@@ -1,16 +1,73 @@
-# fire_extinguisher_shop
 
-A new Flutter project.
+# FireTrack360 🔥📱
 
-## Getting Started
+## Overview
+FireTrack360 is a comprehensive mobile application designed to connect clients and satorrwanda fire existinguisher technical  services .
 
-This project is a starting point for a Flutter application.
+## 🚒 Key Features
+- **Real-time Extinguisher Tracking**: Monitor the status and location of fire extinguishers
+- **Maintenance Scheduling**: Automated reminders for inspections and refills
+- **Compliance Management**: Track and ensure regulatory compliance
+- **Emergency Response Planning**: Quick access to critical safety information
+- **Inventory Management**: Detailed tracking of fire safety equipment
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠 Tech Stack
+- **Framework**: Flutter
+- **State Management**: Provider/Riverpod
+- **Backend**: [FireTrack360-backend](https://github.com/satorrwanda/FireTrack360-backend)
+- **Authentication**: Custom auth
+- **Database**: PostgreSQL
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📱 Supported Platforms
+- Android
+- iOS
+- Web
+- Desktop (Windows, macOS, Linux)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Getting Started
+
+### Prerequisites
+- Flutter SDK (3.16+)
+- Dart SDK
+- Android Studio / Xcode
+- Git
+
+### Installation
+1. Clone the repository
+```bash
+git clone https://github.com/satorrwanda/FireTrack360-client.git
+```
+
+2. Install dependencies
+```bash
+flutter pub get
+```
+
+3. Run the application
+```bash
+flutter run
+```
+
+## 🔐 Environment Setup
+Create a `.env` file with the following variables:
+```
+- to be added
+- to be added
+```
+
+## 🧪 Testing
+```bash
+flutter test
+```
+
+## 🤝 Contributing
+1. clone  the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+
+
+
