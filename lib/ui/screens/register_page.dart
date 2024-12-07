@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushReplacementNamed('/forget-password');
+                                .pushReplacementNamed('/login');
                           },
                           child: const Text(
                             'Login',
