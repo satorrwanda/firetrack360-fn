@@ -1,47 +1,69 @@
-
+import 'dart:async';
+import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'ui/screens/forget_password_page.dart';
-import 'ui/screens/onboarding_page.dart';
-import 'ui/screens/login_page.dart';
-import 'ui/screens/register_page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'routes/app_routes.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: ".env").catchError((error) {
+      debugPrint("Error loading .env file: $error");
+    });
 
-  // Check if the onboarding is complete
-  final prefs = await SharedPreferences.getInstance();
-  final bool onboardingComplete = prefs.getBool('onboardingComplete') ?? false;
-  
-
-  runApp(FireExtinguisherShop(
-    initialRoute: onboardingComplete ? '/onboarding': "/login" ,
-  ));
+    await initHiveForFlutter();
+    final client = GraphQLConfiguration.initializeClient();
+    runApp(MyApp(client: client));
+  } catch (e) {
+    runApp(ErrorApp(error: e));
+  }
 }
 
-class FireExtinguisherShop extends StatelessWidget {
-  final String initialRoute;
+class ErrorApp extends StatelessWidget {
+  final Object error;
 
-  const FireExtinguisherShop({super.key, required this.initialRoute});
+  const ErrorApp({super.key, required this.error});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fire Extinguisher Shop',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Initialization Error'),
+          backgroundColor: Colors.red,
+        ),
+        body: Center(
+          child: Text(
+            'Failed to initialize the app:\n$error',
+            style: const TextStyle(color: Colors.red),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: initialRoute,
-      routes: {
-        '/onboarding': (context) => const OnboardingPage(),
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/forget-password': (context) => const ForgetPasswordPage()
-      },
-      onUnknownRoute: (settings) => MaterialPageRoute(
-        builder: (context) => const OnboardingPage(),
+    );
+  }
+}
+
+class MyApp extends StatelessWidget {
+  final ValueNotifier<GraphQLClient> client;
+
+  const MyApp({super.key, required this.client});
+
+  @override
+  Widget build(BuildContext context) {
+    return GraphQLProvider(
+      client: client,
+      child: MaterialApp(
+        title: 'FireSecure360',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: AppRoutes.getRoutes(),
+        onUnknownRoute: AppRoutes.unknownRoute,
       ),
     );
   }

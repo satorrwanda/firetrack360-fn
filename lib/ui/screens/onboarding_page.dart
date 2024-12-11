@@ -16,24 +16,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
     OnboardingContent(
       title: 'Welcome to FireSecure360',
       description: 'Discover amazing features designed to simplify your life.',
-      image: 'assets/images/onboarding1.png',
+      image: 'assets/images/onboarding1.jpg',
     ),
     OnboardingContent(
       title: 'Stay Organized',
       description: 'Keep track of everything with just a few taps.',
-      image: 'assets/images/onboarding2.png',
+      image: 'assets/images/onboarding2.jpg',
     ),
     OnboardingContent(
       title: 'Get Started',
       description: 'Sign up now to unlock all the features.',
-      image: 'assets/images/onboarding3.png',
+      image: 'assets/images/onboarding3.jpg',
     ),
   ];
 
   void _completeOnboarding() async {
     // Save onboarding as complete
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboardingComplete', true);
+    await prefs.setBool('isOnboardingDone', true);
 
     // Navigate to login page
     // ignore: use_build_context_synchronously
