@@ -1,12 +1,15 @@
+import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/activation_code_input.dart';
+import '../../services/activation_service.dart';
 
 class AccountActivationPage extends StatefulWidget {
   const AccountActivationPage({super.key});
 
   @override
-  _AccountActivationPageState createState() => _AccountActivationPageState();
+  State<AccountActivationPage> createState() => _AccountActivationPageState();
 }
 
 class _AccountActivationPageState extends State<AccountActivationPage> {
@@ -15,129 +18,146 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
   bool _isLoading = false;
   String _email = '';
 
-  // GraphQL Mutation
-  static const String verifyAccountMutation = r'''
-    mutation VerifyAccount($email: String!, $otp: String!) {
-      verifyAccount(
-        verificationFields: { email: $email, otp: $otp }
-      ) {
-        message
-        status
-      }
-    }
-  ''';
+  @override
+  void initState() {
+    super.initState();
+    _getEmailFromSharedPreferences();
+  }
 
-  void _activateAccount(GraphQLClient client) async {
-    // Combine all inputs into a single string
+  Future<void> _activateAccount(GraphQLClient client) async {
     final activationCode = _controllers.map((c) => c.text).join();
 
-    // Validate code length
     if (activationCode.length != 6) {
-      _showErrorDialog('Please enter a valid 6-digit activation code.');
+      _showSnackBar('Please enter a valid 6-digit activation code.');
       return;
     }
 
     setState(() => _isLoading = true);
 
     try {
-      final result = await client.mutate(
-        MutationOptions(
-          document: gql(verifyAccountMutation),
-          variables: {
-            'email': _email, // Use email from shared preferences
-            'otp': activationCode,
-          },
-        ),
+      final result = await ActivationService.verifyAccount(
+        client: client,
+        email: _email,
+        otp: activationCode,
       );
 
-      setState(() => _isLoading = false);
-
-      // Check mutation result
-      if (result.hasException) {
-        _showErrorDialog(result.exception?.graphqlErrors.first.message ?? 'Verification failed');
-        return;
-      }
-
-      final verifyResult = result.data?['verifyAccount'];
-      if (verifyResult['status'] == true) {
-        // Successful verification, navigate to login
-        Navigator.of(context).pushReplacementNamed('/login');
+      if (result['status'] == true) {
+        if (mounted) {
+          AppRoutes.navigateToLogin(context);
+          _showSnackBar('Account activated successfully!');
+        }
       } else {
-        // Show error message from backend
-        _showErrorDialog(verifyResult['message'] ?? 'Verification failed');
+        _showSnackBar(result['message'] ?? 'Verification failed');
       }
     } catch (e) {
-      setState(() => _isLoading = false);
-      _showErrorDialog('An unexpected error occurred');
+      _showSnackBar(e.toString());
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Verification Error'),
+  void _showSnackBar(String message) {
+    if (!mounted) return;
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
         content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
+        backgroundColor: message.contains('success') 
+            ? Colors.green 
+            : Colors.red.shade600,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }
 
+  Future<void> _getEmailFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        _email = prefs.getString('email') ?? '';
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Retrieve the GraphQL client
     final GraphQLClient client = GraphQLProvider.of(context).value;
 
-    // Retrieve email from shared preferences
-    _getEmailFromSharedPreferences();
-
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.blue.shade300,
-                Colors.blue.shade700,
-              ],
-            ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.deepPurple.shade300,
+              Colors.deepPurple.shade700,
+            ],
           ),
-          child: SafeArea(
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  const SizedBox(height: 60),
+                  const Icon(
+                    Icons.mark_email_read_outlined,
+                    size: 80,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
                     'Activate Account',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
+                      letterSpacing: 1.2,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 10.0,
+                          color: Colors.black.withOpacity(0.3),
+                          offset: const Offset(2.0, 2.0),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'Enter the 6-digit activation code sent to your email.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white70,
+                      fontSize: 16,
+                      color: Colors.white.withOpacity(0.9),
+                      height: 1.4,
                     ),
                   ),
                   const SizedBox(height: 48),
-                  _buildCodeInputRow(),
-                  const SizedBox(height: 24),
+                  ActivationCodeInput(
+                    controllers: _controllers,
+                    context: context,
+                  ),
+                  const SizedBox(height: 32),
                   _isLoading
                       ? const Center(
                           child: CircularProgressIndicator(
@@ -148,8 +168,9 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
                           onPressed: () => _activateAccount(client),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
-                            foregroundColor: Colors.blue.shade700,
+                            foregroundColor: Colors.deepPurple,
                             padding: const EdgeInsets.symmetric(vertical: 16),
+                            elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -157,8 +178,9 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
                           child: const Text(
                             'ACTIVATE ACCOUNT',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
                             ),
                           ),
                         ),
@@ -166,14 +188,14 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Already activated? ',
-                        style: TextStyle(color: Colors.white70),
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.9),
+                        ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/login');
-                        },
+                        onTap: () => AppRoutes.navigateToLogin(context),
                         child: const Text(
                           'Sign In',
                           style: TextStyle(
@@ -191,59 +213,5 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
         ),
       ),
     );
-  }
-
-  Widget _buildCodeInputRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(6, (index) {
-        return SizedBox(
-          width: 48,
-          child: TextField(
-            controller: _controllers[index],
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            maxLength: 1,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            decoration: InputDecoration(
-              counterText: '',
-              filled: true,
-              fillColor: Colors.white.withOpacity(0.2),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              // Removed hint text
-            ),
-            onChanged: (value) {
-              if (value.isNotEmpty && index < 5) {
-                FocusScope.of(context).nextFocus();
-              } else if (value.isEmpty && index > 0) {
-                FocusScope.of(context).previousFocus();
-              }
-            },
-          ),
-        );
-      }),
-    );
-  }
-
-  @override
-  void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  _getEmailFromSharedPreferences() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _email = prefs.getString('email') ?? '';
-    });
   }
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class GraphQLConfiguration {
+
   static HttpLink _createHttpLink() {
     final String? endpointUrl = dotenv.env['GRAPHQL_ENDPOINT_URL'];
     
@@ -10,7 +13,10 @@ class GraphQLConfiguration {
       throw Exception('GRAPHQL_ENDPOINT_URL is not set in .env file');
     }
     
-    return HttpLink(endpointUrl);
+    return HttpLink(
+      endpointUrl,
+      httpClient: http.Client(),
+    );
   }
 
   static AuthLink _createAuthLink() {
@@ -43,6 +49,20 @@ class GraphQLConfiguration {
         GraphQLClient(
           link: link,
           cache: GraphQLCache(store: InMemoryStore()),
+          defaultPolicies: DefaultPolicies(
+            watchQuery: Policies(
+              fetch: FetchPolicy.networkOnly,
+              error: ErrorPolicy.all,
+            ),
+            query: Policies(
+              fetch: FetchPolicy.networkOnly,
+              error: ErrorPolicy.all,
+            ),
+            mutate: Policies(
+              fetch: FetchPolicy.networkOnly,
+              error: ErrorPolicy.all,
+            ),
+          ),
         ),
       );
     } catch (e) {
@@ -55,4 +75,23 @@ class GraphQLConfiguration {
       );
     }
   }
+static void handleGraphQLError(OperationException? exception) {
+  if (exception == null) return;
+
+  if (exception.linkException is NetworkException) {
+    final networkException = exception.linkException as NetworkException;
+    
+    if (networkException.originalException is TimeoutException) {
+      debugPrint('GraphQL Request Timed Out');
+    } else {
+      debugPrint('Network Error: ${networkException.message}');
+    }
+  }
+
+  if (exception.graphqlErrors.isNotEmpty) {
+    for (var error in exception.graphqlErrors) {
+      debugPrint('GraphQL Error: ${error.message}');
+    }
+  }
+}
 }

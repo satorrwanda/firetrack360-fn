@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'package:firetrack360/ui/widgets/onboarding_buttons.dart';
+import 'package:firetrack360/ui/models/onboarding_content.dart';
+import 'package:firetrack360/ui/widgets/onboarding_item.dart';
+import 'package:firetrack360/ui/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -11,37 +15,68 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  Timer? _timer;
 
   final List<OnboardingContent> _onboardingContents = [
     OnboardingContent(
       title: 'Welcome to FireSecure360',
-      description: 'Discover amazing features designed to simplify your life.',
+      description: 'Secure your world, one tap at a time',
       image: 'assets/images/onboarding1.jpg',
     ),
     OnboardingContent(
-      title: 'Stay Organized',
-      description: 'Keep track of everything with just a few taps.',
+      title: 'Get Started',
+      description: 'Create an account or log in to access all features',
       image: 'assets/images/onboarding2.jpg',
     ),
     OnboardingContent(
-      title: 'Get Started',
-      description: 'Sign up now to unlock all the features.',
+      title: 'Secure and Simple',
+      description: 'Streamline your security management',
       image: 'assets/images/onboarding3.jpg',
     ),
   ];
 
-  void _completeOnboarding() async {
-    // Save onboarding as complete
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isOnboardingDone', true);
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
 
-    // Navigate to login page
-    // ignore: use_build_context_synchronously
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (_currentPage < _onboardingContents.length - 1) {
+        _pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOutCubic,
+        );
+      } else {
+        _pageController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOutCubic,
+        );
+      }
+    });
+  }
+
+  void _navigateToRegister() {
+    Navigator.of(context).pushReplacementNamed('/register');
+  }
+
+  void _navigateToLogin() {
     Navigator.of(context).pushReplacementNamed('/login');
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -49,30 +84,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.blue.shade300,
-              Colors.blue.shade700,
+              Colors.deepPurple.shade400,
+              Colors.deepPurple.shade800,
             ],
+            stops: const [0.3, 0.9],
           ),
         ),
         child: SafeArea(
           child: Column(
             children: [
-              // Skip button
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                  onPressed: _completeOnboarding,
-                  child: const Text(
-                    'Skip',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
+              PageIndicator(
+                currentPage: _currentPage,
+                pageCount: _onboardingContents.length,
+                onPageSelect: (index) {
+                  _pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOutCubic,
+                  );
+                },
               ),
-
-              // Page View
               Expanded(
                 child: PageView.builder(
                   controller: _pageController,
@@ -83,74 +114,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     });
                   },
                   itemBuilder: (context, index) {
-                    return _OnboardingItem(
+                    return OnboardingItem(
                       content: _onboardingContents[index],
+                      screenWidth: screenWidth,
                     );
                   },
                 ),
               ),
-
-              // Page Indicators
-              _buildPageIndicators(),
-
-              // Navigation Buttons
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Previous Button
-                    _currentPage > 0
-                        ? TextButton(
-                            onPressed: () {
-                              _pageController.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                            child: const Text(
-                              'Previous',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                        : const SizedBox(width: 80),
-
-                    // Next/Done Button
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_currentPage < _onboardingContents.length - 1) {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        } else {
-                          _completeOnboarding();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.blue.shade700,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        _currentPage < _onboardingContents.length - 1
-                            ? 'Next'
-                            : 'Get Started',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              OnboardingButtons(
+                onRegister: _navigateToRegister,
+                onLogin: _navigateToLogin,
               ),
             ],
           ),
@@ -158,82 +131,4 @@ class _OnboardingPageState extends State<OnboardingPage> {
       ),
     );
   }
-
-  Widget _buildPageIndicators() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        _onboardingContents.length,
-        (index) => Container(
-          width: 10,
-          height: 10,
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: _currentPage == index ? Colors.white : Colors.white38,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _OnboardingItem extends StatelessWidget {
-  final OnboardingContent content;
-
-  const _OnboardingItem({required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Image
-          Expanded(
-            flex: 3,
-            child: Image.asset(
-              content.image,
-              fit: BoxFit.contain,
-            ),
-          ),
-
-          // Title
-          Text(
-            content.title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Description
-          Text(
-            content.description,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.white70,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class OnboardingContent {
-  final String title;
-  final String description;
-  final String image;
-
-  OnboardingContent({
-    required this.title,
-    required this.description,
-    required this.image,
-  });
 }
