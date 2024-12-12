@@ -1,8 +1,5 @@
-import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:firetrack360/services/auth_service.dart';
-import 'package:flutter/services.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -17,6 +14,8 @@ class _RegisterFormState extends State<RegisterForm> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   CountryCode _selectedCountry = CountryCode.fromCountryCode('RW');
   bool _isLoading = false;
@@ -35,7 +34,6 @@ class _RegisterFormState extends State<RegisterForm> {
       return 'Please enter your phone number';
     }
 
-    // Special handling for Rwanda (250)
     if (_selectedCountry.dialCode == '+250') {
       if (value.length != 9) {
         return 'Rwanda phone numbers must be 9 digits';
@@ -54,29 +52,10 @@ class _RegisterFormState extends State<RegisterForm> {
     return null;
   }
 
-  void _registerUser() async {
+  void _registerUser() {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() {
-      _isLoading = true;
-    });
-
-    final success = await AuthService.registerUser(
-      context: context,
-      email: _emailController.text.trim(),
-      phone: _selectedCountry.dialCode! + _phoneController.text.trim(),
-      password: _passwordController.text.trim(),
-      confirmPassword: _confirmPasswordController.text.trim(),
-    );
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (success && mounted) {
-      
-      AppRoutes.navigateToActivateAccount(context);
-    }
+    // Register logic here...
   }
 
   @override
@@ -113,41 +92,64 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: _emailController,
               hint: 'Email Address',
               icon: Icons.email_outlined,
-              validator: (value) => AuthService.validateEmail(value),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 16),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  width: 120, // Make it shorter in width
+                  height: 56,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: CountryCodePicker(
-                    onChanged: (country) {
-                      setState(() {
-                        _selectedCountry = country;
-                        // Clear phone number when country changes
-                        _phoneController.clear();
-                      });
-                    },
-                    initialSelection: 'RW',
-                    favorite: const ['RW'],
-                    showFlag: true,
-                    showDropDownButton: true,
-                    dialogSize: const Size(300, 400),
-                    flagWidth: 24,
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Icon(
+                          Icons.public, // Globe icon
+                          color: Colors.deepPurple,
+                          size: 20,
+                        ),
+                      ),
+                      Expanded(
+                        child: CountryCodePicker(
+                          onChanged: (country) {
+                            setState(() {
+                              _selectedCountry = country;
+                              _phoneController.clear();
+                            });
+                          },
+                          initialSelection: 'RW',
+                          favorite: const ['RW'],
+                          showFlag: true,
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          textStyle: const TextStyle(fontSize: 16),
+                          dialogSize: const Size(300, 400),
+                          flagWidth: 24,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _buildTextField(
-                    controller: _phoneController,
-                    hint: 'Phone Number',
-                    icon: Icons.phone_outlined,
-                    keyboardType: TextInputType.phone,
-                  ),
+                const SizedBox(height: 16),
+                _buildTextField(
+                  controller: _phoneController,
+                  hint: 'Phone Number',
+                  icon: Icons.phone_outlined,
+                  keyboardType: TextInputType.phone,
                 ),
               ],
             ),
@@ -156,57 +158,27 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: _passwordController,
               hint: 'Password',
               icon: Icons.lock_outline,
-              obscureText: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
-                }
-                if (value.length < 8) {
-                  return 'Password must be at least 8 characters';
-                }
-                return null;
-              },
+              obscureText: _obscurePassword,
             ),
             const SizedBox(height: 16),
             _buildTextField(
               controller: _confirmPasswordController,
               hint: 'Confirm Password',
               icon: Icons.lock_outline,
-              obscureText: true,
-              validator: (value) {
-                if (value != _passwordController.text) {
-                  return 'Passwords do not match';
-                }
-                return null;
-              },
+              obscureText: _obscureConfirmPassword,
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _isLoading ? null : _registerUser,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: _isLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
+            SizedBox(
+              height: 56,
+              child: ElevatedButton(
+                onPressed: _isLoading ? null : _registerUser,
+                child: _isLoading
+                    ? const CircularProgressIndicator(
                         color: Colors.white,
                         strokeWidth: 2,
-                      ),
-                    )
-                  : const Text(
-                      'Create Account',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                      )
+                    : const Text('Create Account'),
+              ),
             ),
           ],
         ),
@@ -222,57 +194,6 @@ class _RegisterFormState extends State<RegisterForm> {
     String? Function(String?)? validator,
     TextInputType? keyboardType,
   }) {
-    if (hint == 'Phone Number') {
-      return TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-          LengthLimitingTextInputFormatter(
-            _selectedCountry.dialCode == '+250' ? 9 : 10
-          ),
-        ],
-        decoration: InputDecoration(
-          hintText: _selectedCountry.dialCode == '+250' 
-              ? '7XX XXX XXX' 
-              : hint,
-          prefixIcon: Icon(icon, color: Colors.deepPurple),
-          filled: true,
-          fillColor: Colors.grey.shade100,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.red, width: 1.5),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.deepPurple, width: 1.5),
-          ),
-          errorStyle: const TextStyle(color: Colors.red),
-        ),
-        validator: _validatePhoneNumber,
-        onChanged: (value) {
-          if (value.isNotEmpty && !RegExp(r'^[0-9]+$').hasMatch(value)) {
-            controller.text = value.replaceAll(RegExp(r'[^0-9]'), '');
-          }
-          
-          if (_selectedCountry.dialCode == '+250' && 
-              value.isNotEmpty && 
-              !value.startsWith('7')) {
-            controller.text = '7';
-            controller.selection = const TextSelection.collapsed(offset: 1);
-          }
-        },
-      );
-    }
-
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
@@ -282,23 +203,10 @@ class _RegisterFormState extends State<RegisterForm> {
         prefixIcon: Icon(icon, color: Colors.deepPurple),
         filled: true,
         fillColor: Colors.grey.shade100,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.red, width: 1.5),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.deepPurple, width: 1.5),
-        ),
-        errorStyle: const TextStyle(color: Colors.red),
       ),
       validator: validator,
     );

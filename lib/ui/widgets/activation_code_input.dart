@@ -2,106 +2,96 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ActivationCodeInput extends StatelessWidget {
+  final void Function(String)? onCompleted;
+  final void Function(String)? onChanged;
   final List<TextEditingController> controllers;
 
   const ActivationCodeInput({
     super.key,
-    required this.controllers, required BuildContext context,
+    required this.controllers,
+    this.onCompleted,
+    this.onChanged,
   });
 
-  Future<void> _handlePaste(BuildContext context) async {
-    try {
-      // Get clipboard data
-      final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-      if (clipboardData?.text == null) return;
-
-      // Extract only digits from pasted text
-      final digits = clipboardData!.text!.replaceAll(RegExp(r'[^0-9]'), '');
-      if (digits.isEmpty) return;
-
-      // Take only the first 6 digits
-      final validCode = digits.substring(0, digits.length > 6 ? 6 : digits.length);
-
-      // Distribute digits across controllers
-      for (int i = 0; i < controllers.length; i++) {
-        if (i < validCode.length) {
-          controllers[i].text = validCode[i];
-        } else {
-          controllers[i].clear();
-        }
-      }
-
-      // Move focus to the next available field
-      for (int i = 0; i < validCode.length; i++) {
-        if (i < controllers.length - 1) {
-          FocusScope.of(context).nextFocus();
-        }
-      }
-    } catch (e) {
-      debugPrint('Paste error: $e');
-    }
+  Widget _buildTextField(BuildContext context, int index, double fieldSize) {
+    return Container(
+      height: fieldSize,
+      width: fieldSize,
+      child: TextField(
+        controller: controllers[index],
+        autofocus: index == 0,
+        onChanged: (value) {
+          if (value.length == 1 && index < controllers.length - 1) {
+            FocusScope.of(context).nextFocus();
+          }
+          if (value.isEmpty && index > 0) {
+            FocusScope.of(context).previousFocus();
+          }
+          if (onChanged != null) {
+            onChanged!(controllers.map((c) => c.text).join());
+          }
+          // Check if all fields are filled
+          if (controllers.every((controller) => controller.text.isNotEmpty)) {
+            if (onCompleted != null) {
+              onCompleted!(controllers.map((c) => c.text).join());
+            }
+          }
+        },
+        showCursor: false,
+        readOnly: false,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: fieldSize * 0.4, // Responsive font size
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(1),
+        ],
+        decoration: InputDecoration(
+          counter: const Offstage(),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.2),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 2, 
+              color: Colors.white.withOpacity(0.3),
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              width: 2, 
+              color: Colors.white,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(6, (index) {
-        return SizedBox(
-          width: 48,
-          child: GestureDetector(
-            onLongPress: () {
-              showMenu(
-                context: context,
-                position: RelativeRect.fromLTRB(0, 0, 0, 0),
-                items: [
-                  PopupMenuItem(
-                    child: const Text('Paste'),
-                    onTap: () => _handlePaste(context),
-                  ),
-                ],
-              );
-            },
-            child: Focus(
-              child: TextField(
-                controller: controllers[index],
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                maxLength: 1,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(1),
-                ],
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                decoration: InputDecoration(
-                  counterText: '',
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.2),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.white, width: 2),
-                  ),
-                ),
-                onChanged: (value) {
-                  if (value.isNotEmpty && index < 5) {
-                    FocusScope.of(context).nextFocus();
-                  } else if (value.isEmpty && index > 0) {
-                    FocusScope.of(context).previousFocus();
-                  }
-                },
-              ),
-            ),
-          ),
-        );
-      }),
+    final screenWidth = MediaQuery.of(context).size.width;
+    final horizontalPadding = screenWidth * 0.1; 
+    final availableWidth = screenWidth - (horizontalPadding * 2);
+    final spaceBetweenFields = availableWidth * 0.05; 
+    final totalSpacing = spaceBetweenFields * (controllers.length - 1);
+    final fieldSize = (availableWidth - totalSpacing) / controllers.length;
+
+    return Container(
+      width: screenWidth,
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(
+          controllers.length,
+          (index) => _buildTextField(context, index, fieldSize),
+        ),
+      ),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:firetrack360/routes/app_routes.dart';
+import 'package:firetrack360/ui/widgets/activation_code_input.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../widgets/activation_code_input.dart';
 import '../../services/activation_service.dart';
 
 class AccountActivationPage extends StatefulWidget {
@@ -24,11 +24,31 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
     _getEmailFromSharedPreferences();
   }
 
-  Future<void> _activateAccount(GraphQLClient client) async {
-    final activationCode = _controllers.map((c) => c.text).join();
+  String _maskEmail(String email) {
+    if (email.isEmpty) return '';
+    
+    final parts = email.split('@');
+    if (parts.length != 2) return email;
+    
+    String name = parts[0];
+    String domain = parts[1];
+    
+    if (name.length <= 2) {
+      return email;
+    }
+    
+    String maskedName = '${name[0]}${name[1]}${'*' * (name.length - 2)}';
+    return '$maskedName@$domain';
+  }
+
+  Future<void> _activateAccount(GraphQLClient client, [String? code]) async {
+    final activationCode = code ?? _controllers.map((c) => c.text).join();
 
     if (activationCode.length != 6) {
-      _showSnackBar('Please enter a valid 6-digit activation code.');
+      _showSnackBar(
+        'Please enter a valid 6-digit activation code.',
+        isError: true,
+      );
       return;
     }
 
@@ -41,16 +61,19 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
         otp: activationCode,
       );
 
-      if (result['status'] == true) {
+      if (result['status'] == 200) {
         if (mounted) {
-          AppRoutes.navigateToLogin(context);
           _showSnackBar('Account activated successfully!');
+          AppRoutes.navigateToLogin(context);
         }
       } else {
-        _showSnackBar(result['message'] ?? 'Verification failed');
+        _showSnackBar(
+          result['message'] ?? 'Verification failed',
+          isError: true,
+        );
       }
     } catch (e) {
-      _showSnackBar(e.toString());
+      _showSnackBar(e.toString(), isError: true);
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -58,15 +81,22 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
     }
   }
 
-  void _showSnackBar(String message) {
+  void _showSnackBar(String message, {bool isError = false}) {
     if (!mounted) return;
     
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        backgroundColor: message.contains('success') 
-            ? Colors.green 
-            : Colors.red.shade600,
+        content: Row(
+          children: [
+            Icon(
+              isError ? Icons.error_outline : Icons.check_circle_outline,
+              color: Colors.white,
+            ),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: isError ? Colors.red.shade600 : Colors.green.shade600,
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(
@@ -144,7 +174,7 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Enter the 6-digit activation code sent to your email.',
+                    'Enter the 6-digit activation code sent to',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -152,10 +182,22 @@ class _AccountActivationPageState extends State<AccountActivationPage> {
                       height: 1.4,
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _maskEmail(_email),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      height: 1.4,
+                    ),
+                  ),
                   const SizedBox(height: 48),
                   ActivationCodeInput(
                     controllers: _controllers,
-                    context: context,
+                    onCompleted: (code) => _activateAccount(client, code),
+                    onChanged: (_) {},
                   ),
                   const SizedBox(height: 32),
                   _isLoading
