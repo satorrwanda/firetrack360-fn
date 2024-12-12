@@ -5,6 +5,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.0'
+
 dependencies:
   flutter:
     sdk: flutter
@@ -21,17 +22,48 @@ dependencies:
   country_code_picker: ^3.1.0
   otp_text_field_v2: ^1.0.3
   flutter_launcher_icons: ^0.14.2
+  flutter_native_splash: ^2.4.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+
 flutter:
   uses-material-design: true
-
   assets:
-    
+    - assets/images/firetrack_logo.png
     - assets/images/onboarding1.jpg
     - assets/images/onboarding2.jpg
     - assets/images/onboarding3.jpg
     - .env
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/firetrack_logo.png
+  android: true
+  ios: true
+  web:
+    generate: true
+  macos: true
+  linux: true
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/images/firetrack_logo.png"
+    background_color: "#ffffff"
+    theme_color: "#000000"
+  macos:
+    generate: true
+    image_path: "assets/images/firetrack_logo.png"
+  linux:
+    generate: true
+    image_path: "assets/images/firetrack_logo.png"
+  image_path_android: "assets/images/firetrack_logo.png"  
+  image_path_ios: "assets/images/firetrack_logo.png"          
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/firetrack_logo.png"
+

@@ -5,10 +5,10 @@ class OnboardingButtons extends StatelessWidget {
   final VoidCallback onLogin;
 
   const OnboardingButtons({
-    Key? key,
+    super.key,
     required this.onRegister,
     required this.onLogin,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,10 +6,10 @@ class OnboardingItem extends StatelessWidget {
   final double screenWidth;
 
   const OnboardingItem({
-    Key? key,
+    super.key,
     required this.content,
     required this.screenWidth,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,7 @@ import 'package:firetrack360/ui/screens/login_page.dart';
 import 'package:firetrack360/ui/screens/onboarding_page.dart';
 import 'package:firetrack360/ui/screens/register_page.dart';
 import 'package:firetrack360/ui/screens/unknown_route_page.dart';
+import 'package:firetrack360/ui/screens/verify_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,7 @@ class AppRoutes {
   static const String register = '/register';
   static const String forgetPassword = '/forget-password';
   static const String activateAccount = '/activate-account';
+  static const String verifyLogin = '/verify-login';
 
   static const String _onboardingKey = 'isOnboardingDone';
 
@@ -25,6 +27,7 @@ class AppRoutes {
       register: (_) => const RegisterPage(),
       forgetPassword: (_) => const ForgetPasswordPage(),
       activateAccount: (_) => const AccountActivationPage(),
+      verifyLogin: (_) => const VerifyLoginPage(),
     };
   }
 
@@ -63,6 +66,9 @@ class AppRoutes {
   static Future<bool> isOnboardingComplete() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_onboardingKey) ?? false;
+  }
+  static void navigateToVerifyLogin(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(verifyLogin);
   }
 
   static Future<void> checkInitialRoute(BuildContext context) async {

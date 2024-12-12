@@ -14,7 +14,7 @@ class ActivationCodeInput extends StatelessWidget {
   });
 
   Widget _buildTextField(BuildContext context, int index, double fieldSize) {
-    return Container(
+    return SizedBox(
       height: fieldSize,
       width: fieldSize,
       child: TextField(

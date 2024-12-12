@@ -1,6 +1,8 @@
+import 'package:firetrack360/graphql/auth_mutations.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -14,15 +16,6 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
-
-  static const String loginMutation = r'''
-    mutation Login($email: String!, $password: String!) {
-      login(loginInput: { email: $email, password: $password }) {
-        message
-        status
-      }
-    }
-  ''';
 
   Future<void> _performLogin() async {
     if (!_validateInputs()) return;
@@ -52,7 +45,9 @@ class _LoginFormState extends State<LoginForm> {
       if (loginResult['status'] == 200) {
         if (mounted) {
           _showSuccessSnackBar('Login successful!');
-          // TODO: Navigate to home page
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('email', _emailController.text.trim());
+          AppRoutes.navigateToVerifyLogin(context);
         }
       } else {
         _showErrorSnackBar(loginResult['message'] ?? 'Login failed');
@@ -237,7 +232,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.deepPurple, width: 1.5),
+          borderSide: const BorderSide(color: Colors.deepPurple, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,

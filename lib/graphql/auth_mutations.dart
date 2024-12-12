@@ -24,3 +24,23 @@ const String verifyAccountMutation = r'''
       }
     }
   ''';
+
+const String loginMutation = r'''
+    mutation Login($email: String!, $password: String!) {
+      login(loginInput: { email: $email, password: $password }) {
+        message
+        status
+      }
+    }
+  ''';
+
+  const String verifyLoginMutation = r'''
+    mutation VerifyLogin($email: String!, $otp: String!) {
+      verifyLogin(verifyLoginInput: { email: $email, otp: $otp }) {
+        message
+        status
+        accessToken
+        refreshToken
+      }
+    }
+  ''';
