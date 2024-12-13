@@ -36,7 +36,8 @@ flutter:
     - assets/images/onboarding1.jpg
     - assets/images/onboarding2.jpg
     - assets/images/onboarding3.jpg
-    - .env
+    - .env.development
+    - .env.production
 
 flutter_native_splash:
   color: "#ffffff"

@@ -5,14 +5,54 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'routes/app_routes.dart';
 
+// Add environment enum
+enum Environment { development, production }
+
+// Environment configuration class
+class EnvironmentConfig {
+  static Environment _environment = Environment.development;
+
+  static Future<void> initialize(Environment env) async {
+    _environment = env;
+    final filename = _getEnvFileName();
+    try {
+      await dotenv.load(fileName: filename);
+    } catch (e) {
+      debugPrint('Error loading environment file $filename: $e');
+      rethrow;
+    }
+  }
+
+  static String _getEnvFileName() {
+    switch (_environment) {
+      case Environment.development:
+        return '.env.development';
+      case Environment.production:
+        return '.env.production';
+    }
+  }
+
+  static bool get isDevelopment => _environment == Environment.development;
+  static bool get isProduction => _environment == Environment.production;
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await dotenv.load(fileName: ".env").catchError((error) {
-      debugPrint("Error loading .env file: $error");
-    });
 
+  try {
+    // Initialize environment based on build configuration
+    const String envName = String.fromEnvironment(
+      'ENVIRONMENT',
+      defaultValue: 'development',
+    );
+
+    const environment = envName == 'production'
+        ? Environment.production
+        : Environment.development;
+
+    await EnvironmentConfig.initialize(environment);
     await initHiveForFlutter();
+
     final client = GraphQLConfiguration.initializeClient();
     runApp(MyApp(client: client));
   } catch (e) {
@@ -60,7 +100,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
         routes: AppRoutes.getRoutes(),
         initialRoute: AppRoutes.onboarding,
         onUnknownRoute: AppRoutes.unknownRoute,

@@ -1,5 +1,6 @@
 import 'package:firetrack360/ui/screens/account_activation_page.dart';
 import 'package:firetrack360/ui/screens/forget_password_page.dart';
+import 'package:firetrack360/ui/screens/home_page.dart';
 import 'package:firetrack360/ui/screens/login_page.dart';
 import 'package:firetrack360/ui/screens/onboarding_page.dart';
 import 'package:firetrack360/ui/screens/register_page.dart';
@@ -17,6 +18,7 @@ class AppRoutes {
   static const String forgetPassword = '/forget-password';
   static const String activateAccount = '/activate-account';
   static const String verifyLogin = '/verify-login';
+  static const String home = '/home';
 
   static const String _onboardingKey = 'isOnboardingDone';
 
@@ -28,6 +30,7 @@ class AppRoutes {
       forgetPassword: (_) => const ForgetPasswordPage(),
       activateAccount: (_) => const AccountActivationPage(),
       verifyLogin: (_) => const VerifyLoginPage(),
+      home: (_) => const HomePage(),
     };
   }
 
@@ -61,6 +64,9 @@ class AppRoutes {
   static Future<void> setOnboardingComplete() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_onboardingKey, true);
+  }
+  static void navigateToHome(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(home);
   }
 
   static Future<bool> isOnboardingComplete() async {

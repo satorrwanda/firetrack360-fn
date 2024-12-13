@@ -66,7 +66,8 @@ class _LoginFormState extends State<LoginForm> {
       _showErrorSnackBar('Please fill in all fields');
       return false;
     }
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(_emailController.text)) {
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(_emailController.text)) {
       _showErrorSnackBar('Please enter a valid email');
       return false;
     }
@@ -75,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void _showSuccessSnackBar(String message) {
     if (!mounted) return;
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
@@ -97,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void _showErrorSnackBar(String message) {
     if (!mounted) return;
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(

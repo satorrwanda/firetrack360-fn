@@ -44,3 +44,12 @@ const String loginMutation = r'''
       }
     }
   ''';
+
+const resendOtpMutation = '''
+mutation ResendOTP(\$email: String!) {
+  resendOTP(email: \$email) {
+    message
+    status
+  }
+}
+''';

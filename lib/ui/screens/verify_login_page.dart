@@ -1,4 +1,5 @@
-import 'package:firetrack360/graphql/auth_mutations.dart';
+import 'dart:async';
+import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -17,22 +18,43 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   bool _isLoading = false;
   String? _email;
+  Timer? _resendTimer;
+  int _remainingTime = 0;
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
     _loadEmail();
+    _startResendTimer();
+  }
+
+  void _startResendTimer() {
+    _remainingTime = 30;
+    _resendTimer?.cancel();
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime > 0) {
+        setState(() {
+          _remainingTime--;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
   }
 
   Future<void> _loadEmail() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('email');
+      
       if (mounted) {
         setState(() {
           _email = email;
+          _isInitialized = true;
         });
       }
+      
       if (email == null) {
         if (mounted) {
           Navigator.of(context).pushReplacementNamed('/login');
@@ -42,6 +64,7 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
     } catch (e) {
       debugPrint('Error loading email: $e');
       if (mounted) {
+        setState(() => _isInitialized = true);
         _showErrorSnackBar('Error loading session data');
       }
     }
@@ -55,11 +78,62 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
     for (var node in _focusNodes) {
       node.dispose();
     }
+    _resendTimer?.cancel();
     super.dispose();
   }
 
+  Future<void> _resendOTP() async {
+    if (_remainingTime > 0 || _email == null || _isLoading) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final client = GraphQLProvider.of(context).value;
+      final result = await client.mutate(
+        MutationOptions(
+          document: gql('''
+            mutation ResendOTP(\$email: String!) {
+              resendOTP(email: \$email) {
+                status
+                message
+              }
+            }
+          '''),
+          variables: {
+            'email': _email!,
+          },
+        ),
+      );
+
+      if (result.hasException) {
+        _handleGraphQLError(result.exception!);
+        return;
+      }
+
+      final data = result.data?['resendOTP'];
+      if (data != null && data['status'] == 200) {
+        _showSuccessSnackBar(data['message'] ?? 'New OTP sent to your email');
+        _startResendTimer();
+        // Clear existing OTP fields
+        for (var controller in _controllers) {
+          controller.clear();
+        }
+        _focusNodes.first.requestFocus();
+      } else {
+        _showErrorSnackBar(data?['message'] ?? 'Failed to resend OTP');
+      }
+    } catch (e) {
+      debugPrint('Resend OTP error: $e');
+      _showErrorSnackBar('Failed to resend OTP');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
   Future<void> _verifyOTP() async {
-    if (_email == null) {
+    if (_email == null || _isLoading) {
       _showErrorSnackBar('Session expired. Please login again.');
       return;
     }
@@ -77,7 +151,16 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
       final client = GraphQLProvider.of(context).value;
       final result = await client.mutate(
         MutationOptions(
-          document: gql(verifyLoginMutation),
+          document: gql('''
+            mutation VerifyLogin(\$verifyLoginInput: VerifyLoginInput!) {
+              verifyLogin(verifyLoginInput: \$verifyLoginInput) {
+                status
+                message
+                accessToken
+                refreshToken
+              }
+            }
+          '''),
           variables: {
             'verifyLoginInput': {
               'email': _email,
@@ -93,25 +176,52 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
       }
 
       final data = result.data?['verifyLogin'];
-      if (data != null && (data['status'] == 200 || data['status'] == 201)) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken', data['accessToken']);
-        await prefs.setString('refreshToken', data['refreshToken']);
-        
-        if (mounted) {
-          _showSuccessSnackBar(data['message'] ?? 'Login verified successfully');
-          // Navigator.pushReplacementNamed(context, '/home');
+      if (data != null) {
+        switch (data['status']) {
+          case 200:
+          case 201:
+            await _handleSuccessfulVerification(data);
+            break;
+          case 400:
+            _showErrorSnackBar('Invalid OTP. Please try again.');
+            break;
+          case 401:
+            _showErrorSnackBar('OTP expired. Please request a new one.');
+            break;
+          default:
+            _showErrorSnackBar(data['message'] ?? 'Verification failed.');
         }
       } else {
-        _showErrorSnackBar(data?['message'] ?? 'Verification failed. Please try again.');
+        _showErrorSnackBar('Verification failed. Please try again.');
       }
     } catch (e) {
-      _showErrorSnackBar('An unexpected error occurred. Please try again.');
       debugPrint('Verification error: $e');
+      _showErrorSnackBar('An unexpected error occurred');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
       }
+    }
+  }
+
+  Future<void> _handleSuccessfulVerification(Map<String, dynamic> data) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await Future.wait([
+        prefs.setString('accessToken', data['accessToken']),
+        prefs.setString('refreshToken', data['refreshToken']),
+      ]);
+
+      if (mounted) {
+        _showSuccessSnackBar(data['message'] ?? 'Login verified successfully');
+        await Future.delayed(const Duration(seconds: 1));
+        if (mounted) {
+          AppRoutes.navigateToHome(context);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error saving tokens: $e');
+      _showErrorSnackBar('Error saving authentication data');
     }
   }
 
@@ -120,7 +230,8 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
 
     if (exception.graphqlErrors.isNotEmpty) {
       final firstError = exception.graphqlErrors.first;
-      final errorCode = firstError.extensions?['status'] as int?;
+      final dynamic extensions = firstError.extensions;
+      final errorCode = extensions?['status'] as int?;
 
       switch (errorCode) {
         case 400:
@@ -129,9 +240,17 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
         case 401:
           errorMessage = 'OTP has expired. Please request a new one.';
           break;
+        case 404:
+          errorMessage = 'Email not found. Please try logging in again.';
+          break;
+        case 429:
+          errorMessage = 'Too many attempts. Please try again later.';
+          break;
         default:
           errorMessage = firstError.message;
       }
+    } else if (exception.linkException != null) {
+      errorMessage = 'Network error. Please check your connection.';
     }
 
     _showErrorSnackBar(errorMessage);
@@ -179,9 +298,57 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
     );
   }
 
+  Widget _buildOTPField(int index) {
+    return SizedBox(
+      width: 45,
+      height: 55,
+      child: TextFormField(
+        controller: _controllers[index],
+        focusNode: _focusNodes[index],
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: const Color(0xFFF3F4F6),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(
+              color: Color(0xFF6741D9),
+              width: 2,
+            ),
+          ),
+        ),
+        textAlign: TextAlign.center,
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(1),
+          FilteringTextInputFormatter.digitsOnly,
+        ],
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            if (index < 5) {
+              _focusNodes[index + 1].requestFocus();
+            } else {
+              _focusNodes[index].unfocus();
+              final allFilled = _controllers.every(
+                  (controller) => controller.text.isNotEmpty);
+              if (allFilled) {
+                _verifyOTP();
+              }
+            }
+          } else if (index > 0) {
+            _focusNodes[index - 1].requestFocus();
+          }
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_email == null) {
+    if (!_isInitialized) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
@@ -198,11 +365,12 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
         backgroundColor: const Color(0xFF6741D9),
       ),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const SizedBox(height: 32),
               const Icon(
                 Icons.security,
                 size: 64,
@@ -219,7 +387,7 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Enter the 6-digit code sent to your email\n$_email',
+                'Enter the 6-digit code sent to your email\n${_email ?? ""}',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Colors.grey[600],
                     ),
@@ -228,54 +396,15 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
               const SizedBox(height: 32),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(
-                  6,
-                  (index) => SizedBox(
-                    width: 45,
-                    height: 55,
-                    child: TextFormField(
-                      controller: _controllers[index],
-                      focusNode: _focusNodes[index],
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color(0xFFF3F4F6),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF6741D9),
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      onChanged: (value) {
-                        if (value.isNotEmpty && index < 5) {
-                          _focusNodes[index + 1].requestFocus();
-                        }
-                        if (value.isEmpty && index > 0) {
-                          _focusNodes[index - 1].requestFocus();
-                        }
-                      },
-                    ),
-                  ),
-                ),
+                children: List.generate(6, _buildOTPField),
               ),
               const SizedBox(height: 32),
               SizedBox(
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: _isLoading ? null : _verifyOTP,
+                  onPressed: _isLoading || _email == null ? null : _verifyOTP,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: const Color(0xFF6741D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -302,19 +431,22 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
               ),
               const SizedBox(height: 24),
               TextButton(
-                onPressed: _isLoading
+                onPressed: _isLoading || _remainingTime > 0 || _email == null
                     ? null
-                    : () {
-                        _showSuccessSnackBar('New OTP sent to your email');
-                      },
+                    : _resendOTP,
                 style: TextButton.styleFrom(
                   foregroundColor: const Color(0xFF6741D9),
                 ),
-                child: const Text(
-                  'Resend Code',
+                child: Text(
+                  _remainingTime > 0
+                      ? 'Resend Code in ${_remainingTime}s'
+                      : 'Resend Code',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     decoration: TextDecoration.underline,
+                    color: _remainingTime > 0 || _email == null || _isLoading
+                        ? Colors.grey
+                        : const Color(0xFF6741D9),
                   ),
                 ),
               ),
