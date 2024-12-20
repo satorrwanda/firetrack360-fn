@@ -98,7 +98,8 @@ class _RegisterFormState extends State<RegisterForm> {
     try {
       final fullPhoneNumber = '${_selectedCountry.dialCode}${_phoneController.text}';
       
-      final success = await AuthService.registerUser(
+      final authService = AuthService();
+      final success = await authService.registerUser(
         context: context,
         email: _emailController.text.trim(),
         phone: fullPhoneNumber.trim(),

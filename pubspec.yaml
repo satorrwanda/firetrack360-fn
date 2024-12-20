@@ -23,6 +23,8 @@ dependencies:
   otp_text_field_v2: ^1.0.3
   flutter_launcher_icons: ^0.14.2
   flutter_native_splash: ^2.4.3
+  flutter_hooks: ^0.20.5
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:

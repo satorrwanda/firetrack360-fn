@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:firetrack360/ui/widgets/onboarding_buttons.dart';
 import 'package:firetrack360/ui/models/onboarding_content.dart';
-import 'package:firetrack360/ui/widgets/onboarding_item.dart';
-import 'package:firetrack360/ui/widgets/page_indicator.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/onboarding_buttons.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/onboarding_item.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -93,17 +93,98 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: SafeArea(
           child: Column(
             children: [
-              PageIndicator(
-                currentPage: _currentPage,
-                pageCount: _onboardingContents.length,
-                onPageSelect: (index) {
-                  _pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOutCubic,
-                  );
-                },
+              // Enhanced navbar
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.1),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
+                      Icons.local_fire_department,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    Text(
+                      'FireSecure360',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.3),
+                            offset: const Offset(1, 1),
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 32), // Balance the layout
+                  ],
+                ),
               ),
+              // Enhanced sidebar with page indicator
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.2),
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Step ${_currentPage + 1} of ${_onboardingContents.length}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    PageIndicator(
+                      currentPage: _currentPage,
+                      pageCount: _onboardingContents.length,
+                      onPageSelect: (index) {
+                        _pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOutCubic,
+                        );
+                      },
+                      // Removed as per instructions
+                    ),
+                  ],
+                ),
+              ),
+              // Onboarding content page view
               Expanded(
                 child: PageView.builder(
                   controller: _pageController,
@@ -121,6 +202,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   },
                 ),
               ),
+              // Onboarding buttons
               OnboardingButtons(
                 onRegister: _navigateToRegister,
                 onLogin: _navigateToLogin,

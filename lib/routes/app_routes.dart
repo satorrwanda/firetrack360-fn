@@ -1,39 +1,108 @@
-import 'package:firetrack360/ui/screens/account_activation_page.dart';
-import 'package:firetrack360/ui/screens/forget_password_page.dart';
-import 'package:firetrack360/ui/screens/home_page.dart';
-import 'package:firetrack360/ui/screens/login_page.dart';
-import 'package:firetrack360/ui/screens/onboarding_page.dart';
-import 'package:firetrack360/ui/screens/register_page.dart';
-import 'package:firetrack360/ui/screens/unknown_route_page.dart';
-import 'package:firetrack360/ui/screens/verify_login_page.dart';
+// lib/config/routes.dart
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firetrack360/screens/screens.dart';
 
 class AppRoutes {
   const AppRoutes._();
 
+  // Auth Routes
   static const String onboarding = '/';
   static const String login = '/login';
   static const String register = '/register';
   static const String forgetPassword = '/forget-password';
   static const String activateAccount = '/activate-account';
   static const String verifyLogin = '/verify-login';
+  static const String verifyPasswordReset = '/verify-password-reset';
+  static const String resetPassword = '/reset-password';
+
+  // Main App Routes
   static const String home = '/home';
+  static const String analytics = '/analytics';
+  static const String settings = '/settings';
+
+  // Admin Routes
+  static const String customerManagement = '/customer-management';
+  static const String serviceRequests = '/service-requests';
+  static const String inventory = '/inventory';
+  static const String finance = '/finance';
+  static const String aiInsights = '/ai-insights';
+  static const String staffManagement = '/staff-management';
+
+  // Manager Routes
+  static const String technicianManagement = '/technician-management';
+  static const String taskAssignment = '/task-assignment';
+  static const String locationTracking = '/location-tracking';
+  static const String serviceFeedback = '/service-feedback';
+  static const String stockManagement = '/stock-management';
+
+  // Technician Routes
+  static const String myTasks = '/my-tasks';
+  static const String navigation = '/navigation';
+  static const String serviceHistory = '/service-history';
+  static const String offlineMode = '/offline-mode';
+  static const String customerFeedback = '/customer-feedback';
+
+  // Client Routes
+  static const String dashboard = '/dashboard';
+  static const String myExtinguishers = '/my-extinguishers';
+  static const String requestService = '/request-service';
+  static const String payments = '/payments';
+  static const String support = '/support';
+  static const String safetyTips = '/safety-tips';
 
   static const String _onboardingKey = 'isOnboardingDone';
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     return {
+      // Auth routes
       onboarding: (_) => const OnboardingPage(),
       login: (_) => const LoginPage(),
       register: (_) => const RegisterPage(),
       forgetPassword: (_) => const ForgetPasswordPage(),
       activateAccount: (_) => const AccountActivationPage(),
       verifyLogin: (_) => const VerifyLoginPage(),
+      verifyPasswordReset: (_) => const VerifyPasswordResetPage(),
+      resetPassword: (_) => const ResetPasswordPage(),
+
+      // Main app routes
       home: (_) => const HomePage(),
+      analytics: (_) => const AnalyticsScreen(),
+      settings: (_) => const SettingsScreen(),
+
+      // Admin routes
+      customerManagement: (_) => const CustomerManagementScreen(),
+      serviceRequests: (_) => const ServiceRequestsScreen(),
+      inventory: (_) => const InventoryScreen(),
+      finance: (_) => const FinanceScreen(),
+      aiInsights: (_) => const AIInsightsScreen(),
+      staffManagement: (_) => const StaffManagementScreen(),
+
+      // Manager routes
+      technicianManagement: (_) => const TechnicianManagementScreen(),
+      taskAssignment: (_) => const TaskAssignmentScreen(),
+      locationTracking: (_) => const LocationTrackingScreen(),
+      serviceFeedback: (_) => const ServiceFeedbackScreen(),
+      stockManagement: (_) => const StockManagementScreen(),
+
+      // Technician routes
+      myTasks: (_) => const MyTasksScreen(),
+      navigation: (_) => const NavigationScreen(),
+      serviceHistory: (_) => const ServiceHistoryScreen(),
+      offlineMode: (_) => const OfflineModeScreen(),
+      customerFeedback: (_) => const CustomerFeedbackScreen(),
+
+      // Client routes
+      dashboard: (_) => const DashboardScreen(),
+      myExtinguishers: (_) => const MyExtinguishersScreen(),
+      requestService: (_) => const RequestServiceScreen(),
+      payments: (_) => const PaymentsScreen(),
+      support: (_) => const SupportScreen(),
+      safetyTips: (_) => const SafetyTipsScreen(),
     };
   }
 
+  // Navigation helper methods
   static Route<dynamic> unknownRoute(RouteSettings settings) {
     return MaterialPageRoute(
       builder: (_) => const UnknownRoutePage(),
@@ -43,6 +112,14 @@ class AppRoutes {
 
   static void navigateToLogin(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(login);
+  }
+
+  static void navigateToVerifyPasswordReset(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(verifyPasswordReset);
+  }
+
+  static void navigateToResetPassword(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(resetPassword);
   }
 
   static void navigateToRegister(BuildContext context) {
@@ -61,10 +138,6 @@ class AppRoutes {
     Navigator.of(context).pushReplacementNamed(onboarding);
   }
 
-  static Future<void> setOnboardingComplete() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_onboardingKey, true);
-  }
   static void navigateToHome(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(home);
   }
@@ -73,22 +146,9 @@ class AppRoutes {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_onboardingKey) ?? false;
   }
+
   static void navigateToVerifyLogin(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(verifyLogin);
-  }
-
-  static Future<void> checkInitialRoute(BuildContext context) async {
-    try {
-      final isComplete = await isOnboardingComplete();
-      if (isComplete) {
-        navigateToLogin(context);
-      } else {
-        navigateToOnboarding(context);
-      }
-    } catch (e) {
-      debugPrint('Error checking initial route: $e');
-      navigateToOnboarding(context);
-    }
   }
 
   static void resetAndNavigateTo(BuildContext context, String routeName) {
@@ -100,5 +160,171 @@ class AppRoutes {
 
   static void popUntilRoute(BuildContext context, String routeName) {
     Navigator.of(context).popUntil(ModalRoute.withName(routeName));
+  }
+
+  static void navigateToAnalytics(BuildContext context) {
+    Navigator.of(context).pushNamed(analytics);
+  }
+
+  static void navigateToSettings(BuildContext context) {
+    Navigator.of(context).pushNamed(settings);
+  }
+
+  // Admin navigation methods
+  static void navigateToCustomerManagement(BuildContext context) {
+    Navigator.of(context).pushNamed(customerManagement);
+  }
+
+  static void navigateToServiceRequests(BuildContext context) {
+    Navigator.of(context).pushNamed(serviceRequests);
+  }
+
+  static void navigateToInventory(BuildContext context) {
+    Navigator.of(context).pushNamed(inventory);
+  }
+
+  static void navigateToFinance(BuildContext context) {
+    Navigator.of(context).pushNamed(finance);
+  }
+
+  static void navigateToAIInsights(BuildContext context) {
+    Navigator.of(context).pushNamed(aiInsights);
+  }
+
+  static void navigateToStaffManagement(BuildContext context) {
+    Navigator.of(context).pushNamed(staffManagement);
+  }
+
+  // Manager navigation methods
+  static void navigateToTechnicianManagement(BuildContext context) {
+    Navigator.of(context).pushNamed(technicianManagement);
+  }
+
+  static void navigateToTaskAssignment(BuildContext context) {
+    Navigator.of(context).pushNamed(taskAssignment);
+  }
+
+  static void navigateToLocationTracking(BuildContext context) {
+    Navigator.of(context).pushNamed(locationTracking);
+  }
+
+  static void navigateToServiceFeedback(BuildContext context) {
+    Navigator.of(context).pushNamed(serviceFeedback);
+  }
+
+  static void navigateToStockManagement(BuildContext context) {
+    Navigator.of(context).pushNamed(stockManagement);
+  }
+
+  // Technician navigation methods
+  static void navigateToMyTasks(BuildContext context) {
+    Navigator.of(context).pushNamed(myTasks);
+  }
+
+  static void navigateToTechnicianNavigation(BuildContext context) {
+    Navigator.of(context).pushNamed(navigation);
+  }
+
+  static void navigateToServiceHistory(BuildContext context) {
+    Navigator.of(context).pushNamed(serviceHistory);
+  }
+
+  static void navigateToOfflineMode(BuildContext context) {
+    Navigator.of(context).pushNamed(offlineMode);
+  }
+
+  static void navigateToCustomerFeedback(BuildContext context) {
+    Navigator.of(context).pushNamed(customerFeedback);
+  }
+
+  // Client navigation methods
+  static void navigateToDashboard(BuildContext context) {
+    Navigator.of(context).pushNamed(dashboard);
+  }
+
+  static void navigateToMyExtinguishers(BuildContext context) {
+    Navigator.of(context).pushNamed(myExtinguishers);
+  }
+
+  static void navigateToRequestService(BuildContext context) {
+    Navigator.of(context).pushNamed(requestService);
+  }
+
+  static void navigateToPayments(BuildContext context) {
+    Navigator.of(context).pushNamed(payments);
+  }
+
+  static void navigateToSupport(BuildContext context) {
+    Navigator.of(context).pushNamed(support);
+  }
+
+  static void navigateToSafetyTips(BuildContext context) {
+    Navigator.of(context).pushNamed(safetyTips);
+  }
+
+  // Role-based navigation helper
+  static void navigateByRole(
+      BuildContext context, String route, String? userRole) {
+    if (userRole == null) {
+      navigateToLogin(context);
+      return;
+    }
+
+    if (route.startsWith('/admin') && userRole != 'admin' ||
+        route.startsWith('/manager') && userRole != 'manager' ||
+        route.startsWith('/technician') && userRole != 'technician' ||
+        route.startsWith('/client') && userRole != 'client') {
+      Navigator.of(context).pushNamed(route);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const UnauthorizedPage(),
+        ),
+      );
+    }
+  }
+
+  // Navigate with animation
+  static void navigateWithSlideAnimation(
+    BuildContext context,
+    String routeName, {
+    bool replacement = false,
+  }) {
+    final route = PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) {
+        final routes = getRoutes();
+        return routes[routeName]!(context);
+      },
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+        return SlideTransition(position: offsetAnimation, child: child);
+      },
+    );
+
+    if (replacement) {
+      Navigator.of(context).pushReplacement(route);
+    } else {
+      Navigator.of(context).push(route);
+    }
+  }
+  static void navigateTo(BuildContext context, String route) {
+    Navigator.pushNamed(context, route);
+  }
+
+  static void navigateToReplacement(BuildContext context, String route) {
+    Navigator.pushReplacementNamed(context, route);
+  }
+
+  static void navigateAndRemoveUntil(BuildContext context, String route) {
+    Navigator.pushNamedAndRemoveUntil(context, route, (route) => false);
+  }
+
+  static void pop(BuildContext context) {
+    Navigator.pop(context);
   }
 }

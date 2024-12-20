@@ -1,5 +1,5 @@
-import 'package:firetrack360/ui/widgets/register_form.dart';
-import 'package:firetrack360/ui/widgets/register_header.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/register_form.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/register_header.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 

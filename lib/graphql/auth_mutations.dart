@@ -1,4 +1,4 @@
- const String registerMutation = '''
+const String registerMutation = '''
   mutation Register(\$email: String!, \$phone: String!, \$password: String!, \$confirmPassword: String!) {
     register(
       createUserInput: {
@@ -12,7 +12,7 @@
       message
     }
   }
-  '''; 
+  ''';
 
 const String verifyAccountMutation = r'''
     mutation VerifyAccount($email: String!, $otp: String!) {
@@ -34,22 +34,56 @@ const String loginMutation = r'''
     }
   ''';
 
-  const String verifyLoginMutation = r'''
-    mutation VerifyLogin($email: String!, $otp: String!) {
-      verifyLogin(verifyLoginInput: { email: $email, otp: $otp }) {
+const String resendOtpMutation = '''
+  mutation ResendVerificationOtp(\$email: String!) {
+    resendVerificationOtp(email: \$email) {
+      status
+      message
+    }
+  }
+''';
+const String forgetPasswordMutation = '''
+    mutation ForgetPassword(\$userEmail: String!) {
+      forgetPassword(userEmail: \$userEmail) {
         message
         status
-        accessToken
-        refreshToken
       }
     }
   ''';
 
-const resendOtpMutation = '''
-mutation ResendOTP(\$email: String!) {
-  resendOTP(email: \$email) {
-    message
-    status
+const String replaceForgotPasswordMutation = '''
+    mutation ReplaceForgotPassword(
+      \$newPassword: String!
+      \$confirmPassword: String!
+      \$email: String!
+      \$verificationToken: String!
+    ) {
+      replaceForgotPassword(
+        newPasswordInput: {
+          newPassword: \$newPassword
+          confirmPassword: \$confirmPassword
+          email: \$email
+          verificationToken: \$verificationToken
+        }
+      ) {
+        message
+        status
+      }
+    }
+  ''';
+
+const String verifyLoginMutation = '''
+  mutation VerifyLogin(\$email: String!, \$otp: String!) {
+    verifyLogin(
+      verifyLoginInput: {
+        email: \$email,
+        otp: \$otp
+      }
+    ) {
+      message
+      status
+      accessToken
+      refreshToken
+    }
   }
-}
 ''';

@@ -45,8 +45,19 @@ class _LoginFormState extends State<LoginForm> {
       if (loginResult['status'] == 200) {
         if (mounted) {
           _showSuccessSnackBar('Login successful!');
+
+          // Store email and verify storage
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('email', _emailController.text.trim());
+          final email = _emailController.text.trim();
+          await prefs.setString('email', email);
+
+          // Double-check email was stored correctly
+          final storedEmail = prefs.getString('email');
+          if (storedEmail == null || storedEmail != email) {
+            _showErrorSnackBar('Failed to save email. Please try again.');
+            return;
+          }
+
           AppRoutes.navigateToVerifyLogin(context);
         }
       } else {

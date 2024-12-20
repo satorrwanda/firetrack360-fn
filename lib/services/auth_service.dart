@@ -1,10 +1,11 @@
 import 'package:firetrack360/graphql/auth_mutations.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static Future<bool> registerUser({
+  Future<bool> registerUser({
     required BuildContext context,
     required String email,
     required String phone,
@@ -12,7 +13,7 @@ class AuthService {
     required String confirmPassword,
   }) async {
     try {
-       final prefs = await SharedPreferences.getInstance();
+      final prefs = await SharedPreferences.getInstance();
       final client = GraphQLProvider.of(context).value;
       final MutationOptions options = MutationOptions(
         document: gql(registerMutation),
@@ -36,9 +37,10 @@ class AuthService {
       if (data != null && (data['status'] == 200 || data['status'] == 201)) {
         _showSuccessSnackBar(
           context,
-          data['message'] ?? 'Registration successful! Please check your email for verification.',
+          data['message'] ??
+              'Registration successful! Please check your email for verification.',
         );
-        prefs.setString('email',email) ;
+        prefs.setString('email', email);
         return true;
       } else {
         _showErrorSnackBar(
@@ -56,10 +58,39 @@ class AuthService {
     return false;
   }
 
-  static String _handleGraphQLException(OperationException exception) {
+  Future<bool> verifyAccount({
+    required String email,
+    required String otp,
+    required BuildContext context,
+  }) async {
+    try {
+      final GraphQLClient client = GraphQLProvider.of(context).value;
+
+      final MutationOptions options = MutationOptions(
+        document: gql(verifyAccountMutation),
+        variables: {
+          'email': email,
+          'otp': otp,
+        },
+      );
+
+      final QueryResult result = await client.mutate(options);
+
+      if (result.hasException) {
+        return false;
+      }
+
+      final dynamic data = result.data?['verifyAccount'];
+      return data?['status'] == 200;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  String _handleGraphQLException(OperationException exception) {
     if (exception.graphqlErrors.isNotEmpty) {
       final firstError = exception.graphqlErrors.first;
-      
+
       final errorCode = firstError.extensions?['status'] as int?;
       switch (errorCode) {
         case 409:
@@ -80,25 +111,9 @@ class AuthService {
     return 'An error occurred. Please try again.';
   }
 
-  static String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email address';
-    }
-    
-    final emailRegex = RegExp(
-      r"^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$",
-    );
-
-    if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
-    }
-    
-    return null;
-  }
-
-  static void _showSuccessSnackBar(BuildContext context, String message) {
+  void _showSuccessSnackBar(BuildContext context, String message) {
     final theme = Theme.of(context);
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Container(
@@ -155,9 +170,9 @@ class AuthService {
     );
   }
 
-  static void _showErrorSnackBar(BuildContext context, String message) {
+  void _showErrorSnackBar(BuildContext context, String message) {
     final theme = Theme.of(context);
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Container(
@@ -213,7 +228,8 @@ class AuthService {
       ),
     );
   }
-  static Future<bool> loginUser({
+
+  Future<bool> loginUser({
     required BuildContext context,
     required String email,
     required String password,
@@ -258,69 +274,49 @@ class AuthService {
     return false;
   }
 
-
-
-  static Future<bool> verifyLogin({
+  Future<QueryResult<Object?>> verifyLogin({
     required BuildContext context,
     required String email,
     required String otp,
   }) async {
     try {
       final client = GraphQLProvider.of(context).value;
+      print('Email to verify: $email'); // Debugging print
+
       final MutationOptions options = MutationOptions(
         document: gql(verifyLoginMutation),
         variables: {
-          'verifyLoginInput': {
-            'email': email,
-            'otp': otp,
-          }
+          'email': email, // Changed from 'verifyLoginInput'
+          'otp': otp,
         },
       );
 
       final result = await client.mutate(options);
 
       if (result.hasException) {
-        _showErrorSnackBar(context, _handleGraphQLException(result.exception!));
-        return false;
+        return result;
       }
 
-      final data = result.data?['verifyLogin'];
-      if (data != null && (data['status'] == 200 || data['status'] == 201)) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken', data['accessToken']);
-        await prefs.setString('refreshToken', data['refreshToken']);
-        _showSuccessSnackBar(
-          context,
-          data['message'] ?? 'Login verified successfully',
-        );
-        return true;
-      } else {
-        _showErrorSnackBar(
-          context,
-          data?['message'] ?? 'Verification failed. Please try again.',
-        );
-      }
+      return result;
     } catch (e) {
-      _showErrorSnackBar(
-        context,
-        'An unexpected error occurred. Please try again later.',
-      );
-      debugPrint('Verification error: $e');
+      throw Exception('Verification error: $e');
     }
-    return false;
   }
 
-  static Future<bool> resendOTP({
+  Future<bool> resendVerificationOtp({
     required BuildContext context,
     required String email,
   }) async {
     try {
       final client = GraphQLProvider.of(context).value;
+
       final MutationOptions options = MutationOptions(
         document: gql(resendOtpMutation),
         variables: {
           'email': email,
         },
+        fetchPolicy: FetchPolicy.noCache,
+        errorPolicy: ErrorPolicy.all,
       );
 
       final result = await client.mutate(options);
@@ -330,17 +326,18 @@ class AuthService {
         return false;
       }
 
-      final data = result.data?['resendOTP'];
+      final data = result.data?['resendVerificationOtp'];
       if (data != null && (data['status'] == 200 || data['status'] == 201)) {
         _showSuccessSnackBar(
           context,
-          data['message'] ?? 'OTP has been resent to your email.',
+          data['message'] ?? 'Verification code has been resent successfully.',
         );
         return true;
       } else {
         _showErrorSnackBar(
           context,
-          data?['message'] ?? 'Failed to resend OTP. Please try again.',
+          data?['message'] ??
+              'Failed to resend verification code. Please try again.',
         );
       }
     } catch (e) {
@@ -351,6 +348,22 @@ class AuthService {
       debugPrint('Resend OTP error: $e');
     }
     return false;
+  }
+
+  static String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email address';
+    }
+
+    final emailRegex = RegExp(
+      r"^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$",
+    );
+
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
   }
 
   static String? validatePassword(String? value) {
@@ -390,7 +403,8 @@ class AuthService {
       return 'Please enter your phone number';
     }
 
-    if (countryCode == '+250') { // Rwanda
+    if (countryCode == '+250') {
+      // Rwanda
       if (value.length != 9) {
         return 'Rwanda phone numbers must be 9 digits';
       }
@@ -409,7 +423,7 @@ class AuthService {
   }
 
   // Token management
-  static Future<void> clearTokens() async {
+  static Future<void> clearAllTokens() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('accessToken');
     await prefs.remove('refreshToken');
@@ -425,5 +439,90 @@ class AuthService {
   static Future<String?> getAccessToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('accessToken');
+  }
+
+  static const String _accessTokenKey = 'accessToken';
+  static const String _refreshTokenKey = 'refreshToken';
+  static const String _userRoleKey = 'userRole';
+
+  static Future<void> saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      // Save tokens
+      await prefs.setString(_accessTokenKey, accessToken);
+      await prefs.setString(_refreshTokenKey, refreshToken);
+
+      // Decode token and save role
+      final Map<String, dynamic> decodedToken = JwtDecoder.decode(accessToken);
+      print('Decoded Token: $decodedToken'); // Debug print
+
+      // Extract role from token
+      String? role;
+      if (decodedToken.containsKey('role')) {
+        role = decodedToken['role'];
+      } else if (decodedToken.containsKey('roles')) {
+        final roles = decodedToken['roles'];
+        if (roles is List && roles.isNotEmpty) {
+          role = roles[0];
+        }
+      }
+
+      // Save role if found
+      if (role != null) {
+        role = role.toString().toLowerCase();
+        await prefs.setString(_userRoleKey, role);
+        print('Saved Role: $role'); // Debug print
+      } else {
+        print('No role found in token');
+      }
+    } catch (e) {
+      print('Error saving tokens and role: $e');
+      throw Exception('Failed to save authentication data');
+    }
+  }
+
+  static Future<Map<String, dynamic>?> getDecodedToken() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(_accessTokenKey);
+      if (token == null) return null;
+      return JwtDecoder.decode(token);
+    } catch (e) {
+      print('Error decoding token: $e');
+      return null;
+    }
+  }
+
+  static Future<String?> getRole() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString(_userRoleKey);
+    } catch (e) {
+      print('Error getting role: $e');
+      return null;
+    }
+  }
+
+  static Future<bool> isAuthenticated() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(_accessTokenKey);
+      if (token == null) return false;
+      return !JwtDecoder.isExpired(token);
+    } catch (e) {
+      print('Error checking authentication: $e');
+      return false;
+    }
+  }
+
+  static Future<void> clearTokens() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_accessTokenKey);
+    await prefs.remove(_refreshTokenKey);
+    await prefs.remove(_userRoleKey);
   }
 }
