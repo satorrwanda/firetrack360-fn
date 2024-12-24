@@ -15,32 +15,41 @@ class AuthService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final client = GraphQLProvider.of(context).value;
+
+      debugPrint('Starting registration for email: $email');
+
       final MutationOptions options = MutationOptions(
         document: gql(registerMutation),
         variables: {
-          'email': email,
-          'phone': phone,
-          'password': password,
-          'confirmPassword': confirmPassword,
+          'createUserInput': {
+            'email': email,
+            'phone': phone,
+            'password': password,
+            'confirmPassword': confirmPassword,
+          }
         },
       );
 
       final result = await client.mutate(options);
 
       if (result.hasException) {
+        debugPrint('GraphQL Errors: ${result.exception?.graphqlErrors}');
+        debugPrint('Link Error: ${result.exception?.linkException}');
         final error = _handleGraphQLException(result.exception!);
         _showErrorSnackBar(context, error);
         return false;
       }
 
       final data = result.data?['register'];
-      if (data != null && (data['status'] == 200 || data['status'] == 201)) {
+      debugPrint('Received data: $data');
+
+      if (data != null && data['status'] == 2001) {
         _showSuccessSnackBar(
           context,
           data['message'] ??
               'Registration successful! Please check your email for verification.',
         );
-        prefs.setString('email', email);
+        await prefs.setString('email', email);
         return true;
       } else {
         _showErrorSnackBar(
@@ -48,12 +57,13 @@ class AuthService {
           data?['message'] ?? 'Registration failed. Please try again.',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint('Registration error: $e');
+      debugPrint('Stack trace: $stackTrace');
       _showErrorSnackBar(
         context,
         'An unexpected error occurred. Please try again later.',
       );
-      debugPrint('Registration error: $e');
     }
     return false;
   }

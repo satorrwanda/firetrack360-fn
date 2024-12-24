@@ -35,9 +35,11 @@ class _LoginFormState extends State<LoginForm> {
       );
 
       if (result.hasException) {
-        _showErrorSnackBar(
-          result.exception?.graphqlErrors.first.message ?? 'Login failed',
-        );
+        final errorMessage = result.exception?.graphqlErrors.first.message ?? 'Login failed';
+        _showErrorSnackBar(errorMessage);
+        if (errorMessage == 'Please verify your email before logging in') {
+          AppRoutes.navigateToActivateAccount(context);
+        }
         return;
       }
 

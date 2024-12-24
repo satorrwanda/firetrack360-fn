@@ -1,18 +1,11 @@
 const String registerMutation = '''
-  mutation Register(\$email: String!, \$phone: String!, \$password: String!, \$confirmPassword: String!) {
-    register(
-      createUserInput: {
-        email: \$email
-        phone: \$phone
-        password: \$password
-        confirmPassword: \$confirmPassword
-      }
-    ) {
-      status
+  mutation Register(\$createUserInput: RegistrationInput!) {
+    register(createUserInput: \$createUserInput) {
       message
+      status
     }
   }
-  ''';
+''';
 
 const String verifyAccountMutation = r'''
     mutation VerifyAccount($email: String!, $otp: String!) {
