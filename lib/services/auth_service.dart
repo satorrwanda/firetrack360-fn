@@ -1,4 +1,5 @@
 import 'package:firetrack360/graphql/auth_mutations.dart';
+import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -30,7 +31,7 @@ class AuthService {
         },
       );
 
-      final result = await client.mutate(options);
+      final QueryResult result = await client.mutate(options);
 
       if (result.hasException) {
         debugPrint('GraphQL Errors: ${result.exception?.graphqlErrors}');
@@ -43,13 +44,23 @@ class AuthService {
       final data = result.data?['register'];
       debugPrint('Received data: $data');
 
-      if (data != null && data['status'] == 2001) {
+      // Check for HTTP status 201 (CREATED) or message indicating success
+      if (data != null && 
+          (data['status'] == 201 || // HTTP CREATED status
+           data['status'] == 2001 || // Your custom status code if used
+           (data['message']?.toString().toLowerCase().contains('success') ?? false))) {
+        
+        // Store email in SharedPreferences
+        await prefs.setString('email', email);
+        
+        // Show success message
         _showSuccessSnackBar(
           context,
-          data['message'] ??
-              'Registration successful! Please check your email for verification.',
+          data['message'] ?? 'Registration successful! Please verify your email with the OTP sent.',
         );
-        await prefs.setString('email', email);
+        
+       AppRoutes.navigateToActivateAccount(context);
+        
         return true;
       } else {
         _showErrorSnackBar(
