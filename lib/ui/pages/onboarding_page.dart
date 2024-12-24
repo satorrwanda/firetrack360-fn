@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
+  const OnboardingPage({Key? key}) : super(key: key);
 
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
@@ -17,7 +17,7 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  Timer? _timer;
+  Timer? _autoSlideTimer;
 
   final List<OnboardingContent> _onboardingContents = [
     OnboardingContent(
@@ -41,6 +41,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   void initState() {
     super.initState();
     _checkOnboardingStatus();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startAutoSlide();
+    });
   }
 
   void _checkOnboardingStatus() async {
@@ -49,30 +52,37 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (!isOnboardingComplete) {
       AppRoutes.navigateToLogin(context);
     } else {
-      _startAutoSlide();
+      startAutoSlide();
     }
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _autoSlideTimer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
 
-  void _startAutoSlide() {
-    _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
-      if (_currentPage < _onboardingContents.length - 1) {
-        _pageController.nextPage(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOutCubic,
-        );
-      } else {
-        _pageController.animateToPage(
-          0,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOutCubic,
-        );
+  void startAutoSlide() {
+    _autoSlideTimer?.cancel();
+    
+    _autoSlideTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_pageController.hasClients) {
+        final nextPage = (_pageController.page?.toInt() ?? 0) + 1;
+        
+        if (nextPage < _onboardingContents.length) {
+          _pageController.animateToPage(
+            nextPage,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          _pageController.animateToPage(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
       }
     });
   }

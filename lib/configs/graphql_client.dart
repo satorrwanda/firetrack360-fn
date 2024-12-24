@@ -6,19 +6,19 @@ import 'package:http/http.dart' as http;
 
 class GraphQLConfiguration {
   static HttpLink _createHttpLink() {
-    // final String? endpointUrl = dotenv.env['GRAPHQL_ENDPOINT_URL'];
-    // debugPrint('GraphQL Endpoint URL: $endpointUrl'); // Log the URL
-
-    // if (endpointUrl == null || endpointUrl.isEmpty) {
-    //   throw Exception('GRAPHQL_ENDPOINT_URL is not set in .env file');
-    // }
-
+    final String? endpointUrl = dotenv.env['GRAPHQL_ENDPOINT_URL'];
+    debugPrint('GraphQL_ENDPOINT_URL: $endpointUrl'); 
+    
+    if (endpointUrl == null || endpointUrl.isEmpty) {
+      throw Exception('GRAPHQL_ENDPOINT_URL is not set in .env file');
+    }
+    
     return HttpLink(
-      "https://47a7-2c0f-eb68-65d-8900-b8d8-d83b-5c40-5e7.ngrok-free.app/graphql",
+      endpointUrl,
+      httpClient: http.Client(),
       defaultHeaders: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Connection': 'keep-alive',
       },
     );
   }
@@ -28,7 +28,9 @@ class GraphQLConfiguration {
       getToken: () async {
         final String? token = dotenv.env['GRAPHQL_TOKEN'];
         debugPrint('Auth Token Present: ${token != null && token.isNotEmpty}');
-        return token != null && token.isNotEmpty ? 'Bearer $token' : null;
+        return token != null && token.isNotEmpty 
+          ? 'Bearer $token' 
+          : null;
       },
     );
   }
@@ -48,7 +50,7 @@ class GraphQLConfiguration {
   static ValueNotifier<GraphQLClient> initializeClient() {
     try {
       final Link link = _createLink();
-
+      
       final client = GraphQLClient(
         link: link,
         cache: GraphQLCache(store: InMemoryStore()),
@@ -73,12 +75,12 @@ class GraphQLConfiguration {
 
       // Test connection
       _testConnection(client);
-
+      
       return ValueNotifier(client);
     } catch (e, stackTrace) {
       debugPrint('Error initializing GraphQL client: $e');
       debugPrint('Stack trace: $stackTrace');
-
+      
       // Fallback client with basic configuration
       return ValueNotifier(
         GraphQLClient(
@@ -91,12 +93,12 @@ class GraphQLConfiguration {
 
   static Future<void> _testConnection(GraphQLClient client) async {
     try {
-      const testQuery = '''
+      final testQuery = '''
         query {
           __typename
         }
       ''';
-
+      
       final result = await client.query(
         QueryOptions(
           document: gql(testQuery),
@@ -118,17 +120,16 @@ class GraphQLConfiguration {
     if (exception == null) return;
 
     debugPrint('GraphQL Error Details:');
-
+    
     if (exception.linkException != null) {
       debugPrint('Link Exception: ${exception.linkException.toString()}');
-
+      
       if (exception.linkException is NetworkException) {
         final networkException = exception.linkException as NetworkException;
         debugPrint('Network Error Details:');
         debugPrint('- Message: ${networkException.message}');
         debugPrint('- URI: ${networkException.uri}');
-        debugPrint(
-            '- Original Exception: ${networkException.originalException}');
+        debugPrint('- Original Exception: ${networkException.originalException}');
       }
     }
 

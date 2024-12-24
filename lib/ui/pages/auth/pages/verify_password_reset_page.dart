@@ -141,7 +141,7 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
                       final domain = _email.split('@').last;
 
                       return Text(
-                        'Enter the verification code sent to\n$maskedLocal@$domain',
+                        'Enter the verification code sent to\n${maskedLocal}@${domain}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 16,
