@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/custom_bottom_nav.dart';
+import 'package:firetrack360/routes/auth_gateway.dart';
 
 class HomePage extends HookWidget {
   const HomePage({super.key});
@@ -16,16 +17,6 @@ class HomePage extends HookWidget {
     final selectedIndex = useState(0);
     final bottomNavIndex = useState(0);
     final navigator = useNavigation();
-    print(authState.userRole);
-    // Redirect if not authenticated
-    useEffect(() {
-      if (!authState.isLoading && !authState.isAuthenticated) {
-        Future.microtask(() {
-          navigator.navigateAndRemoveUntil(AppRoutes.login);
-        });
-      }
-      return null;
-    }, [authState.isAuthenticated]);
 
     void handleBottomNavTap(int index) {
       bottomNavIndex.value = index;
@@ -37,7 +28,7 @@ class HomePage extends HookWidget {
           navigator.navigateTo(AppRoutes.analytics);
           break;
         case 2:
-          navigator.navigateTo(AppRoutes.settings);
+          navigator.navigateTo(AppRoutes.profile); // Changed from settings to profile
           break;
       }
     }
@@ -72,51 +63,45 @@ class HomePage extends HookWidget {
       }
     }
 
-    if (authState.isLoading) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FireTrack360'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {
-              // Handle notifications
-            },
-          ),
-        ],
-      ),
-      drawer: CustomDrawer(
-        selectedIndex: selectedIndex.value,
-        onIndexSelected: (index) => selectedIndex.value = index,
-        onLogout: handleLogout,
-        userRole: authState.userRole,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Home Page Content'),
-            const SizedBox(height: 16),
-            if (authState.userRole != null)
-              Text('Current Role: ${authState.userRole}'),
-            if (authState.error != null)
-              Text(
-                'Error: ${authState.error}',
-                style: const TextStyle(color: Colors.red),
-              ),
+    return AuthGateway(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('FireTrack360'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications_outlined),
+              onPressed: () {
+                // Handle notifications
+              },
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNav(
-        selectedIndex: bottomNavIndex.value,
-        onIndexSelected: handleBottomNavTap,
+        drawer: CustomDrawer(
+          selectedIndex: selectedIndex.value,
+          onIndexSelected: (index) => selectedIndex.value = index,
+          onLogout: handleLogout,
+          userRole: authState.userRole,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Home Page Content'),
+              const SizedBox(height: 16),
+              if (authState.userRole != null)
+                Text('Current Role: ${authState.userRole}'),
+              if (authState.error != null)
+                Text(
+                  'Error: ${authState.error}',
+                  style: const TextStyle(color: Colors.red),
+                ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: CustomBottomNav(
+          selectedIndex: bottomNavIndex.value,
+          onIndexSelected: handleBottomNavTap,
+        ),
       ),
     );
   }

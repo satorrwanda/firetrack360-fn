@@ -295,8 +295,8 @@ class CustomDrawer extends StatelessWidget {
       case 'dashboard':
         AppRoutes.navigateToHome(context);
         break;
-      case 'settings':
-        AppRoutes.navigateToSettings(context);
+      case 'profile':
+        AppRoutes.navigateToProfile(context);
         break;
       default:
         AppRoutes.navigateToHome(context);

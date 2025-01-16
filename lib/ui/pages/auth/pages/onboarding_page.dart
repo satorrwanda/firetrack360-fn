@@ -14,7 +14,7 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  final PageController _pageController = PageController();
+  late final PageController _pageController;
   int _currentPage = 0;
   Timer? _timer;
 
@@ -39,18 +39,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   void initState() {
     super.initState();
+    _pageController = PageController();
     _startAutoSlide();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _stopAutoSlide();
     _pageController.dispose();
     super.dispose();
   }
 
+  void _stopAutoSlide() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
   void _startAutoSlide() {
+    _stopAutoSlide(); // Cancel any existing timer
     _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (!mounted || !_pageController.hasClients) return;
+      
       if (_currentPage < _onboardingContents.length - 1) {
         _pageController.nextPage(
           duration: const Duration(milliseconds: 500),
@@ -67,10 +76,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   void _navigateToRegister() {
+    _stopAutoSlide(); // Stop auto-slide before navigation
     AppRoutes.navigateToRegister(context);
   }
 
   void _navigateToLogin() {
+    _stopAutoSlide(); // Stop auto-slide before navigation
     AppRoutes.navigateToLogin(context);
   }
 
@@ -98,11 +109,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 currentPage: _currentPage,
                 pageCount: _onboardingContents.length,
                 onPageSelect: (index) {
-                  _pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOutCubic,
-                  );
+                  if (_pageController.hasClients) {
+                    _pageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOutCubic,
+                    );
+                  }
                 },
               ),
               Expanded(
@@ -110,9 +123,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   controller: _pageController,
                   itemCount: _onboardingContents.length,
                   onPageChanged: (int page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
+                    if (mounted) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    }
                   },
                   itemBuilder: (context, index) {
                     return OnboardingItem(
