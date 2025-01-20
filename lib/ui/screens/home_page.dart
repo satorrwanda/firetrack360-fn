@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firetrack360/services/auth_service.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -305,5 +306,89 @@ class _HomePageState extends State<HomePage> {
       default:
         return const _HomeContent();
     }
+  }
+}
+
+class _HomeContent extends StatelessWidget {
+  const _HomeContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.home,
+              size: 64,
+              color: Colors.deepPurple.shade300,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Home Content',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AnalyticsContent extends StatelessWidget {
+  const _AnalyticsContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.analytics,
+              size: 64,
+              color: Colors.deepPurple.shade300,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Analytics Content',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SettingsContent extends StatelessWidget {
+  const _SettingsContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.settings,
+              size: 64,
+              color: Colors.deepPurple.shade300,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Settings Content',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:firetrack360/routes/app_routes.dart';
+import 'package:firetrack360/services/auth_service.dart';
+import 'package:firetrack360/ui/pages/home/widgets/custom_drawer_header.dart';
 import 'package:firetrack360/ui/pages/home/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'drawer_item.dart';
@@ -7,21 +9,16 @@ class CustomDrawer extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onIndexSelected;
   final VoidCallback onLogout;
-  final String? userRole;
-  final String? photoUrl;
 
   const CustomDrawer({
     super.key,
     required this.selectedIndex,
     required this.onIndexSelected,
     required this.onLogout,
-    this.userRole,
-    this.photoUrl,
   });
 
   @override
   Widget build(BuildContext context) {
-    print('User Role: $userRole');
     return Drawer(
       elevation: 0,
       child: Container(
@@ -44,8 +41,7 @@ class CustomDrawer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _buildHeader(context),
-            const SizedBox(height: 16),
+            const CustomDrawerHeader(),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -81,112 +77,39 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person_outline,
-                      size: 35,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: const Icon(
-                      Icons.edit,
-                      size: 12,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'John Doe',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  if (userRole != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        userRole!.toUpperCase(),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildMenuItems(BuildContext context) {
-    final menuItems = _getMenuItemsByRole(context);
-    print('Menu Items: $menuItems'); // Debug print for menu items
-    return Column(
-      children: [
-        _buildMenuSection('MENU', menuItems.take(1).toList()),
-        if (menuItems.length > 1) ...[
-          const SizedBox(height: 24),
-          _buildMenuSection(
-            'FEATURES',
-            menuItems.skip(1).take(menuItems.length - 2).toList(),
-          ),
-          const SizedBox(height: 24),
-          _buildMenuSection(
-              'OTHER', menuItems.skip(menuItems.length - 1).toList()),
-        ],
-      ],
+    return FutureBuilder<String?>(
+      future: AuthService.getRole(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          );
+        }
+
+        final userRole = snapshot.data;
+        final menuItems = _getMenuItemsByRole(context, userRole);
+        
+        return Column(
+          children: [
+            _buildMenuSection('MENU', menuItems.take(1).toList()),
+            if (menuItems.length > 1) ...[
+              const SizedBox(height: 24),
+              _buildMenuSection(
+                'FEATURES',
+                menuItems.skip(1).take(menuItems.length - 2).toList(),
+              ),
+              const SizedBox(height: 24),
+              _buildMenuSection(
+                'OTHER',
+                menuItems.skip(menuItems.length - 1).toList(),
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 
@@ -303,7 +226,7 @@ class CustomDrawer extends StatelessWidget {
     }
   }
 
-  List<DrawerItem> _getMenuItemsByRole(BuildContext context) {
+  List<DrawerItem> _getMenuItemsByRole(BuildContext context, String? userRole) {
     List<DrawerItem> menuItems = [
       DrawerItem(
         icon: Icons.dashboard_outlined,
@@ -330,7 +253,7 @@ class CustomDrawer extends StatelessWidget {
         break;
     }
 
-    menuItems.add(_settingsMenuItem(menuItems.length));
+    menuItems.add(_settingsMenuItem(context, menuItems.length));
     return menuItems;
   }
 
@@ -352,18 +275,16 @@ class CustomDrawer extends StatelessWidget {
       ];
 
   List<DrawerItem> _managerMenuItems(BuildContext context) => [
-        _createMenuItem(
-            context, Icons.analytics_outlined, Icons.analytics, 'Dashboard', 1),
         _createMenuItem(context, Icons.people_outline, Icons.people,
-            'Technician Management', 2),
+            'Technician Management', 1),
         _createMenuItem(context, Icons.assignment_outlined, Icons.assignment,
-            'Task Assignment', 3),
+            'Task Assignment', 2),
         _createMenuItem(
-            context, Icons.map_outlined, Icons.map, 'Location Tracking', 4),
+            context, Icons.map_outlined, Icons.map, 'Location Tracking', 3),
         _createMenuItem(context, Icons.reviews_outlined, Icons.reviews,
-            'Service Feedback', 5),
+            'Service Feedback', 4),
         _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
-            'Stock Management', 6),
+            'Stock Management', 5),
       ];
 
   List<DrawerItem> _technicianMenuItems(BuildContext context) => [
@@ -398,25 +319,22 @@ class CustomDrawer extends StatelessWidget {
       ];
 
   DrawerItem _createMenuItem(BuildContext context, IconData icon,
-      IconData selectedIcon, String title, int index) {
-    return DrawerItem(
-      icon: icon,
-      selectedIcon: selectedIcon,
-      title: title,
-      index: index,
-      isSelected: selectedIndex == index,
-      onTap: () => _handleNavigation(context, title, index),
-    );
-  }
+          IconData selectedIcon, String title, int index) =>
+      DrawerItem(
+        icon: icon,
+        selectedIcon: selectedIcon,
+        title: title,
+        index: index,
+        isSelected: selectedIndex == index,
+        onTap: () => _handleNavigation(context, title, index),
+      );
 
-  DrawerItem _settingsMenuItem(int index) {
-    return DrawerItem(
-      icon: Icons.settings_outlined,
-      selectedIcon: Icons.settings,
-      title: 'Settings',
-      index: index,
-      isSelected: selectedIndex == index,
-      onTap: () => onIndexSelected(index),
-    );
-  }
+  DrawerItem _settingsMenuItem(BuildContext context, int index) => DrawerItem(
+        icon: Icons.settings_outlined,
+        selectedIcon: Icons.settings,
+        title: 'Settings',
+        index: index,
+        isSelected: selectedIndex == index,
+        onTap: () => _handleNavigation(context, 'Settings', index),
+      );
 }
