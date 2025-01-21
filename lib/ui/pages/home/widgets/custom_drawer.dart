@@ -305,7 +305,7 @@ class CustomDrawer extends StatelessWidget {
         _createMenuItem(context, Icons.dashboard_outlined, Icons.dashboard,
             'My Dashboard', 1),
         _createMenuItem(context, Icons.fire_extinguisher,
-            Icons.fire_extinguisher, 'My Extinguishers', 2),
+            Icons.fire_extinguisher, 'Extinguishers', 2),
         _createMenuItem(context, Icons.history_outlined, Icons.history,
             'Service History', 3),
         _createMenuItem(context, Icons.request_page_outlined,

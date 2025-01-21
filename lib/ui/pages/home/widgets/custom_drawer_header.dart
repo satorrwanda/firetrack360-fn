@@ -38,7 +38,8 @@ class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
           ),
           builder: (result, {refetch, fetchMore}) {
             if (result.isLoading) return _buildLoading();
-            if (result.hasException) return _buildError(result.exception.toString());
+            if (result.hasException)
+              return _buildError(result.exception.toString());
             final profile = result.data?['getProfileByUserId'];
             if (profile == null) return _buildError('Profile not found');
             return _buildProfile(profile);
@@ -49,26 +50,38 @@ class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
   }
 
   Widget _buildProfile(Map<String, dynamic> profile) {
-    final fullName = '${profile['firstName']} ${profile['lastName']}';
-    final email = profile['user']['email'];
+    final fullName =
+        '${profile['firstName'] ?? ''} ${profile['lastName'] ?? ''}'.trim();
+    final email = profile['user']?['email'] ?? 'Email not available';
     final profilePicture = profile['profilePictureUrl'];
-    final role = profile['user']['role'];
+    final role = profile['user']?['role'];
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Profile Picture
           CircleAvatar(
             radius: 40,
-            backgroundImage: profilePicture != null ? _getImage(profilePicture) as ImageProvider : null,
+            backgroundImage: profilePicture != null
+                ? _getImage(profilePicture) as ImageProvider
+                : null,
             child: profilePicture == null
-                ? const Icon(Icons.person_outline, size: 40, color: Colors.white)
+                ? const Icon(Icons.person_outline,
+                    size: 40, color: Colors.white)
                 : null,
           ),
           const SizedBox(height: 16),
-          Text(fullName, style: _textStyle(fontSize: 18, isBold: true)),
+          Text(
+            fullName.isNotEmpty ? fullName : '___ ___',
+            style: _textStyle(fontSize: 18, isBold: true),
+          ),
+
+          // Email
           Text(email, style: _textStyle()),
+
+          // Role Badge
           if (role != null) _buildRoleBadge(role),
         ],
       ),
@@ -85,7 +98,8 @@ class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
         child: Text(role.toUpperCase(), style: _textStyle(fontSize: 12)),
       );
 
-  TextStyle _textStyle({double fontSize = 14, bool isBold = false}) => TextStyle(
+  TextStyle _textStyle({double fontSize = 14, bool isBold = false}) =>
+      TextStyle(
         color: Colors.white,
         fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
         fontSize: fontSize,
@@ -101,7 +115,8 @@ class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
           children: [
             const Icon(Icons.error_outline, size: 40, color: Colors.white),
             const SizedBox(height: 16),
-            Text('Error loading profile', style: _textStyle(fontSize: 16, isBold: true)),
+            Text('Error loading profile',
+                style: _textStyle(fontSize: 16, isBold: true)),
             Text(message, style: _textStyle(fontSize: 12)),
           ],
         ),

@@ -275,7 +275,8 @@ class _ProfileContent extends StatelessWidget {
               final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => UpdateProfileScreen(currentProfile: profile),
+                  builder: (context) =>
+                      UpdateProfileScreen(currentProfile: profile),
                 ),
               );
               if (result == true) {
@@ -332,7 +333,7 @@ class _ProfileContent extends StatelessWidget {
                         hasExistingImage: profile['profilePictureUrl'] != null,
                         onImageSelected: (cloudinaryUrl) async {
                           final client = GraphQLProvider.of(context).value;
-                          
+
                           try {
                             final result = await client.mutate(
                               MutationOptions(
@@ -355,7 +356,8 @@ class _ProfileContent extends StatelessWidget {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Failed to update profile image: $e'),
+                                  content: Text(
+                                      'Failed to update profile image: $e'),
                                   backgroundColor: Colors.red,
                                 ),
                               );
@@ -364,15 +366,16 @@ class _ProfileContent extends StatelessWidget {
                         },
                         onRemoveImage: profile['profilePictureUrl'] != null
                             ? () async {
-                                final client = GraphQLProvider.of(context).value;
-                                
+                                final client =
+                                    GraphQLProvider.of(context).value;
+
                                 try {
                                   final result = await client.mutate(
                                     MutationOptions(
                                       document: gql(updateProfileMutation),
                                       variables: {
                                         'id': profile['id'],
-                                        'profileInput': {
+                                        'profileInput': const {
                                           'profilePictureUrl': null,
                                         },
                                       },
@@ -380,7 +383,8 @@ class _ProfileContent extends StatelessWidget {
                                   );
 
                                   if (result.hasException) {
-                                    throw Exception(result.exception.toString());
+                                    throw Exception(
+                                        result.exception.toString());
                                   }
 
                                   onRefresh?.call();
@@ -388,7 +392,8 @@ class _ProfileContent extends StatelessWidget {
                                   if (context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text('Failed to remove profile image: $e'),
+                                        content: Text(
+                                            'Failed to remove profile image: $e'),
                                         backgroundColor: Colors.red,
                                       ),
                                     );
@@ -417,7 +422,10 @@ class _ProfileContent extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            '${profile['firstName']} ${profile['lastName']}',
+            profile['firstName'] != null || profile['lastName'] != null
+                ? '${profile['firstName'] ?? ''} ${profile['lastName'] ?? ''}'
+                    .trim()
+                : '____   _____',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           if (profile['bio'] != null) ...[
@@ -490,7 +498,8 @@ class _ProfileContent extends StatelessWidget {
           _buildInfoTile(
             icon: Icons.cake,
             title: 'Date of Birth',
-            value: _formatDate(DateTime.tryParse(profile['dateOfBirth']) ?? DateTime.now()),
+            value: _formatDate(
+                DateTime.tryParse(profile['dateOfBirth']) ?? DateTime.now()),
           ),
       ],
     );

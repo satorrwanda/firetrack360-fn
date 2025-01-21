@@ -27,6 +27,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   image_picker: ^1.0.7
   intl: ^0.20.1
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:
