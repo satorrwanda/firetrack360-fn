@@ -32,15 +32,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     // Initialize controllers with current values
-    _firstNameController = TextEditingController(text: widget.currentProfile['firstName'] ?? '');
-    _lastNameController = TextEditingController(text: widget.currentProfile['lastName'] ?? '');
-    _addressController = TextEditingController(text: widget.currentProfile['address'] ?? '');
-    _cityController = TextEditingController(text: widget.currentProfile['city'] ?? '');
-    _stateController = TextEditingController(text: widget.currentProfile['state'] ?? '');
-    _zipCodeController = TextEditingController(text: widget.currentProfile['zipCode'] ?? '');
-    _bioController = TextEditingController(text: widget.currentProfile['bio'] ?? '');
+    _firstNameController =
+        TextEditingController(text: widget.currentProfile['firstName'] ?? '');
+    _lastNameController =
+        TextEditingController(text: widget.currentProfile['lastName'] ?? '');
+    _addressController =
+        TextEditingController(text: widget.currentProfile['address'] ?? '');
+    _cityController =
+        TextEditingController(text: widget.currentProfile['city'] ?? '');
+    _stateController =
+        TextEditingController(text: widget.currentProfile['state'] ?? '');
+    _zipCodeController =
+        TextEditingController(text: widget.currentProfile['zipCode'] ?? '');
+    _bioController =
+        TextEditingController(text: widget.currentProfile['bio'] ?? '');
 
     // Store original values
     _originalValues = {
@@ -54,19 +61,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     };
 
     // Add listeners to track changes
-    _firstNameController.addListener(() => _onFieldChanged('firstName', _firstNameController));
-    _lastNameController.addListener(() => _onFieldChanged('lastName', _lastNameController));
-    _addressController.addListener(() => _onFieldChanged('address', _addressController));
+    _firstNameController
+        .addListener(() => _onFieldChanged('firstName', _firstNameController));
+    _lastNameController
+        .addListener(() => _onFieldChanged('lastName', _lastNameController));
+    _addressController
+        .addListener(() => _onFieldChanged('address', _addressController));
     _cityController.addListener(() => _onFieldChanged('city', _cityController));
-    _stateController.addListener(() => _onFieldChanged('state', _stateController));
-    _zipCodeController.addListener(() => _onFieldChanged('zipCode', _zipCodeController));
+    _stateController
+        .addListener(() => _onFieldChanged('state', _stateController));
+    _zipCodeController
+        .addListener(() => _onFieldChanged('zipCode', _zipCodeController));
     _bioController.addListener(() => _onFieldChanged('bio', _bioController));
   }
 
   void _onFieldChanged(String fieldName, TextEditingController controller) {
     final newValue = controller.text;
     final originalValue = _originalValues[fieldName] ?? '';
-    
+
     if (newValue != originalValue) {
       setState(() {
         _modifiedFields[fieldName] = true;
@@ -92,11 +104,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   String? _validateField(String? value, String fieldName) {
     if (!_modifiedFields.containsKey(fieldName)) return null;
-    
+
     if (value == null || value.isEmpty) {
       return 'This field cannot be empty';
     }
-    
+
     if (fieldName == 'zipCode') {
       if (!RegExp(r'^\d{5}(-\d{4})?$').hasMatch(value)) {
         return 'Please enter a valid ZIP code';
@@ -107,7 +119,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> _handleSubmit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     if (_modifiedFields.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('No changes made')),
@@ -119,7 +131,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     try {
       final client = GraphQLProvider.of(context).value;
-      
+
       final Map<String, dynamic> updateInput = {};
       _modifiedFields.forEach((field, _) {
         switch (field) {
@@ -172,10 +184,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             _originalValues[field] = updateInput[field];
           });
           _modifiedFields.clear();
-          
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(responseData['message'] ?? 'Profile updated successfully'),
+              content: Text(
+                  responseData['message'] ?? 'Profile updated successfully'),
               backgroundColor: Colors.green,
             ),
           );
@@ -231,7 +244,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           else
             IconButton(
               icon: const Icon(Icons.save),
-              onPressed: _modifiedFields.isEmpty ? null : () => _handleSubmit(context),
+              onPressed:
+                  _modifiedFields.isEmpty ? null : () => _handleSubmit(context),
               tooltip: 'Save Changes',
             ),
         ],
@@ -246,18 +260,32 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               children: [
                 TextFormField(
                   controller: _firstNameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'First Name',
                     prefixIcon: Icon(Icons.person_outline),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2.0,
+                      ),
+                    ),
                   ),
                   validator: (value) => _validateField(value, 'firstName'),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _lastNameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Last Name',
                     prefixIcon: Icon(Icons.person_outline),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2.0,
+                      ),
+                    ),
                   ),
                   validator: (value) => _validateField(value, 'lastName'),
                 ),
@@ -268,18 +296,32 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               children: [
                 TextFormField(
                   controller: _addressController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Street Address',
                     prefixIcon: Icon(Icons.location_on),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2.0,
+                      ),
+                    ),
                   ),
                   validator: (value) => _validateField(value, 'address'),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _cityController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'City',
                     prefixIcon: Icon(Icons.location_city),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2.0,
+                      ),
+                    ),
                   ),
                   validator: (value) => _validateField(value, 'city'),
                 ),
@@ -289,9 +331,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Expanded(
                       child: TextFormField(
                         controller: _stateController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'State',
                           prefixIcon: Icon(Icons.map),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            ),
+                          ),
                         ),
                         validator: (value) => _validateField(value, 'state'),
                       ),
@@ -300,9 +349,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Expanded(
                       child: TextFormField(
                         controller: _zipCodeController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'ZIP Code',
                           prefixIcon: Icon(Icons.pin),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                              width: 2.0,
+                            ),
+                          ),
                         ),
                         keyboardType: TextInputType.number,
                         validator: (value) => _validateField(value, 'zipCode'),
@@ -317,10 +373,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               children: [
                 TextFormField(
                   controller: _bioController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Bio',
                     prefixIcon: Icon(Icons.edit),
                     alignLabelWithHint: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2.0,
+                      ),
+                    ),
                   ),
                   maxLines: 3,
                   maxLength: 500,
@@ -347,6 +410,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
                 ),
           ),
         ),

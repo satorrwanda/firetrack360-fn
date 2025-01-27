@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:firetrack360/graphql/mutations/profile_mutations.dart';
-import 'package:firetrack360/graphql/mutations/profile_query.dart';
+import 'package:firetrack360/graphql/queries/profile_query.dart';
 import 'package:firetrack360/services/auth_service.dart';
 import 'package:firetrack360/ui/pages/home/widgets/ProfileImagePickerModal.dart';
+import 'package:firetrack360/ui/pages/home/widgets/custom_app_bar.dart';
 import 'package:firetrack360/ui/pages/profile/UpdateProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
+
 
 class ProfileScreen extends HookWidget {
   const ProfileScreen({super.key});
@@ -160,6 +162,7 @@ class _ProfileContent extends StatelessWidget {
   }
 
   Widget buildProfileImage(String? imageUrl) {
+    // If no image URL is provided, show the avatar
     if (imageUrl == null) {
       return const CircleAvatar(
         radius: 50,
@@ -173,21 +176,36 @@ class _ProfileContent extends StatelessWidget {
       return CircleAvatar(
         radius: 50,
         backgroundImage: FileImage(file),
-        onBackgroundImageError: (exception, stackTrace) {
-          debugPrint('Error loading profile image: $exception');
-        },
-        child: const Icon(Icons.person, size: 50),
+        child: Container(
+          decoration: const BoxDecoration(shape: BoxShape.circle),
+          child: ClipOval(
+            child: Image.file(
+              file,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.person, size: 50);
+              },
+            ),
+          ),
+        ),
       );
     }
 
     // Handle network images (from Cloudinary or other sources)
     return CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(imageUrl),
-      onBackgroundImageError: (exception, stackTrace) {
-        debugPrint('Error loading profile image: $exception');
-      },
-      child: const Icon(Icons.person, size: 50),
+      child: Container(
+        decoration: const BoxDecoration(shape: BoxShape.circle),
+        child: ClipOval(
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.person, size: 50);
+            },
+          ),
+        ),
+      ),
     );
   }
 
@@ -266,9 +284,34 @@ class _ProfileContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: CustomAppBar(
         title: const Text('Profile'),
         actions: [
+          IconButton(
+            icon: Stack(
+              children: [
+                const Icon(Icons.notifications_outlined),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            onPressed: () {
+              // Handle notifications
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {

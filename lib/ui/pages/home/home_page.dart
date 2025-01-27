@@ -7,22 +7,20 @@ import 'package:firetrack360/routes/auth_gateway.dart';
 import 'package:firetrack360/services/auth_service.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/custom_bottom_nav.dart';
+import 'widgets/custom_app_bar.dart';
 
 class HomePage extends HookWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Hooks
     final authState = useAuth();
     final selectedIndex = useState(0);
     final bottomNavIndex = useState(0);
     final navigator = useNavigation();
 
-    // Navigation Handlers
     void handleBottomNavTap(int index) {
       bottomNavIndex.value = index;
-      
       switch (index) {
         case 0:
           navigator.navigateAndReplace(AppRoutes.home);
@@ -36,27 +34,44 @@ class HomePage extends HookWidget {
       }
     }
 
-    // Authentication Handlers
-    Future<void> handleLogout() async {
-      final confirmed = await _showLogoutConfirmationDialog(context);
-
-      if (confirmed == true) {
-        await AuthService.clearTokens();
-        if (context.mounted) {
-          navigator.navigateAndRemoveUntil(AppRoutes.login);
-        }
-      }
-    }
-
     return AuthGateway(
       child: Scaffold(
-        appBar: _buildAppBar(),
+        appBar: CustomAppBar(
+          actions: [
+            IconButton(
+              icon: Stack(
+                children: [
+                  const Icon(Icons.notifications_outlined),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                // Handle notifications
+              },
+            ),
+            const SizedBox(width: 8),
+          ],
+          title: const Text('Home'),
+        ),
         drawer: CustomDrawer(
           selectedIndex: selectedIndex.value,
           onIndexSelected: (index) => selectedIndex.value = index,
-          onLogout: handleLogout,
         ),
-        body: _buildBody(authState),
+        body: _buildBody(context, authState),
         bottomNavigationBar: CustomBottomNav(
           selectedIndex: bottomNavIndex.value,
           onIndexSelected: handleBottomNavTap,
@@ -65,60 +80,168 @@ class HomePage extends HookWidget {
     );
   }
 
-  // UI Components
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      title: const Text(
-        'FireTrack360',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.5,
+  Widget _buildBody(BuildContext context, AuthState authState) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.blue[50]!,
+            Colors.white,
+          ],
         ),
       ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.notifications_outlined),
-          onPressed: () {
-            // Handle notifications
-          },
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildWelcomeSection(context),
+              const SizedBox(height: 24),
+              _buildQuickActions(context),
+              const SizedBox(height: 24),
+              _buildStatusSection(context, authState),
+              if (authState.error != null) _buildErrorMessage(authState.error!),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeSection(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Welcome Back',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Manage your fire safety equipment efficiently',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.grey[600],
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuickActions(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Quick Actions',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            _buildActionCard(
+              context,
+              icon: Icons.add_circle_outline,
+              title: 'New Inspection',
+              color: Colors.blue,
+            ),
+            const SizedBox(width: 12),
+            _buildActionCard(
+              context,
+              icon: Icons.inventory_2_outlined,
+              title: 'View Inventory',
+              color: Colors.green,
+            ),
+          ],
         ),
       ],
     );
   }
 
-  Widget _buildBody(AuthState authState) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Home Page Content',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+  Widget _buildActionCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Color color,
+  }) {
+    return Expanded(
+      child: Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Icon(icon, size: 32, color: color),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            if (authState.userRole != null)
-              Text(
-                'Current Role: ${authState.userRole}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-            if (authState.error != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  'Error: ${authState.error}',
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 14,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusSection(BuildContext context, AuthState authState) {
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Status',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
-                ),
+            ),
+            const SizedBox(height: 12),
+            if (authState.userRole != null)
+              Row(
+                children: [
+                  Icon(
+                    Icons.verified_user_outlined,
+                    size: 20,
+                    color: Colors.green[700],
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Role: ${authState.userRole}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey[700],
+                        ),
+                  ),
+                ],
               ),
           ],
         ),
@@ -126,29 +249,29 @@ class HomePage extends HookWidget {
     );
   }
 
-  // Dialogs
-  Future<bool?> _showLogoutConfirmationDialog(BuildContext context) {
-    return showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirm Logout'),
-        content: const Text('Are you sure you want to logout?'),
+  Widget _buildErrorMessage(String error) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Card(
+        color: Colors.red[50],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(Icons.error_outline, color: Colors.red[700]),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  error,
+                  style: TextStyle(color: Colors.red[700]),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
-            child: const Text('Logout'),
-          ),
-        ],
+        ),
       ),
     );
   }

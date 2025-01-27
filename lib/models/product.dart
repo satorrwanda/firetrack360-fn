@@ -7,7 +7,7 @@ class Product {
   final String description;
   final double price;
   final int stockQuantity;
-  final String? imageUrl;
+  final String imageUrl;
 
   Product({
     required this.id,
@@ -18,20 +18,20 @@ class Product {
     required this.description,
     required this.price,
     required this.stockQuantity,
-    this.imageUrl,
+    required this.imageUrl,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      serialNumber: json['serialNumber'] as String,
-      type: json['type'] as String,
-      size: json['size'] as String,
-      description: json['description'] as String,
-      price: (json['price'] as num).toDouble(),
-      stockQuantity: json['stockQuantity'] as int,
-      imageUrl: json['imageUrl'] as String?,
+      id: json['id'],
+      name: json['name'],
+      serialNumber: json['serialNumber'],
+      type: json['type'],
+      size: json['size'],
+      description: json['description'],
+      price: json['price'],
+      stockQuantity: json['stockQuantity'],
+      imageUrl: json['imageUrl'],
     );
   }
 }

@@ -1,4 +1,6 @@
+import 'package:firetrack360/ui/pages/home/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:firetrack360/ui/pages/home/widgets/custom_bottom_nav.dart';
 
 class AnalyticsScreen extends StatelessWidget {
   const AnalyticsScreen({super.key});
@@ -6,71 +8,31 @@ class AnalyticsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+        title: const Text('Analytics Dashboard'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: () {
+              // Handle filter action
+            },
+          ),
+        ],
+      ),
+      drawer: CustomDrawer(
+        selectedIndex: 1,
+        onIndexSelected: (index) {
+          // Handle navigation based on index
+        },
+      ),
       body: CustomScrollView(
         slivers: [
-          // Custom App Bar with gradient and back button
-          SliverAppBar(
-            expandedHeight: 120,
-            floating: true,
-            pinned: true,
-            leading: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-            ),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      const Color(0xFF6741D9),
-                      Colors.deepPurple.shade800,
-                      Colors.deepPurple.shade900,
-                    ],
-                  ),
-                ),
-              ),
-              title: const Text(
-                'Analytics Dashboard',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              centerTitle: false,
-              titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
-            ),
-            actions: [
-              Container(
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  color: Colors.white,
-                  onPressed: () {
-                    // Handle filter action
-                  },
-                ),
-              ),
-            ],
-          ),
-
           // Content
           SliverToBoxAdapter(
             child: Padding(
@@ -82,7 +44,6 @@ class AnalyticsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   _buildMetricsGrid(),
                   const SizedBox(height: 24),
-                  
                   _buildSectionTitle(context, 'Detailed Analysis'),
                   const SizedBox(height: 16),
                   _buildChartCard(
@@ -110,6 +71,13 @@ class AnalyticsScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex:
+            1, // Assuming Analytics is the second item in the bottom nav
+        onIndexSelected: (index) {
+          // Handle navigation based on index
+        },
       ),
     );
   }
@@ -173,8 +141,8 @@ class AnalyticsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
+            color: Colors.grey.withOpacity(0.15),
+            blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
@@ -182,12 +150,12 @@ class AnalyticsScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: color, size: 32),
+          Icon(icon, color: color, size: 36),
           const SizedBox(height: 12),
           Text(
             value,
             style: const TextStyle(
-              fontSize: 24,
+              fontSize: 26,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -196,7 +164,7 @@ class AnalyticsScreen extends StatelessWidget {
             title,
             style: TextStyle(
               color: Colors.grey[600],
-              fontSize: 12,
+              fontSize: 14,
             ),
             textAlign: TextAlign.center,
           ),
@@ -219,7 +187,7 @@ class AnalyticsScreen extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
+            blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
@@ -245,7 +213,7 @@ class AnalyticsScreen extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -253,7 +221,7 @@ class AnalyticsScreen extends StatelessWidget {
                       subtitle,
                       style: TextStyle(
                         color: Colors.grey[600],
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ],

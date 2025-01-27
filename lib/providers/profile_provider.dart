@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/graphql/mutations/profile_mutations.dart';
-import 'package:firetrack360/graphql/mutations/profile_query.dart';
+import 'package:firetrack360/graphql/queries/profile_query.dart';
 import 'package:firetrack360/services/auth_service.dart';
 
 class ProfileProvider with ChangeNotifier {
@@ -14,6 +14,7 @@ class ProfileProvider with ChangeNotifier {
   String get error => _error;
 
   Future<void> fetchProfile(GraphQLClient client) async {
+    
     try {
       _isLoading = true;
       notifyListeners();

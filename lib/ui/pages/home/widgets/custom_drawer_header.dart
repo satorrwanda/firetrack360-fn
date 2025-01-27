@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/services/auth_service.dart';
-import 'package:firetrack360/graphql/mutations/profile_query.dart';
+import 'package:firetrack360/graphql/queries/profile_query.dart';
 
 class CustomDrawerHeader extends StatefulWidget {
   const CustomDrawerHeader({super.key});

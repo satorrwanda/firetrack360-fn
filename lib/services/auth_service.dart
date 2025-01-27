@@ -45,22 +45,23 @@ class AuthService {
       debugPrint('Received data: $data');
 
       // Check for HTTP status 201 (CREATED) or message indicating success
-      if (data != null && 
+      if (data != null &&
           (data['status'] == 201 || // HTTP CREATED status
-           data['status'] == 2001 || // Your custom status code if used
-           (data['message']?.toString().toLowerCase().contains('success') ?? false))) {
-        
+              data['status'] == 2001 || // Your custom status code if used
+              (data['message']?.toString().toLowerCase().contains('success') ??
+                  false))) {
         // Store email in SharedPreferences
         await prefs.setString('email', email);
-        
+
         // Show success message
         _showSuccessSnackBar(
           context,
-          data['message'] ?? 'Registration successful! Please verify your email with the OTP sent.',
+          data['message'] ??
+              'Registration successful! Please verify your email with the OTP sent.',
         );
-        
-       AppRoutes.navigateToActivateAccount(context);
-        
+
+        AppRoutes.navigateToActivateAccount(context);
+
         return true;
       } else {
         _showErrorSnackBar(
@@ -295,7 +296,7 @@ class AuthService {
     return false;
   }
 
-Future<QueryResult<Object?>> verifyLogin({
+  Future<QueryResult<Object?>> verifyLogin({
     required BuildContext context,
     required String email,
     required String otp,
@@ -329,7 +330,7 @@ Future<QueryResult<Object?>> verifyLogin({
         if (accessToken != null && refreshToken != null) {
           // Debug print the token before decoding
           debugPrint('Access Token received: $accessToken');
-          
+
           // Decode and print token contents
           final decodedToken = JwtDecoder.decode(accessToken);
           debugPrint('Decoded token contents: $decodedToken');
@@ -492,57 +493,64 @@ Future<QueryResult<Object?>> verifyLogin({
     return prefs.getString('accessToken');
   }
 
+  static Future<void> logout() async {
+    await clearAllTokens();
+    debugPrint('Logged out successfully');
+  }
+
   static const String _accessTokenKey = 'accessToken';
   static const String _refreshTokenKey = 'refreshToken';
   static const String _userRoleKey = 'userRole';
   static const String _userIdKey = 'userId';
 
- static Future<void> saveTokens({
-  required String accessToken,
-  required String refreshToken,
-}) async {
-  try {
-    final prefs = await SharedPreferences.getInstance();
+  static Future<void> saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
 
-    // Save tokens
-    await prefs.setString(_accessTokenKey, accessToken);
-    await prefs.setString(_refreshTokenKey, refreshToken);
+      // Save tokens
+      await prefs.setString(_accessTokenKey, accessToken);
+      await prefs.setString(_refreshTokenKey, refreshToken);
 
-    // Decode access token for role
-    final Map<String, dynamic> decodedAccessToken = JwtDecoder.decode(accessToken);
-    debugPrint('Decoded Access Token: $decodedAccessToken');
+      // Decode access token for role
+      final Map<String, dynamic> decodedAccessToken =
+          JwtDecoder.decode(accessToken);
+      debugPrint('Decoded Access Token: $decodedAccessToken');
 
-    // Decode refresh token for user ID
-    final Map<String, dynamic> decodedRefreshToken = JwtDecoder.decode(refreshToken);
-    debugPrint('Decoded Refresh Token: $decodedRefreshToken');
+      // Decode refresh token for user ID
+      final Map<String, dynamic> decodedRefreshToken =
+          JwtDecoder.decode(refreshToken);
+      debugPrint('Decoded Refresh Token: $decodedRefreshToken');
 
-    // Extract role from access token
-    if (decodedAccessToken.containsKey('role')) {
-      final role = decodedAccessToken['role'].toString().toLowerCase();
-      await prefs.setString(_userRoleKey, role);
-      debugPrint('Saved Role: $role');
+      // Extract role from access token
+      if (decodedAccessToken.containsKey('role')) {
+        final role = decodedAccessToken['role'].toString().toLowerCase();
+        await prefs.setString(_userRoleKey, role);
+        debugPrint('Saved Role: $role');
+      }
+
+      // Extract ID from refresh token
+      if (decodedRefreshToken.containsKey('id')) {
+        final id = decodedRefreshToken['id'].toString();
+        await prefs.setString(_userIdKey, id);
+        debugPrint('Saved ID from refresh token: $id');
+      } else {
+        debugPrint('No ID found in refresh token');
+      }
+
+      // Verify saved data
+      final savedId = await prefs.getString(_userIdKey);
+      final savedRole = await prefs.getString(_userRoleKey);
+      debugPrint('Verification - Saved ID: $savedId, Saved Role: $savedRole');
+    } catch (e, stackTrace) {
+      debugPrint('Error saving tokens: $e');
+      debugPrint('Stack trace: $stackTrace');
+      throw Exception('Failed to save authentication data');
     }
-
-    // Extract ID from refresh token
-    if (decodedRefreshToken.containsKey('id')) {
-      final id = decodedRefreshToken['id'].toString();
-      await prefs.setString(_userIdKey, id);
-      debugPrint('Saved ID from refresh token: $id');
-    } else {
-      debugPrint('No ID found in refresh token');
-    }
-
-    // Verify saved data
-    final savedId = await prefs.getString(_userIdKey);
-    final savedRole = await prefs.getString(_userRoleKey);
-    debugPrint('Verification - Saved ID: $savedId, Saved Role: $savedRole');
-
-  } catch (e, stackTrace) {
-    debugPrint('Error saving tokens: $e');
-    debugPrint('Stack trace: $stackTrace');
-    throw Exception('Failed to save authentication data');
   }
-}
+
   static Future<Map<String, dynamic>?> getDecodedToken() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -588,5 +596,4 @@ Future<QueryResult<Object?>> verifyLogin({
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_userIdKey);
   }
-
 }

@@ -1,7 +1,6 @@
 // lib/pages/home_page.dart
 import 'package:flutter/material.dart';
-import 'package:firetrack360/services/auth_service.dart';
-
+import 'package:firetrack360/services/auth_ui_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,39 +12,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  Future<void> _handleLogout() async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirm Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true && mounted) {
-      await AuthService.clearTokens();
-      if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-      }
-    }
-  }
 
   Widget _buildDrawer() {
     return Drawer(
@@ -150,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                onTap: _handleLogout,
+                onTap: () => AuthUiService.handleLogout(context),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'routes/app_routes.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum Environment { development, production }
 
@@ -143,30 +144,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GraphQLProvider(
-      client: client,
-      child: MaterialApp(
-        title: 'FireSecure360',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          useMaterial3: true, // Enable Material 3
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.red,
-            brightness: Brightness.light,
+    return ProviderScope(
+      child: GraphQLProvider(
+        client: client,
+        child: MaterialApp(
+          title: 'FireSecure360',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            useMaterial3: true, // Enable Material 3
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.red,
+              brightness: Brightness.light,
+            ),
           ),
-        ),
-        darkTheme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.red,
-            brightness: Brightness.dark,
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.red,
+              brightness: Brightness.dark,
+            ),
           ),
+          debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
+          routes: AppRoutes.getRoutes(),
+          initialRoute: initialRoute,
+          onUnknownRoute: AppRoutes.unknownRoute,
         ),
-        debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
-        routes: AppRoutes.getRoutes(),
-        initialRoute: initialRoute,
-        onUnknownRoute: AppRoutes.unknownRoute,
       ),
     );
   }

@@ -8,13 +8,11 @@ import 'drawer_item.dart';
 class CustomDrawer extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onIndexSelected;
-  final VoidCallback onLogout;
 
   const CustomDrawer({
     super.key,
     required this.selectedIndex,
     required this.onIndexSelected,
-    required this.onLogout,
   });
 
   @override
@@ -66,7 +64,38 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    LogoutButton(onLogout: onLogout),
+                    LogoutButton(onLogout: () async {
+                      final shouldLogout = await showDialog<bool>(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Confirm Logout'),
+                            content:
+                                const Text('Are you sure you want to logout?'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () =>
+                                    Navigator.of(context).pop(false),
+                              ),
+                              TextButton(
+                                child: const Text('Logout'),
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      if (shouldLogout != null && shouldLogout) {
+                        AuthService.clearAllTokens();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          AppRoutes.login,
+                          (Route<dynamic> route) => false,
+                        );
+                      }
+                    }),
                   ],
                 ),
               ),
@@ -91,7 +120,7 @@ class CustomDrawer extends StatelessWidget {
 
         final userRole = snapshot.data;
         final menuItems = _getMenuItemsByRole(context, userRole);
-        
+
         return Column(
           children: [
             _buildMenuSection('MENU', menuItems.take(1).toList()),
