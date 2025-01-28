@@ -29,6 +29,7 @@ jobs:
           flutter build ios --release --no-codesign
 
       - name: Upload iOS Release
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: ios-release

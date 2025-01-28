@@ -2,7 +2,7 @@ import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/forget_password_header.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import '../../../../graphql/auth_mutations.dart';
+import '../../../../graphql/mutations/auth_mutations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgetPasswordPage extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:firetrack360/graphql/auth_mutations.dart';
+import 'package:firetrack360/graphql/mutations/auth_mutations.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -45,22 +45,23 @@ class AuthService {
       debugPrint('Received data: $data');
 
       // Check for HTTP status 201 (CREATED) or message indicating success
-      if (data != null && 
+      if (data != null &&
           (data['status'] == 201 || // HTTP CREATED status
-           data['status'] == 2001 || // Your custom status code if used
-           (data['message']?.toString().toLowerCase().contains('success') ?? false))) {
-        
+              data['status'] == 2001 || // Your custom status code if used
+              (data['message']?.toString().toLowerCase().contains('success') ??
+                  false))) {
         // Store email in SharedPreferences
         await prefs.setString('email', email);
-        
+
         // Show success message
         _showSuccessSnackBar(
           context,
-          data['message'] ?? 'Registration successful! Please verify your email with the OTP sent.',
+          data['message'] ??
+              'Registration successful! Please verify your email with the OTP sent.',
         );
-        
-       AppRoutes.navigateToActivateAccount(context);
-        
+
+        AppRoutes.navigateToActivateAccount(context);
+
         return true;
       } else {
         _showErrorSnackBar(
@@ -302,12 +303,12 @@ class AuthService {
   }) async {
     try {
       final client = GraphQLProvider.of(context).value;
-      print('Email to verify: $email'); // Debugging print
+      debugPrint('Verifying login for email: $email');
 
       final MutationOptions options = MutationOptions(
         document: gql(verifyLoginMutation),
         variables: {
-          'email': email, // Changed from 'verifyLoginInput'
+          'email': email,
           'otp': otp,
         },
       );
@@ -315,11 +316,41 @@ class AuthService {
       final result = await client.mutate(options);
 
       if (result.hasException) {
+        debugPrint('Verification error: ${result.exception}');
         return result;
       }
 
+      final data = result.data?['verifyLogin'];
+      debugPrint('Verification response data: $data');
+
+      if (data != null) {
+        final accessToken = data['accessToken'] as String?;
+        final refreshToken = data['refreshToken'] as String?;
+
+        if (accessToken != null && refreshToken != null) {
+          // Debug print the token before decoding
+          debugPrint('Access Token received: $accessToken');
+
+          // Decode and print token contents
+          final decodedToken = JwtDecoder.decode(accessToken);
+          debugPrint('Decoded token contents: $decodedToken');
+
+          // Save tokens - this will extract and save the ID
+          await AuthService.saveTokens(
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          );
+
+          // Verify the ID was saved
+          final savedId = await AuthService.getUserId();
+          debugPrint('Verified saved User ID: $savedId');
+        }
+      }
+
       return result;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint('Verification error: $e');
+      debugPrint('Stack trace: $stackTrace');
       throw Exception('Verification error: $e');
     }
   }
@@ -462,9 +493,15 @@ class AuthService {
     return prefs.getString('accessToken');
   }
 
+  static Future<void> logout() async {
+    await clearAllTokens();
+    debugPrint('Logged out successfully');
+  }
+
   static const String _accessTokenKey = 'accessToken';
   static const String _refreshTokenKey = 'refreshToken';
   static const String _userRoleKey = 'userRole';
+  static const String _userIdKey = 'userId';
 
   static Future<void> saveTokens({
     required String accessToken,
@@ -477,31 +514,39 @@ class AuthService {
       await prefs.setString(_accessTokenKey, accessToken);
       await prefs.setString(_refreshTokenKey, refreshToken);
 
-      // Decode token and save role
-      final Map<String, dynamic> decodedToken = JwtDecoder.decode(accessToken);
-      print('Decoded Token: $decodedToken'); // Debug print
+      // Decode access token for role
+      final Map<String, dynamic> decodedAccessToken =
+          JwtDecoder.decode(accessToken);
+      debugPrint('Decoded Access Token: $decodedAccessToken');
 
-      // Extract role from token
-      String? role;
-      if (decodedToken.containsKey('role')) {
-        role = decodedToken['role'];
-      } else if (decodedToken.containsKey('roles')) {
-        final roles = decodedToken['roles'];
-        if (roles is List && roles.isNotEmpty) {
-          role = roles[0];
-        }
-      }
+      // Decode refresh token for user ID
+      final Map<String, dynamic> decodedRefreshToken =
+          JwtDecoder.decode(refreshToken);
+      debugPrint('Decoded Refresh Token: $decodedRefreshToken');
 
-      // Save role if found
-      if (role != null) {
-        role = role.toString().toLowerCase();
+      // Extract role from access token
+      if (decodedAccessToken.containsKey('role')) {
+        final role = decodedAccessToken['role'].toString().toLowerCase();
         await prefs.setString(_userRoleKey, role);
-        print('Saved Role: $role'); // Debug print
-      } else {
-        print('No role found in token');
+        debugPrint('Saved Role: $role');
       }
-    } catch (e) {
-      print('Error saving tokens and role: $e');
+
+      // Extract ID from refresh token
+      if (decodedRefreshToken.containsKey('id')) {
+        final id = decodedRefreshToken['id'].toString();
+        await prefs.setString(_userIdKey, id);
+        debugPrint('Saved ID from refresh token: $id');
+      } else {
+        debugPrint('No ID found in refresh token');
+      }
+
+      // Verify saved data
+      final savedId = await prefs.getString(_userIdKey);
+      final savedRole = await prefs.getString(_userRoleKey);
+      debugPrint('Verification - Saved ID: $savedId, Saved Role: $savedRole');
+    } catch (e, stackTrace) {
+      debugPrint('Error saving tokens: $e');
+      debugPrint('Stack trace: $stackTrace');
       throw Exception('Failed to save authentication data');
     }
   }
@@ -513,7 +558,7 @@ class AuthService {
       if (token == null) return null;
       return JwtDecoder.decode(token);
     } catch (e) {
-      print('Error decoding token: $e');
+      debugPrint('Error decoding token: $e');
       return null;
     }
   }
@@ -523,7 +568,7 @@ class AuthService {
       final prefs = await SharedPreferences.getInstance();
       return prefs.getString(_userRoleKey);
     } catch (e) {
-      print('Error getting role: $e');
+      debugPrint('Error getting role: $e');
       return null;
     }
   }
@@ -535,7 +580,7 @@ class AuthService {
       if (token == null) return false;
       return !JwtDecoder.isExpired(token);
     } catch (e) {
-      print('Error checking authentication: $e');
+      debugPrint('Error checking authentication: $e');
       return false;
     }
   }
@@ -545,5 +590,10 @@ class AuthService {
     await prefs.remove(_accessTokenKey);
     await prefs.remove(_refreshTokenKey);
     await prefs.remove(_userRoleKey);
+  }
+
+  static Future<String?> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_userIdKey);
   }
 }

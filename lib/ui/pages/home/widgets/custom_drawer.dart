@@ -1,4 +1,6 @@
 import 'package:firetrack360/routes/app_routes.dart';
+import 'package:firetrack360/services/auth_service.dart';
+import 'package:firetrack360/ui/pages/home/widgets/custom_drawer_header.dart';
 import 'package:firetrack360/ui/pages/home/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'drawer_item.dart';
@@ -6,22 +8,40 @@ import 'drawer_item.dart';
 class CustomDrawer extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onIndexSelected;
-  final VoidCallback onLogout;
-  final String? userRole;
-  final String? photoUrl;
 
   const CustomDrawer({
     super.key,
     required this.selectedIndex,
     required this.onIndexSelected,
-    required this.onLogout,
-    this.userRole,
-    this.photoUrl,
   });
+
+  static const String analytics = 'Analytics';
+  static const String customers = 'Customers';
+  static const String service = 'Service';
+  static const String inventory = 'Inventory';
+  static const String finance = 'Finance';
+  static const String aiInsights = 'AI Insights';
+  static const String staff = 'Staff';
+  static const String technician = 'Technician';
+  static const String task = 'Task';
+  static const String location = 'Location';
+  static const String stock = 'Stock';
+  static const String tasks = 'Tasks';
+  static const String navigation = 'Navigation';
+  static const String offlineMode = 'Offline Mode';
+  static const String customerFeedback = 'Customer Feedback';
+  static const String dashboard = 'Dashboard';
+  static const String extinguishers = 'Extinguishers';
+  static const String requestService = 'Request Service';
+  static const String payments = 'Payments & Billing';
+  static const String support = 'Support';
+  static const String safetyTips = 'Safety Tips';
+  static const String home = 'Home';
+  static const String profile = 'Profile';
+  static const String settings = 'Settings';
 
   @override
   Widget build(BuildContext context) {
-    print('User Role: $userRole');
     return Drawer(
       elevation: 0,
       child: Container(
@@ -44,8 +64,7 @@ class CustomDrawer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _buildHeader(context),
-            const SizedBox(height: 16),
+            const CustomDrawerHeader(),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -70,7 +89,38 @@ class CustomDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    LogoutButton(onLogout: onLogout),
+                    LogoutButton(onLogout: () async {
+                      final shouldLogout = await showDialog<bool>(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Confirm Logout'),
+                            content:
+                                const Text('Are you sure you want to logout?'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Cancel'),
+                                onPressed: () =>
+                                    Navigator.of(context).pop(false),
+                              ),
+                              TextButton(
+                                child: const Text('Logout'),
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      if (shouldLogout != null && shouldLogout) {
+                        AuthService.clearAllTokens();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          AppRoutes.login,
+                          (Route<dynamic> route) => false,
+                        );
+                      }
+                    }),
                   ],
                 ),
               ),
@@ -81,112 +131,39 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person_outline,
-                      size: 35,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: const Icon(
-                      Icons.edit,
-                      size: 12,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'John Doe',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  if (userRole != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        userRole!.toUpperCase(),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildMenuItems(BuildContext context) {
-    final menuItems = _getMenuItemsByRole(context);
-    print('Menu Items: $menuItems'); // Debug print for menu items
-    return Column(
-      children: [
-        _buildMenuSection('MENU', menuItems.take(1).toList()),
-        if (menuItems.length > 1) ...[
-          const SizedBox(height: 24),
-          _buildMenuSection(
-            'FEATURES',
-            menuItems.skip(1).take(menuItems.length - 2).toList(),
-          ),
-          const SizedBox(height: 24),
-          _buildMenuSection(
-              'OTHER', menuItems.skip(menuItems.length - 1).toList()),
-        ],
-      ],
+    return FutureBuilder<String?>(
+      future: AuthService.getRole(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          );
+        }
+
+        final userRole = snapshot.data;
+        final menuItems = _getMenuItemsByRole(context, userRole);
+
+        return Column(
+          children: [
+            _buildMenuSection('MENU', menuItems.take(1).toList()),
+            if (menuItems.length > 1) ...[
+              const SizedBox(height: 24),
+              _buildMenuSection(
+                'FEATURES',
+                menuItems.skip(1).take(menuItems.length - 2).toList(),
+              ),
+              const SizedBox(height: 24),
+              _buildMenuSection(
+                'OTHER',
+                menuItems.skip(menuItems.length - 1).toList(),
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 
@@ -213,89 +190,89 @@ class CustomDrawer extends StatelessWidget {
 
   void _handleNavigation(BuildContext context, String title, int index) {
     onIndexSelected(index);
-    switch (title.toLowerCase()) {
+    switch (title) {
       // Admin routes
-      case 'analytics & reports':
+      case analytics:
         AppRoutes.navigateToAnalytics(context);
         break;
-      case 'customer management':
+      case customers:
         AppRoutes.navigateToCustomerManagement(context);
         break;
-      case 'service requests':
+      case service:
         AppRoutes.navigateToServiceRequests(context);
         break;
-      case 'inventory':
+      case inventory:
         AppRoutes.navigateToInventory(context);
         break;
-      case 'finance':
+      case finance:
         AppRoutes.navigateToFinance(context);
         break;
-      case 'ai insights':
+      case aiInsights:
         AppRoutes.navigateToAIInsights(context);
         break;
-      case 'staff management':
+      case staff:
         AppRoutes.navigateToStaffManagement(context);
         break;
 
       // Manager routes
-      case 'technician management':
+      case technician:
         AppRoutes.navigateToTechnicianManagement(context);
         break;
-      case 'task assignment':
+      case task:
         AppRoutes.navigateToTaskAssignment(context);
         break;
-      case 'location tracking':
+      case location:
         AppRoutes.navigateToLocationTracking(context);
         break;
-      case 'service feedback':
-        AppRoutes.navigateToServiceFeedback(context);
-        break;
-      case 'stock management':
+      case stock:
         AppRoutes.navigateToStockManagement(context);
         break;
 
       // Technician routes
-      case 'my tasks':
+      case tasks:
         AppRoutes.navigateToMyTasks(context);
         break;
-      case 'navigation':
+      case navigation:
         AppRoutes.navigateToTechnicianNavigation(context);
         break;
-      case 'service history':
+      case service:
         AppRoutes.navigateToServiceHistory(context);
         break;
-      case 'offline mode':
+      case offlineMode:
         AppRoutes.navigateToOfflineMode(context);
         break;
-      case 'customer feedback':
+      case customerFeedback:
         AppRoutes.navigateToCustomerFeedback(context);
         break;
 
       // Client routes
-      case 'my dashboard':
+      case dashboard:
         AppRoutes.navigateToDashboard(context);
         break;
-      case 'my extinguishers':
+      case extinguishers:
         AppRoutes.navigateToMyExtinguishers(context);
         break;
-      case 'request service':
+      case requestService:
         AppRoutes.navigateToRequestService(context);
         break;
-      case 'payments & billing':
+      case payments:
         AppRoutes.navigateToPayments(context);
         break;
-      case 'support':
+      case support:
         AppRoutes.navigateToSupport(context);
         break;
-      case 'safety tips':
+      case safetyTips:
         AppRoutes.navigateToSafetyTips(context);
         break;
 
       // Common routes
-      case 'dashboard':
+      case home:
         AppRoutes.navigateToHome(context);
         break;
-      case 'settings':
+      case profile:
+        AppRoutes.navigateToProfile(context);
+        break;
+      case settings:
         AppRoutes.navigateToSettings(context);
         break;
       default:
@@ -303,15 +280,15 @@ class CustomDrawer extends StatelessWidget {
     }
   }
 
-  List<DrawerItem> _getMenuItemsByRole(BuildContext context) {
+  List<DrawerItem> _getMenuItemsByRole(BuildContext context, String? userRole) {
     List<DrawerItem> menuItems = [
       DrawerItem(
         icon: Icons.dashboard_outlined,
         selectedIcon: Icons.dashboard,
-        title: 'Dashboard',
+        title: dashboard,
         index: 0,
         isSelected: selectedIndex == 0,
-        onTap: () => _handleNavigation(context, 'Dashboard', 0),
+        onTap: () => AppRoutes.navigateToDashboard(context),
       ),
     ];
 
@@ -330,93 +307,82 @@ class CustomDrawer extends StatelessWidget {
         break;
     }
 
-    menuItems.add(_settingsMenuItem(menuItems.length));
+    menuItems.add(_settingsMenuItem(context, menuItems.length));
     return menuItems;
   }
 
   List<DrawerItem> _adminMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.analytics_outlined, Icons.analytics,
-            'Analytics & Reports', 1),
-        _createMenuItem(context, Icons.group_outlined, Icons.group,
-            'Customer Management', 2),
-        _createMenuItem(context, Icons.assignment_outlined, Icons.assignment,
-            'Service Requests', 3),
-        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
-            'Inventory', 4),
         _createMenuItem(
-            context, Icons.payments_outlined, Icons.payments, 'Finance', 5),
-        _createMenuItem(context, Icons.analytics_outlined, Icons.analytics,
-            'AI Insights', 6),
+            context, Icons.analytics_outlined, Icons.analytics, analytics, 1),
+        _createMenuItem(
+            context, Icons.group_outlined, Icons.group, customers, 2),
+        _createMenuItem(
+            context, Icons.assignment_outlined, Icons.assignment, service, 3),
+        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
+            inventory, 4),
+        _createMenuItem(
+            context, Icons.payments_outlined, Icons.payments, finance, 5),
+        _createMenuItem(
+            context, Icons.analytics_outlined, Icons.analytics, aiInsights, 6),
         _createMenuItem(context, Icons.supervisor_account_outlined,
-            Icons.supervisor_account, 'Staff Management', 7),
+            Icons.supervisor_account, staff, 7),
       ];
 
   List<DrawerItem> _managerMenuItems(BuildContext context) => [
         _createMenuItem(
-            context, Icons.analytics_outlined, Icons.analytics, 'Dashboard', 1),
-        _createMenuItem(context, Icons.people_outline, Icons.people,
-            'Technician Management', 2),
-        _createMenuItem(context, Icons.assignment_outlined, Icons.assignment,
-            'Task Assignment', 3),
+            context, Icons.people_outline, Icons.people, technician, 1),
         _createMenuItem(
-            context, Icons.map_outlined, Icons.map, 'Location Tracking', 4),
-        _createMenuItem(context, Icons.reviews_outlined, Icons.reviews,
-            'Service Feedback', 5),
-        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
-            'Stock Management', 6),
+            context, Icons.assignment_outlined, Icons.assignment, task, 2),
+        _createMenuItem(context, Icons.map_outlined, Icons.map, location, 3),
+        _createMenuItem(
+            context, Icons.inventory_2_outlined, Icons.inventory_2, stock, 4),
       ];
 
   List<DrawerItem> _technicianMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.work_outline, Icons.work, 'My Tasks', 1),
-        _createMenuItem(context, Icons.qr_code_scanner_outlined,
-            Icons.qr_code_scanner, 'Scan QR', 2),
+        _createMenuItem(context, Icons.work_outline, Icons.work, tasks, 1),
+        _createMenuItem(context, Icons.map_outlined, Icons.map, navigation, 2),
         _createMenuItem(
-            context, Icons.map_outlined, Icons.map, 'Navigation', 3),
-        _createMenuItem(context, Icons.history_outlined, Icons.history,
-            'Service History', 4),
+            context, Icons.history_outlined, Icons.history, service, 3),
         _createMenuItem(context, Icons.offline_bolt_outlined,
-            Icons.offline_bolt, 'Offline Mode', 5),
+            Icons.offline_bolt, offlineMode, 4),
         _createMenuItem(context, Icons.rate_review_outlined, Icons.rate_review,
-            'Customer Feedback', 6),
+            customerFeedback, 5),
       ];
 
   List<DrawerItem> _clientMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.dashboard_outlined, Icons.dashboard,
-            'My Dashboard', 1),
-        _createMenuItem(context, Icons.fire_extinguisher,
-            Icons.fire_extinguisher, 'My Extinguishers', 2),
-        _createMenuItem(context, Icons.history_outlined, Icons.history,
-            'Service History', 3),
-        _createMenuItem(context, Icons.request_page_outlined,
-            Icons.request_page, 'Request Service', 4),
-        _createMenuItem(context, Icons.payment_outlined, Icons.payment,
-            'Payments & Billing', 5),
         _createMenuItem(
-            context, Icons.support_outlined, Icons.support, 'Support', 6),
+            context, Icons.dashboard_outlined, Icons.dashboard, dashboard, 1),
+        _createMenuItem(context, Icons.fire_extinguisher,
+            Icons.fire_extinguisher, extinguishers, 2),
+        _createMenuItem(
+            context, Icons.history_outlined, Icons.history, service, 3),
+        _createMenuItem(context, Icons.request_page_outlined,
+            Icons.request_page, requestService, 4),
+        _createMenuItem(
+            context, Icons.payment_outlined, Icons.payment, payments, 5),
+        _createMenuItem(
+            context, Icons.support_outlined, Icons.support, support, 6),
         _createMenuItem(context, Icons.safety_check_outlined,
-            Icons.safety_check, 'Safety Tips', 7),
+            Icons.safety_check, safetyTips, 7),
       ];
 
   DrawerItem _createMenuItem(BuildContext context, IconData icon,
-      IconData selectedIcon, String title, int index) {
-    return DrawerItem(
-      icon: icon,
-      selectedIcon: selectedIcon,
-      title: title,
-      index: index,
-      isSelected: selectedIndex == index,
-      onTap: () => _handleNavigation(context, title, index),
-    );
-  }
+          IconData selectedIcon, String title, int index) =>
+      DrawerItem(
+        icon: icon,
+        selectedIcon: selectedIcon,
+        title: title,
+        index: index,
+        isSelected: selectedIndex == index,
+        onTap: () => _handleNavigation(context, title, index),
+      );
 
-  DrawerItem _settingsMenuItem(int index) {
-    return DrawerItem(
-      icon: Icons.settings_outlined,
-      selectedIcon: Icons.settings,
-      title: 'Settings',
-      index: index,
-      isSelected: selectedIndex == index,
-      onTap: () => onIndexSelected(index),
-    );
-  }
+  DrawerItem _settingsMenuItem(BuildContext context, int index) => DrawerItem(
+        icon: Icons.settings_outlined,
+        selectedIcon: Icons.settings,
+        title: 'Settings',
+        index: index,
+        isSelected: selectedIndex == index,
+        onTap: () => AppRoutes.navigateToSettings(context),
+      );
 }

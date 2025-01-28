@@ -1,3 +1,4 @@
+import 'package:firetrack360/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -24,16 +25,16 @@ class GraphQLConfiguration {
   }
 
   static AuthLink _createAuthLink() {
-    return AuthLink(
-      getToken: () async {
-        final String? token = dotenv.env['GRAPHQL_TOKEN'];
-        debugPrint('Auth Token Present: ${token != null && token.isNotEmpty}');
-        return token != null && token.isNotEmpty 
-          ? 'Bearer $token' 
-          : null;
-      },
-    );
-  }
+  return AuthLink(
+    getToken: () async {
+      final token = await AuthService.getAccessToken(); 
+      debugPrint('Auth Token Present: ${token != null && token.isNotEmpty}');
+      return token != null && token.isNotEmpty 
+        ? 'Bearer $token' 
+        : null;
+    },
+  );
+}
 
   static Link _createLink() {
     try {
@@ -93,7 +94,7 @@ class GraphQLConfiguration {
 
   static Future<void> _testConnection(GraphQLClient client) async {
     try {
-      final testQuery = '''
+      const testQuery = '''
         query {
           __typename
         }

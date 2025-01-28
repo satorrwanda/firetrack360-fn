@@ -1,4 +1,4 @@
-import 'package:firetrack360/graphql/auth_mutations.dart';
+import 'package:firetrack360/graphql/mutations/auth_mutations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class ActivationService {

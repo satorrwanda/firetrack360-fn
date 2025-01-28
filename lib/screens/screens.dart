@@ -13,7 +13,7 @@ export 'package:firetrack360/ui/pages/auth/pages/verify_password_reset_page.dart
 // Main pages
 export 'package:firetrack360/ui/pages/home/home_page.dart';
 export 'package:firetrack360/ui/pages/home/screens/analytics_screen.dart';
-export 'package:firetrack360/ui/pages/home/screens/settings_screen.dart';
+export 'package:firetrack360/ui/pages/home/screens/profile_screen.dart';
 export 'package:firetrack360/ui/pages/home/screens/base_screen.dart';
 
 // Admin screens
@@ -45,3 +45,6 @@ export 'package:firetrack360/ui/pages/client/request_service_screen.dart';
 export 'package:firetrack360/ui/pages/client/payments_screen.dart';
 export 'package:firetrack360/ui/pages/client/support_screen.dart';
 export 'package:firetrack360/ui/pages/client/safety_tips_screen.dart';
+
+// Common screens
+export 'package:firetrack360/ui/pages/home/screens/settings_screen.dart';

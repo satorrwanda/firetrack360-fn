@@ -1,4 +1,3 @@
-// lib/config/routes.dart
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firetrack360/screens/screens.dart';
@@ -19,7 +18,7 @@ class AppRoutes {
   // Main App Routes
   static const String home = '/home';
   static const String analytics = '/analytics';
-  static const String settings = '/settings';
+  static const String profile = '/profile';
 
   // Admin Routes
   static const String customerManagement = '/customer-management';
@@ -51,6 +50,9 @@ class AppRoutes {
   static const String support = '/support';
   static const String safetyTips = '/safety-tips';
 
+  // common routes
+  static const String settings = '/settings';
+
   static const String _onboardingKey = 'isOnboardingDone';
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
@@ -68,7 +70,7 @@ class AppRoutes {
       // Main app routes
       home: (_) => const HomePage(),
       analytics: (_) => const AnalyticsScreen(),
-      settings: (_) => const SettingsScreen(),
+      profile: (_) => ProfileScreen(),
 
       // Admin routes
       customerManagement: (_) => const CustomerManagementScreen(),
@@ -99,6 +101,9 @@ class AppRoutes {
       payments: (_) => const PaymentsScreen(),
       support: (_) => const SupportScreen(),
       safetyTips: (_) => const SafetyTipsScreen(),
+
+      // common routes
+      settings: (_) => const SettingsScreen(),
     };
   }
 
@@ -110,6 +115,7 @@ class AppRoutes {
     );
   }
 
+  // Auth navigation methods
   static void navigateToLogin(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(login);
   }
@@ -166,8 +172,8 @@ class AppRoutes {
     Navigator.of(context).pushNamed(analytics);
   }
 
-  static void navigateToSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(settings);
+  static void navigateToProfile(BuildContext context) {
+    Navigator.of(context).pushNamed(profile);
   }
 
   // Admin navigation methods
@@ -262,6 +268,11 @@ class AppRoutes {
     Navigator.of(context).pushNamed(safetyTips);
   }
 
+  // common routes
+  static void navigateToSettings(BuildContext context) {
+    Navigator.of(context).pushNamed(settings);
+  }
+
   // Role-based navigation helper
   static void navigateByRole(
       BuildContext context, String route, String? userRole) {
@@ -312,6 +323,7 @@ class AppRoutes {
       Navigator.of(context).push(route);
     }
   }
+
   static void navigateTo(BuildContext context, String route) {
     Navigator.pushNamed(context, route);
   }
