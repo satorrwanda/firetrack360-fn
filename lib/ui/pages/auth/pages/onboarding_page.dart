@@ -5,89 +5,82 @@ import 'package:firetrack360/ui/models/onboarding_content.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/onboarding_item.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class OnboardingPage extends StatefulWidget {
+class OnboardingPage extends HookWidget {
   const OnboardingPage({super.key});
 
   @override
-  _OnboardingPageState createState() => _OnboardingPageState();
-}
-
-class _OnboardingPageState extends State<OnboardingPage> {
-  late final PageController _pageController;
-  int _currentPage = 0;
-  Timer? _timer;
-
-  final List<OnboardingContent> _onboardingContents = [
-    OnboardingContent(
-      title: 'Welcome to FireSecure360',
-      description: 'Secure your world, one tap at a time',
-      image: 'assets/images/onboarding1.jpg',
-    ),
-    OnboardingContent(
-      title: 'Get Started',
-      description: 'Create an account or log in to access all features',
-      image: 'assets/images/onboarding2.jpg',
-    ),
-    OnboardingContent(
-      title: 'Secure and Simple',
-      description: 'Streamline your security management',
-      image: 'assets/images/onboarding3.jpg',
-    ),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-    _startAutoSlide();
-  }
-
-  @override
-  void dispose() {
-    _stopAutoSlide();
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _stopAutoSlide() {
-    _timer?.cancel();
-    _timer = null;
-  }
-
-  void _startAutoSlide() {
-    _stopAutoSlide(); // Cancel any existing timer
-    _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
-      if (!mounted || !_pageController.hasClients) return;
-      
-      if (_currentPage < _onboardingContents.length - 1) {
-        _pageController.nextPage(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOutCubic,
-        );
-      } else {
-        _pageController.animateToPage(
-          0,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOutCubic,
-        );
-      }
-    });
-  }
-
-  void _navigateToRegister() {
-    _stopAutoSlide(); // Stop auto-slide before navigation
-    AppRoutes.navigateToRegister(context);
-  }
-
-  void _navigateToLogin() {
-    _stopAutoSlide(); // Stop auto-slide before navigation
-    AppRoutes.navigateToLogin(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    final pageController = usePageController(initialPage: 0);
+    final currentPage = useState(0);
+    final isAutoSliding = useState(true);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final onboardingContents = [
+      OnboardingContent(
+        title: 'Welcome to FireSecure360',
+        description: 'Secure your world, one tap at a time',
+        image: 'assets/images/onboarding1.jpg',
+      ),
+      OnboardingContent(
+        title: 'Get Started',
+        description: 'Create an account or log in to access all features',
+        image: 'assets/images/onboarding2.jpg',
+      ),
+      OnboardingContent(
+        title: 'Secure and Simple',
+        description: 'Streamline your security management',
+        image: 'assets/images/onboarding3.jpg',
+      ),
+    ];
+
+    // Auto-slide effect
+    useEffect(() {
+      Timer? timer;
+
+      void startAutoSlide() {
+        timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+          if (!isAutoSliding.value) return;
+          if (!pageController.hasClients) return;
+
+          try {
+            if (currentPage.value < onboardingContents.length - 1) {
+              pageController.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOutCubic,
+              );
+            } else {
+              pageController.animateToPage(
+                0,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOutCubic,
+              );
+            }
+          } catch (e) {
+            // If there's an error with the page controller, stop auto-sliding
+            timer.cancel();
+            isAutoSliding.value = false;
+          }
+        });
+      }
+
+      // Delay the start of auto-sliding to ensure the PageController is properly initialized
+      Future.delayed(const Duration(milliseconds: 500), startAutoSlide);
+
+      return () {
+        timer?.cancel();
+        isAutoSliding.value = false;
+      };
+    }, []);
+
+    void navigateToRegister() {
+      AppRoutes.navigateToRegister(context);
+    }
+
+    void navigateToLogin() {
+      AppRoutes.navigateToLogin(context);
+    }
 
     return Scaffold(
       body: Container(
@@ -106,11 +99,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Column(
             children: [
               PageIndicator(
-                currentPage: _currentPage,
-                pageCount: _onboardingContents.length,
+                currentPage: currentPage.value,
+                pageCount: onboardingContents.length,
                 onPageSelect: (index) {
-                  if (_pageController.hasClients) {
-                    _pageController.animateToPage(
+                  if (pageController.hasClients) {
+                    pageController.animateToPage(
                       index,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOutCubic,
@@ -120,26 +113,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
               Expanded(
                 child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: _onboardingContents.length,
+                  controller: pageController,
+                  itemCount: onboardingContents.length,
                   onPageChanged: (int page) {
-                    if (mounted) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    }
+                    currentPage.value = page;
                   },
                   itemBuilder: (context, index) {
                     return OnboardingItem(
-                      content: _onboardingContents[index],
+                      content: onboardingContents[index],
                       screenWidth: screenWidth,
                     );
                   },
                 ),
               ),
               OnboardingButtons(
-                onRegister: _navigateToRegister,
-                onLogin: _navigateToLogin,
+                onRegister: navigateToRegister,
+                onLogin: navigateToLogin,
               ),
             ],
           ),

@@ -1,83 +1,73 @@
-class UserProfile {
+import 'package:firetrack360/models/user.dart';
+
+class Profile {
   final String id;
-  final String firstName;
-  final String lastName;
-  final String address;
-  final String city;
-  final String state;
-  final String zipCode;
+  final String? firstName;
+  final String? lastName;
   final String? profilePictureUrl;
   final String? bio;
+  final String? address;
+  final String? city;
+  final String? state;
+  final String? zipCode;
   final DateTime? dateOfBirth;
-  final bool isActive;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final UserData user;
+  final User user;
 
-  UserProfile({
+  Profile({
     required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.address,
-    required this.city,
-    required this.state,
-    required this.zipCode,
+    this.firstName,
+    this.lastName,
     this.profilePictureUrl,
     this.bio,
+    this.address,
+    this.city,
+    this.state,
+    this.zipCode,
     this.dateOfBirth,
-    required this.isActive,
-    required this.createdAt,
-    required this.updatedAt,
     required this.user,
   });
 
-  String get fullName => '$firstName $lastName';
-  String get fullAddress => '$address, $city, $state $zipCode';
-
-  factory UserProfile.fromJson(Map<String, dynamic> json) {
-    return UserProfile(
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(
       id: json['id'],
       firstName: json['firstName'],
       lastName: json['lastName'],
+      profilePictureUrl: json['profilePictureUrl'],
+      bio: json['bio'],
       address: json['address'],
       city: json['city'],
       state: json['state'],
       zipCode: json['zipCode'],
-      profilePictureUrl: json['profilePictureUrl'],
-      bio: json['bio'],
-      dateOfBirth: json['dateOfBirth'] != null 
-        ? DateTime.parse(json['dateOfBirth']) 
-        : null,
-      isActive: json['isActive'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      user: UserData.fromJson(json['user']),
+      dateOfBirth: json['dateOfBirth'] != null
+          ? DateTime.parse(json['dateOfBirth'])
+          : null,
+      user: User.fromJson(json['user']),
     );
   }
-}
 
-class UserData {
-  final String id;
-  final String email;
-  final String phone;
-  final String role;
-  final bool verified;
-
-  UserData({
-    required this.id,
-    required this.email,
-    required this.phone,
-    required this.role,
-    required this.verified,
-  });
-
-  factory UserData.fromJson(Map<String, dynamic> json) {
-    return UserData(
-      id: json['id'],
-      email: json['email'],
-      phone: json['phone'],
-      role: json['role'],
-      verified: json['verified'],
+  Profile copyWith({
+    String? firstName,
+    String? lastName,
+    String? profilePictureUrl,
+    String? bio,
+    String? address,
+    String? city,
+    String? state,
+    String? zipCode,
+    DateTime? dateOfBirth,
+  }) {
+    return Profile(
+      id: id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
+      bio: bio ?? this.bio,
+      address: address ?? this.address,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      zipCode: zipCode ?? this.zipCode,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      user: user,
     );
   }
 }

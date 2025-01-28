@@ -4,7 +4,6 @@ import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/hooks/use_navigation.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/routes/auth_gateway.dart';
-import 'package:firetrack360/services/auth_service.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/custom_bottom_nav.dart';
 import 'widgets/custom_app_bar.dart';
@@ -73,8 +72,7 @@ class HomePage extends HookWidget {
         ),
         body: _buildBody(context, authState),
         bottomNavigationBar: CustomBottomNav(
-          selectedIndex: bottomNavIndex.value,
-          onIndexSelected: handleBottomNavTap,
+          userRole: authState.userRole,
         ),
       ),
     );

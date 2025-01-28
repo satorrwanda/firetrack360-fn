@@ -15,6 +15,31 @@ class CustomDrawer extends StatelessWidget {
     required this.onIndexSelected,
   });
 
+  static const String analytics = 'Analytics';
+  static const String customers = 'Customers';
+  static const String service = 'Service';
+  static const String inventory = 'Inventory';
+  static const String finance = 'Finance';
+  static const String aiInsights = 'AI Insights';
+  static const String staff = 'Staff';
+  static const String technician = 'Technician';
+  static const String task = 'Task';
+  static const String location = 'Location';
+  static const String stock = 'Stock';
+  static const String tasks = 'Tasks';
+  static const String navigation = 'Navigation';
+  static const String offlineMode = 'Offline Mode';
+  static const String customerFeedback = 'Customer Feedback';
+  static const String dashboard = 'Dashboard';
+  static const String extinguishers = 'Extinguishers';
+  static const String requestService = 'Request Service';
+  static const String payments = 'Payments & Billing';
+  static const String support = 'Support';
+  static const String safetyTips = 'Safety Tips';
+  static const String home = 'Home';
+  static const String profile = 'Profile';
+  static const String settings = 'Settings';
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -165,90 +190,90 @@ class CustomDrawer extends StatelessWidget {
 
   void _handleNavigation(BuildContext context, String title, int index) {
     onIndexSelected(index);
-    switch (title.toLowerCase()) {
+    switch (title) {
       // Admin routes
-      case 'analytics & reports':
+      case analytics:
         AppRoutes.navigateToAnalytics(context);
         break;
-      case 'customer management':
+      case customers:
         AppRoutes.navigateToCustomerManagement(context);
         break;
-      case 'service requests':
+      case service:
         AppRoutes.navigateToServiceRequests(context);
         break;
-      case 'inventory':
+      case inventory:
         AppRoutes.navigateToInventory(context);
         break;
-      case 'finance':
+      case finance:
         AppRoutes.navigateToFinance(context);
         break;
-      case 'ai insights':
+      case aiInsights:
         AppRoutes.navigateToAIInsights(context);
         break;
-      case 'staff management':
+      case staff:
         AppRoutes.navigateToStaffManagement(context);
         break;
 
       // Manager routes
-      case 'technician management':
+      case technician:
         AppRoutes.navigateToTechnicianManagement(context);
         break;
-      case 'task assignment':
+      case task:
         AppRoutes.navigateToTaskAssignment(context);
         break;
-      case 'location tracking':
+      case location:
         AppRoutes.navigateToLocationTracking(context);
         break;
-      case 'service feedback':
-        AppRoutes.navigateToServiceFeedback(context);
-        break;
-      case 'stock management':
+      case stock:
         AppRoutes.navigateToStockManagement(context);
         break;
 
       // Technician routes
-      case 'my tasks':
+      case tasks:
         AppRoutes.navigateToMyTasks(context);
         break;
-      case 'navigation':
+      case navigation:
         AppRoutes.navigateToTechnicianNavigation(context);
         break;
-      case 'service history':
+      case service:
         AppRoutes.navigateToServiceHistory(context);
         break;
-      case 'offline mode':
+      case offlineMode:
         AppRoutes.navigateToOfflineMode(context);
         break;
-      case 'customer feedback':
+      case customerFeedback:
         AppRoutes.navigateToCustomerFeedback(context);
         break;
 
       // Client routes
-      case 'my dashboard':
+      case dashboard:
         AppRoutes.navigateToDashboard(context);
         break;
-      case 'my extinguishers':
+      case extinguishers:
         AppRoutes.navigateToMyExtinguishers(context);
         break;
-      case 'request service':
+      case requestService:
         AppRoutes.navigateToRequestService(context);
         break;
-      case 'payments & billing':
+      case payments:
         AppRoutes.navigateToPayments(context);
         break;
-      case 'support':
+      case support:
         AppRoutes.navigateToSupport(context);
         break;
-      case 'safety tips':
+      case safetyTips:
         AppRoutes.navigateToSafetyTips(context);
         break;
 
       // Common routes
-      case 'dashboard':
+      case home:
         AppRoutes.navigateToHome(context);
         break;
-      case 'profile':
+      case profile:
         AppRoutes.navigateToProfile(context);
+        break;
+      case settings:
+        AppRoutes.navigateToSettings(context);
         break;
       default:
         AppRoutes.navigateToHome(context);
@@ -260,10 +285,10 @@ class CustomDrawer extends StatelessWidget {
       DrawerItem(
         icon: Icons.dashboard_outlined,
         selectedIcon: Icons.dashboard,
-        title: 'Dashboard',
+        title: dashboard,
         index: 0,
         isSelected: selectedIndex == 0,
-        onTap: () => _handleNavigation(context, 'Dashboard', 0),
+        onTap: () => AppRoutes.navigateToDashboard(context),
       ),
     ];
 
@@ -287,64 +312,58 @@ class CustomDrawer extends StatelessWidget {
   }
 
   List<DrawerItem> _adminMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.analytics_outlined, Icons.analytics,
-            'Analytics & Reports', 1),
-        _createMenuItem(context, Icons.group_outlined, Icons.group,
-            'Customer Management', 2),
-        _createMenuItem(context, Icons.assignment_outlined, Icons.assignment,
-            'Service Requests', 3),
-        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
-            'Inventory', 4),
         _createMenuItem(
-            context, Icons.payments_outlined, Icons.payments, 'Finance', 5),
-        _createMenuItem(context, Icons.analytics_outlined, Icons.analytics,
-            'AI Insights', 6),
+            context, Icons.analytics_outlined, Icons.analytics, analytics, 1),
+        _createMenuItem(
+            context, Icons.group_outlined, Icons.group, customers, 2),
+        _createMenuItem(
+            context, Icons.assignment_outlined, Icons.assignment, service, 3),
+        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
+            inventory, 4),
+        _createMenuItem(
+            context, Icons.payments_outlined, Icons.payments, finance, 5),
+        _createMenuItem(
+            context, Icons.analytics_outlined, Icons.analytics, aiInsights, 6),
         _createMenuItem(context, Icons.supervisor_account_outlined,
-            Icons.supervisor_account, 'Staff Management', 7),
+            Icons.supervisor_account, staff, 7),
       ];
 
   List<DrawerItem> _managerMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.people_outline, Icons.people,
-            'Technician Management', 1),
-        _createMenuItem(context, Icons.assignment_outlined, Icons.assignment,
-            'Task Assignment', 2),
         _createMenuItem(
-            context, Icons.map_outlined, Icons.map, 'Location Tracking', 3),
-        _createMenuItem(context, Icons.reviews_outlined, Icons.reviews,
-            'Service Feedback', 4),
-        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
-            'Stock Management', 5),
+            context, Icons.people_outline, Icons.people, technician, 1),
+        _createMenuItem(
+            context, Icons.assignment_outlined, Icons.assignment, task, 2),
+        _createMenuItem(context, Icons.map_outlined, Icons.map, location, 3),
+        _createMenuItem(
+            context, Icons.inventory_2_outlined, Icons.inventory_2, stock, 4),
       ];
 
   List<DrawerItem> _technicianMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.work_outline, Icons.work, 'My Tasks', 1),
-        _createMenuItem(context, Icons.qr_code_scanner_outlined,
-            Icons.qr_code_scanner, 'Scan QR', 2),
+        _createMenuItem(context, Icons.work_outline, Icons.work, tasks, 1),
+        _createMenuItem(context, Icons.map_outlined, Icons.map, navigation, 2),
         _createMenuItem(
-            context, Icons.map_outlined, Icons.map, 'Navigation', 3),
-        _createMenuItem(context, Icons.history_outlined, Icons.history,
-            'Service History', 4),
+            context, Icons.history_outlined, Icons.history, service, 3),
         _createMenuItem(context, Icons.offline_bolt_outlined,
-            Icons.offline_bolt, 'Offline Mode', 5),
+            Icons.offline_bolt, offlineMode, 4),
         _createMenuItem(context, Icons.rate_review_outlined, Icons.rate_review,
-            'Customer Feedback', 6),
+            customerFeedback, 5),
       ];
 
   List<DrawerItem> _clientMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.dashboard_outlined, Icons.dashboard,
-            'My Dashboard', 1),
-        _createMenuItem(context, Icons.fire_extinguisher,
-            Icons.fire_extinguisher, 'Extinguishers', 2),
-        _createMenuItem(context, Icons.history_outlined, Icons.history,
-            'Service History', 3),
-        _createMenuItem(context, Icons.request_page_outlined,
-            Icons.request_page, 'Request Service', 4),
-        _createMenuItem(context, Icons.payment_outlined, Icons.payment,
-            'Payments & Billing', 5),
         _createMenuItem(
-            context, Icons.support_outlined, Icons.support, 'Support', 6),
+            context, Icons.dashboard_outlined, Icons.dashboard, dashboard, 1),
+        _createMenuItem(context, Icons.fire_extinguisher,
+            Icons.fire_extinguisher, extinguishers, 2),
+        _createMenuItem(
+            context, Icons.history_outlined, Icons.history, service, 3),
+        _createMenuItem(context, Icons.request_page_outlined,
+            Icons.request_page, requestService, 4),
+        _createMenuItem(
+            context, Icons.payment_outlined, Icons.payment, payments, 5),
+        _createMenuItem(
+            context, Icons.support_outlined, Icons.support, support, 6),
         _createMenuItem(context, Icons.safety_check_outlined,
-            Icons.safety_check, 'Safety Tips', 7),
+            Icons.safety_check, safetyTips, 7),
       ];
 
   DrawerItem _createMenuItem(BuildContext context, IconData icon,
@@ -364,6 +383,6 @@ class CustomDrawer extends StatelessWidget {
         title: 'Settings',
         index: index,
         isSelected: selectedIndex == index,
-        onTap: () => _handleNavigation(context, 'Settings', index),
+        onTap: () => AppRoutes.navigateToSettings(context),
       );
 }

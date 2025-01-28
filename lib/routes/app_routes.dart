@@ -50,10 +50,12 @@ class AppRoutes {
   static const String support = '/support';
   static const String safetyTips = '/safety-tips';
 
+  // common routes
+  static const String settings = '/settings';
+
   static const String _onboardingKey = 'isOnboardingDone';
 
   static Map<String, Widget Function(BuildContext)> getRoutes() {
-
     return {
       // Auth routes
       onboarding: (_) => const OnboardingPage(),
@@ -99,6 +101,9 @@ class AppRoutes {
       payments: (_) => const PaymentsScreen(),
       support: (_) => const SupportScreen(),
       safetyTips: (_) => const SafetyTipsScreen(),
+
+      // common routes
+      settings: (_) => const SettingsScreen(),
     };
   }
 
@@ -110,6 +115,7 @@ class AppRoutes {
     );
   }
 
+  // Auth navigation methods
   static void navigateToLogin(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(login);
   }
@@ -262,6 +268,11 @@ class AppRoutes {
     Navigator.of(context).pushNamed(safetyTips);
   }
 
+  // common routes
+  static void navigateToSettings(BuildContext context) {
+    Navigator.of(context).pushNamed(settings);
+  }
+
   // Role-based navigation helper
   static void navigateByRole(
       BuildContext context, String route, String? userRole) {
@@ -312,6 +323,7 @@ class AppRoutes {
       Navigator.of(context).push(route);
     }
   }
+
   static void navigateTo(BuildContext context, String route) {
     Navigator.pushNamed(context, route);
   }

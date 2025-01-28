@@ -260,32 +260,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               children: [
                 TextFormField(
                   controller: _firstNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'First Name',
                     prefixIcon: Icon(Icons.person_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
-                    ),
                   ),
                   validator: (value) => _validateField(value, 'firstName'),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _lastNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Last Name',
                     prefixIcon: Icon(Icons.person_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
-                    ),
                   ),
                   validator: (value) => _validateField(value, 'lastName'),
                 ),
@@ -296,32 +282,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               children: [
                 TextFormField(
                   controller: _addressController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Street Address',
                     prefixIcon: Icon(Icons.location_on),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
-                    ),
                   ),
                   validator: (value) => _validateField(value, 'address'),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _cityController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'City',
                     prefixIcon: Icon(Icons.location_city),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
-                    ),
                   ),
                   validator: (value) => _validateField(value, 'city'),
                 ),
@@ -331,16 +303,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Expanded(
                       child: TextFormField(
                         controller: _stateController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'State',
                           prefixIcon: Icon(Icons.map),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                              width: 2.0,
-                            ),
-                          ),
                         ),
                         validator: (value) => _validateField(value, 'state'),
                       ),
@@ -349,16 +314,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Expanded(
                       child: TextFormField(
                         controller: _zipCodeController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'ZIP Code',
                           prefixIcon: Icon(Icons.pin),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                              width: 2.0,
-                            ),
-                          ),
                         ),
                         keyboardType: TextInputType.number,
                         validator: (value) => _validateField(value, 'zipCode'),
@@ -373,17 +331,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               children: [
                 TextFormField(
                   controller: _bioController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Bio',
                     prefixIcon: Icon(Icons.edit),
                     alignLabelWithHint: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
-                    ),
                   ),
                   maxLines: 3,
                   maxLength: 500,
@@ -410,7 +361,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
                 ),
           ),
         ),
