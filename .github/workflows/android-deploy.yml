@@ -2,17 +2,17 @@ name: Android Deployment
 
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
-    branches: 
+    branches:
       - main
 
 jobs:
   android-deploy:
     name: Android Deployment 🚀
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
@@ -114,6 +114,7 @@ jobs:
           docker cp android-deploy-container:/app/build/app/outputs/flutter-apk/app-release.apk ./app-release.apk
 
       - name: Upload Build Artifact 📤
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: android-release

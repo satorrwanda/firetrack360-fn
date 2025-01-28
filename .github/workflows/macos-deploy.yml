@@ -26,6 +26,7 @@ jobs:
         run: flutter build macos
 
       - name: Upload macOS Release
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: macos-release
