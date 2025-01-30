@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firetrack360/configs/graphql_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -56,6 +57,35 @@ Future<String> _determineInitialRoute() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Override the error widget in release mode
+  ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+    // Let's keep the default error widget in debug mode
+    if (kDebugMode) {
+      return ErrorWidget(errorDetails.exception);
+    }
+
+    // In release mode, handle the defunct lifecycle error gracefully
+    if (errorDetails.exception
+        .toString()
+        .contains('_lifecycleState != _ElementLifecycle.defunct')) {
+      debugPrint(
+          'Gracefully handling defunct lifecycle error: ${errorDetails.exception}');
+      return const SizedBox.shrink();
+    }
+
+    // For other errors in release mode, show a user-friendly error widget
+    return Material(
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(
+          'Something went wrong.',
+          style: TextStyle(color: Colors.red[700]),
+        ),
+      ),
+    );
+  };
 
   try {
     // Initialize environment
