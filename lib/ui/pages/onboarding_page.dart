@@ -6,18 +6,10 @@ import 'package:firetrack360/ui/pages/auth/widgets/onboarding_item.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
-
-  @override
-  _OnboardingPageState createState() => _OnboardingPageState();
-}
-
-class _OnboardingPageState extends State<OnboardingPage> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
-  Timer? _autoSlideTimer;
+class OnboardingPage extends HookWidget {
+  OnboardingPage({Key? key}) : super(key: key);
 
   final List<OnboardingContent> _onboardingContents = [
     OnboardingContent(
@@ -38,70 +30,80 @@ class _OnboardingPageState extends State<OnboardingPage> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _checkOnboardingStatus();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      startAutoSlide();
-    });
-  }
+  Widget build(BuildContext context) {
+    final pageController = usePageController();
+    final currentPage = useState(0);
+    final isMounted = useIsMounted();
+    final timerRef = useRef<Timer?>(null);
 
-  void _checkOnboardingStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    bool isOnboardingComplete = prefs.getBool('isOnboardingComplete') ?? false;
-    if (!isOnboardingComplete) {
-      AppRoutes.navigateToLogin(context);
-    } else {
-      startAutoSlide();
+    Future<void> checkOnboardingStatus() async {
+      final prefs = await SharedPreferences.getInstance();
+      final isOnboardingComplete =
+          prefs.getBool('isOnboardingComplete') ?? false;
+
+      if (isOnboardingComplete && isMounted()) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (isMounted()) {
+            AppRoutes.navigateToLogin(context);
+          }
+        });
+      }
     }
-  }
 
-  @override
-  void dispose() {
-    _autoSlideTimer?.cancel();
-    _pageController.dispose();
-    super.dispose();
-  }
+    void startAutoSlide() {
+      timerRef.value?.cancel();
 
-  void startAutoSlide() {
-    _autoSlideTimer?.cancel();
-    
-    _autoSlideTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (_pageController.hasClients) {
-        final nextPage = (_pageController.page?.toInt() ?? 0) + 1;
-        
-        if (nextPage < _onboardingContents.length) {
-          _pageController.animateToPage(
+      timerRef.value = Timer.periodic(const Duration(seconds: 3), (timer) {
+        if (!isMounted()) {
+          timer.cancel();
+          return;
+        }
+
+        if (pageController.hasClients) {
+          final nextPage = ((pageController.page ?? 0).toInt() + 1) %
+              _onboardingContents.length;
+          pageController.animateToPage(
             nextPage,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
-        } else {
-          _pageController.animateToPage(
-            0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
         }
+      });
+    }
+
+    useEffect(() {
+      checkOnboardingStatus();
+      startAutoSlide();
+      return () {
+        timerRef.value?.cancel();
+        timerRef.value = null;
+      };
+    }, []);
+
+    Future<void> handleNavigation(bool isLogin) async {
+      if (!isMounted()) return;
+
+      try {
+        debugPrint('Starting navigation process');
+        timerRef.value?.cancel();
+        timerRef.value = null;
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isOnboardingComplete', true);
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (isMounted()) {
+            if (isLogin) {
+              AppRoutes.navigateToLogin(context);
+            } else {
+              AppRoutes.navigateToRegister(context);
+            }
+          }
+        });
+      } catch (e) {
+        debugPrint('Navigation error: $e');
       }
-    });
-  }
-
-  void _navigateToRegister() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isOnboardingComplete', true);
-    AppRoutes.navigateToRegister(context);
-  }
-
-  void _navigateToLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isOnboardingComplete', true);
-    AppRoutes.navigateToLogin(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    }
 
     return Scaffold(
       body: Container(
@@ -120,10 +122,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Column(
             children: [
               PageIndicator(
-                currentPage: _currentPage,
+                currentPage: currentPage.value,
                 pageCount: _onboardingContents.length,
                 onPageSelect: (index) {
-                  _pageController.animateToPage(
+                  if (!isMounted()) return;
+                  pageController.animateToPage(
                     index,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOutCubic,
@@ -132,24 +135,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
               Expanded(
                 child: PageView.builder(
-                  controller: _pageController,
+                  controller: pageController,
                   itemCount: _onboardingContents.length,
-                  onPageChanged: (int page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
+                  onPageChanged: (page) {
+                    if (isMounted()) {
+                      currentPage.value = page;
+                    }
                   },
                   itemBuilder: (context, index) {
                     return OnboardingItem(
                       content: _onboardingContents[index],
-                      screenWidth: screenWidth,
+                      screenWidth: MediaQuery.of(context).size.width,
                     );
                   },
                 ),
               ),
               OnboardingButtons(
-                onRegister: _navigateToRegister,
-                onLogin: _navigateToLogin,
+                onRegister: () => handleNavigation(false),
+                onLogin: () => handleNavigation(true),
               ),
             ],
           ),
