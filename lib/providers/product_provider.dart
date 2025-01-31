@@ -1,9 +1,19 @@
-import 'package:firetrack360/graphql/mutations/product_mutation.dart';
-import 'package:firetrack360/graphql/queries/product_query.dart';
-import 'package:firetrack360/models/product.dart';
+// lib/providers/product_provider.dart
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firetrack360/models/product.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/configs/graphql_client.dart';
+import 'package:firetrack360/graphql/mutations/product_mutation.dart';
+import 'package:firetrack360/graphql/queries/product_query.dart';
+
+
+
+
+final productNotifierProvider =
+    StateNotifierProvider<ProductNotifier, AsyncValue<List<Product>>>((ref) {
+  return ProductNotifier();
+});
 
 class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
   ProductNotifier() : super(const AsyncValue.loading()) {
@@ -37,18 +47,29 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
         document: gql(getAllProductsQuery),
       ));
 
-      print('Query result: ${result.data}'); // Add this to see the raw response
+      print('Raw GraphQL response: ${result.data}');
 
       if (result.hasException) {
         throw Exception(result.exception.toString());
       }
 
-      final productsData = result.data?['getAllProducts'] as List;
-      if (productsData == null) {
-        throw Exception('Failed to fetch products');
+      if (result.data == null) {
+        throw Exception('No data returned from GraphQL query');
       }
 
-      final products = productsData.map((e) => Product.fromJson(e)).toList();
+      final productsData = result.data!['getAllProducts'] as List<dynamic>?;
+
+      if (productsData == null) {
+        print('No products data in response');
+        state = const AsyncValue.data([]);
+        return;
+      }
+
+      final products = productsData
+          .where((item) => item != null)
+          .map((json) => Product.fromJson(json as Map<String, dynamic>))
+          .toList();
+
       print('Successfully loaded ${products.length} products');
       state = AsyncValue.data(products);
     } catch (error, stackTrace) {
@@ -57,7 +78,3 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
     }
   }
 }
-
-final productNotifierProvider =
-    StateNotifierProvider<ProductNotifier, AsyncValue<List<Product>>>(
-        (ref) => ProductNotifier());
