@@ -1,6 +1,7 @@
 // lib/ui/screens/inventory_screen.dart
 
 import 'package:firetrack360/models/product.dart';
+import 'package:firetrack360/ui/pages/admin/product_details_screen.dart';
 import 'package:firetrack360/ui/pages/widgets/product_card.dart';
 import 'package:firetrack360/ui/widgets/create_product_dialog.dart';
 import 'package:firetrack360/ui/widgets/edit_product_dialog.dart';
@@ -316,12 +317,17 @@ class InventoryScreen extends ConsumerWidget {
                       return ProductCard(
                         product: product,
                         onTap: () {
-                          // TODO: Navigate to product details
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ProductDetailsScreen(product: product),
-                          //   ),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsScreen(
+                                product: product,
+                                onEdit: () =>
+                                    _showEditDialog(context, ref, product),
+                                onDelete: () => _showDeleteConfirmation(
+                                    context, ref, product),
+                              ),
+                            ),
+                          );
                         },
                         onEdit: () => _showEditDialog(context, ref, product),
                         onDelete: () =>

@@ -99,8 +99,7 @@ class ProductCard extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              if (canManageProducts &&
-                                  (onEdit != null || onDelete != null))
+                              if (canManageProducts)
                                 Theme(
                                   data: Theme.of(context).copyWith(
                                     popupMenuTheme: PopupMenuThemeData(
@@ -113,15 +112,33 @@ class ProductCard extends StatelessWidget {
                                     icon: const Icon(Icons.more_vert),
                                     offset: const Offset(0, 40),
                                     itemBuilder: (context) => [
+                                      // View Details Option
+                                      PopupMenuItem(
+                                        value: 'view',
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.remove_red_eye_outlined,
+                                              size: 20,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            const SizedBox(width: 12),
+                                            const Text('View Details'),
+                                          ],
+                                        ),
+                                      ),
                                       if (onEdit != null)
                                         PopupMenuItem(
                                           value: 'edit',
                                           child: Row(
                                             children: [
-                                              Icon(Icons.edit,
-                                                  size: 20,
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
+                                              Icon(
+                                                Icons.edit,
+                                                size: 20,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                               const SizedBox(width: 12),
                                               const Text('Edit'),
                                             ],
@@ -132,18 +149,26 @@ class ProductCard extends StatelessWidget {
                                           value: 'delete',
                                           child: Row(
                                             children: [
-                                              Icon(Icons.delete,
-                                                  size: 20, color: Colors.red),
+                                              Icon(
+                                                Icons.delete,
+                                                size: 20,
+                                                color: Colors.red,
+                                              ),
                                               SizedBox(width: 12),
-                                              Text('Delete',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
+                                              Text(
+                                                'Delete',
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
                                             ],
                                           ),
                                         ),
                                     ],
                                     onSelected: (value) {
                                       switch (value) {
+                                        case 'view':
+                                          onTap?.call();
+                                          break;
                                         case 'edit':
                                           onEdit?.call();
                                           break;
