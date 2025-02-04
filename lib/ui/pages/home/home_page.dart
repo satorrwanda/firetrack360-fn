@@ -177,6 +177,7 @@ class HomePage extends HookWidget {
     required String title,
     required Color color,
   }) {
+    final navigator = useNavigation();
     return Expanded(
       child: Card(
         elevation: 1,
@@ -185,7 +186,11 @@ class HomePage extends HookWidget {
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () {},
+          onTap: () {
+            if (title == 'View Inventory') {
+              navigator.navigateTo(AppRoutes.inventory);
+            }
+          },
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
