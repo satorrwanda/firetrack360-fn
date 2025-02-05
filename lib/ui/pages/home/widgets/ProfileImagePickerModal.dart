@@ -96,7 +96,7 @@ class ProfileImagePickerModal extends StatelessWidget {
             onImageSelected(uploadedUrl);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Profile picture updated successfully'),
+                content: Text('Image updated successfully'),
                 backgroundColor: Colors.green,
               ),
             );
@@ -110,7 +110,7 @@ class ProfileImagePickerModal extends StatelessWidget {
         Navigator.pop(context); // Close loading indicator
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error updating profile picture: $e'),
+            content: Text('Error updating image: $e'),
             backgroundColor: Colors.red,
           ),
         );

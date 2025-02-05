@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firetrack360/models/product.dart';
 import 'package:firetrack360/ui/pages/widgets/product_image.dart';
+import 'package:firetrack360/ui/pages/home/widgets/ProfileImagePickerModal.dart';
+import 'package:firetrack360/providers/product_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firetrack360/services/auth_service.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends ConsumerWidget {
   final Product product;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
@@ -15,83 +19,196 @@ class ProductDetailsScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productNotifier = ref.watch(productNotifierProvider.notifier);
+
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.red.shade800,
         title: const Text(
-          'Extinguisher Details',
+          'Product Details',
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withRed(150),
-              ],
-            ),
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
         actions: [
           if (onEdit != null)
             IconButton(
-              icon: const Icon(Icons.edit, color: Colors.white),
+              icon: const Icon(Icons.edit_outlined, color: Colors.white),
               onPressed: onEdit,
             ),
           if (onDelete != null)
             IconButton(
-              icon: const Icon(Icons.delete, color: Colors.white),
+              icon: const Icon(Icons.delete_outline, color: Colors.white),
               onPressed: onDelete,
             ),
         ],
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image Section
-            Container(
-              width: double.infinity,
-              height: 300,
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
                   ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
+                  child: ProductImage(
+                    imageUrl: product.imageUrl,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                child: ProductImage(
-                  imageUrl: product.imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
+                Positioned(
+                  right: 16,
+                  bottom: 16,
+                  child: GestureDetector(
+                    onTap: () async {
+                      final authToken = await AuthService.getAccessToken();
+                      if (context.mounted) {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => ProfileImagePickerModal(
+                            hasExistingImage: product.imageUrl != null,
+                            authToken: authToken,
+                            onImageSelected: (String newImageUrl) async {
+                              // Close the modal first
+                              Navigator.pop(context);
 
-            // Details Section
+                              try {
+                                // Update product and refetch data
+                                // Update product and refetch data
+                                await productNotifier.updateProduct(
+                                  product.id,
+                                  {'imageUrl': newImageUrl},
+                                );
+                                await productNotifier.fetchAllProducts();
+
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Product image updated successfully'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  // Close loading dialog
+                                  Navigator.pop(context);
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          Text('Failed to update image: $e'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            onRemoveImage: product.imageUrl != null
+                                ? () async {
+                                    // Close modal first
+                                    Navigator.pop(context);
+
+                                    try {
+                                      // Show loading dialog
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                      );
+
+                                      // Remove image and refetch data
+                                      await productNotifier.updateProduct(
+                                        product.id,
+                                        {'imageUrl': null},
+                                      );
+                                      await productNotifier.fetchAllProducts();
+
+                                      if (context.mounted) {
+                                        // Pop back to inventory screen
+                                        Navigator.of(context)
+                                          ..pop() // Close loading dialog
+                                          ..pop(); // Return to inventory
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Product image removed successfully'),
+                                            backgroundColor: Colors.green,
+                                          ),
+                                        );
+                                      }
+                                    } catch (e) {
+                                      if (context.mounted) {
+                                        // Close loading dialog
+                                        Navigator.pop(context);
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                'Failed to remove image: $e'),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  }
+                                : null,
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.pink.shade700,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Product Name and Status
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -109,190 +226,223 @@ class ProductDetailsScreen extends StatelessWidget {
                       _buildStatusBadge(context),
                     ],
                   ),
-                  const SizedBox(height: 8),
-
-                  // Serial Number
-                  _buildDetailRow(
-                    context,
-                    Icons.confirmation_number_outlined,
-                    'Serial Number',
-                    product.serialNumber,
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Type and Size
+                  const SizedBox(height: 24),
                   Row(
                     children: [
                       Expanded(
-                        child: _buildDetailRow(
-                          context,
-                          Icons.category_outlined,
-                          'Type',
-                          product.type,
+                        child: _buildInfoCard(
+                          context: context,
+                          icon: Icons.category_outlined,
+                          label: 'Type',
+                          value: product.type,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
-                        child: _buildDetailRow(
-                          context,
-                          Icons.straighten,
-                          'Size',
-                          product.size,
+                        child: _buildInfoCard(
+                          context: context,
+                          icon: Icons.straighten,
+                          label: 'Size',
+                          value: product.size,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-
-                  // Description
-                  _buildDetailRow(
-                    context,
-                    Icons.description_outlined,
-                    'Description',
-                    product.description,
-                    isMultiLine: true,
-                  ),
+                  _buildSerialNumberCard(context),
                   const SizedBox(height: 16),
-
-                  // Price and Stock Section
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[50],
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.grey[200]!,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildPriceInfo(context),
-                            _buildStockInfo(context),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  _buildDescriptionCard(context),
+                  const SizedBox(height: 16),
+                  _buildPriceStockCard(context),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDetailRow(
-    BuildContext context,
-    IconData icon,
-    String label,
-    String value, {
-    bool isMultiLine = false,
+  Widget _buildInfoCard({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required String value,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              icon,
-              size: 20,
-              color: Colors.grey[600],
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: Colors.pink.shade700),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade600,
             ),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[800],
-            height: isMultiLine ? 1.5 : 1.2,
           ),
-        ),
-      ],
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildPriceInfo(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Price',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            Icon(
-              Icons.attach_money,
-              size: 20,
-              color: Theme.of(context).primaryColor,
-            ),
-            Text(
-              product.price.toStringAsFixed(2),
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
+  Widget _buildSerialNumberCard(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.pink.shade50,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.confirmation_number_outlined,
+                color: Colors.pink.shade700,
+                size: 20,
               ),
+              const SizedBox(width: 8),
+              Text(
+                'Serial Number',
+                style: TextStyle(
+                  color: Colors.pink.shade700,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            product.serialNumber,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildStockInfo(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text(
-          'In Stock',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            Icon(
-              Icons.inventory_2_outlined,
-              size: 20,
-              color: Colors.grey[700],
-            ),
-            const SizedBox(width: 4),
-            Text(
-              product.stockQuantity.toString(),
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey[800],
+  Widget _buildDescriptionCard(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.description_outlined, color: Colors.grey.shade700),
+              const SizedBox(width: 8),
+              Text(
+                'Description',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            product.description,
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey.shade800,
+              height: 1.5,
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceStockCard(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.pink.shade50,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Price',
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '\$${product.price.toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.pink.shade700,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'In Stock',
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(
+                    Icons.inventory_2_outlined,
+                    color: Colors.grey.shade800,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    product.stockQuantity.toString(),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade800,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -316,20 +466,14 @@ class ProductDetailsScreen extends StatelessWidget {
       backgroundColor = Colors.green[50]!;
       textColor = Colors.green[700]!;
       text = 'In Stock';
-      icon = Icons.check_circle_outline;
+      icon = Icons.check_circle;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 6,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: textColor.withOpacity(0.3),
-        ),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -344,7 +488,7 @@ class ProductDetailsScreen extends StatelessWidget {
             text,
             style: TextStyle(
               color: textColor,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               fontSize: 14,
             ),
           ),
