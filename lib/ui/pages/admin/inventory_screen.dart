@@ -145,16 +145,6 @@ class InventoryScreen extends ConsumerWidget {
     try {
       ref.read(currentPageProvider.notifier).state = 1;
       await ref.read(productNotifierProvider.notifier).fetchAllProducts();
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Inventory updated'),
-            backgroundColor: Colors.green,
-            duration: Duration(seconds: 1),
-          ),
-        );
-      }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

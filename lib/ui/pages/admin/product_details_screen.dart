@@ -29,7 +29,7 @@ class ProductDetailsScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red,
         title: const Text(
           'Product Details',
           style: TextStyle(
