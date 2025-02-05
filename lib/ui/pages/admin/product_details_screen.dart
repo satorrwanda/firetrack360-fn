@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firetrack360/models/product.dart';
 import 'package:firetrack360/ui/pages/widgets/product_image.dart';
-import 'package:firetrack360/ui/pages/home/widgets/ProfileImagePickerModal.dart';
+import 'package:firetrack360/ui/pages/home/widgets/ImagePickerModal.dart';
 import 'package:firetrack360/providers/product_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firetrack360/services/auth_service.dart';
