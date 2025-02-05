@@ -1,7 +1,14 @@
+// lib/ui/screens/inventory_screen.dart
+
+import 'package:firetrack360/models/product.dart';
+import 'package:firetrack360/ui/pages/admin/product_details_screen.dart';
+import 'package:firetrack360/ui/pages/widgets/product_card.dart';
+import 'package:firetrack360/ui/widgets/create_product_dialog.dart';
+import 'package:firetrack360/ui/widgets/edit_product_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firetrack360/providers/product_provider.dart';
-import 'package:firetrack360/ui/widgets/create_product_dialog.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class InventoryScreen extends ConsumerWidget {
   const InventoryScreen({super.key});
@@ -9,17 +16,154 @@ class InventoryScreen extends ConsumerWidget {
   void _showCreateProductDialog(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
+      barrierDismissible: false, // Prevent dismissing by tapping outside
       builder: (context) => CreateProductDialog(
-        onSubmit: (productData) {
-          ref.read(productNotifierProvider.notifier).createProduct(productData);
+        uploadEndpoint: dotenv.env['FILE_UPLOAD_ENDPOINT']!,
+        onSubmit: (productData) async {
+          try {
+            await ref
+                .read(productNotifierProvider.notifier)
+                .createProduct(productData);
+
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Product created successfully'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              Navigator.of(context).pop();
+              // Refresh data after creating
+              _refreshData(context, ref);
+            }
+          } catch (e) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Error creating product: $e'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          }
         },
       ),
     );
   }
 
+  void _showDeleteConfirmation(
+      BuildContext context, WidgetRef ref, Product product) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Product'),
+        content: Text('Are you sure you want to delete ${product.name}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              try {
+                await ref
+                    .read(productNotifierProvider.notifier)
+                    .deleteProduct(product.id);
+
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Product deleted successfully'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                  // Refresh data after deleting
+                  _refreshData(context, ref);
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error deleting product: $e'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showEditDialog(BuildContext context, WidgetRef ref, Product product) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => EditProductDialog(
+        product: product,
+        onSubmit: (id, productData) async {
+          try {
+            await ref.read(productNotifierProvider.notifier).updateProduct(
+                  id,
+                  productData,
+                );
+
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Product updated successfully'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              Navigator.of(context).pop();
+              await _refreshData(context, ref);
+            }
+          } catch (e) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Error updating product: $e'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          }
+        },
+      ),
+    );
+  }
+
+  Future<void> _refreshData(BuildContext context, WidgetRef ref) async {
+    try {
+      ref.read(currentPageProvider.notifier).state = 1;
+      await ref.read(productNotifierProvider.notifier).fetchAllProducts();
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to refresh: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productNotifierProvider);
+    final paginatedProducts = ref.watch(paginatedProductsProvider);
+    final filteredProducts = ref.watch(filteredProductsProvider);
+    final currentPage = ref.watch(currentPageProvider);
+    final totalPages = ref.watch(totalPagesProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,47 +189,82 @@ class InventoryScreen extends ConsumerWidget {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              // TODO: Implement search functionality
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list, color: Colors.white),
-            onPressed: () {
-              // TODO: Implement filter functionality
-            },
+            icon: const Icon(Icons.refresh, color: Colors.white),
+            onPressed: () => _refreshData(context, ref),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showCreateProductDialog(context, ref),
         icon: const Icon(Icons.add),
-        label: const Text('New Extinguisher'),
+        label: const Text('New'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-        ),
+      body: RefreshIndicator(
+        onRefresh: () => _refreshData(context, ref),
         child: Column(
           children: [
-            Container(
+            // Search Bar
+            Padding(
               padding: const EdgeInsets.all(16),
+              child: TextField(
+                onChanged: (value) {
+                  ref.read(searchQueryProvider.notifier).state = value;
+                  ref.read(currentPageProvider.notifier).state = 1;
+                },
+                decoration: InputDecoration(
+                  hintText: 'Search extinguishers...',
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            ref.read(searchQueryProvider.notifier).state = '';
+                            ref.read(currentPageProvider.notifier).state = 1;
+                          },
+                        )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+            ),
+
+            // Summary header
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               color: Colors.white,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.fire_extinguisher, color: Colors.red),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Available Extinguishers',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Row(
+                    children: [
+                      const Icon(Icons.fire_extinguisher, color: Colors.red),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Available Extinguishers',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                  filteredProducts.when(
+                    data: (items) => Text(
+                      '${items.length} items',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    loading: () => const SizedBox(),
+                    error: (_, __) => const SizedBox(),
                   ),
                 ],
               ),
             ),
+
+            // Product List
             Expanded(
-              child: products.when(
+              child: paginatedProducts.when(
                 data: (products) {
                   if (products.isEmpty) {
                     return Center(
@@ -99,92 +278,51 @@ class InventoryScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'No extinguishers available',
+                            searchQuery.isEmpty
+                                ? 'No extinguishers available'
+                                : 'No extinguishers match your search',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey[600],
                             ),
                           ),
+                          const SizedBox(height: 8),
+                          if (searchQuery.isEmpty)
+                            ElevatedButton.icon(
+                              onPressed: () =>
+                                  _showCreateProductDialog(context, ref),
+                              icon: const Icon(Icons.add),
+                              label: const Text('Add Extinguisher'),
+                            ),
                         ],
                       ),
                     );
                   }
+
                   return ListView.builder(
                     padding: const EdgeInsets.all(8),
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      return Card(
-                        elevation: 2,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(12),
-                          title: Text(
-                            product.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 4),
-                              Text(
-                                product.description,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  '\$${product.price.toStringAsFixed(2)}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          leading: Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Colors.grey[300]!,
-                                width: 1,
+                      return ProductCard(
+                        product: product,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsScreen(
+                                product: product,
+                                onEdit: () =>
+                                    _showEditDialog(context, ref, product),
+                                onDelete: () => _showDeleteConfirmation(
+                                    context, ref, product),
                               ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                product.imageUrl,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(
-                                  Icons.image_not_supported,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                          );
+                        },
+                        onEdit: () => _showEditDialog(context, ref, product),
+                        onDelete: () =>
+                            _showDeleteConfirmation(context, ref, product),
+                        canManageProducts: true,
                       );
                     },
                   );
@@ -219,12 +357,55 @@ class InventoryScreen extends ConsumerWidget {
                             color: Colors.grey[600],
                           ),
                         ),
+                        const SizedBox(height: 16),
+                        ElevatedButton.icon(
+                          onPressed: () => _refreshData(context, ref),
+                          icon: const Icon(Icons.refresh),
+                          label: const Text('Retry'),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
+
+            if (paginatedProducts.maybeWhen(
+              data: (products) => products.isNotEmpty,
+              orElse: () => false,
+            ))
+              // Pagination Controls
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.chevron_left),
+                      onPressed: currentPage > 1
+                          ? () => ref
+                              .read(currentPageProvider.notifier)
+                              .update((state) => state - 1)
+                          : null,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Page $currentPage of $totalPages',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.chevron_right),
+                      onPressed: currentPage < totalPages
+                          ? () => ref
+                              .read(currentPageProvider.notifier)
+                              .update((state) => state + 1)
+                          : null,
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

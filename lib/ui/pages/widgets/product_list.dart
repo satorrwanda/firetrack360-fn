@@ -22,6 +22,9 @@ class ProductList extends StatelessWidget {
         return ProductCard(
           product: product,
           canManageProducts: canManageProducts,
+          onTap: () {},
+          onEdit: () {},
+          onDelete: () {},
         );
       },
     );
