@@ -12,12 +12,11 @@ export 'package:firetrack360/ui/pages/auth/pages/verify_password_reset_page.dart
 
 // Main pages
 export 'package:firetrack360/ui/pages/home/home_page.dart';
-export 'package:firetrack360/ui/pages/home/screens/analytics_screen.dart';
 export 'package:firetrack360/ui/pages/home/screens/profile_screen.dart';
 export 'package:firetrack360/ui/pages/home/screens/base_screen.dart';
 
 // Admin screens
-export 'package:firetrack360/ui/pages/admin/customer_management_screen.dart';
+export 'package:firetrack360/ui/pages/admin/user_management_screen.dart';
 export 'package:firetrack360/ui/pages/admin/service_requests_screen.dart';
 export 'package:firetrack360/ui/pages/admin/inventory_screen.dart';
 export 'package:firetrack360/ui/pages/admin/finance_screen.dart';
