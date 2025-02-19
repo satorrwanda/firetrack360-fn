@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, required List<Widget> actions, required Text title});
+  const CustomAppBar(
+      {super.key, required List<Widget> actions, required Text title});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -17,13 +18,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.local_fire_department),
+            child: const Icon(
+              Icons.local_fire_department,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(width: 12),
-          const Text('FireTrack360'),
+          const Text(
+            'FireTrack360',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
-      backgroundColor: const Color(0xFF6741D9),
+      backgroundColor: const Color(0xFFA46B6B),
       elevation: 0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -39,7 +49,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: IconButton(
-            icon: const Icon(Icons.notifications_outlined),
+            icon: Stack(
+              children: [
+                const Icon(
+                  Icons.notifications_outlined,
+                  color: Colors.white,
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             onPressed: () {
               // Handle notifications
             },

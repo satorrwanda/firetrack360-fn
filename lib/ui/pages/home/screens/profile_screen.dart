@@ -285,6 +285,8 @@ class _ProfileContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        backgroundColor: const Color(0xFFA46B6B),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: Stack(

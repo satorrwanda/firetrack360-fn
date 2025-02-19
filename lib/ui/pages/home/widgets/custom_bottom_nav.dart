@@ -4,7 +4,7 @@ import 'package:firetrack360/routes/app_routes.dart';
 
 class CustomBottomNav extends HookWidget {
   final String? userRole;
-  // Add static variable to persist selected label across instances
+  // Changed default value from Analytics to Dashboard
   static String currentLabel = 'Home';
 
   const CustomBottomNav({
@@ -14,13 +14,18 @@ class CustomBottomNav extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize state with the static value
-    final selectedLabel = useState(CustomBottomNav.currentLabel);
+    // Add validation to ensure we start with a valid label
+    String initialLabel = CustomBottomNav.currentLabel;
+    if (!['Home', 'Dashboard', 'Profile'].contains(initialLabel)) {
+      initialLabel = 'Home';
+      CustomBottomNav.currentLabel = 'Home';
+    }
+
+    final selectedLabel = useState(initialLabel);
     final navigatorState = Navigator.of(context);
 
     void handleNavigation(String label) {
       selectedLabel.value = label;
-      // Update static value
       CustomBottomNav.currentLabel = label;
 
       switch (label) {
@@ -29,9 +34,9 @@ class CustomBottomNav extends HookWidget {
             navigatorState.pushReplacementNamed(AppRoutes.home);
           }
           break;
-        case 'Analytics':
-          if (ModalRoute.of(context)?.settings.name != AppRoutes.analytics) {
-            navigatorState.pushNamed(AppRoutes.analytics);
+        case 'Dashboard':
+          if (ModalRoute.of(context)?.settings.name != AppRoutes.dashboard) {
+            navigatorState.pushNamed(AppRoutes.dashboard);
           }
           break;
         case 'Profile':
@@ -42,7 +47,27 @@ class CustomBottomNav extends HookWidget {
       }
     }
 
-    // Ensure we're using the Material widget for proper theming
+    final items = const [
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home_outlined),
+        activeIcon: Icon(Icons.home),
+        label: 'Home',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.dashboard_outlined),
+        activeIcon: Icon(Icons.dashboard),
+        label: 'Dashboard',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.person_outline),
+        activeIcon: Icon(Icons.person),
+        label: 'Profile',
+      ),
+    ];
+
+    final currentIndex =
+        ['Home', 'Dashboard', 'Profile'].indexOf(selectedLabel.value);
+
     return Material(
       elevation: 8,
       child: Container(
@@ -58,33 +83,16 @@ class CustomBottomNav extends HookWidget {
         ),
         child: SafeArea(
           child: BottomNavigationBar(
-            currentIndex:
-                ['Home', 'Analytics', 'Profile'].indexOf(selectedLabel.value),
+            currentIndex: currentIndex,
             onTap: (index) =>
-                handleNavigation(['Home', 'Analytics', 'Profile'][index]),
-            selectedItemColor: Theme.of(context).primaryColor,
+                handleNavigation(['Home', 'Dashboard', 'Profile'][index]),
+            selectedItemColor: const Color(0xFFA46B6B),
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                activeIcon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.analytics_outlined),
-                activeIcon: Icon(Icons.analytics),
-                label: 'Analytics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
-                activeIcon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
+            items: items,
           ),
         ),
       ),
