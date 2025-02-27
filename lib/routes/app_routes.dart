@@ -21,12 +21,11 @@ class AppRoutes {
   static const String profile = '/profile';
 
   // Admin Routes
-  static const String customerManagement = '/customer-management';
+  static const String userManagement = '/user-management';
   static const String serviceRequests = '/service-requests';
   static const String inventory = '/inventory';
   static const String finance = '/finance';
   static const String aiInsights = '/ai-insights';
-  static const String staffManagement = '/staff-management';
 
   // Manager Routes
   static const String technicianManagement = '/technician-management';
@@ -69,16 +68,15 @@ class AppRoutes {
 
       // Main app routes
       home: (_) => const HomePage(),
-      analytics: (_) => const AnalyticsScreen(),
       profile: (_) => ProfileScreen(),
 
       // Admin routes
-      customerManagement: (_) => const CustomerManagementScreen(),
+      userManagement: (_) => const UserManagementScreen(),
       serviceRequests: (_) => const ServiceRequestsScreen(),
       inventory: (_) => const InventoryScreen(),
       finance: (_) => const FinanceScreen(),
       aiInsights: (_) => const AIInsightsScreen(),
-      staffManagement: (_) => const StaffManagementScreen(),
+
 
       // Manager routes
       technicianManagement: (_) => const TechnicianManagementScreen(),
@@ -177,8 +175,8 @@ class AppRoutes {
   }
 
   // Admin navigation methods
-  static void navigateToCustomerManagement(BuildContext context) {
-    Navigator.of(context).pushNamed(customerManagement);
+  static void navigateToUserManagement(BuildContext context) {
+    Navigator.of(context).pushNamed(userManagement);
   }
 
   static void navigateToServiceRequests(BuildContext context) {
@@ -197,9 +195,6 @@ class AppRoutes {
     Navigator.of(context).pushNamed(aiInsights);
   }
 
-  static void navigateToStaffManagement(BuildContext context) {
-    Navigator.of(context).pushNamed(staffManagement);
-  }
 
   // Manager navigation methods
   static void navigateToTechnicianManagement(BuildContext context) {

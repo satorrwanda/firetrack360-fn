@@ -43,7 +43,6 @@ Future<String> _determineInitialRoute() async {
     final token = prefs.getString('accessToken');
 
     if (token != null) {
-      // Optional: Add token validation here
       return AppRoutes.home;
     }
     // Check if user has seen onboarding
@@ -148,7 +147,6 @@ class ErrorApp extends StatelessWidget {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    // Restart app or retry initialization
                     main();
                   },
                   child: const Text('Retry'),

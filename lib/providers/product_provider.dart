@@ -99,7 +99,7 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
         throw Exception(result.exception.toString());
       }
 
-      await fetchAllProducts(); 
+      await fetchAllProducts();
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
     }
@@ -112,7 +112,7 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
       final client = GraphQLConfiguration.initializeClient().value;
       final result = await client.query(QueryOptions(
         document: gql(getAllProductsQuery),
-        fetchPolicy: FetchPolicy.networkOnly, 
+        fetchPolicy: FetchPolicy.networkOnly,
       ));
 
       if (result.hasException) {
@@ -158,10 +158,10 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
         throw Exception(result.exception.toString());
       }
 
-      await fetchAllProducts(); 
+      await fetchAllProducts();
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
-      rethrow; 
+      rethrow;
     }
   }
 
@@ -184,10 +184,10 @@ class ProductNotifier extends StateNotifier<AsyncValue<List<Product>>> {
         throw Exception(result.exception.toString());
       }
 
-      await fetchAllProducts(); 
+      await fetchAllProducts();
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
-      rethrow; 
+      rethrow;
     }
   }
 }

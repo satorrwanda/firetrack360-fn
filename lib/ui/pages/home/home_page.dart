@@ -36,6 +36,7 @@ class HomePage extends HookWidget {
     return AuthGateway(
       child: Scaffold(
         appBar: CustomAppBar(
+          
           actions: [
             IconButton(
               icon: Stack(

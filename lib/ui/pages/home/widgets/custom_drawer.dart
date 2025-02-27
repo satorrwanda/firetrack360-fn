@@ -1,6 +1,5 @@
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/services/auth_service.dart';
-import 'package:firetrack360/ui/pages/home/widgets/custom_drawer_header.dart';
 import 'package:firetrack360/ui/pages/home/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'drawer_item.dart';
@@ -15,13 +14,10 @@ class CustomDrawer extends StatelessWidget {
     required this.onIndexSelected,
   });
 
-  static const String analytics = 'Analytics';
-  static const String customers = 'Customers';
+  static const String users = 'Users';
   static const String service = 'Service';
   static const String inventory = 'Inventory';
   static const String finance = 'Finance';
-  static const String aiInsights = 'AI Insights';
-  static const String staff = 'Staff';
   static const String technician = 'Technician';
   static const String task = 'Task';
   static const String location = 'Location';
@@ -64,7 +60,7 @@ class CustomDrawer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const CustomDrawerHeader(),
+            const SizedBox(height: 48),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -192,11 +188,8 @@ class CustomDrawer extends StatelessWidget {
     onIndexSelected(index);
     switch (title) {
       // Admin routes
-      case analytics:
-        AppRoutes.navigateToAnalytics(context);
-        break;
-      case customers:
-        AppRoutes.navigateToCustomerManagement(context);
+      case users:
+        AppRoutes.navigateToUserManagement(context);
         break;
       case service:
         AppRoutes.navigateToServiceRequests(context);
@@ -207,13 +200,6 @@ class CustomDrawer extends StatelessWidget {
       case finance:
         AppRoutes.navigateToFinance(context);
         break;
-      case aiInsights:
-        AppRoutes.navigateToAIInsights(context);
-        break;
-      case staff:
-        AppRoutes.navigateToStaffManagement(context);
-        break;
-
       // Manager routes
       case technician:
         AppRoutes.navigateToTechnicianManagement(context);
@@ -238,9 +224,6 @@ class CustomDrawer extends StatelessWidget {
       case service:
         AppRoutes.navigateToServiceHistory(context);
         break;
-      case offlineMode:
-        AppRoutes.navigateToOfflineMode(context);
-        break;
       case customerFeedback:
         AppRoutes.navigateToCustomerFeedback(context);
         break;
@@ -254,9 +237,6 @@ class CustomDrawer extends StatelessWidget {
         break;
       case requestService:
         AppRoutes.navigateToRequestService(context);
-        break;
-      case payments:
-        AppRoutes.navigateToPayments(context);
         break;
       case support:
         AppRoutes.navigateToSupport(context);
@@ -313,19 +293,13 @@ class CustomDrawer extends StatelessWidget {
 
   List<DrawerItem> _adminMenuItems(BuildContext context) => [
         _createMenuItem(
-            context, Icons.analytics_outlined, Icons.analytics, analytics, 1),
-        _createMenuItem(
-            context, Icons.group_outlined, Icons.group, customers, 2),
+            context, Icons.group_outlined, Icons.group, users, 2),
         _createMenuItem(
             context, Icons.assignment_outlined, Icons.assignment, service, 3),
         _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
             inventory, 4),
         _createMenuItem(
             context, Icons.payments_outlined, Icons.payments, finance, 5),
-        _createMenuItem(
-            context, Icons.analytics_outlined, Icons.analytics, aiInsights, 6),
-        _createMenuItem(context, Icons.supervisor_account_outlined,
-            Icons.supervisor_account, staff, 7),
       ];
 
   List<DrawerItem> _managerMenuItems(BuildContext context) => [

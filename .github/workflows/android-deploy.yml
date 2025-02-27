@@ -78,10 +78,10 @@ jobs:
             \$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --list_installed
           "
 
-      - name: Install Flutter SDK 💙
-        run: |
           docker exec android-deploy-container bash -c "
-            git clone https://github.com/flutter/flutter.git -b stable --depth 1 /flutter && \
+            git clone https://github.com/flutter/flutter.git /flutter && \
+            cd /flutter && \
+            git checkout stable -f && \
             export PATH=\$PATH:/flutter/bin && \
             export ANDROID_HOME=/opt/android-sdk && \
             export ANDROID_SDK_ROOT=/opt/android-sdk && \

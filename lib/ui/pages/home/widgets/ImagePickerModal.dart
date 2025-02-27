@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:camera/camera.dart';
 
 class ProfileImagePickerModal extends StatelessWidget {
   final Function(String) onImageSelected;
@@ -20,61 +22,89 @@ class ProfileImagePickerModal extends StatelessWidget {
     this.authToken,
   }) : super(key: key);
 
-  Future<String?> _uploadImage(String imagePath) async {
+  Future<bool> _checkCameraAvailability() async {
     try {
-      final uploadUrl = dotenv.env['FILE_UPLOAD_ENDPOINT']!;
-      final file = File(imagePath);
-
-      // Create multipart request
-      final request = http.MultipartRequest('POST', Uri.parse(uploadUrl));
-
-      // Add auth header if token is provided
-      if (authToken != null) {
-        request.headers['Authorization'] = 'Bearer $authToken';
+      // Check if device has cameras
+      print('Checking camera availability...'); // Debug log
+      final cameras = await availableCameras();
+      print('Found ${cameras.length} cameras'); // Debug log
+      for (var camera in cameras) {
+        print('Camera: ${camera.name} (${camera.lensDirection})'); // Debug log
       }
-
-      // Add file to request
-      final fileStream = http.ByteStream(file.openRead());
-      final fileLength = await file.length();
-
-      final multipartFile = http.MultipartFile(
-        'file',
-        fileStream,
-        fileLength,
-        filename: path.basename(file.path),
-      );
-
-      request.files.add(multipartFile);
-
-      // Send request
-      final response = await request.send();
-
-      if (response.statusCode == 200) {
-        final responseBody = await response.stream.bytesToString();
-        // Parse JSON response
-        final Map<String, dynamic> jsonResponse = json.decode(responseBody);
-        return jsonResponse['url'] as String?; // Extract URL from JSON
-      } else {
-        throw Exception('Upload failed with status: ${response.statusCode}');
-      }
+      return cameras.isNotEmpty;
     } catch (e) {
-      throw Exception('Failed to upload image: $e');
+      print('Error checking cameras: $e'); // Debug log
+      return false;
+    }
+  }
+
+  Future<bool> _requestCameraPermission(BuildContext context) async {
+    try {
+      print('Checking current camera permission status...'); // Debug log
+      final currentStatus = await Permission.camera.status;
+      print('Current permission status: $currentStatus'); // Debug log
+
+      if (currentStatus.isDenied) {
+        print('Requesting camera permission...'); // Debug log
+        final status = await Permission.camera.request();
+        print('Permission request result: $status'); // Debug log
+
+        if (!status.isGranted && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Camera permission is required to take photos'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+        return status.isGranted;
+      }
+
+      return currentStatus.isGranted;
+    } catch (e) {
+      print('Error requesting camera permission: $e'); // Debug log
+      return false;
     }
   }
 
   Future<void> _pickAndUploadImage(
       ImageSource source, BuildContext context) async {
     try {
+      // Check camera availability if camera source is selected
+      if (source == ImageSource.camera) {
+        final isCameraAvailable = await _checkCameraAvailability();
+        if (!isCameraAvailable) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                    'No camera available. Please choose from gallery instead.'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+            // Automatically switch to gallery picker if camera is not available
+            _pickAndUploadImage(ImageSource.gallery, context);
+          }
+          return;
+        }
+
+        // Request camera permission
+        final hasPermission = await _requestCameraPermission(context);
+        if (!hasPermission) return;
+      }
+
       // Show loading indicator
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+      }
 
       final picker = ImagePicker();
       final XFile? image = await picker.pickImage(
@@ -108,13 +138,62 @@ class ProfileImagePickerModal extends StatelessWidget {
     } catch (e) {
       if (context.mounted) {
         Navigator.pop(context); // Close loading indicator
+
+        // Show a more user-friendly error message
+        String errorMessage = 'Error updating image';
+        if (e.toString().contains('camera')) {
+          errorMessage =
+              'Camera not available. Please try using gallery instead.';
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error updating image: $e'),
+            content: Text(errorMessage),
             backgroundColor: Colors.red,
           ),
         );
       }
+    }
+  }
+
+  Future<String?> _uploadImage(String imagePath) async {
+    try {
+      final uploadUrl = dotenv.env['FILE_UPLOAD_ENDPOINT']!;
+      final file = File(imagePath);
+
+      // Create multipart request
+      final request = http.MultipartRequest('POST', Uri.parse(uploadUrl));
+
+      // Add auth header if token is provided
+      if (authToken != null) {
+        request.headers['Authorization'] = 'Bearer $authToken';
+      }
+
+      // Add file to request
+      final fileStream = http.ByteStream(file.openRead());
+      final fileLength = await file.length();
+
+      final multipartFile = http.MultipartFile(
+        'file',
+        fileStream,
+        fileLength,
+        filename: path.basename(file.path),
+      );
+
+      request.files.add(multipartFile);
+
+      // Send request
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final Map<String, dynamic> jsonResponse = json.decode(responseBody);
+        return jsonResponse['url'] as String?;
+      } else {
+        throw Exception('Upload failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
     }
   }
 
