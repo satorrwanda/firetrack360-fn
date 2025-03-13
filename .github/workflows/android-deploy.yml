@@ -106,7 +106,7 @@ jobs:
             export PATH=\$PATH:/flutter/bin && \
             export ANDROID_HOME=/opt/android-sdk && \
             export ANDROID_SDK_ROOT=/opt/android-sdk && \
-            flutter build apk --release
+            flutter build apk --release --dart-define=ENVIRONMENT=production
           "
 
       - name: Copy APK from Container 📋
