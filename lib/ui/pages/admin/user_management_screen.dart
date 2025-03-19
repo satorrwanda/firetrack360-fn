@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firetrack360/models/users.dart';
 import 'package:firetrack360/providers/users_provider.dart';
 import 'package:firetrack360/ui/pages/widgets/user_table.dart';
+import 'package:firetrack360/ui/pages/widgets/add_technician_form.dart';
 
 class UserManagementScreen extends StatelessWidget {
   const UserManagementScreen({super.key});
@@ -50,6 +51,39 @@ class _UserManagementContentState extends State<_UserManagementContent> {
         .toList();
   }
 
+  // Function to show the Add Technician modal dialog
+  void showAddTechnicianModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Add New Technician',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  const AddTechnicianFormNoSubmit(),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,9 +126,7 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.person_add, color: Colors.white),
-                  onPressed: () {
-                    // TODO: Implement add user
-                  },
+                  onPressed: () => showAddTechnicianModal(context),
                 ),
               ],
             ),
@@ -180,6 +212,112 @@ class _UserManagementContentState extends State<_UserManagementContent> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Modified form that doesn't submit to API
+class AddTechnicianFormNoSubmit extends StatefulWidget {
+  const AddTechnicianFormNoSubmit({super.key});
+
+  @override
+  _AddTechnicianFormNoSubmitState createState() =>
+      _AddTechnicianFormNoSubmitState();
+}
+
+class _AddTechnicianFormNoSubmitState extends State<AddTechnicianFormNoSubmit> {
+  final _formKey = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  void _handleFormSubmit() {
+    if (_formKey.currentState!.validate()) {
+      // Just close the dialog without submitting to API
+      Navigator.pop(context);
+
+      // Optionally show a message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Form validated but not submitted to API')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: _firstNameController,
+              decoration: const InputDecoration(labelText: 'First Name'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a first name';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _lastNameController,
+              decoration: const InputDecoration(labelText: 'Last Name'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a last name';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter an email';
+                }
+                if (!value.contains('@')) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _phoneController,
+              decoration: const InputDecoration(labelText: 'Phone'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a phone number';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _handleFormSubmit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFA65D57),
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Create Technician'),
+            ),
+          ],
+        ),
       ),
     );
   }

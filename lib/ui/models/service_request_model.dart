@@ -89,27 +89,6 @@ class Invoice {
   }
 }
 
-class Technician {
-  final String id;
-  final String name;
-  final String email;
-  final String phone;
-
-  Technician(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.phone});
-
-  factory Technician.fromJson(Map<String, dynamic> json) {
-    return Technician(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-    );
-  }
-}
 
 class Client {
   final String id;

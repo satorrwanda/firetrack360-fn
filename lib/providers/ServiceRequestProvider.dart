@@ -1,3 +1,4 @@
+import 'package:firetrack360/models/technician.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/ui/models/service_request_model.dart';
