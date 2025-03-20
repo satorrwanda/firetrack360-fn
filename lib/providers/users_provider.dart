@@ -1,3 +1,5 @@
+import 'package:firetrack360/graphql/mutations/auth_mutations.dart';
+import 'package:firetrack360/graphql/queries/users_query.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/models/users.dart';
@@ -15,32 +17,6 @@ class UsersProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  static const String _getAllUsersQuery = '''
-    query GetAllProfiles {
-      getAllProfiles {
-        id
-        firstName
-        lastName
-        address
-        city
-        state
-        zipCode
-        profilePictureUrl
-        bio
-        dateOfBirth
-        isActive
-        createdAt
-        updatedAt
-        user {
-          email
-          phone
-          role
-          verified
-        }
-      }
-    }
-  ''';
-
   Future<void> loadUsers() async {
     try {
       _isLoading = true;
@@ -49,7 +25,7 @@ class UsersProvider extends ChangeNotifier {
 
       final result = await _client.query(
         QueryOptions(
-          document: gql(_getAllUsersQuery),
+          document: gql(getAllUsersQuery),
           fetchPolicy: FetchPolicy.networkOnly,
         ),
       );
@@ -63,7 +39,8 @@ class UsersProvider extends ChangeNotifier {
 
         _users = profiles.map((profileData) {
           if (profileData == null) {
-            throw FormatException('Received null profile in GraphQL response');
+            throw const FormatException(
+                'Received null profile in GraphQL response');
           }
 
           final profileMap = Map<String, dynamic>.from(profileData as Map);
@@ -182,6 +159,43 @@ class UsersProvider extends ChangeNotifier {
 
   Future<List<User>> getUsersByRole(String role) async {
     return _users.where((user) => user.role == role).toList();
+  }
+
+  Future<Map<String, dynamic>> createTechnician(
+      Map<String, dynamic> input) async {
+    try {
+      _isLoading = true;
+      _error = null;
+      notifyListeners();
+
+      final result = await _client.mutate(
+        MutationOptions(
+          document: gql(createTechnicianMutation),
+          variables: {'technicianInput': input},
+        ),
+      );
+
+      if (result.hasException) {
+        throw _handleGraphQLError(result.exception);
+      }
+
+      if (result.data != null) {
+        final response =
+            result.data!['createTechnician'] as Map<String, dynamic>;
+        _isLoading = false;
+        notifyListeners();
+        return response;
+      } else {
+        _isLoading = false;
+        notifyListeners();
+        throw Exception('No data returned from mutation');
+      }
+    } catch (e) {
+      _error = _formatError(e);
+      _isLoading = false;
+      notifyListeners();
+      rethrow;
+    }
   }
 
   @override
