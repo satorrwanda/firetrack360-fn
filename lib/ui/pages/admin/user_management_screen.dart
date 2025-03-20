@@ -1,4 +1,4 @@
-// lib/ui/pages/user_management_screen.dart
+import 'package:firetrack360/ui/pages/widgets/add_technician_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firetrack360/models/users.dart';
@@ -50,6 +50,17 @@ class _UserManagementContentState extends State<_UserManagementContent> {
         .toList();
   }
 
+  // Function to show the Add Technician modal dialog
+  void showAddTechnicianModal(BuildContext context) {
+    final usersProvider = Provider.of<UsersProvider>(context, listen: false);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AddTechnicianDialog(usersProvider: usersProvider);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,9 +103,8 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.person_add, color: Colors.white),
-                  onPressed: () {
-                    // TODO: Implement add user
-                  },
+                  onPressed: () =>
+                      showAddTechnicianModal(context), // Open the modal
                 ),
               ],
             ),

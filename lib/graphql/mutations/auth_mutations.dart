@@ -80,3 +80,12 @@ const String verifyLoginMutation = '''
     }
   }
 ''';
+
+const String createTechnicianMutation = '''
+  mutation CreateTechnician( \$technicianInput: TechnicianInput!) {
+    createTechnician(technicianInput: \$technicianInput) {
+      message
+      status
+    }
+  }
+''';

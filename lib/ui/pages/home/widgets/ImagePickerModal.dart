@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:camera/camera.dart';
 
 class ProfileImagePickerModal extends StatelessWidget {
   final Function(String) onImageSelected;
@@ -22,77 +20,8 @@ class ProfileImagePickerModal extends StatelessWidget {
     this.authToken,
   }) : super(key: key);
 
-  Future<bool> _checkCameraAvailability() async {
+  Future<void> _pickAndUploadImage(BuildContext context) async {
     try {
-      // Check if device has cameras
-      print('Checking camera availability...'); // Debug log
-      final cameras = await availableCameras();
-      print('Found ${cameras.length} cameras'); // Debug log
-      for (var camera in cameras) {
-        print('Camera: ${camera.name} (${camera.lensDirection})'); // Debug log
-      }
-      return cameras.isNotEmpty;
-    } catch (e) {
-      print('Error checking cameras: $e'); // Debug log
-      return false;
-    }
-  }
-
-  Future<bool> _requestCameraPermission(BuildContext context) async {
-    try {
-      print('Checking current camera permission status...'); // Debug log
-      final currentStatus = await Permission.camera.status;
-      print('Current permission status: $currentStatus'); // Debug log
-
-      if (currentStatus.isDenied) {
-        print('Requesting camera permission...'); // Debug log
-        final status = await Permission.camera.request();
-        print('Permission request result: $status'); // Debug log
-
-        if (!status.isGranted && context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Camera permission is required to take photos'),
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
-        return status.isGranted;
-      }
-
-      return currentStatus.isGranted;
-    } catch (e) {
-      print('Error requesting camera permission: $e'); // Debug log
-      return false;
-    }
-  }
-
-  Future<void> _pickAndUploadImage(
-      ImageSource source, BuildContext context) async {
-    try {
-      // Check camera availability if camera source is selected
-      if (source == ImageSource.camera) {
-        final isCameraAvailable = await _checkCameraAvailability();
-        if (!isCameraAvailable) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                    'No camera available. Please choose from gallery instead.'),
-                duration: Duration(seconds: 3),
-              ),
-            );
-            // Automatically switch to gallery picker if camera is not available
-            _pickAndUploadImage(ImageSource.gallery, context);
-          }
-          return;
-        }
-
-        // Request camera permission
-        final hasPermission = await _requestCameraPermission(context);
-        if (!hasPermission) return;
-      }
-
       // Show loading indicator
       if (context.mounted) {
         showDialog(
@@ -108,7 +37,7 @@ class ProfileImagePickerModal extends StatelessWidget {
 
       final picker = ImagePicker();
       final XFile? image = await picker.pickImage(
-        source: source,
+        source: ImageSource.gallery,
         maxWidth: 1000,
         maxHeight: 1000,
         imageQuality: 85,
@@ -139,16 +68,10 @@ class ProfileImagePickerModal extends StatelessWidget {
       if (context.mounted) {
         Navigator.pop(context); // Close loading indicator
 
-        // Show a more user-friendly error message
-        String errorMessage = 'Error updating image';
-        if (e.toString().contains('camera')) {
-          errorMessage =
-              'Camera not available. Please try using gallery instead.';
-        }
-
+        // Show a user-friendly error message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(errorMessage),
+            content: Text('Error updating image: $e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -240,14 +163,9 @@ class ProfileImagePickerModal extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ListTile(
-            leading: const Icon(Icons.photo_camera),
-            title: const Text('Take a Photo'),
-            onTap: () => _pickAndUploadImage(ImageSource.camera, context),
-          ),
-          ListTile(
             leading: const Icon(Icons.photo_library),
             title: const Text('Choose from Gallery'),
-            onTap: () => _pickAndUploadImage(ImageSource.gallery, context),
+            onTap: () => _pickAndUploadImage(context),
           ),
           if (hasExistingImage && onRemoveImage != null) ...[
             const Divider(),

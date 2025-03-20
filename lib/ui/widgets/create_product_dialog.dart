@@ -144,27 +144,40 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
+      backgroundColor: Colors.white, // Ensure the dialog is not transparent
       child: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header Section with Background Color
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color(0xFFA65D57), // Header background color
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                ),
+              ),
+              child: Row(
                 children: [
-                  Icon(Icons.fire_extinguisher,
-                      color: Theme.of(context).primaryColor),
+                  Icon(Icons.fire_extinguisher, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
                     'New Fire Extinguisher',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: Colors.white, // White text for contrast
                         ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              Form(
+            ),
+            // Form Section
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -337,8 +350,12 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
-              Row(
+            ),
+            const SizedBox(height: 16),
+            // Buttons Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
@@ -362,8 +379,8 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
