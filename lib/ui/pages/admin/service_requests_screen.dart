@@ -1,14 +1,19 @@
+import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firetrack360/ui/models/service_request_model.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ServiceRequestsScreen extends ConsumerWidget {
+class ServiceRequestsScreen extends HookConsumerWidget {
   const ServiceRequestsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final serviceRequestsAsync = ref.watch(filteredServiceRequestsProvider);
+    final authState = useAuth();
+    final userRole = authState.userRole;
+    final serviceRequestsAsync = (userRole?.toUpperCase() ?? '') == 'CLIENT'
+        ? AsyncValue.data([])
+        : ref.watch(filteredServiceRequestsProvider);
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -54,12 +59,13 @@ class ServiceRequestsScreen extends ConsumerWidget {
                             .refreshServiceRequests();
                       },
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.add, color: Colors.white),
-                      onPressed: () {
-                        // TODO: Implement add new service request
-                      },
-                    ),
+                    if (userRole == 'client')
+                      IconButton(
+                        icon: const Icon(Icons.add, color: Colors.white),
+                        onPressed: () {
+                          // TODO: Implement add new service request
+                        },
+                      ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -302,7 +308,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\${request.invoice!.totalAmount.toStringAsFixed(2)}',
+                        '\$${request.invoice!.totalAmount.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

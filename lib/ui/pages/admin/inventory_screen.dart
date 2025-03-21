@@ -1,5 +1,4 @@
-// lib/ui/screens/inventory_screen.dart
-
+import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/models/product.dart';
 import 'package:firetrack360/ui/pages/admin/product_details_screen.dart';
 import 'package:firetrack360/ui/pages/widgets/product_card.dart';
@@ -164,6 +163,7 @@ class InventoryScreen extends ConsumerWidget {
     final currentPage = ref.watch(currentPageProvider);
     final totalPages = ref.watch(totalPagesProvider);
     final searchQuery = ref.watch(searchQueryProvider);
+    final userRole = useAuth().userRole;
 
     return Scaffold(
       appBar: AppBar(
@@ -194,12 +194,15 @@ class InventoryScreen extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showCreateProductDialog(context, ref),
-        icon: const Icon(Icons.add),
-        label: const Text('New'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      // Conditionally render the FAB based on userRole
+      floatingActionButton: userRole == 'admin'
+          ? FloatingActionButton.extended(
+              onPressed: () => _showCreateProductDialog(context, ref),
+              icon: const Icon(Icons.add),
+              label: const Text('New'),
+              backgroundColor: Theme.of(context).primaryColor,
+            )
+          : null,
       body: RefreshIndicator(
         onRefresh: () => _refreshData(context, ref),
         child: Column(
@@ -287,7 +290,7 @@ class InventoryScreen extends ConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          if (searchQuery.isEmpty)
+                          if (searchQuery.isEmpty && userRole == 'admin')
                             ElevatedButton.icon(
                               onPressed: () =>
                                   _showCreateProductDialog(context, ref),
@@ -311,18 +314,26 @@ class InventoryScreen extends ConsumerWidget {
                             MaterialPageRoute(
                               builder: (context) => ProductDetailsScreen(
                                 product: product,
-                                onEdit: () =>
-                                    _showEditDialog(context, ref, product),
-                                onDelete: () => _showDeleteConfirmation(
-                                    context, ref, product),
+                                onEdit: userRole == 'admin'
+                                    ? () =>
+                                        _showEditDialog(context, ref, product)
+                                    : null,
+                                onDelete: userRole == 'admin'
+                                    ? () => _showDeleteConfirmation(
+                                        context, ref, product)
+                                    : null,
                               ),
                             ),
                           );
                         },
-                        onEdit: () => _showEditDialog(context, ref, product),
-                        onDelete: () =>
-                            _showDeleteConfirmation(context, ref, product),
-                        canManageProducts: true,
+                        onEdit: userRole == 'admin'
+                            ? () => _showEditDialog(context, ref, product)
+                            : null,
+                        onDelete: userRole == 'admin'
+                            ? () =>
+                                _showDeleteConfirmation(context, ref, product)
+                            : null,
+                        canManageProducts: userRole == 'admin', // Pass userRole
                       );
                     },
                   );

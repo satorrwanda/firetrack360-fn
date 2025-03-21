@@ -78,13 +78,6 @@ class AppRoutes {
       aiInsights: (_) => const AIInsightsScreen(),
 
 
-      // Manager routes
-      technicianManagement: (_) => const TechnicianManagementScreen(),
-      taskAssignment: (_) => const TaskAssignmentScreen(),
-      locationTracking: (_) => const LocationTrackingScreen(),
-      serviceFeedback: (_) => const ServiceFeedbackScreen(),
-      stockManagement: (_) => const StockManagementScreen(),
-
       // Technician routes
       myTasks: (_) => const MyTasksScreen(),
       navigation: (_) => const NavigationScreen(),
@@ -93,7 +86,7 @@ class AppRoutes {
       customerFeedback: (_) => const CustomerFeedbackScreen(),
 
       // Client routes
-      dashboard: (_) => const DashboardScreen(),
+      dashboard: (_) => const HomePage(),
       myExtinguishers: (_) => const MyExtinguishersScreen(),
       requestService: (_) => const RequestServiceScreen(),
       payments: (_) => const PaymentsScreen(),

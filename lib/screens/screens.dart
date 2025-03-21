@@ -23,13 +23,6 @@ export 'package:firetrack360/ui/pages/admin/finance_screen.dart';
 export 'package:firetrack360/ui/pages/admin/ai_insights_screen.dart';
 export 'package:firetrack360/ui/pages/admin/staff_management_screen.dart';
 
-// Manager screens
-export 'package:firetrack360/ui/pages/manager/technician_management_screen.dart';
-export 'package:firetrack360/ui/pages/manager/task_assignment_screen.dart';
-export 'package:firetrack360/ui/pages/manager/location_tracking_screen.dart';
-export 'package:firetrack360/ui/pages/manager/service_feedback_screen.dart';
-export 'package:firetrack360/ui/pages/manager/stock_management_screen.dart';
-
 // Technician screens
 export 'package:firetrack360/ui/pages/technician/my_tasks_screen.dart';
 export 'package:firetrack360/ui/pages/technician/navigation_screen.dart';
@@ -38,7 +31,6 @@ export 'package:firetrack360/ui/pages/technician/offline_mode_screen.dart';
 export 'package:firetrack360/ui/pages/technician/customer_feedback_screen.dart';
 
 // Client screens
-export 'package:firetrack360/ui/pages/client/dashboard_screen.dart';
 export 'package:firetrack360/ui/pages/client/my_extinguishers_screen.dart';
 export 'package:firetrack360/ui/pages/client/request_service_screen.dart';
 export 'package:firetrack360/ui/pages/client/payments_screen.dart';

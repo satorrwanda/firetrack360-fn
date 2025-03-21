@@ -47,7 +47,7 @@ class GraphQLConfiguration {
             if (response.errors != null && response.errors!.isNotEmpty) {
               if (GraphQLErrorHandler.isAuthenticationError(
                   response.errors!.first)) {
-                await AuthService.logout();
+                // await AuthService.logout();
               }
             }
             yield response;
@@ -55,7 +55,7 @@ class GraphQLConfiguration {
         } catch (error) {
           if (error is LinkException &&
               GraphQLErrorHandler.isAuthenticationError(error)) {
-            await AuthService.logout();
+            // await AuthService.logout();
           }
           rethrow;
         }

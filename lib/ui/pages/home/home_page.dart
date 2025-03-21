@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firetrack360/hooks/use_auth.dart';
-import 'package:firetrack360/hooks/use_navigation.dart';
-import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/routes/auth_gateway.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/custom_bottom_nav.dart';
@@ -15,54 +13,25 @@ class HomePage extends HookWidget {
   Widget build(BuildContext context) {
     final authState = useAuth();
     final selectedIndex = useState(0);
-    final bottomNavIndex = useState(0);
-    final navigator = useNavigation();
 
-    void handleBottomNavTap(int index) {
-      bottomNavIndex.value = index;
-      switch (index) {
-        case 0:
-          navigator.navigateAndReplace(AppRoutes.home);
-          break;
-        case 1:
-          navigator.navigateTo(AppRoutes.analytics);
-          break;
-        case 2:
-          navigator.navigateTo(AppRoutes.profile);
-          break;
+    // Handle errors globally
+    useEffect(() {
+      if (authState.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(authState.error!),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
-    }
+      return null;
+    }, [authState.error]);
 
     return AuthGateway(
       child: Scaffold(
         appBar: CustomAppBar(
-          
           actions: [
-            IconButton(
-              icon: Stack(
-                children: [
-                  const Icon(Icons.notifications_outlined),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              onPressed: () {
-                // Handle notifications
-              },
-            ),
+            _buildNotificationIcon(),
             const SizedBox(width: 8),
           ],
           title: const Text('Home'),
@@ -72,9 +41,7 @@ class HomePage extends HookWidget {
           onIndexSelected: (index) => selectedIndex.value = index,
         ),
         body: _buildBody(context, authState),
-        bottomNavigationBar: CustomBottomNav(
-          userRole: authState.userRole,
-        ),
+        bottomNavigationBar: CustomBottomNav(userRole: authState.userRole),
       ),
     );
   }
@@ -85,10 +52,7 @@ class HomePage extends HookWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Colors.blue[50]!,
-            Colors.white,
-          ],
+          colors: [Colors.blue[50]!, Colors.white],
         ),
       ),
       child: SafeArea(
@@ -102,7 +66,6 @@ class HomePage extends HookWidget {
               _buildQuickActions(context),
               const SizedBox(height: 24),
               _buildStatusSection(context, authState),
-              if (authState.error != null) _buildErrorMessage(authState.error!),
             ],
           ),
         ),
@@ -113,9 +76,7 @@ class HomePage extends HookWidget {
   Widget _buildWelcomeSection(BuildContext context) {
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -153,19 +114,31 @@ class HomePage extends HookWidget {
         const SizedBox(height: 12),
         Row(
           children: [
-            _buildActionCard(
-              context,
-              icon: Icons.add_circle_outline,
-              title: 'New Inspection',
-              color: Colors.blue,
-            ),
-            const SizedBox(width: 12),
-            _buildActionCard(
-              context,
-              icon: Icons.inventory_2_outlined,
-              title: 'View Inventory',
-              color: Colors.green,
-            ),
+            Expanded(
+                child: _buildActionCard(context,
+                    icon: Icons.inventory,
+                    title: 'Inventory',
+                    color: Colors.blue)),
+            Expanded(
+                child: _buildActionCard(context,
+                    icon: Icons.miscellaneous_services,
+                    title: 'Services',
+                    color: Colors.green)),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+                child: _buildActionCard(context,
+                    icon: Icons.payment,
+                    title: 'Payments & Billing',
+                    color: Colors.orange)),
+            Expanded(
+                child: _buildActionCard(context,
+                    icon: Icons.map,
+                    title: 'Navigation',
+                    color: Colors.purple)),
           ],
         ),
       ],
@@ -177,35 +150,27 @@ class HomePage extends HookWidget {
     required IconData icon,
     required String title,
     required Color color,
+    VoidCallback? onTap,
   }) {
-    final navigator = useNavigation();
-    return Expanded(
-      child: Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            if (title == 'View Inventory') {
-              navigator.navigateTo(AppRoutes.inventory);
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Icon(icon, size: 32, color: color),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-              ],
-            ),
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Icon(icon, size: 32, color: color),
+              const SizedBox(height: 8),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+              ),
+            ],
           ),
         ),
       ),
@@ -215,9 +180,7 @@ class HomePage extends HookWidget {
   Widget _buildStatusSection(BuildContext context, AuthState authState) {
     return Card(
       elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -253,30 +216,31 @@ class HomePage extends HookWidget {
     );
   }
 
-  Widget _buildErrorMessage(String error) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Card(
-        color: Colors.red[50],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Icon(Icons.error_outline, color: Colors.red[700]),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  error,
-                  style: TextStyle(color: Colors.red[700]),
-                ),
+  Widget _buildNotificationIcon() {
+    return IconButton(
+      icon: Stack(
+        children: [
+          const Icon(Icons.notifications_outlined),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(6),
               ),
-            ],
+              constraints: const BoxConstraints(
+                minWidth: 12,
+                minHeight: 12,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
+      onPressed: () {
+        // Handle notification tap
+      },
     );
   }
 }
