@@ -115,30 +115,42 @@ class HomePage extends HookWidget {
         Row(
           children: [
             Expanded(
-                child: _buildActionCard(context,
-                    icon: Icons.inventory,
-                    title: 'Inventory',
-                    color: Colors.blue)),
+                child: _buildActionCard(
+              context,
+              icon: Icons.inventory,
+              title: 'Inventory',
+              color: Colors.blue,
+              onTap: () => Navigator.pushNamed(context, '/inventory'),
+            )),
             Expanded(
-                child: _buildActionCard(context,
-                    icon: Icons.miscellaneous_services,
-                    title: 'Services',
-                    color: Colors.green)),
+                child: _buildActionCard(
+              context,
+              icon: Icons.miscellaneous_services,
+              title: 'Services',
+              color: Colors.green,
+              onTap: () => Navigator.pushNamed(context, '/service-requests'),
+            )),
           ],
         ),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
-                child: _buildActionCard(context,
-                    icon: Icons.payment,
-                    title: 'Payments & Billing',
-                    color: Colors.orange)),
+                child: _buildActionCard(
+              context,
+              icon: Icons.payment,
+              title: 'Payments & Billing',
+              color: Colors.orange,
+              onTap: () => Navigator.pushNamed(context, '/payments'),
+            )),
             Expanded(
-                child: _buildActionCard(context,
-                    icon: Icons.map,
-                    title: 'Navigation',
-                    color: Colors.purple)),
+                child: _buildActionCard(
+              context,
+              icon: Icons.map,
+              title: 'Navigation',
+              color: Colors.purple,
+              onTap: () => Navigator.pushNamed(context, '/navigation'),
+            )),
           ],
         ),
       ],
