@@ -176,7 +176,7 @@ class _CreateServiceRequestModalState
                 items: _technicians.map((technician) {
                   return DropdownMenuItem(
                     value: technician,
-                    child: Text('${technician.fullName} (${technician.email})'),
+                    child: Text('${technician.fullName} (${technician.phone})'),
                   );
                 }).toList(),
                 onChanged: (value) {

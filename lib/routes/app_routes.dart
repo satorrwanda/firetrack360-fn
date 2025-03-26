@@ -25,7 +25,6 @@ class AppRoutes {
   static const String serviceRequests = '/service-requests';
   static const String inventory = '/inventory';
   static const String finance = '/finance';
-  static const String aiInsights = '/ai-insights';
 
   // Manager Routes
   static const String technicianManagement = '/technician-management';
@@ -75,9 +74,6 @@ class AppRoutes {
       serviceRequests: (_) => const ServiceRequestsScreen(),
       inventory: (_) => const InventoryScreen(),
       finance: (_) => const FinanceScreen(),
-      aiInsights: (_) => const AIInsightsScreen(),
-
-
       // Technician routes
       myTasks: (_) => const MyTasksScreen(),
       navigation: (_) => const NavigationScreen(),
@@ -183,11 +179,6 @@ class AppRoutes {
   static void navigateToFinance(BuildContext context) {
     Navigator.of(context).pushNamed(finance);
   }
-
-  static void navigateToAIInsights(BuildContext context) {
-    Navigator.of(context).pushNamed(aiInsights);
-  }
-
 
   // Manager navigation methods
   static void navigateToTechnicianManagement(BuildContext context) {

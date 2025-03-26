@@ -198,9 +198,19 @@ class UsersProvider extends ChangeNotifier {
     }
   }
 
+
+
   @override
   void dispose() {
     _users = [];
     super.dispose();
+  }
+
+  List<User> getTechnicians() {
+    return _users.where((user) {
+      return user.role.toLowerCase() == 'technician' ||
+          user.role.toLowerCase() ==
+              'tech';
+    }).toList();
   }
 }

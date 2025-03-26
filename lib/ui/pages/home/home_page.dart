@@ -141,7 +141,7 @@ class HomePage extends HookWidget {
               icon: Icons.payment,
               title: 'Payments & Billing',
               color: Colors.orange,
-              onTap: () => Navigator.pushNamed(context, '/payments'),
+              onTap: () => Navigator.pushNamed(context, '/finance'),
             )),
             Expanded(
                 child: _buildActionCard(

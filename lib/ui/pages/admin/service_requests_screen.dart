@@ -1,6 +1,8 @@
 import 'package:firetrack360/hooks/use_auth.dart';
+import 'package:firetrack360/models/service_request.dart';
+import 'package:firetrack360/ui/pages/home/widgets/create_service_request_modal.dart'
+    as home_widgets;
 import 'package:flutter/material.dart';
-import 'package:firetrack360/ui/models/service_request_model.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,9 +13,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = useAuth();
     final userRole = authState.userRole;
-    final serviceRequestsAsync = (userRole?.toUpperCase() ?? '') == 'CLIENT'
-        ? AsyncValue.data([])
-        : ref.watch(filteredServiceRequestsProvider);
+    final serviceRequestsAsync = ref.watch(filteredServiceRequestsProvider);
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -59,11 +59,20 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                             .refreshServiceRequests();
                       },
                     ),
-                    if (userRole == 'client')
+                    if (userRole == 'CLIENT')
                       IconButton(
                         icon: const Icon(Icons.add, color: Colors.white),
                         onPressed: () {
-                          // TODO: Implement add new service request
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                const home_widgets.CreateServiceRequestModal(),
+                          ).then((_) {
+                            // Refresh the list after creating a new request
+                            ref
+                                .read(serviceRequestNotifierProvider.notifier)
+                                .refreshServiceRequests();
+                          });
                         },
                       ),
                   ],
@@ -239,7 +248,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        request.technician.name ?? request.technician.email,
+                        request.technician.firstName,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
