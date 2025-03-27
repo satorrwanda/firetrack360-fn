@@ -1,5 +1,5 @@
 const String createServiceRequestMutation = '''
-  mutation CreateServiceRequest(\$input: ServiceRequestInput!) {
+  mutation CreateServiceRequest(\$input: CreateServiceRequestInput!) {
     createServiceRequest(input: \$input) {
       id
       title

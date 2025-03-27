@@ -298,7 +298,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        request.invoice!.status,
+                        request.invoice?.status ?? 'Unknown',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -317,7 +317,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\$${request.invoice!.totalAmount.toStringAsFixed(2)}',
+                        '\$${request.invoice!.totalAmount?.toStringAsFixed(2) ?? '0.00'}',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

@@ -1,38 +1,11 @@
+import 'package:firetrack360/configs/graphql_client.dart';
+import 'package:firetrack360/graphql/queries/profile_query.dart';
+import 'package:firetrack360/models/technician.dart';
+import 'package:firetrack360/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
-import 'package:firetrack360/hooks/use_auth.dart';
-
-class Technician {
-  final String? id;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String phone;
-  final String role;
-
-  Technician({
-    this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
-    required this.role,
-  });
-
-  factory Technician.fromJson(Map<String, dynamic> json) {
-    return Technician(
-      id: json['id'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      role: json['role'] as String,
-    );
-  }
-
-  String get fullName => '$firstName $lastName';
-}
 
 class CreateServiceRequestModal extends ConsumerStatefulWidget {
   const CreateServiceRequestModal({super.key});
@@ -47,33 +20,8 @@ class _CreateServiceRequestModalState
   final _formKey = GlobalKey<FormState>();
   final _descriptionController = TextEditingController();
   bool _isSubmitting = false;
-
-  final List<Technician> _technicians = [
-    Technician(
-      id: 'tech1',
-      firstName: 'Technician',
-      lastName: 'A',
-      email: 'tech1@example.com',
-      phone: '1234567890',
-      role: 'technician',
-    ),
-    Technician(
-      id: 'tech2',
-      firstName: 'Technician',
-      lastName: 'B',
-      email: 'tech2@example.com',
-      phone: '0987654321',
-      role: 'technician',
-    ),
-    Technician(
-      id: 'tech3',
-      firstName: 'Technician',
-      lastName: 'C',
-      email: 'tech3@example.com',
-      phone: '5555555555',
-      role: 'technician',
-    ),
-  ];
+  bool _isLoadingTechnicians = false;
+  String? _errorMessage;
 
   final List<String> _serviceOptions = [
     'Refill',
@@ -83,6 +31,13 @@ class _CreateServiceRequestModalState
   ];
   String? _selectedService;
   Technician? _selectedTechnician;
+  List<Technician> _technicians = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTechnicians();
+  }
 
   @override
   void dispose() {
@@ -90,14 +45,64 @@ class _CreateServiceRequestModalState
     super.dispose();
   }
 
+  Future<void> _loadTechnicians() async {
+    if (_isLoadingTechnicians) return;
+
+    setState(() {
+      _isLoadingTechnicians = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final client = GraphQLConfiguration.initializeClient().value;
+      final result = await client.query(
+        QueryOptions(
+          document: gql(getAvailableTechniciansQuery),
+          fetchPolicy: FetchPolicy.networkOnly,
+        ),
+      );
+
+      if (result.hasException) {
+        throw _handleGraphQLError(result.exception);
+      }
+
+      if (result.data != null) {
+        final technicians = result.data!['getAvailableTechnicians'] as List;
+        setState(() {
+          _technicians =
+              technicians.map((json) => Technician.fromJson(json)).toList();
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Failed to load technicians: ${e.toString()}';
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _isLoadingTechnicians = false);
+      }
+    }
+  }
+
+  String _handleGraphQLError(OperationException? exception) {
+    if (exception == null) return 'Unknown error occurred';
+    if (exception.linkException != null) {
+      return 'Network error occurred. Please check your connection.';
+    }
+    if (exception.graphqlErrors.isNotEmpty) {
+      return exception.graphqlErrors.map((e) => e.message).join(', ');
+    }
+    return 'An error occurred while loading technicians';
+  }
+
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
+    if (_selectedTechnician == null) return;
 
     setState(() => _isSubmitting = true);
 
     try {
-      final authState = useAuth();
-      final userId = authState.userId;
+      final userId = await AuthService.getUserId();
       if (userId == null) throw Exception('User not authenticated');
 
       await ref
@@ -106,26 +111,18 @@ class _CreateServiceRequestModalState
             title: _selectedService!,
             description: _descriptionController.text.trim(),
             clientId: userId,
-            technicianId: _selectedTechnician!.id!,
+            technicianId: _selectedTechnician!.id ?? '',
           );
 
       if (mounted) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Service request created successfully!'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: ${e.toString()}'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        print(e.toString());
+        setState(() {
+          _errorMessage = 'Failed to create request: ${e.toString()}';
+        });
       }
     } finally {
       if (mounted) {
@@ -137,23 +134,68 @@ class _CreateServiceRequestModalState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Create New Service Request'),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      title: Text(
+        'Create New Service Request',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColor,
+        ),
+        textAlign: TextAlign.center,
+      ),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Service Dropdown with Enhanced Styling
               DropdownButtonFormField<String>(
                 value: _selectedService,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Select Service',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 1.5,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                dropdownColor: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                  fontSize: 16,
                 ),
                 items: _serviceOptions.map((service) {
                   return DropdownMenuItem(
                     value: service,
-                    child: Text(service),
+                    child: Text(
+                      service,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -167,36 +209,138 @@ class _CreateServiceRequestModalState
                 },
               ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<Technician>(
-                value: _selectedTechnician,
-                decoration: const InputDecoration(
-                  labelText: 'Select Technician',
-                  border: OutlineInputBorder(),
+
+              // Technician Dropdown with Elegant Styling
+              if (_isLoadingTechnicians)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else if (_errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    _errorMessage!,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              else if (_technicians.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'No available technicians found',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.grey,
+                    ),
+                  ),
+                )
+              else
+                DropdownButtonFormField<Technician>(
+                  value: _selectedTechnician,
+                  decoration: InputDecoration(
+                    labelText: 'Select Technician',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.5,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  dropdownColor: Colors.white,
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                    fontSize: 16,
+                  ),
+                  items: _technicians.map((technician) {
+                    return DropdownMenuItem(
+                      value: technician,
+                      child: Text(
+                        technician.fullName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() => _selectedTechnician = value);
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a technician';
+                    }
+                    return null;
+                  },
+                  isExpanded: true,
                 ),
-                items: _technicians.map((technician) {
-                  return DropdownMenuItem(
-                    value: technician,
-                    child: Text('${technician.fullName} (${technician.phone})'),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() => _selectedTechnician = value);
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select a technician';
-                  }
-                  return null;
-                },
-              ),
               const SizedBox(height: 16),
+
+              // Description TextField with Modern Styling
               TextFormField(
                 controller: _descriptionController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Description',
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  hintText: 'Describe your service request...',
+                  hintStyle: const TextStyle(
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 1.5,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 2,
+                    ),
+                  ),
                 ),
                 maxLines: 3,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Please enter a description';
@@ -212,12 +356,31 @@ class _CreateServiceRequestModalState
         ),
       ),
       actions: [
+        // Styled Action Buttons
         TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: Theme.of(context).primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
           onPressed: _isSubmitting ? null : () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         ElevatedButton(
-          onPressed: _isSubmitting ? null : _submitForm,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          onPressed:
+              _isSubmitting || _isLoadingTechnicians ? null : _submitForm,
           child: _isSubmitting
               ? const SizedBox(
                   width: 20,
@@ -227,7 +390,13 @@ class _CreateServiceRequestModalState
                     color: Colors.white,
                   ),
                 )
-              : const Text('Submit'),
+              : const Text(
+                  'Submit',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
         ),
       ],
     );

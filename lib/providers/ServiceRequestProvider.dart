@@ -210,7 +210,8 @@ class ServiceRequestNotifier
             phone: '',
             firstName: '',
             lastName: '',
-            role: '',
+            role: '', 
+            id: '',
           ),
           client: Technician(
             email: '',
@@ -218,6 +219,7 @@ class ServiceRequestNotifier
             firstName: '',
             lastName: '',
             role: '',
+             id: '',
           ),
         ),
       ),
