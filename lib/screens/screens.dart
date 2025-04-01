@@ -39,3 +39,4 @@ export 'package:firetrack360/ui/pages/client/safety_tips_screen.dart';
 
 // Common screens
 export 'package:firetrack360/ui/pages/home/screens/settings_screen.dart';
+export 'package:firetrack360/ui/pages/notification/notification_page .dart';

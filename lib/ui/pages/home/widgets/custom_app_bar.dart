@@ -1,3 +1,4 @@
+import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -73,7 +74,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
             onPressed: () {
-              // Handle notifications
+              AppRoutes.navigateToNotification(context);
             },
           ),
         ),
