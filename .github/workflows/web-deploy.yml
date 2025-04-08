@@ -55,7 +55,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DO_USERNAME }}/firetrack360:latest,${{ secrets.DO_PRIVATE_KEY }}/firetrack360:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/firetrack360:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/firetrack360:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/firetrack360:buildcache,mode=max
 
