@@ -1,4 +1,4 @@
-name: Web Deployment
+name: Deploy Flutter Web App to Digital Ocean
 
 on:
   push:
@@ -6,12 +6,17 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  CI: true
+
 jobs:
-  web-deploy:
-    name: Web Deployment
+  build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: docker_image
+      cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -23,10 +28,30 @@ jobs:
         run: flutter pub get
 
       - name: Build Web
-        run: flutter build web
+        run: flutter build web --release --web-renderer html --dart-define=ENVIRONMENT=production
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Build and Publish Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          image: ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360
+          registry: docker.io
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          tags: latest
+
+      - name: Deploy to DigitalOcean
+        env:
+          DO_SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          DO_DROPLET_IP: ${{ secrets.DO_DROPLET_IP }}
+        run: |
+          echo "$DO_SSH_PRIVATE_KEY" > do_key.pem
+          chmod 600 do_key.pem
+
+          ssh -i do_key.pem -o StrictHostKeyChecking=no root@$DO_DROPLET_IP <<EOF
+          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest
+          docker stop firetrack360-frontend || true
+          docker rm firetrack360-frontend || true
+          docker run -d --name firetrack360-frontend -p 4000:4000 ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest
+          EOF
+
+          rm -f do_key.pem
