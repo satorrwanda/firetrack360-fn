@@ -12,46 +12,68 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
     concurrency:
-      group: docker_image
-      cancel-in-progress: false
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    
     steps:
-      - uses: actions/checkout@v3
+      # Step 1: Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
+      # Step 2: Set up Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.0"
           channel: "stable"
+          cache: true
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Step 4: Build Flutter Web
       - name: Build Web
         run: flutter build web --release --web-renderer html --dart-define=ENVIRONMENT=production
 
-      - name: Build and Publish Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v5
+      # Step 5: Docker build and push to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          image: ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360
-          registry: docker.io
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          tags: latest
+          
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest,${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:buildcache,mode=max
 
-      - name: Deploy to DigitalOcean
-        env:
-          DO_SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          DO_DROPLET_IP: ${{ secrets.DO_DROPLET_IP }}
-        run: |
-          echo "$DO_SSH_PRIVATE_KEY" > do_key.pem
-          chmod 600 do_key.pem
-
-          ssh -i do_key.pem -o StrictHostKeyChecking=no root@$DO_DROPLET_IP <<EOF
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest
-          docker stop firetrack360-frontend || true
-          docker rm firetrack360-frontend || true
-          docker run -d --name firetrack360-frontend -p 4000:4000 ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest
-          EOF
-
-          rm -f do_key.pem
+      # Step 6: Deploy to DigitalOcean droplet
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DO_DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest
+            docker stop firetrack360-frontend || true
+            docker rm firetrack360-frontend || true
+            docker run -d --name firetrack360-frontend \
+              --restart unless-stopped \
+              -p 4000:4000 \
+              ${{ secrets.DOCKER_HUB_USERNAME }}/firetrack360:latest
+            
+            # Cleanup unused images to prevent disk space issues
+            docker image prune -af --filter "until=24h"
