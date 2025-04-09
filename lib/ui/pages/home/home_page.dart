@@ -30,11 +30,11 @@ class HomePage extends HookWidget {
     return AuthGateway(
       child: Scaffold(
         appBar: CustomAppBar(
+          title: ('Home'),
           actions: [
             _buildNotificationIcon(),
             const SizedBox(width: 8),
           ],
-          title: const Text('Home'),
         ),
         drawer: CustomDrawer(
           selectedIndex: selectedIndex.value,

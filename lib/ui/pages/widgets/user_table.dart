@@ -2,13 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:firetrack360/models/users.dart';
 
-
 class UserTable extends StatefulWidget {
   final List<User> users;
 
   const UserTable({
     super.key,
-    required this.users,
+    this.users = const [],
   });
 
   @override
@@ -148,12 +147,10 @@ class _UserTableState extends State<UserTable> {
           CircleAvatar(
             radius: 24,
             backgroundColor: Colors.white,
-            child: Text(
-              '${user.firstName[0]}${user.lastName[0]}',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Icon(
+              Icons.person,
+              color: Theme.of(context).primaryColor,
+              size: 28,
             ),
           ),
           const SizedBox(width: 16),
@@ -162,7 +159,7 @@ class _UserTableState extends State<UserTable> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${user.firstName} ${user.lastName}',
+                  '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -278,13 +275,10 @@ class _UserTableState extends State<UserTable> {
                                       backgroundColor: Theme.of(context)
                                           .primaryColor
                                           .withOpacity(0.1),
-                                      child: Text(
-                                        user.firstName[0],
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 16,
+                                        color: Theme.of(context).primaryColor,
                                       ),
                                     ),
                                     const SizedBox(width: 8),
@@ -424,7 +418,7 @@ class _UserTableState extends State<UserTable> {
                     ),
                     const SizedBox(width: 24),
                     Text(
-                      '${_currentPage * _rowsPerPage + 1}-${(_currentPage + 1) * _rowsPerPage > _sortedUsers.length ? _sortedUsers.length : (_currentPage + 1) * _rowsPerPage} of ${_sortedUsers.length}',
+                      '${_sortedUsers.isEmpty ? 0 : _currentPage * _rowsPerPage + 1}-${(_currentPage + 1) * _rowsPerPage > _sortedUsers.length ? _sortedUsers.length : (_currentPage + 1) * _rowsPerPage} of ${_sortedUsers.length}',
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],

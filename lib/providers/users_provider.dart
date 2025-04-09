@@ -63,15 +63,7 @@ class UsersProvider extends ChangeNotifier {
   }
 
   void _validateProfileData(Map<String, dynamic> profile) {
-    final requiredFields = [
-      'id',
-      'firstName',
-      'lastName',
-      'isActive',
-      'createdAt',
-      'updatedAt',
-      'user'
-    ];
+    final requiredFields = ['id', 'isActive', 'createdAt', 'updatedAt', 'user'];
 
     for (final field in requiredFields) {
       if (!profile.containsKey(field) || profile[field] == null) {
@@ -198,8 +190,6 @@ class UsersProvider extends ChangeNotifier {
     }
   }
 
-
-
   @override
   void dispose() {
     _users = [];
@@ -209,8 +199,7 @@ class UsersProvider extends ChangeNotifier {
   List<User> getTechnicians() {
     return _users.where((user) {
       return user.role.toLowerCase() == 'technician' ||
-          user.role.toLowerCase() ==
-              'tech';
+          user.role.toLowerCase() == 'tech';
     }).toList();
   }
 }

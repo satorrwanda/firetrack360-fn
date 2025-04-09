@@ -1,7 +1,9 @@
 // lib/ui/screens/inventory_screen.dart
 
+import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/models/product.dart';
 import 'package:firetrack360/ui/pages/admin/product_details_screen.dart';
+import 'package:firetrack360/ui/pages/home/widgets/custom_app_bar.dart';
 import 'package:firetrack360/ui/pages/widgets/product_card.dart';
 import 'package:firetrack360/ui/widgets/create_product_dialog.dart';
 import 'package:firetrack360/ui/widgets/edit_product_dialog.dart';
@@ -9,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firetrack360/providers/product_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firetrack360/hooks/use_auth.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class InventoryScreen extends ConsumerWidget {
+class InventoryScreen extends HookConsumerWidget {
   const InventoryScreen({super.key});
 
   void _showCreateProductDialog(BuildContext context, WidgetRef ref) {
@@ -164,42 +168,26 @@ class InventoryScreen extends ConsumerWidget {
     final currentPage = ref.watch(currentPageProvider);
     final totalPages = ref.watch(totalPagesProvider);
     final searchQuery = ref.watch(searchQueryProvider);
+    final theme = Theme.of(context);
+
+    final authState = useAuth();
+    var isAdmin = authState.userRole?.toLowerCase() == 'admin';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Fire Extinguisher Inventory',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withRed(150),
-              ],
-            ),
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: 'Inventory',
+        showBackButton: true,
+        backgroundColor: theme.colorScheme.primary,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () => _refreshData(context, ref),
-          ),
-        ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showCreateProductDialog(context, ref),
-        icon: const Icon(Icons.add),
-        label: const Text('New'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      floatingActionButton: isAdmin
+          ? FloatingActionButton.extended(
+              onPressed: () => _showCreateProductDialog(context, ref),
+              icon: const Icon(Icons.add),
+              label: const Text('New'),
+              backgroundColor: Theme.of(context).primaryColor,
+            )
+          : null,
       body: RefreshIndicator(
         onRefresh: () => _refreshData(context, ref),
         child: Column(
@@ -287,7 +275,7 @@ class InventoryScreen extends ConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          if (searchQuery.isEmpty)
+                          if (searchQuery.isEmpty && isAdmin)
                             ElevatedButton.icon(
                               onPressed: () =>
                                   _showCreateProductDialog(context, ref),

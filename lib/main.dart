@@ -41,11 +41,8 @@ Future<String> _determineInitialRoute() async {
   try {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('accessToken');
+    if (token != null) return AppRoutes.home;
 
-    if (token != null) {
-      return AppRoutes.home;
-    }
-    // Check if user has seen onboarding
     final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
     return hasSeenOnboarding ? AppRoutes.login : AppRoutes.onboarding;
   } catch (e) {
@@ -57,14 +54,9 @@ Future<String> _determineInitialRoute() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Override the error widget in release mode
   ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-    // Let's keep the default error widget in debug mode
-    if (kDebugMode) {
-      return ErrorWidget(errorDetails.exception);
-    }
+    if (kDebugMode) return ErrorWidget(errorDetails.exception);
 
-    // In release mode, handle the defunct lifecycle error gracefully
     if (errorDetails.exception
         .toString()
         .contains('_lifecycleState != _ElementLifecycle.defunct')) {
@@ -73,22 +65,21 @@ Future<void> main() async {
       return const SizedBox.shrink();
     }
 
-    // For other errors in release mode, show a user-friendly error widget
     return Material(
-      child: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Text(
-          'Something went wrong.',
-          style: TextStyle(color: Colors.red[700]),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            'Something went wrong.',
+            style: TextStyle(color: Colors.red.shade700),
+          ),
         ),
       ),
     );
   };
 
   try {
-    // Initialize environment
-    const String envName = String.fromEnvironment(
+    const envName = String.fromEnvironment(
       'ENVIRONMENT',
       defaultValue: 'development',
     );
@@ -116,12 +107,13 @@ Future<void> main() async {
 
 class ErrorApp extends StatelessWidget {
   final Object error;
-
   const ErrorApp({super.key, required this.error});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData.dark(useMaterial3: true),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Initialization Error'),
@@ -133,11 +125,7 @@ class ErrorApp extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.error_outline,
-                  color: Colors.red,
-                  size: 48,
-                ),
+                const Icon(Icons.error_outline, color: Colors.red, size: 48),
                 const SizedBox(height: 16),
                 Text(
                   'Failed to initialize the app:\n$error',
@@ -177,14 +165,15 @@ class MyApp extends StatelessWidget {
         client: client,
         child: MaterialApp(
           title: 'FireSecure360',
+          themeMode: ThemeMode.system,
+          debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
           theme: ThemeData(
-            primarySwatch: Colors.red,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            useMaterial3: true, // Enable Material 3
+            useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.red,
               brightness: Brightness.light,
             ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
@@ -192,8 +181,8 @@ class MyApp extends StatelessWidget {
               seedColor: Colors.red,
               brightness: Brightness.dark,
             ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
           routes: AppRoutes.getRoutes(),
           initialRoute: initialRoute,
           onUnknownRoute: AppRoutes.unknownRoute,

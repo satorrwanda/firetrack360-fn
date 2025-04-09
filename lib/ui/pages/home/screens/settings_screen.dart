@@ -1,3 +1,4 @@
+import 'package:firetrack360/ui/pages/home/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -7,13 +8,9 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Settings',
-          style: theme.textTheme.titleLarge?.copyWith(
-            color: theme.colorScheme.onPrimary,
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: 'Settings',
+        showBackButton: true,
         backgroundColor: theme.colorScheme.primary,
         elevation: 0,
       ),

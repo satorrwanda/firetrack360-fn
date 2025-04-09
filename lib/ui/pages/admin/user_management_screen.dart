@@ -43,8 +43,8 @@ class _UserManagementContentState extends State<_UserManagementContent> {
     final query = _searchQuery.toLowerCase();
     return users
         .where((user) =>
-            user.firstName.toLowerCase().contains(query) ||
-            user.lastName.toLowerCase().contains(query) ||
+            user.firstName!.toLowerCase().contains(query) ||
+            user.lastName!.toLowerCase().contains(query) ||
             user.email.toLowerCase().contains(query) ||
             user.role.toLowerCase().contains(query))
         .toList();
