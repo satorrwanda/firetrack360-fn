@@ -25,7 +25,6 @@ class AppRoutes {
   static const String serviceRequests = '/service-requests';
   static const String inventory = '/inventory';
   static const String finance = '/finance';
-  static const String aiInsights = '/ai-insights';
 
   // Manager Routes
   static const String technicianManagement = '/technician-management';
@@ -51,6 +50,7 @@ class AppRoutes {
 
   // common routes
   static const String settings = '/settings';
+  static const String notification = '/notification';
 
   static const String _onboardingKey = 'isOnboardingDone';
 
@@ -65,7 +65,6 @@ class AppRoutes {
       verifyLogin: (_) => const VerifyLoginPage(),
       verifyPasswordReset: (_) => const VerifyPasswordResetPage(),
       resetPassword: (_) => const ResetPasswordPage(),
-
       // Main app routes
       home: (_) => const HomePage(),
       profile: (_) => ProfileScreen(),
@@ -75,16 +74,6 @@ class AppRoutes {
       serviceRequests: (_) => const ServiceRequestsScreen(),
       inventory: (_) => const InventoryScreen(),
       finance: (_) => const FinanceScreen(),
-      aiInsights: (_) => const AIInsightsScreen(),
-
-
-      // Manager routes
-      technicianManagement: (_) => const TechnicianManagementScreen(),
-      taskAssignment: (_) => const TaskAssignmentScreen(),
-      locationTracking: (_) => const LocationTrackingScreen(),
-      serviceFeedback: (_) => const ServiceFeedbackScreen(),
-      stockManagement: (_) => const StockManagementScreen(),
-
       // Technician routes
       myTasks: (_) => const MyTasksScreen(),
       navigation: (_) => const NavigationScreen(),
@@ -93,7 +82,7 @@ class AppRoutes {
       customerFeedback: (_) => const CustomerFeedbackScreen(),
 
       // Client routes
-      dashboard: (_) => const DashboardScreen(),
+      dashboard: (_) => const HomePage(),
       myExtinguishers: (_) => const MyExtinguishersScreen(),
       requestService: (_) => const RequestServiceScreen(),
       payments: (_) => const PaymentsScreen(),
@@ -102,6 +91,7 @@ class AppRoutes {
 
       // common routes
       settings: (_) => const SettingsScreen(),
+      notification: (_) => const NotificationPage(),
     };
   }
 
@@ -191,11 +181,6 @@ class AppRoutes {
     Navigator.of(context).pushNamed(finance);
   }
 
-  static void navigateToAIInsights(BuildContext context) {
-    Navigator.of(context).pushNamed(aiInsights);
-  }
-
-
   // Manager navigation methods
   static void navigateToTechnicianManagement(BuildContext context) {
     Navigator.of(context).pushNamed(technicianManagement);
@@ -266,6 +251,9 @@ class AppRoutes {
   // common routes
   static void navigateToSettings(BuildContext context) {
     Navigator.of(context).pushNamed(settings);
+  }
+  static void navigateToNotification(BuildContext context) {
+    Navigator.of(context).pushNamed(notification);
   }
 
   // Role-based navigation helper

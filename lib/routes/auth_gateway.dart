@@ -22,7 +22,7 @@ class AuthGateway extends HookWidget {
         if (!context.mounted) return;
 
         try {
-          await AuthService.logout();
+          // await AuthService.logout();
 
           if (!context.mounted) return;
 

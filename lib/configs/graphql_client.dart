@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'dart:convert';
 
 class GraphQLConfiguration {
   static HttpLink _createHttpLink() {
@@ -12,6 +14,8 @@ class GraphQLConfiguration {
     if (endpointUrl == null || endpointUrl.isEmpty) {
       throw Exception('GRAPHQL_ENDPOINT_URL is not set in .env file');
     }
+
+    _testDirectConnection(endpointUrl);
 
     return HttpLink(
       endpointUrl,
@@ -67,6 +71,28 @@ class GraphQLConfiguration {
       debugPrint('Stack trace: $stackTrace');
       rethrow;
     }
+  }
+
+  static void _testDirectConnection(String url) {
+    // Use POST instead of GET for GraphQL
+    http
+        .post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'query':
+            '{ __schema { queryType { name } } }' // Simple introspection query
+      }),
+    )
+        .then((response) {
+      debugPrint('Direct connection test - Status: ${response.statusCode}');
+      debugPrint('Response headers: ${response.headers}');
+      debugPrint('Response body: ${response.body.substring(0, 100)}...');
+    }).catchError((error) {
+      debugPrint('Direct connection failed: $error');
+    });
   }
 
   static ValueNotifier<GraphQLClient> initializeClient() {

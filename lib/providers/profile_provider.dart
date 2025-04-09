@@ -6,6 +6,7 @@ class ProfileProvider extends ChangeNotifier {
   Profile? _profile;
   bool _isLoading = false;
   String? _error;
+  List<Profile> _availableTechnicians = [];
 
   final GraphQLClient _client;
 
@@ -14,6 +15,7 @@ class ProfileProvider extends ChangeNotifier {
   Profile? get profile => _profile;
   bool get isLoading => _isLoading;
   String? get error => _error;
+  List<Profile> get availableTechnicians => _availableTechnicians;
   String? get fullName {
     if (_profile?.firstName == null && _profile?.lastName == null) return null;
     return '${_profile?.firstName ?? ''} ${_profile?.lastName ?? ''}'.trim();
@@ -41,6 +43,7 @@ class ProfileProvider extends ChangeNotifier {
       }
     }
   ''';
+
 
   static const String _updateProfileMutation = '''
     mutation UpdateProfile(
@@ -121,6 +124,7 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
+  
   Future<void> updateProfile({
     String? firstName,
     String? lastName,
@@ -231,6 +235,7 @@ class ProfileProvider extends ChangeNotifier {
     _profile = null;
     _isLoading = false;
     _error = null;
+    _availableTechnicians = [];
     notifyListeners();
   }
 }

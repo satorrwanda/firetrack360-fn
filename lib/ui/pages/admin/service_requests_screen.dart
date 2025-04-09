@@ -1,13 +1,18 @@
+import 'package:firetrack360/hooks/use_auth.dart';
+import 'package:firetrack360/models/service_request.dart';
+import 'package:firetrack360/ui/pages/home/widgets/create_service_request_modal.dart'
+    as home_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firetrack360/ui/models/service_request_model.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ServiceRequestsScreen extends ConsumerWidget {
+class ServiceRequestsScreen extends HookConsumerWidget {
   const ServiceRequestsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authState = useAuth();
+    final userRole = authState.userRole;
     final serviceRequestsAsync = ref.watch(filteredServiceRequestsProvider);
 
     return Scaffold(
@@ -54,12 +59,22 @@ class ServiceRequestsScreen extends ConsumerWidget {
                             .refreshServiceRequests();
                       },
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.add, color: Colors.white),
-                      onPressed: () {
-                        // TODO: Implement add new service request
-                      },
-                    ),
+                    if (userRole == 'CLIENT')
+                      IconButton(
+                        icon: const Icon(Icons.add, color: Colors.white),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                const home_widgets.CreateServiceRequestModal(),
+                          ).then((_) {
+                            // Refresh the list after creating a new request
+                            ref
+                                .read(serviceRequestNotifierProvider.notifier)
+                                .refreshServiceRequests();
+                          });
+                        },
+                      ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -233,7 +248,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        request.technician.name ?? request.technician.email,
+                        request.technician.firstName,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -283,7 +298,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        request.invoice!.status,
+                        request.invoice?.status ?? 'Unknown',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -302,7 +317,7 @@ class ServiceRequestCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\${request.invoice!.totalAmount.toStringAsFixed(2)}',
+                        '\$${request.invoice!.totalAmount?.toStringAsFixed(2) ?? '0.00'}',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

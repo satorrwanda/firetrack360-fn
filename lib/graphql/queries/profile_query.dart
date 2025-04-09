@@ -24,3 +24,23 @@ const String getProfileQuery = r'''
     }
   }
 ''';
+
+const String getAvailableTechniciansQuery = '''
+    query GetAvailableTechnicians {
+      getAvailableTechnicians {
+        id
+        firstName
+        lastName
+        address
+        city
+        state
+        zipCode
+        profilePictureUrl
+        user {
+          id
+          email
+          phone
+        }
+      }
+    }
+  ''';

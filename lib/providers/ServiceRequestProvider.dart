@@ -1,7 +1,8 @@
+import 'package:firetrack360/graphql/queries/service_request_mutation.dart';
+import 'package:firetrack360/models/service_request.dart';
 import 'package:firetrack360/models/technician.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:firetrack360/ui/models/service_request_model.dart';
 import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:firetrack360/graphql/queries/service_request_query.dart';
 
@@ -58,7 +59,7 @@ final filteredServiceRequestsProvider =
       // Apply client filter
       if (clientFilter != null) {
         filtered = filtered
-            .where((request) => request.client.email == clientFilter)
+            .where((request) => request.client?.email == clientFilter)
             .toList();
       }
 
@@ -204,14 +205,21 @@ class ServiceRequestNotifier
           description: '',
           requestDate: DateTime.now(),
           status: '',
-          technician: Contact(
-            name: '',
+          technician: Technician(
             email: '',
             phone: '',
+            firstName: '',
+            lastName: '',
+            role: '', 
+            id: '',
           ),
-          client: Contact(
+          client: Technician(
             email: '',
             phone: '',
+            firstName: '',
+            lastName: '',
+            role: '',
+             id: '',
           ),
         ),
       ),
@@ -220,6 +228,46 @@ class ServiceRequestNotifier
 
   Future<void> refreshServiceRequests() async {
     await loadServiceRequests();
+  }
+
+  // Add this to your ServiceRequestNotifier class
+  Future<void> createServiceRequest({
+    required String title,
+    required String description,
+    required String clientId,
+    required String technicianId,
+  }) async {
+    try {
+      state = const AsyncValue.loading();
+
+      final result = await _client.mutate(
+        MutationOptions(
+          document: gql(createServiceRequestMutation),
+          variables: {
+            'input': {
+              'title': title,
+              'description': description,
+              'clientId': clientId,
+              'technicianId': technicianId,
+            },
+          },
+        ),
+      );
+
+      if (result.hasException) {
+        throw _handleGraphQLError(result.exception);
+      }
+
+      if (result.data != null) {
+        // Refresh the list after successful creation
+        await loadServiceRequests();
+      } else {
+        throw Exception('No data returned from mutation');
+      }
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+      rethrow;
+    }
   }
 }
 
@@ -250,6 +298,6 @@ final technicianProvider = Provider<AsyncValue<Technician>>((ref) {
 });
 
 // Client Provider
-final clientProvider = Provider<AsyncValue<Client>>((ref) {
+final clientProvider = Provider<AsyncValue<Technician>>((ref) {
   return const AsyncValue.loading();
 });

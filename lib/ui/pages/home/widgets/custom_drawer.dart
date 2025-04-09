@@ -28,7 +28,6 @@ class CustomDrawer extends StatelessWidget {
   static const String customerFeedback = 'Customer Feedback';
   static const String dashboard = 'Dashboard';
   static const String extinguishers = 'Extinguishers';
-  static const String requestService = 'Request Service';
   static const String payments = 'Payments & Billing';
   static const String support = 'Support';
   static const String safetyTips = 'Safety Tips';
@@ -200,20 +199,6 @@ class CustomDrawer extends StatelessWidget {
       case finance:
         AppRoutes.navigateToFinance(context);
         break;
-      // Manager routes
-      case technician:
-        AppRoutes.navigateToTechnicianManagement(context);
-        break;
-      case task:
-        AppRoutes.navigateToTaskAssignment(context);
-        break;
-      case location:
-        AppRoutes.navigateToLocationTracking(context);
-        break;
-      case stock:
-        AppRoutes.navigateToStockManagement(context);
-        break;
-
       // Technician routes
       case tasks:
         AppRoutes.navigateToMyTasks(context);
@@ -230,13 +215,10 @@ class CustomDrawer extends StatelessWidget {
 
       // Client routes
       case dashboard:
-        AppRoutes.navigateToDashboard(context);
+        AppRoutes.navigateToHome(context);
         break;
       case extinguishers:
         AppRoutes.navigateToMyExtinguishers(context);
-        break;
-      case requestService:
-        AppRoutes.navigateToRequestService(context);
         break;
       case support:
         AppRoutes.navigateToSupport(context);
@@ -276,9 +258,6 @@ class CustomDrawer extends StatelessWidget {
       case 'admin':
         menuItems.addAll(_adminMenuItems(context));
         break;
-      case 'manager':
-        menuItems.addAll(_managerMenuItems(context));
-        break;
       case 'technician':
         menuItems.addAll(_technicianMenuItems(context));
         break;
@@ -292,24 +271,13 @@ class CustomDrawer extends StatelessWidget {
   }
 
   List<DrawerItem> _adminMenuItems(BuildContext context) => [
-        _createMenuItem(
-            context, Icons.group_outlined, Icons.group, users, 2),
+        _createMenuItem(context, Icons.group_outlined, Icons.group, users, 2),
         _createMenuItem(
             context, Icons.assignment_outlined, Icons.assignment, service, 3),
         _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
             inventory, 4),
         _createMenuItem(
             context, Icons.payments_outlined, Icons.payments, finance, 5),
-      ];
-
-  List<DrawerItem> _managerMenuItems(BuildContext context) => [
-        _createMenuItem(
-            context, Icons.people_outline, Icons.people, technician, 1),
-        _createMenuItem(
-            context, Icons.assignment_outlined, Icons.assignment, task, 2),
-        _createMenuItem(context, Icons.map_outlined, Icons.map, location, 3),
-        _createMenuItem(
-            context, Icons.inventory_2_outlined, Icons.inventory_2, stock, 4),
       ];
 
   List<DrawerItem> _technicianMenuItems(BuildContext context) => [
@@ -324,20 +292,16 @@ class CustomDrawer extends StatelessWidget {
       ];
 
   List<DrawerItem> _clientMenuItems(BuildContext context) => [
-        _createMenuItem(
-            context, Icons.dashboard_outlined, Icons.dashboard, dashboard, 1),
         _createMenuItem(context, Icons.fire_extinguisher,
-            Icons.fire_extinguisher, extinguishers, 2),
+            Icons.fire_extinguisher, extinguishers, 1),
         _createMenuItem(
-            context, Icons.history_outlined, Icons.history, service, 3),
-        _createMenuItem(context, Icons.request_page_outlined,
-            Icons.request_page, requestService, 4),
+            context, Icons.history_outlined, Icons.history, service, 2),
         _createMenuItem(
-            context, Icons.payment_outlined, Icons.payment, payments, 5),
+            context, Icons.payment_outlined, Icons.payment, payments, 4),
         _createMenuItem(
-            context, Icons.support_outlined, Icons.support, support, 6),
+            context, Icons.support_outlined, Icons.support, support, 5),
         _createMenuItem(context, Icons.safety_check_outlined,
-            Icons.safety_check, safetyTips, 7),
+            Icons.safety_check, safetyTips, 6),
       ];
 
   DrawerItem _createMenuItem(BuildContext context, IconData icon,

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -10,6 +9,7 @@ class AuthState {
   final String? userRole;
   final String? error;
   final bool isTokenExpired;
+  final String? userId;
 
   AuthState({
     required this.isLoading,
@@ -17,6 +17,7 @@ class AuthState {
     this.userRole,
     this.error,
     this.isTokenExpired = false,
+    this.userId,
   });
 
   AuthState copyWith({
@@ -25,6 +26,7 @@ class AuthState {
     String? userRole,
     String? error,
     bool? isTokenExpired,
+    String? userId,
   }) {
     return AuthState(
       isLoading: isLoading ?? this.isLoading,
@@ -32,6 +34,7 @@ class AuthState {
       userRole: userRole ?? this.userRole,
       error: error ?? this.error,
       isTokenExpired: isTokenExpired ?? this.isTokenExpired,
+      userId: userId ?? this.userId,
     );
   }
 }
@@ -43,6 +46,7 @@ AuthState useAuth() {
     userRole: null,
     error: null,
     isTokenExpired: false,
+    userId: null,
   ));
 
   Future<void> checkAuthentication() async {
@@ -54,11 +58,13 @@ AuthState useAuth() {
       if (accessToken != null && refreshToken != null) {
         final isValid = await _validateToken(accessToken);
         final userRole = _extractUserRole(accessToken);
+        final userId = _extractUserId(accessToken);
 
         state.value = state.value.copyWith(
           isLoading: false,
           isAuthenticated: isValid,
           userRole: userRole,
+          userId: userId,
           isTokenExpired: !isValid,
         );
       } else {
@@ -81,13 +87,16 @@ AuthState useAuth() {
   useEffect(() {
     checkAuthentication();
 
-    final timer = Timer.periodic(
-      const Duration(minutes: 1),
-      (_) => checkAuthentication(),
-    );
+    if (state.value.isAuthenticated) {
+      final timer = Timer.periodic(
+        const Duration(minutes: 5),
+        (_) => checkAuthentication(),
+      );
+      return () => timer.cancel();
+    }
 
-    return () => timer.cancel();
-  }, []);
+    return null;
+  }, [state.value.isAuthenticated]);
 
   return state.value;
 }
@@ -95,6 +104,8 @@ AuthState useAuth() {
 Future<bool> _validateToken(String token) async {
   try {
     final decodedToken = JwtDecoder.decode(token);
+    if (!decodedToken.containsKey('exp')) return false;
+
     final expirationDate = DateTime.fromMillisecondsSinceEpoch(
       decodedToken['exp'] * 1000,
     );
@@ -110,6 +121,15 @@ String? _extractUserRole(String token) {
   try {
     final decodedToken = JwtDecoder.decode(token);
     return decodedToken['role'] as String?;
+  } catch (e) {
+    return null;
+  }
+}
+
+String? _extractUserId(String token) {
+  try {
+    final decodedToken = JwtDecoder.decode(token);
+    return decodedToken['userId'] as String?;
   } catch (e) {
     return null;
   }
