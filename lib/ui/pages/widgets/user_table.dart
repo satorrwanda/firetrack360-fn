@@ -123,7 +123,12 @@ class _UserTableState extends State<UserTable> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Close'),
+                      child: Text(
+                        'Close',
+                        style: TextStyle(
+                          color: Colors.deepPurple, // Primary color
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -139,7 +144,7 @@ class _UserTableState extends State<UserTable> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Colors.deepPurple, // Primary color
         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       ),
       child: Row(
@@ -149,7 +154,7 @@ class _UserTableState extends State<UserTable> {
             backgroundColor: Colors.white,
             child: Icon(
               Icons.person,
-              color: Theme.of(context).primaryColor,
+              color: Colors.deepPurple, // Primary color
               size: 28,
             ),
           ),
@@ -187,7 +192,7 @@ class _UserTableState extends State<UserTable> {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.grey),
+          Icon(icon, size: 20, color: Colors.deepPurple), // Primary color
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -195,9 +200,9 @@ class _UserTableState extends State<UserTable> {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey,
+                    color: Colors.grey.shade600, // Consistent with login form
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -206,6 +211,7 @@ class _UserTableState extends State<UserTable> {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
+                    color: Colors.black87, // Consistent with login form
                   ),
                 ),
               ],
@@ -230,38 +236,74 @@ class _UserTableState extends State<UserTable> {
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
                 child: DataTable(
+                  headingRowColor: MaterialStateColor.resolveWith(
+                    (states) =>
+                        Colors.deepPurple.withOpacity(0.05), // Light tint
+                  ),
                   sortColumnIndex: _sortColumnIndex,
                   sortAscending: _sortAscending,
                   columns: [
                     DataColumn(
-                      label: const Text('Email'),
+                      label: Text(
+                        'Email',
+                        style: TextStyle(
+                          color: Colors.deepPurple, // Primary color
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       onSort: (columnIndex, ascending) {
                         _sort<String>(
                             (user) => user.email, columnIndex, ascending);
                       },
                     ),
                     DataColumn(
-                      label: const Text('Phone'),
+                      label: Text(
+                        'Phone',
+                        style: TextStyle(
+                          color: Colors.deepPurple, // Primary color
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       onSort: (columnIndex, ascending) {
                         _sort<String>(
                             (user) => user.phone ?? '', columnIndex, ascending);
                       },
                     ),
                     DataColumn(
-                      label: const Text('Role'),
+                      label: Text(
+                        'Role',
+                        style: TextStyle(
+                          color: Colors.deepPurple, // Primary color
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       onSort: (columnIndex, ascending) {
                         _sort<String>(
                             (user) => user.role, columnIndex, ascending);
                       },
                     ),
                     DataColumn(
-                      label: const Text('Status'),
+                      label: Text(
+                        'Status',
+                        style: TextStyle(
+                          color: Colors.deepPurple, // Primary color
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       onSort: (columnIndex, ascending) {
                         _sort<num>((user) => user.verified ? 1 : 0, columnIndex,
                             ascending);
                       },
                     ),
-                    const DataColumn(label: Text('')), // Actions column
+                    DataColumn(
+                      label: Text(
+                        'Actions',
+                        style: TextStyle(
+                          color: Colors.deepPurple, // Primary color
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ],
                   rows: _paginatedUsers
                       .map((user) => DataRow(
@@ -272,21 +314,34 @@ class _UserTableState extends State<UserTable> {
                                   children: [
                                     CircleAvatar(
                                       radius: 14,
-                                      backgroundColor: Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.1),
+                                      backgroundColor: Colors.deepPurple
+                                          .withOpacity(0.1), // Light tint
                                       child: Icon(
                                         Icons.person,
                                         size: 16,
-                                        color: Theme.of(context).primaryColor,
+                                        color:
+                                            Colors.deepPurple, // Primary color
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    Text(user.email),
+                                    Text(
+                                      user.email,
+                                      style: const TextStyle(
+                                        color:
+                                            Colors.black87, // Consistent text
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                              DataCell(Text(user.phone ?? '-')),
+                              DataCell(
+                                Text(
+                                  user.phone ?? '-',
+                                  style: const TextStyle(
+                                    color: Colors.black87, // Consistent text
+                                  ),
+                                ),
+                              ),
                               DataCell(
                                 Container(
                                   padding: const EdgeInsets.symmetric(
@@ -294,15 +349,14 @@ class _UserTableState extends State<UserTable> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.1),
+                                    color: Colors.deepPurple
+                                        .withOpacity(0.1), // Light tint
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Text(
                                     user.role,
                                     style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
+                                      color: Colors.deepPurple, // Primary color
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -355,13 +409,20 @@ class _UserTableState extends State<UserTable> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     IconButton(
-                                      icon:
-                                          const Icon(Icons.visibility_outlined),
+                                      icon: Icon(
+                                        Icons.visibility_outlined,
+                                        color:
+                                            Colors.deepPurple, // Primary color
+                                      ),
                                       onPressed: () => _showUserDetails(user),
                                       tooltip: 'View Details',
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.edit_outlined),
+                                      icon: Icon(
+                                        Icons.edit_outlined,
+                                        color:
+                                            Colors.deepPurple, // Primary color
+                                      ),
                                       onPressed: () {
                                         // TODO: Implement edit functionality
                                       },
@@ -426,7 +487,12 @@ class _UserTableState extends State<UserTable> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.chevron_left),
+                      icon: Icon(
+                        Icons.chevron_left,
+                        color: _currentPage > 0
+                            ? Colors.deepPurple // Primary color
+                            : Colors.grey,
+                      ),
                       onPressed: _currentPage > 0
                           ? () {
                               setState(() {
@@ -436,7 +502,12 @@ class _UserTableState extends State<UserTable> {
                           : null,
                     ),
                     IconButton(
-                      icon: const Icon(Icons.chevron_right),
+                      icon: Icon(
+                        Icons.chevron_right,
+                        color: _currentPage < _pageCount - 1
+                            ? Colors.deepPurple // Primary color
+                            : Colors.grey,
+                      ),
                       onPressed: _currentPage < _pageCount - 1
                           ? () {
                               setState(() {

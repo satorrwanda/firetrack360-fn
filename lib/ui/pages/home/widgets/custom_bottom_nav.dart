@@ -72,7 +72,7 @@ class CustomBottomNav extends HookWidget {
       elevation: 8,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -86,8 +86,8 @@ class CustomBottomNav extends HookWidget {
             currentIndex: currentIndex,
             onTap: (index) =>
                 handleNavigation(['Home', 'Dashboard', 'Profile'][index]),
-            selectedItemColor: const Color(0xFFA46B6B),
-            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.deepPurple,
+            unselectedItemColor: Colors.grey.shade600,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
             elevation: 0,

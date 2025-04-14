@@ -27,9 +27,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
               right: 16,
               bottom: 16,
             ),
-            decoration: const BoxDecoration(
-              color: Color(0xFFA65D57),
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: Colors.deepPurple, // Updated to primary color
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),
@@ -83,6 +83,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                   hintStyle: MaterialStateProperty.all(
                     const TextStyle(color: Colors.white70),
                   ),
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.deepPurple.shade300, // Secondary color
+                  ),
                   onChanged: (value) {
                     ref.read(searchQueryProvider.notifier).state = value;
                   },
@@ -94,8 +97,10 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           // Content
           Expanded(
             child: serviceRequestsAsync.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
+              loading: () => Center(
+                child: CircularProgressIndicator(
+                  color: Colors.deepPurple, // Primary color
+                ),
               ),
               error: (error, stack) => Center(
                 child: Column(
@@ -189,6 +194,10 @@ class ServiceRequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -202,6 +211,7 @@ class ServiceRequestCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black87, // Consistent text color
                     ),
                   ),
                 ),
@@ -228,7 +238,7 @@ class ServiceRequestCard extends StatelessWidget {
             Text(
               request.description,
               style: TextStyle(
-                color: Colors.grey[600],
+                color: Colors.grey[600], // Consistent with login form
                 fontSize: 14,
               ),
             ),
@@ -252,6 +262,7 @@ class ServiceRequestCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
+                          color: Colors.black87, // Consistent text color
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -274,6 +285,7 @@ class ServiceRequestCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
+                        color: Colors.black87, // Consistent text color
                       ),
                     ),
                   ],
@@ -302,6 +314,7 @@ class ServiceRequestCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
+                          color: Colors.black87, // Consistent text color
                         ),
                       ),
                     ],
@@ -321,6 +334,7 @@ class ServiceRequestCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
+                          color: Colors.black87, // Consistent text color
                         ),
                       ),
                     ],
@@ -337,9 +351,9 @@ class ServiceRequestCard extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'pending':
-        return Colors.orange;
+        return Colors.deepPurple.shade300; // Using secondary color
       case 'in progress':
-        return Colors.blue;
+        return Colors.deepPurple; // Primary color
       case 'completed':
         return Colors.green;
       case 'cancelled':
