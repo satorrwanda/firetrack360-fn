@@ -77,7 +77,6 @@ class AppRoutes {
       // Technician routes
       myTasks: (_) => const MyTasksScreen(),
       navigation: (_) => const NavigationScreen(),
-      serviceHistory: (_) => const ServiceHistoryScreen(),
       offlineMode: (_) => const OfflineModeScreen(),
       customerFeedback: (_) => const CustomerFeedbackScreen(),
 
