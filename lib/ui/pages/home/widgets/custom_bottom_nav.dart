@@ -4,7 +4,6 @@ import 'package:firetrack360/routes/app_routes.dart';
 
 class CustomBottomNav extends HookWidget {
   final String? userRole;
-  // Changed default value from Analytics to Dashboard
   static String currentLabel = 'Home';
 
   const CustomBottomNav({
@@ -14,9 +13,9 @@ class CustomBottomNav extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Add validation to ensure we start with a valid label
+    // Validate currentLabel
     String initialLabel = CustomBottomNav.currentLabel;
-    if (!['Home', 'Dashboard', 'Profile'].contains(initialLabel)) {
+    if (!['Home', 'Profile'].contains(initialLabel)) {
       initialLabel = 'Home';
       CustomBottomNav.currentLabel = 'Home';
     }
@@ -34,14 +33,9 @@ class CustomBottomNav extends HookWidget {
             navigatorState.pushReplacementNamed(AppRoutes.home);
           }
           break;
-        case 'Dashboard':
-          if (ModalRoute.of(context)?.settings.name != AppRoutes.dashboard) {
-            navigatorState.pushNamed(AppRoutes.dashboard);
-          }
-          break;
         case 'Profile':
           if (ModalRoute.of(context)?.settings.name != AppRoutes.profile) {
-            navigatorState.pushNamed(AppRoutes.profile);
+            navigatorState.pushReplacementNamed(AppRoutes.profile);
           }
           break;
       }
@@ -54,19 +48,13 @@ class CustomBottomNav extends HookWidget {
         label: 'Home',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.dashboard_outlined),
-        activeIcon: Icon(Icons.dashboard),
-        label: 'Dashboard',
-      ),
-      BottomNavigationBarItem(
         icon: Icon(Icons.person_outline),
         activeIcon: Icon(Icons.person),
         label: 'Profile',
       ),
     ];
 
-    final currentIndex =
-        ['Home', 'Dashboard', 'Profile'].indexOf(selectedLabel.value);
+    final currentIndex = ['Home', 'Profile'].indexOf(selectedLabel.value);
 
     return Material(
       elevation: 8,
@@ -84,8 +72,7 @@ class CustomBottomNav extends HookWidget {
         child: SafeArea(
           child: BottomNavigationBar(
             currentIndex: currentIndex,
-            onTap: (index) =>
-                handleNavigation(['Home', 'Dashboard', 'Profile'][index]),
+            onTap: (index) => handleNavigation(['Home', 'Profile'][index]),
             selectedItemColor: Colors.deepPurple,
             unselectedItemColor: Colors.grey.shade600,
             showUnselectedLabels: true,
