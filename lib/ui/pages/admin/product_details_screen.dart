@@ -29,7 +29,7 @@ class ProductDetailsScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.deepPurple,
         title: const Text(
           'Product Details',
           style: TextStyle(
@@ -184,7 +184,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.pink.shade700,
+                        color: Colors.deepPurple.shade700,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -279,7 +279,7 @@ class ProductDetailsScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.pink.shade700),
+          Icon(icon, color: Colors.deepPurple.shade700),
           const SizedBox(height: 8),
           Text(
             label,
@@ -305,7 +305,7 @@ class ProductDetailsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.pink.shade50,
+        color: Colors.deepPurple.shade50,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -315,14 +315,14 @@ class ProductDetailsScreen extends ConsumerWidget {
             children: [
               Icon(
                 Icons.confirmation_number_outlined,
-                color: Colors.pink.shade700,
+                color: Colors.deepPurple.shade700,
                 size: 20,
               ),
               const SizedBox(width: 8),
               Text(
                 'Serial Number',
                 style: TextStyle(
-                  color: Colors.pink.shade700,
+                  color: Colors.deepPurple.shade700,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -384,7 +384,7 @@ class ProductDetailsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.pink.shade50,
+        color: Colors.deepPurple.shade50,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -406,7 +406,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.pink.shade700,
+                  color: Colors.deepPurple.shade700,
                 ),
               ),
             ],

@@ -169,21 +169,38 @@ class HomePage extends HookWidget {
             Expanded(
               child: _buildActionCard(
                 context,
-                icon: Icons.payment,
-                title: 'Payments & Billing',
+                icon: Icons.settings,
+                title: 'Settings',
                 color: Colors.deepPurple.shade400,
-                onTap: () => Navigator.pushNamed(context, '/finance'),
+                onTap: () => Navigator.pushNamed(context, '/settings'),
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: _buildActionCard(
                 context,
+                icon: Icons.notifications,
+                title: 'Notifications',
+                color: Colors.deepPurple.shade500,
+                onTap: () => Navigator.pushNamed(context, '/notification'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildActionCard(
+                context,
                 icon: Icons.map,
                 title: 'Navigation',
-                color: Colors.deepPurple.shade500,
+                color: Colors.deepPurple.shade600,
                 onTap: () => Navigator.pushNamed(context, '/navigation'),
               ),
+            ),
+            Expanded(
+              child: const SizedBox(),
             ),
           ],
         ),

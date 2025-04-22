@@ -73,7 +73,6 @@ class AppRoutes {
       userManagement: (_) => const UserManagementScreen(),
       serviceRequests: (_) => const ServiceRequestsScreen(),
       inventory: (_) => const InventoryScreen(),
-      finance: (_) => const FinanceScreen(),
       // Technician routes
       myTasks: (_) => const MyTasksScreen(),
       navigation: (_) => const NavigationScreen(),
@@ -251,6 +250,7 @@ class AppRoutes {
   static void navigateToSettings(BuildContext context) {
     Navigator.of(context).pushNamed(settings);
   }
+
   static void navigateToNotification(BuildContext context) {
     Navigator.of(context).pushNamed(notification);
   }

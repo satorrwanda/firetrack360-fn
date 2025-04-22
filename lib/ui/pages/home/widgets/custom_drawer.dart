@@ -17,7 +17,6 @@ class CustomDrawer extends StatelessWidget {
   static const String users = 'Users';
   static const String service = 'Service';
   static const String inventory = 'Inventory';
-  static const String finance = 'Finance';
   static const String technician = 'Technician';
   static const String task = 'Task';
   static const String location = 'Location';
@@ -196,9 +195,6 @@ class CustomDrawer extends StatelessWidget {
       case inventory:
         AppRoutes.navigateToInventory(context);
         break;
-      case finance:
-        AppRoutes.navigateToFinance(context);
-        break;
       // Technician routes
       case tasks:
         AppRoutes.navigateToMyTasks(context);
@@ -276,8 +272,6 @@ class CustomDrawer extends StatelessWidget {
             context, Icons.assignment_outlined, Icons.assignment, service, 3),
         _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
             inventory, 4),
-        _createMenuItem(
-            context, Icons.payments_outlined, Icons.payments, finance, 5),
       ];
 
   List<DrawerItem> _technicianMenuItems(BuildContext context) => [
