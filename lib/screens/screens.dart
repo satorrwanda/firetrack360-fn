@@ -21,7 +21,6 @@ export 'package:firetrack360/ui/pages/admin/service_requests_screen.dart';
 export 'package:firetrack360/ui/pages/admin/inventory_screen.dart';
 export 'package:firetrack360/ui/pages/admin/finance_screen.dart';
 export 'package:firetrack360/ui/pages/admin/ai_insights_screen.dart';
-export 'package:firetrack360/ui/pages/admin/staff_management_screen.dart';
 
 // Technician screens
 export 'package:firetrack360/ui/pages/technician/my_tasks_screen.dart';

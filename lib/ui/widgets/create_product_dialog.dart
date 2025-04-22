@@ -141,42 +141,50 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      insetPadding:
+          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      backgroundColor: Colors.white, // Ensure the dialog is not transparent
+      backgroundColor: Colors.white,
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Header Section with Background Color
+            // Header Section with Purple Background Color matching inventory screen
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color(0xFFA65D57), // Header background color
-                borderRadius: const BorderRadius.only(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: const BoxDecoration(
+                color:
+                    Color(0xFF9747FF), // Purple color matching inventory screen
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 ),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.fire_extinguisher, color: Colors.white),
+                  const Icon(Icons.fire_extinguisher, color: Colors.white),
                   const SizedBox(width: 10),
                   Text(
                     'New Fire Extinguisher',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Colors.white, // White text for contrast
+                          color: Colors.white,
                         ),
                   ),
                 ],
               ),
             ),
+
             // Form Section
             Container(
               padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Color(
+                    0xFFF0E9FF), // Light purple background matching inventory screen
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -186,17 +194,18 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
                     GestureDetector(
                       onTap: _isUploading ? null : _pickImage,
                       child: Container(
-                        height: 150,
+                        height: 120,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: _selectedImage != null
                             ? Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(12),
                                     child: Image.file(
                                       _selectedImage!,
                                       fit: BoxFit.cover,
@@ -206,7 +215,9 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
                                   if (_isUploading)
                                     Container(
                                       color: Colors.black45,
-                                      child: const CircularProgressIndicator(),
+                                      child: const CircularProgressIndicator(
+                                        color: Color(0xFF9747FF),
+                                      ),
                                     ),
                                 ],
                               )
@@ -216,13 +227,13 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
                                   Icon(
                                     Icons.add_photo_alternate,
                                     size: 48,
-                                    color: Theme.of(context).primaryColor,
+                                    color: const Color(0xFF9747FF),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     'Click to add image',
                                     style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
+                                      color: const Color(0xFF9747FF),
                                     ),
                                   ),
                                 ],
@@ -238,143 +249,373 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
                         ),
                       ),
                     const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.label),
+
+                    // Name field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      validator: (value) =>
-                          value?.isEmpty ?? true ? 'Please enter a name' : null,
+                      child: TextFormField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon:
+                              const Icon(Icons.label, color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        validator: (value) => value?.isEmpty ?? true
+                            ? 'Please enter a name'
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _serialNumberController,
-                      decoration: InputDecoration(
-                        labelText: 'Serial Number *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.numbers),
+                    const SizedBox(height: 12),
+
+                    // Type field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      validator: (value) => value?.isEmpty ?? true
-                          ? 'Please enter a serial number'
-                          : null,
+                      child: TextFormField(
+                        controller: _typeController,
+                        decoration: InputDecoration(
+                          labelText: 'Type',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon: const Icon(Icons.category,
+                              color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        validator: (value) => value?.isEmpty ?? true
+                            ? 'Please enter a type'
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _typeController,
-                      decoration: InputDecoration(
-                        labelText: 'Type *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.category),
+                    const SizedBox(height: 12),
+
+                    // Serial Number field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      validator: (value) =>
-                          value?.isEmpty ?? true ? 'Please enter a type' : null,
+                      child: TextFormField(
+                        controller: _serialNumberController,
+                        decoration: InputDecoration(
+                          labelText: 'Serial Number',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon: const Icon(Icons.numbers,
+                              color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        validator: (value) => value?.isEmpty ?? true
+                            ? 'Please enter a serial number'
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _sizeController,
-                      decoration: InputDecoration(
-                        labelText: 'Size *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.straighten),
+                    const SizedBox(height: 12),
+
+                    // Size field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      validator: (value) =>
-                          value?.isEmpty ?? true ? 'Please enter a size' : null,
+                      child: TextFormField(
+                        controller: _sizeController,
+                        decoration: InputDecoration(
+                          labelText: 'Size',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon: const Icon(Icons.straighten,
+                              color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        validator: (value) => value?.isEmpty ?? true
+                            ? 'Please enter a size'
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _descriptionController,
-                      decoration: InputDecoration(
-                        labelText: 'Description',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.description),
+                    const SizedBox(height: 12),
+
+                    // Description field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      maxLines: 3,
-                      validator: (value) => value?.isEmpty ?? true
-                          ? 'Please enter a description'
-                          : null,
+                      child: TextFormField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon: const Icon(Icons.description,
+                              color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        maxLines: 2,
+                        validator: (value) => value?.isEmpty ?? true
+                            ? 'Please enter a description'
+                            : null,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _priceController,
-                      decoration: InputDecoration(
-                        labelText: 'Price',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.attach_money),
+                    const SizedBox(height: 12),
+
+                    // Price field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter a price';
-                        }
-                        if (double.tryParse(value!) == null) {
-                          return 'Please enter a valid number';
-                        }
-                        return null;
-                      },
+                      child: TextFormField(
+                        controller: _priceController,
+                        decoration: InputDecoration(
+                          labelText: 'Price',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon: const Icon(Icons.attach_money,
+                              color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Please enter a price';
+                          }
+                          if (double.tryParse(value!) == null) {
+                            return 'Please enter a valid number';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _stockQuantityController,
-                      decoration: InputDecoration(
-                        labelText: 'Stock Quantity',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        prefixIcon: const Icon(Icons.inventory),
+                    const SizedBox(height: 12),
+
+                    // Stock Quantity field
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter stock quantity';
-                        }
-                        if (int.tryParse(value!) == null) {
-                          return 'Please enter a valid number';
-                        }
-                        return null;
-                      },
+                      child: TextFormField(
+                        controller: _stockQuantityController,
+                        decoration: InputDecoration(
+                          labelText: 'Stock Quantity',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: const Color(0xFF9747FF), width: 1),
+                          ),
+                          prefixIcon: const Icon(Icons.inventory,
+                              color: Color(0xFF9747FF)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Please enter stock quantity';
+                          }
+                          if (int.tryParse(value!) == null) {
+                            return 'Please enter a valid number';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+
             // Buttons Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                ),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.grey.shade700,
+                    ),
                     child: const Text('Cancel'),
                   ),
-                  const SizedBox(width: 8),
-                  ElevatedButton.icon(
+                  const SizedBox(width: 12),
+                  ElevatedButton(
                     onPressed: _isUploading ? null : _handleSubmit,
-                    icon: const Icon(Icons.add),
-                    label: const Text('Create'),
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF9747FF),
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
+                          horizontal: 24, vertical: 12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(24),
                       ),
+                      elevation: 0,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.add, size: 20),
+                        const SizedBox(width: 8),
+                        const Text('New'),
+                      ],
                     ),
                   ),
                 ],
