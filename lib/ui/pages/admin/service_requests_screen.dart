@@ -1,5 +1,4 @@
 import 'package:firetrack360/hooks/use_auth.dart';
-import 'package:firetrack360/models/service_request.dart';
 import 'package:firetrack360/ui/pages/home/widgets/create_service_request_modal.dart'
     as home_widgets;
 import 'package:flutter/material.dart';
@@ -349,17 +348,24 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                               ),
                                             ),
                                             DataCell(
-                                              IconButton(
-                                                icon: const Icon(
-                                                    Icons
-                                                        .remove_red_eye_outlined,
-                                                    size: 20,
-                                                    color: Colors.deepPurple),
-                                                onPressed: () {
-                                                  // Handle view action
-                                                  // Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                                  //   ServiceRequestDetailScreen(request: request)));
-                                                },
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                        Icons
+                                                            .remove_red_eye_outlined,
+                                                        size: 20,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    onPressed: () {
+                                                      // Show client info dialog
+                                                      _showClientInfoDialog(
+                                                          context, request);
+                                                    },
+                                                    tooltip: "View Client Info",
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -400,6 +406,181 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                   ),
                 );
               },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showClientInfoDialog(BuildContext context, dynamic request) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 5,
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple.shade100,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.article_outlined,
+                        color: Colors.deepPurple.shade800,
+                        size: 28,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Service Request Details',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepPurple.shade800,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+
+                // Service Request Info
+                _buildInfoSection(
+                  'Request Information',
+                  [
+                    _buildInfoRow('Title', request.title),
+                    _buildInfoRow('Status', request.status),
+                    _buildInfoRow('Date',
+                        DateFormat('MMM dd, yyyy').format(request.requestDate)),
+                    _buildInfoRow('Description', request.description),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Client Info
+                _buildInfoSection(
+                  'Client Information',
+                  [
+                    // _buildInfoRow('Name', request.client ?? 'N/A'),
+                    _buildInfoRow('Email', request.client?.email ?? 'N/A'),
+                    _buildInfoRow('Phone', request.client?.phone ?? 'N/A'),
+                    // _buildInfoRow('Address', request.client?.address ?? 'N/A'),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Technician Info
+                _buildInfoSection(
+                  'Technician Information',
+                  [
+                    // _buildInfoRow(
+                    //     'Name', request.technician?.name ?? 'Not assigned'),
+                    _buildInfoRow('Email', request.technician?.email ?? 'N/A'),
+                    _buildInfoRow('Phone', request.technician?.phone ?? 'N/A'),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Action buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.deepPurple[700],
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                      ),
+                      child: const Text('Close'),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildInfoSection(String title, List<Widget> rows) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple[700],
+            ),
+          ),
+          const SizedBox(height: 12),
+          ...rows,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[700],
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                color: Colors.black87,
+              ),
             ),
           ),
         ],
