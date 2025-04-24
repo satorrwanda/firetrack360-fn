@@ -1,6 +1,7 @@
 import 'package:firetrack360/models/product.dart';
 import 'package:firetrack360/models/user_role.dart';
 import 'package:firetrack360/services/auth_service.dart';
+import 'package:firetrack360/ui/pages/home/widgets/custom_app_bar.dart';
 import 'package:firetrack360/ui/pages/widgets/empty_screen.dart';
 import 'package:firetrack360/ui/pages/widgets/error_screen.dart';
 import 'package:firetrack360/ui/pages/widgets/loading_screen.dart';
@@ -65,19 +66,17 @@ class MyExtinguishersScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('My Extinguishers'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.refresh),
-                onPressed: () => refetch?.call(),
-              ),
-              if (canManageProducts)
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () => _navigateToAddProduct(context),
-                ),
-            ],
+          appBar: CustomAppBar(
+            title: 'My Extinguishers',
+            showBackButton: true,
+            actions: canManageProducts
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () => _navigateToAddProduct(context),
+                    ),
+                  ]
+                : null,
           ),
           body: RefreshIndicator(
             onRefresh: () async => await refetch?.call(),

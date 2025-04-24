@@ -21,9 +21,28 @@ class NotificationPage extends HookWidget {
             onPressed: () => Navigator.pop(context),
           ),
           title: const Text('Notifications'),
-          backgroundColor: const Color(0xFFA46B6B),
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              onPressed: () => _showFilterDialog(context, notifications),
+            ),
+          ],
         ),
-        body: _buildNotificationList(notifications.value),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.deepPurple.withOpacity(0.05),
+                Colors.white,
+              ],
+            ),
+          ),
+          child: _buildNotificationList(notifications.value),
+        ),
       ),
     );
   }
@@ -40,10 +59,11 @@ class NotificationPage extends HookWidget {
         await Future.delayed(const Duration(seconds: 1));
         notifications = _generateMockNotifications();
       },
+      color: Colors.deepPurple,
       child: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: notifications.length,
-        separatorBuilder: (context, index) => const Divider(height: 16),
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
         itemBuilder: (context, index) {
           final notification = notifications[index];
           return _buildNotificationItem(notification);
@@ -113,8 +133,8 @@ class NotificationPage extends HookWidget {
                 Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple.shade400,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -128,13 +148,13 @@ class NotificationPage extends HookWidget {
   Color _getNotificationColor(NotificationType type) {
     switch (type) {
       case NotificationType.alert:
-        return Colors.red;
+        return Colors.red.shade400;
       case NotificationType.warning:
-        return Colors.orange;
+        return Colors.orange.shade400;
       case NotificationType.info:
-        return Colors.blue;
+        return Colors.deepPurple.shade400;
       case NotificationType.success:
-        return Colors.green;
+        return Colors.green.shade400;
       default:
         return Colors.grey;
     }
@@ -178,13 +198,17 @@ class NotificationPage extends HookWidget {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Filter Notifications'),
+              title: Text(
+                'Filter Notifications',
+                style: TextStyle(color: Colors.deepPurple.shade700),
+              ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: filters.entries.map((entry) {
                   return CheckboxListTile(
                     title: Text(entry.key),
                     value: entry.value,
+                    activeColor: Colors.deepPurple,
                     onChanged: (value) {
                       setState(() {
                         filters[entry.key] = value!;
@@ -196,6 +220,9 @@ class NotificationPage extends HookWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey.shade700,
+                  ),
                   child: const Text('Cancel'),
                 ),
                 TextButton(
@@ -226,9 +253,15 @@ class NotificationPage extends HookWidget {
                     }).toList();
                     Navigator.pop(context);
                   },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.deepPurple,
+                  ),
                   child: const Text('Apply'),
                 ),
               ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
             );
           },
         );

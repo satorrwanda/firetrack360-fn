@@ -82,14 +82,19 @@ class _LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text('Loading profile...'),
+            CircularProgressIndicator(
+              color: Colors.deepPurple,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Loading profile...',
+              style: TextStyle(color: Colors.grey.shade600),
+            ),
           ],
         ),
       ),
@@ -117,26 +122,41 @@ class _ErrorScreen extends StatelessWidget {
             children: [
               Icon(
                 Icons.error_outline,
-                color: Theme.of(context).colorScheme.error,
+                color: Colors.red.shade600,
                 size: 48,
               ),
               const SizedBox(height: 16),
               Text(
                 'Error Loading Profile',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 error,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                ),
               ),
               if (onRetry != null) ...[
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: onRetry,
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  icon: const Icon(Icons.refresh, color: Colors.white),
+                  label: const Text('Retry',
+                      style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 ),
               ],
             ],
@@ -163,9 +183,10 @@ class _ProfileContent extends StatelessWidget {
   Widget buildProfileImage(String? imageUrl) {
     // If no image URL is provided, show the avatar
     if (imageUrl == null) {
-      return const CircleAvatar(
+      return CircleAvatar(
         radius: 50,
-        child: Icon(Icons.person, size: 50),
+        backgroundColor: Colors.deepPurple.withOpacity(0.1),
+        child: Icon(Icons.person, size: 50, color: Colors.deepPurple),
       );
     }
 
@@ -182,7 +203,7 @@ class _ProfileContent extends StatelessWidget {
               file,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.person, size: 50);
+                return Icon(Icons.person, size: 50, color: Colors.deepPurple);
               },
             ),
           ),
@@ -200,7 +221,7 @@ class _ProfileContent extends StatelessWidget {
             imageUrl,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
-              return const Icon(Icons.person, size: 50);
+              return Icon(Icons.person, size: 50, color: Colors.deepPurple);
             },
           ),
         ),
@@ -218,7 +239,7 @@ class _ProfileContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Icon(icon, size: 24, color: Colors.grey[600]),
+          Icon(icon, size: 24, color: Colors.deepPurple),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -227,7 +248,7 @@ class _ProfileContent extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Colors.grey[600],
+                    color: Colors.grey.shade600,
                     fontSize: 14,
                   ),
                 ),
@@ -240,6 +261,7 @@ class _ProfileContent extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
+                          color: Colors.black87,
                         ),
                       ),
                     ),
@@ -264,19 +286,36 @@ class _ProfileContent extends StatelessWidget {
     required String title,
     required List<Widget> children,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        const Divider(),
-        const SizedBox(height: 8),
-        ...children,
-      ],
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          const Divider(color: Colors.deepPurple),
+          const SizedBox(height: 12),
+          ...children,
+        ],
+      ),
     );
   }
 
@@ -285,7 +324,7 @@ class _ProfileContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: const Color(0xFFA46B6B),
+        backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         actions: [
           IconButton(
@@ -298,7 +337,7 @@ class _ProfileContent extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.red.shade600,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     constraints: const BoxConstraints(
@@ -330,23 +369,36 @@ class _ProfileContent extends StatelessWidget {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await onRefresh?.call();
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildProfileHeader(context),
-              const SizedBox(height: 24),
-              _buildPersonalInfo(context),
-              const SizedBox(height: 24),
-              _buildAddressInfo(context),
-              const SizedBox(height: 32),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.deepPurple.withOpacity(0.05),
+              Colors.white,
             ],
+          ),
+        ),
+        child: RefreshIndicator(
+          color: Colors.deepPurple,
+          onRefresh: () async {
+            await onRefresh?.call();
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildProfileHeader(context),
+                const SizedBox(height: 24),
+                _buildPersonalInfo(context),
+                const SizedBox(height: 24),
+                _buildAddressInfo(context),
+                const SizedBox(height: 32),
+              ],
+            ),
           ),
         ),
       ),
@@ -357,158 +409,209 @@ class _ProfileContent extends StatelessWidget {
   }
 
   Widget _buildProfileHeader(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              buildProfileImage(profile['profilePictureUrl']),
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => ProfileImagePickerModal(
-                        hasExistingImage: profile['profilePictureUrl'] != null,
-                        onImageSelected: (cloudinaryUrl) async {
-                          final client = GraphQLProvider.of(context).value;
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 3,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                buildProfileImage(profile['profilePictureUrl']),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => ProfileImagePickerModal(
+                          hasExistingImage:
+                              profile['profilePictureUrl'] != null,
+                          onImageSelected: (cloudinaryUrl) async {
+                            final client = GraphQLProvider.of(context).value;
 
-                          try {
-                            final result = await client.mutate(
-                              MutationOptions(
-                                document: gql(updateProfileMutation),
-                                variables: {
-                                  'id': profile['id'],
-                                  'profileInput': {
-                                    'profilePictureUrl': cloudinaryUrl,
+                            try {
+                              final result = await client.mutate(
+                                MutationOptions(
+                                  document: gql(updateProfileMutation),
+                                  variables: {
+                                    'id': profile['id'],
+                                    'profileInput': {
+                                      'profilePictureUrl': cloudinaryUrl,
+                                    },
                                   },
-                                },
-                              ),
-                            );
-                            if (result.hasException) {
-                              throw Exception(result.exception.toString());
-                            }
-
-                            onRefresh?.call();
-                          } catch (e) {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      'Failed to update profile image: $e'),
-                                  backgroundColor: Colors.red,
                                 ),
                               );
-                            }
-                          }
-                        },
-                        onRemoveImage: profile['profilePictureUrl'] != null
-                            ? () async {
-                                final client =
-                                    GraphQLProvider.of(context).value;
+                              if (result.hasException) {
+                                throw Exception(result.exception.toString());
+                              }
 
-                                try {
-                                  final result = await client.mutate(
-                                    MutationOptions(
-                                      document: gql(updateProfileMutation),
-                                      variables: {
-                                        'id': profile['id'],
-                                        'profileInput': const {
-                                          'profilePictureUrl': null,
-                                        },
-                                      },
+                              onRefresh?.call();
+                            } catch (e) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      children: [
+                                        const Icon(Icons.error_outline,
+                                            color: Colors.white),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                            child: Text(
+                                                'Failed to update profile image: $e')),
+                                      ],
                                     ),
-                                  );
+                                    backgroundColor: Colors.red.shade600,
+                                    behavior: SnackBarBehavior.floating,
+                                    margin: const EdgeInsets.all(16),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          onRemoveImage: profile['profilePictureUrl'] != null
+                              ? () async {
+                                  final client =
+                                      GraphQLProvider.of(context).value;
 
-                                  if (result.hasException) {
-                                    throw Exception(
-                                        result.exception.toString());
-                                  }
-
-                                  onRefresh?.call();
-                                } catch (e) {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Failed to remove profile image: $e'),
-                                        backgroundColor: Colors.red,
+                                  try {
+                                    final result = await client.mutate(
+                                      MutationOptions(
+                                        document: gql(updateProfileMutation),
+                                        variables: {
+                                          'id': profile['id'],
+                                          'profileInput': const {
+                                            'profilePictureUrl': null,
+                                          },
+                                        },
                                       ),
                                     );
+
+                                    if (result.hasException) {
+                                      throw Exception(
+                                          result.exception.toString());
+                                    }
+
+                                    onRefresh?.call();
+                                  } catch (e) {
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              const Icon(Icons.error_outline,
+                                                  color: Colors.white),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                  child: Text(
+                                                      'Failed to remove profile image: $e')),
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.red.shade600,
+                                          behavior: SnackBarBehavior.floating,
+                                          margin: const EdgeInsets.all(16),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   }
                                 }
-                              }
-                            : null,
+                              : null,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: Colors.deepPurple,
+                        shape: BoxShape.circle,
                       ),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt,
-                      size: 20,
-                      color: Colors.white,
+                      child: const Icon(
+                        Icons.camera_alt,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              profile['firstName'] != null || profile['lastName'] != null
+                  ? '${profile['firstName'] ?? ''} ${profile['lastName'] ?? ''}'
+                      .trim()
+                  : '____   _____',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            if (profile['bio'] != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                profile['bio'],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 14,
+                ),
               ),
             ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            profile['firstName'] != null || profile['lastName'] != null
-                ? '${profile['firstName'] ?? ''} ${profile['lastName'] ?? ''}'
-                    .trim()
-                : '____   _____',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          if (profile['bio'] != null) ...[
             const SizedBox(height: 8),
-            Text(
-              profile['bio'],
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-          const SizedBox(height: 8),
-          if (profile['user']?['verified'] == true)
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 6,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.verified,
-                    size: 16,
-                    color: Colors.green[700],
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Verified Account',
-                    style: TextStyle(
+            if (profile['user']?['verified'] == true)
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.verified,
+                      size: 16,
                       color: Colors.green[700],
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 4),
+                    Text(
+                      'Verified Account',
+                      style: TextStyle(
+                        color: Colors.green[700],
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

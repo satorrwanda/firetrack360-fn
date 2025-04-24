@@ -121,9 +121,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     if (_modifiedFields.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No changes made')),
-      );
+      _showErrorSnackBar('No changes made');
       return;
     }
 
@@ -171,7 +169,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
       if (result.hasException) {
         if (mounted) {
-          _showErrorDialog(context, result.exception.toString());
+          _showErrorSnackBar(result.exception.toString());
         }
         return;
       }
@@ -185,13 +183,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           });
           _modifiedFields.clear();
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  responseData['message'] ?? 'Profile updated successfully'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          _showSuccessSnackBar(
+              responseData['message'] ?? 'Profile updated successfully');
           Navigator.pop(context, true);
         }
       } else {
@@ -199,7 +192,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       }
     } catch (e) {
       if (mounted) {
-        _showErrorDialog(context, e.toString());
+        _showErrorSnackBar(e.toString());
       }
     } finally {
       if (mounted) {
@@ -208,19 +201,87 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
   }
 
-  void _showErrorDialog(BuildContext context, String error) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(error),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
+  void _showSuccessSnackBar(String message) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.check_circle_outline, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: Colors.green.shade600,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
+    );
+  }
+
+  void _showErrorSnackBar(String message) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: Colors.red.shade600,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    required IconData icon,
+    String? Function(String?)? validator,
+    TextInputType keyboardType = TextInputType.text,
+    int maxLines = 1,
+    int? maxLength,
+    bool alignLabelWithHint = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
+      maxLength: maxLength,
+      style: const TextStyle(color: Colors.black87),
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon, color: Colors.deepPurple),
+        labelText: labelText,
+        labelStyle: TextStyle(color: Colors.grey.shade600),
+        filled: true,
+        fillColor: Colors.grey.shade100,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.deepPurple, width: 1.5),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+        alignLabelWithHint: alignLabelWithHint,
+      ),
+      validator: validator,
     );
   }
 
@@ -229,6 +290,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Profile'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
         actions: [
           if (_isLoading)
             const Center(
@@ -250,99 +313,121 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16.0),
-          children: [
-            _buildSection(
-              title: 'Personal Information',
-              children: [
-                TextFormField(
-                  controller: _firstNameController,
-                  decoration: const InputDecoration(
+      body: Container(
+        color: Colors.grey.shade50,
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              _buildSection(
+                title: 'Personal Information',
+                children: [
+                  _buildTextField(
+                    controller: _firstNameController,
                     labelText: 'First Name',
-                    prefixIcon: Icon(Icons.person_outline),
+                    icon: Icons.person_outline,
+                    validator: (value) => _validateField(value, 'firstName'),
                   ),
-                  validator: (value) => _validateField(value, 'firstName'),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _lastNameController,
-                  decoration: const InputDecoration(
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: _lastNameController,
                     labelText: 'Last Name',
-                    prefixIcon: Icon(Icons.person_outline),
+                    icon: Icons.person_outline,
+                    validator: (value) => _validateField(value, 'lastName'),
                   ),
-                  validator: (value) => _validateField(value, 'lastName'),
-                ),
-              ],
-            ),
-            _buildSection(
-              title: 'Address',
-              children: [
-                TextFormField(
-                  controller: _addressController,
-                  decoration: const InputDecoration(
+                ],
+              ),
+              _buildSection(
+                title: 'Address',
+                children: [
+                  _buildTextField(
+                    controller: _addressController,
                     labelText: 'Street Address',
-                    prefixIcon: Icon(Icons.location_on),
+                    icon: Icons.location_on,
+                    validator: (value) => _validateField(value, 'address'),
                   ),
-                  validator: (value) => _validateField(value, 'address'),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _cityController,
-                  decoration: const InputDecoration(
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: _cityController,
                     labelText: 'City',
-                    prefixIcon: Icon(Icons.location_city),
+                    icon: Icons.location_city,
+                    validator: (value) => _validateField(value, 'city'),
                   ),
-                  validator: (value) => _validateField(value, 'city'),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _stateController,
-                        decoration: const InputDecoration(
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildTextField(
+                          controller: _stateController,
                           labelText: 'State',
-                          prefixIcon: Icon(Icons.map),
+                          icon: Icons.map,
+                          validator: (value) => _validateField(value, 'state'),
                         ),
-                        validator: (value) => _validateField(value, 'state'),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _zipCodeController,
-                        decoration: const InputDecoration(
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: _buildTextField(
+                          controller: _zipCodeController,
                           labelText: 'ZIP Code',
-                          prefixIcon: Icon(Icons.pin),
+                          icon: Icons.pin,
+                          keyboardType: TextInputType.number,
+                          validator: (value) =>
+                              _validateField(value, 'zipCode'),
                         ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) => _validateField(value, 'zipCode'),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            _buildSection(
-              title: 'About',
-              children: [
-                TextFormField(
-                  controller: _bioController,
-                  decoration: const InputDecoration(
-                    labelText: 'Bio',
-                    prefixIcon: Icon(Icons.edit),
-                    alignLabelWithHint: true,
+                    ],
                   ),
-                  maxLines: 3,
-                  maxLength: 500,
-                  validator: (value) => _validateField(value, 'bio'),
+                ],
+              ),
+              _buildSection(
+                title: 'About',
+                children: [
+                  _buildTextField(
+                    controller: _bioController,
+                    labelText: 'Bio',
+                    icon: Icons.edit,
+                    maxLines: 3,
+                    maxLength: 500,
+                    alignLabelWithHint: true,
+                    validator: (value) => _validateField(value, 'bio'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _isLoading || _modifiedFields.isEmpty
+                    ? null
+                    : () => _handleSubmit(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  disabledBackgroundColor: Colors.grey.shade300,
                 ),
-              ],
-            ),
-          ],
+                child: _isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Text(
+                        'SAVE CHANGES',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -352,21 +437,35 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     required String title,
     required List<Widget> children,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Text(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
                 ),
           ),
-        ),
-        ...children,
-        const SizedBox(height: 16),
-      ],
+          const SizedBox(height: 16),
+          ...children,
+        ],
+      ),
     );
   }
 }

@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
 import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:firetrack360/graphql/queries/profile_query.dart';
 import 'package:firetrack360/models/technician.dart';
 import 'package:firetrack360/services/auth_service.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
 
 class CreateServiceRequestModal extends ConsumerStatefulWidget {
@@ -96,8 +97,8 @@ class _CreateServiceRequestModalState
   }
 
   Future<void> _submitForm() async {
-    if (!_formKey.currentState!.validate()) return;
-    if (_selectedTechnician == null) return;
+    if (!_formKey.currentState!.validate() || _selectedTechnician == null)
+      return;
 
     setState(() => _isSubmitting = true);
 
@@ -114,34 +115,53 @@ class _CreateServiceRequestModalState
             technicianId: _selectedTechnician!.id ?? '',
           );
 
-      if (mounted) {
-        Navigator.pop(context, true);
-      }
+      if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) {
-        print(e.toString());
         setState(() {
           _errorMessage = 'Failed to create request: ${e.toString()}';
         });
       }
     } finally {
-      if (mounted) {
-        setState(() => _isSubmitting = false);
-      }
+      if (mounted) setState(() => _isSubmitting = false);
     }
+  }
+
+  InputDecoration _inputDecoration(String label) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(
+        color: colorScheme.primary,
+        fontWeight: FontWeight.w600,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Colors.grey.shade400, width: 1.2),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: colorScheme.primary, width: 2),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       title: Text(
-        'Create New Service Request',
+        'Request for Service',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Theme.of(context).primaryColor,
+          color: colorScheme.primary,
         ),
         textAlign: TextAlign.center,
       ),
@@ -149,205 +169,72 @@ class _CreateServiceRequestModalState
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              // Service Dropdown with Enhanced Styling
               DropdownButtonFormField<String>(
                 value: _selectedService,
-                decoration: InputDecoration(
-                  labelText: 'Select Service',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 1.5,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                      width: 1.5,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 2,
-                    ),
-                  ),
-                ),
+                decoration: _inputDecoration('Select Service'),
                 dropdownColor: Colors.white,
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyLarge?.color,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.black87),
                 items: _serviceOptions.map((service) {
                   return DropdownMenuItem(
                     value: service,
-                    child: Text(
-                      service,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    child: Text(service,
+                        style: TextStyle(fontWeight: FontWeight.w500)),
                   );
                 }).toList(),
-                onChanged: (value) {
-                  setState(() => _selectedService = value);
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a service';
-                  }
-                  return null;
-                },
+                onChanged: (value) => setState(() => _selectedService = value),
+                validator: (value) =>
+                    value == null ? 'Please select a service' : null,
               ),
               const SizedBox(height: 16),
-
-              // Technician Dropdown with Elegant Styling
               if (_isLoadingTechnicians)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+                const CircularProgressIndicator()
               else if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    _errorMessage!,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+                Text(
+                  _errorMessage!,
+                  style: TextStyle(
+                      color: colorScheme.error, fontWeight: FontWeight.w500),
                 )
               else if (_technicians.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    'No available technicians found',
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: Colors.grey,
-                    ),
-                  ),
+                const Text(
+                  'No available technicians found',
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic, color: Colors.grey),
                 )
               else
                 DropdownButtonFormField<Technician>(
                   value: _selectedTechnician,
-                  decoration: InputDecoration(
-                    labelText: 'Select Technician',
-                    labelStyle: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 1.5,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                        width: 1.5,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 2,
-                      ),
-                    ),
-                  ),
+                  decoration: _inputDecoration('Select Technician'),
                   dropdownColor: Colors.white,
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                    fontSize: 16,
-                  ),
-                  items: _technicians.map((technician) {
+                  style: TextStyle(fontSize: 16, color: Colors.black87),
+                  items: _technicians.map((tech) {
                     return DropdownMenuItem(
-                      value: technician,
-                      child: Text(
-                        technician.fullName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      value: tech,
+                      child: Text(tech.fullName,
+                          style: TextStyle(fontWeight: FontWeight.w500)),
                     );
                   }).toList(),
-                  onChanged: (value) {
-                    setState(() => _selectedTechnician = value);
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select a technician';
-                    }
-                    return null;
-                  },
+                  onChanged: (value) =>
+                      setState(() => _selectedTechnician = value),
+                  validator: (value) =>
+                      value == null ? 'Please select a technician' : null,
                   isExpanded: true,
                 ),
               const SizedBox(height: 16),
-
-              // Description TextField with Modern Styling
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
+                decoration: _inputDecoration('Description').copyWith(
                   hintText: 'Describe your service request...',
                   hintStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontStyle: FontStyle.italic,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 1.5,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                      width: 1.5,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 2,
-                    ),
-                  ),
+                      fontStyle: FontStyle.italic, color: Colors.grey),
                 ),
                 maxLines: 3,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+                style: const TextStyle(fontSize: 16),
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  if (value == null || value.trim().isEmpty)
                     return 'Please enter a description';
-                  }
-                  if (value.length > 500) {
+                  if (value.length > 500)
                     return 'Description too long (max 500 characters)';
-                  }
                   return null;
                 },
               ),
@@ -356,28 +243,22 @@ class _CreateServiceRequestModalState
         ),
       ),
       actions: [
-        // Styled Action Buttons
         TextButton(
           style: TextButton.styleFrom(
-            foregroundColor: Theme.of(context).primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            foregroundColor: colorScheme.primary,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
           onPressed: _isSubmitting ? null : () => Navigator.pop(context),
-          child: const Text(
-            'Cancel',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: const Text('Cancel',
+              style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            backgroundColor: colorScheme.primary,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
           onPressed:
               _isSubmitting || _isLoadingTechnicians ? null : _submitForm,
@@ -386,17 +267,11 @@ class _CreateServiceRequestModalState
                   width: 20,
                   height: 20,
                   child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
+                      strokeWidth: 2, color: Colors.white),
                 )
-              : const Text(
-                  'Submit',
+              : const Text('Submit',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
+                      fontWeight: FontWeight.bold, color: Colors.white)),
         ),
       ],
     );

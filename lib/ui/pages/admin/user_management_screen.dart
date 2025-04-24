@@ -43,8 +43,8 @@ class _UserManagementContentState extends State<_UserManagementContent> {
     final query = _searchQuery.toLowerCase();
     return users
         .where((user) =>
-            user.firstName.toLowerCase().contains(query) ||
-            user.lastName.toLowerCase().contains(query) ||
+            user.firstName!.toLowerCase().contains(query) ||
+            user.lastName!.toLowerCase().contains(query) ||
             user.email.toLowerCase().contains(query) ||
             user.role.toLowerCase().contains(query))
         .toList();
@@ -61,10 +61,54 @@ class _UserManagementContentState extends State<_UserManagementContent> {
     );
   }
 
+  void _showSuccessSnackBar(String message) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.check_circle_outline, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: Colors.green.shade600,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  void _showErrorSnackBar(String message) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: Colors.red.shade600,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
       body: Column(
         children: [
           // Header
@@ -76,11 +120,18 @@ class _UserManagementContentState extends State<_UserManagementContent> {
               bottom: 16,
             ),
             decoration: const BoxDecoration(
-              color: Color(0xFFA65D57),
+              color: Colors.deepPurple,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x40000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
             ),
             child: Row(
               children: [
@@ -99,12 +150,14 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.refresh, color: Colors.white),
-                  onPressed: () => context.read<UsersProvider>().refreshUsers(),
+                  onPressed: () {
+                    context.read<UsersProvider>().refreshUsers();
+                    _showSuccessSnackBar('User list refreshed');
+                  },
                 ),
                 IconButton(
                   icon: const Icon(Icons.person_add, color: Colors.white),
-                  onPressed: () =>
-                      showAddTechnicianModal(context), // Open the modal
+                  onPressed: () => showAddTechnicianModal(context),
                 ),
               ],
             ),
@@ -120,19 +173,23 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
+                          spreadRadius: 2,
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
                     child: TextField(
+                      style: const TextStyle(color: Colors.black87),
                       decoration: InputDecoration(
                         hintText: 'Search users...',
-                        prefixIcon: Icon(Icons.search, color: Colors.grey[400]),
+                        hintStyle: TextStyle(color: Colors.grey.shade600),
+                        prefixIcon:
+                            const Icon(Icons.search, color: Colors.deepPurple),
                         border: InputBorder.none,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -145,44 +202,101 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                   ),
                   // Table
                   Expanded(
-                    child: Consumer<UsersProvider>(
-                      builder: (context, provider, child) {
-                        if (provider.isLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation(Color(0xFFA65D57)),
-                            ),
-                          );
-                        }
-
-                        if (provider.error != null) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  provider.error!,
-                                  style:
-                                      const TextStyle(color: Color(0xFFA65D57)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 3,
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Consumer<UsersProvider>(
+                          builder: (context, provider, child) {
+                            if (provider.isLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.deepPurple),
                                 ),
-                                const SizedBox(height: 16),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFFA65D57),
-                                    foregroundColor: Colors.white,
-                                  ),
-                                  onPressed: () => provider.refreshUsers(),
-                                  child: const Text('Retry'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
+                              );
+                            }
 
-                        final filteredUsers = _getFilteredUsers(provider.users);
-                        return UserTable(users: filteredUsers);
-                      },
+                            if (provider.error != null) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      provider.error!,
+                                      style: const TextStyle(
+                                          color: Colors.deepPurple),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.deepPurple,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      onPressed: () => provider.refreshUsers(),
+                                      child: const Text(
+                                        'RETRY',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+
+                            final filteredUsers =
+                                _getFilteredUsers(provider.users);
+
+                            if (filteredUsers.isEmpty) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.search_off,
+                                      size: 64,
+                                      color: Colors.grey[400],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      'No users found',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+
+                            return UserTable(users: filteredUsers);
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -190,6 +304,12 @@ class _UserManagementContentState extends State<_UserManagementContent> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        onPressed: () => showAddTechnicianModal(context),
+        child: const Icon(Icons.person_add),
       ),
     );
   }

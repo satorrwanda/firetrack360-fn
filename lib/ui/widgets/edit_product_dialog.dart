@@ -26,6 +26,11 @@ class _EditProductDialogState extends State<EditProductDialog> {
   late final TextEditingController stockQuantityController;
   bool isLoading = false;
 
+  // Define theme colors to match app
+  final Color primaryColor = const Color(0xFF6A3DE8); // Purple from home screen
+  final Color backgroundColor =
+      const Color(0xFFEDE7F6); // Light purple background
+
   @override
   void initState() {
     super.initState();
@@ -64,7 +69,7 @@ class _EditProductDialogState extends State<EditProductDialog> {
       'description': descriptionController.text,
       'price': double.tryParse(priceController.text) ?? 0.0,
       'stockQuantity': int.tryParse(stockQuantityController.text) ?? 0,
-      'imageUrl': widget.product.imageUrl, 
+      'imageUrl': widget.product.imageUrl,
     };
   }
 
@@ -74,6 +79,8 @@ class _EditProductDialogState extends State<EditProductDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
+      backgroundColor: Colors.white,
+      elevation: 5,
       child: Container(
         padding: const EdgeInsets.all(24),
         constraints: const BoxConstraints(maxWidth: 500),
@@ -88,23 +95,39 @@ class _EditProductDialogState extends State<EditProductDialog> {
                   children: [
                     Icon(
                       Icons.edit,
-                      color: Theme.of(context).primaryColor,
+                      color: primaryColor,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 12),
                     Text(
-                      'Edit Product',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      'Edit Extinguisher',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
+                Divider(color: backgroundColor),
+                const SizedBox(height: 16),
+
+                // Name field
                 TextFormField(
                   controller: nameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Name',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: primaryColor, width: 2),
+                    ),
+                    prefixIcon: Icon(Icons.label_outline, color: primaryColor),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
                   validator: (value) {
                     if (value?.isEmpty ?? true) {
@@ -113,12 +136,25 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 16),
+
+                // Serial Number field
                 TextFormField(
                   controller: serialNumberController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Serial Number',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: primaryColor, width: 2),
+                    ),
+                    prefixIcon: Icon(Icons.tag, color: primaryColor),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
                   validator: (value) {
                     if (value?.isEmpty ?? true) {
@@ -127,15 +163,30 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 16),
+
+                // Type and Size fields
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
                         controller: typeController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Type',
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: primaryColor),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 2),
+                          ),
+                          prefixIcon: Icon(Icons.category_outlined,
+                              color: primaryColor),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
@@ -149,9 +200,21 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     Expanded(
                       child: TextFormField(
                         controller: sizeController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Size',
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: primaryColor),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 2),
+                          ),
+                          prefixIcon:
+                              Icon(Icons.straighten, color: primaryColor),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
@@ -163,12 +226,26 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 16),
+
+                // Description field
                 TextFormField(
                   controller: descriptionController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Description',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: primaryColor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: primaryColor, width: 2),
+                    ),
+                    prefixIcon:
+                        Icon(Icons.description_outlined, color: primaryColor),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
                   maxLines: 3,
                   validator: (value) {
@@ -178,16 +255,30 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 16),
+
+                // Price and Stock Quantity fields
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
                         controller: priceController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Price',
-                          border: OutlineInputBorder(),
-                          prefixText: '\$',
+                          labelStyle: TextStyle(color: primaryColor),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 2),
+                          ),
+                          prefixIcon:
+                              Icon(Icons.attach_money, color: primaryColor),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
                         keyboardType: TextInputType.number,
                         validator: (value) {
@@ -205,9 +296,21 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     Expanded(
                       child: TextFormField(
                         controller: stockQuantityController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Stock Quantity',
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: primaryColor),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:
+                                BorderSide(color: primaryColor, width: 2),
+                          ),
+                          prefixIcon: Icon(Icons.inventory_2_outlined,
+                              color: primaryColor),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
                         keyboardType: TextInputType.number,
                         validator: (value) {
@@ -223,13 +326,29 @@ class _EditProductDialogState extends State<EditProductDialog> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 24),
+                Divider(color: backgroundColor),
+                const SizedBox(height: 16),
+
+                // Action Buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Cancel'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.grey[700],
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                     const SizedBox(width: 16),
                     ElevatedButton(
@@ -245,15 +364,37 @@ class _EditProductDialogState extends State<EditProductDialog> {
                                 setState(() => isLoading = false);
                               }
                             },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 2,
+                      ),
                       child: isLoading
-                          ? const SizedBox(
+                          ? SizedBox(
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
                             )
-                          : const Text('Save Changes'),
+                          : Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(Icons.save),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Save Changes',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                     ),
                   ],
                 ),

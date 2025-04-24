@@ -1,7 +1,9 @@
+import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/routes/auth_gateway.dart';
+import 'package:path/path.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/custom_bottom_nav.dart';
 import 'widgets/custom_app_bar.dart';
@@ -19,8 +21,19 @@ class HomePage extends HookWidget {
       if (authState.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(authState.error!),
-            backgroundColor: Colors.red,
+            content: Row(
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white),
+                const SizedBox(width: 12),
+                Expanded(child: Text(authState.error!)),
+              ],
+            ),
+            backgroundColor: Colors.red.shade600,
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.all(16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         );
       }
@@ -30,11 +43,12 @@ class HomePage extends HookWidget {
     return AuthGateway(
       child: Scaffold(
         appBar: CustomAppBar(
+          title: 'Home',
+          backgroundColor: Colors.deepPurple,
           actions: [
-            _buildNotificationIcon(),
+            _buildNotificationIcon(context),
             const SizedBox(width: 8),
           ],
-          title: const Text('Home'),
         ),
         drawer: CustomDrawer(
           selectedIndex: selectedIndex.value,
@@ -52,7 +66,10 @@ class HomePage extends HookWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.blue[50]!, Colors.white],
+          colors: [
+            Colors.deepPurple.withOpacity(0.05),
+            Colors.white,
+          ],
         ),
       ),
       child: SafeArea(
@@ -74,29 +91,40 @@ class HomePage extends HookWidget {
   }
 
   Widget _buildWelcomeSection(BuildContext context) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome Back',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 3,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome Back',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Manage your fire safety equipment efficiently',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Manage your fire safety equipment efficiently',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade600,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -107,50 +135,75 @@ class HomePage extends HookWidget {
       children: [
         Text(
           'Quick Actions',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
-                child: _buildActionCard(
-              context,
-              icon: Icons.inventory,
-              title: 'Inventory',
-              color: Colors.blue,
-              onTap: () => Navigator.pushNamed(context, '/inventory'),
-            )),
+              child: _buildActionCard(
+                context,
+                icon: Icons.inventory,
+                title: 'Inventory',
+                color: Colors.deepPurple,
+                onTap: () => Navigator.pushNamed(context, '/inventory'),
+              ),
+            ),
+            const SizedBox(width: 12),
             Expanded(
-                child: _buildActionCard(
-              context,
-              icon: Icons.miscellaneous_services,
-              title: 'Services',
-              color: Colors.green,
-              onTap: () => Navigator.pushNamed(context, '/service-requests'),
-            )),
+              child: _buildActionCard(
+                context,
+                icon: Icons.miscellaneous_services,
+                title: 'Services',
+                color: Colors.deepPurple.shade300,
+                onTap: () => Navigator.pushNamed(context, '/service-requests'),
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
-                child: _buildActionCard(
-              context,
-              icon: Icons.payment,
-              title: 'Payments & Billing',
-              color: Colors.orange,
-              onTap: () => Navigator.pushNamed(context, '/finance'),
-            )),
+              child: _buildActionCard(
+                context,
+                icon: Icons.settings,
+                title: 'Settings',
+                color: Colors.deepPurple.shade400,
+                onTap: () => Navigator.pushNamed(context, '/settings'),
+              ),
+            ),
+            const SizedBox(width: 12),
             Expanded(
-                child: _buildActionCard(
-              context,
-              icon: Icons.map,
-              title: 'Navigation',
-              color: Colors.purple,
-              onTap: () => Navigator.pushNamed(context, '/navigation'),
-            )),
+              child: _buildActionCard(
+                context,
+                icon: Icons.notifications,
+                title: 'Notifications',
+                color: Colors.deepPurple.shade500,
+                onTap: () => Navigator.pushNamed(context, '/notification'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildActionCard(
+                context,
+                icon: Icons.map,
+                title: 'Navigation',
+                color: Colors.deepPurple.shade600,
+                onTap: () => Navigator.pushNamed(context, '/navigation'),
+              ),
+            ),
+            Expanded(
+              child: const SizedBox(),
+            ),
           ],
         ),
       ],
@@ -164,25 +217,40 @@ class HomePage extends HookWidget {
     required Color color,
     VoidCallback? onTap,
   }) {
-    return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: InkWell(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(icon, size: 32, color: color),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-              ),
-            ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Icon(icon, size: 32, color: color),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -190,56 +258,70 @@ class HomePage extends HookWidget {
   }
 
   Widget _buildStatusSection(BuildContext context, AuthState authState) {
-    return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Status',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Status',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
-            const SizedBox(height: 12),
-            if (authState.userRole != null)
-              Row(
-                children: [
-                  Icon(
-                    Icons.verified_user_outlined,
-                    size: 20,
-                    color: Colors.green[700],
+          ),
+          const SizedBox(height: 12),
+          if (authState.userRole != null)
+            Row(
+              children: [
+                Icon(
+                  Icons.verified_user_outlined,
+                  size: 20,
+                  color: Colors.deepPurple,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Role: ${authState.userRole}',
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 14,
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Role: ${authState.userRole}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[700],
-                        ),
-                  ),
-                ],
-              ),
-          ],
-        ),
+                ),
+              ],
+            ),
+        ],
       ),
     );
   }
 
-  Widget _buildNotificationIcon() {
+  Widget _buildNotificationIcon(BuildContext context) {
     return IconButton(
       icon: Stack(
         children: [
-          const Icon(Icons.notifications_outlined),
+          const Icon(
+            Icons.notifications_outlined,
+            color: Colors.white,
+          ),
           Positioned(
             right: 0,
             top: 0,
             child: Container(
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.red.shade600,
                 borderRadius: BorderRadius.circular(6),
               ),
               constraints: const BoxConstraints(
@@ -251,7 +333,7 @@ class HomePage extends HookWidget {
         ],
       ),
       onPressed: () {
-        // Handle notification tap
+        AppRoutes.navigateToNotification(context);
       },
     );
   }
