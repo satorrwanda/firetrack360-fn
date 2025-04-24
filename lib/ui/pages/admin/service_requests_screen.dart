@@ -484,10 +484,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 _buildInfoSection(
                   'Client Information',
                   [
-                    // _buildInfoRow('Name', request.client ?? 'N/A'),
                     _buildInfoRow('Email', request.client?.email ?? 'N/A'),
                     _buildInfoRow('Phone', request.client?.phone ?? 'N/A'),
-                    // _buildInfoRow('Address', request.client?.address ?? 'N/A'),
                   ],
                 ),
 
@@ -497,8 +495,6 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 _buildInfoSection(
                   'Technician Information',
                   [
-                    // _buildInfoRow(
-                    //     'Name', request.technician?.name ?? 'Not assigned'),
                     _buildInfoRow('Email', request.technician?.email ?? 'N/A'),
                     _buildInfoRow('Phone', request.technician?.phone ?? 'N/A'),
                   ],
