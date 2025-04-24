@@ -117,7 +117,7 @@ class ErrorApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Initialization Error'),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.deepPurple,
         ),
         body: Center(
           child: Padding(
@@ -137,6 +137,11 @@ class ErrorApp extends StatelessWidget {
                   onPressed: () {
                     main();
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.deepPurple, // Deep purple retry button
+                    foregroundColor: Colors.white,
+                  ),
                   child: const Text('Retry'),
                 ),
               ],
@@ -170,7 +175,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.red,
+              seedColor: Colors.deepPurple,
               brightness: Brightness.light,
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -178,7 +183,7 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.red,
+              seedColor: Colors.deepPurple,
               brightness: Brightness.dark,
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,

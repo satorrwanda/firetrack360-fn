@@ -22,140 +22,96 @@ class ProductDetailsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productNotifier = ref.watch(productNotifierProvider.notifier);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.deepPurple,
-        title: const Text(
-          'Product Details',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
-        actions: [
-          if (onEdit != null)
-            IconButton(
-              icon: const Icon(Icons.edit_outlined, color: Colors.white),
-              onPressed: onEdit,
+    return FutureBuilder<String?>(
+      future: AuthService.getRole(),
+      builder: (context, snapshot) {
+        // Check if the user is an admin
+        final bool isAdmin = snapshot.data?.toLowerCase() == 'admin';
+
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-          if (onDelete != null)
-            IconButton(
-              icon: const Icon(Icons.delete_outline, color: Colors.white),
-              onPressed: onDelete,
+            backgroundColor: Colors.deepPurple,
+            title: const Text(
+              'Product Details',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+              ),
             ),
-        ],
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                  ),
-                  child: ProductImage(
-                    imageUrl: product.imageUrl,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+            actions: [
+              // Only show edit and delete buttons for admin users
+              if (isAdmin && onEdit != null)
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined, color: Colors.white),
+                  onPressed: onEdit,
                 ),
-                Positioned(
-                  right: 16,
-                  bottom: 16,
-                  child: GestureDetector(
-                    onTap: () async {
-                      final authToken = await AuthService.getAccessToken();
-                      if (context.mounted) {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) => ProfileImagePickerModal(
-                            hasExistingImage: product.imageUrl != null,
-                            authToken: authToken,
-                            onImageSelected: (String newImageUrl) async {
-                              // Close the modal first
-                              Navigator.pop(context);
-
-                              try {
-                                // Update product and refetch data
-                                // Update product and refetch data
-                                await productNotifier.updateProduct(
-                                  product.id,
-                                  {'imageUrl': newImageUrl},
-                                );
-                                await productNotifier.fetchAllProducts();
-
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          'Product image updated successfully'),
-                                      backgroundColor: Colors.green,
-                                    ),
-                                  );
-                                }
-                              } catch (e) {
-                                if (context.mounted) {
-                                  // Close loading dialog
-                                  Navigator.pop(context);
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content:
-                                          Text('Failed to update image: $e'),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            onRemoveImage: product.imageUrl != null
-                                ? () async {
-                                    // Close modal first
+              if (isAdmin && onDelete != null)
+                IconButton(
+                  icon: const Icon(Icons.delete_outline, color: Colors.white),
+                  onPressed: onDelete,
+                ),
+            ],
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 250,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                      ),
+                      child: ProductImage(
+                        imageUrl: product.imageUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // Only show image edit button for admin users
+                    if (isAdmin)
+                      Positioned(
+                        right: 16,
+                        bottom: 16,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final authToken =
+                                await AuthService.getAccessToken();
+                            if (context.mounted) {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => ProfileImagePickerModal(
+                                  hasExistingImage: product.imageUrl != null,
+                                  authToken: authToken,
+                                  onImageSelected: (String newImageUrl) async {
+                                    // Close the modal first
                                     Navigator.pop(context);
 
                                     try {
-                                      // Show loading dialog
-                                      showDialog(
-                                        context: context,
-                                        barrierDismissible: false,
-                                        builder: (BuildContext context) {
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        },
-                                      );
-
-                                      // Remove image and refetch data
+                                      // Update product and refetch data
                                       await productNotifier.updateProduct(
                                         product.id,
-                                        {'imageUrl': null},
+                                        {'imageUrl': newImageUrl},
                                       );
                                       await productNotifier.fetchAllProducts();
 
                                       if (context.mounted) {
-                                        // Pop back to inventory screen
-                                        Navigator.of(context)
-                                          ..pop() // Close loading dialog
-                                          ..pop(); // Return to inventory
-
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                                'Product image removed successfully'),
+                                                'Product image updated successfully'),
                                             backgroundColor: Colors.green,
                                           ),
                                         );
@@ -169,97 +125,156 @@ class ProductDetailsScreen extends ConsumerWidget {
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                'Failed to remove image: $e'),
+                                                'Failed to update image: $e'),
                                             backgroundColor: Colors.red,
                                           ),
                                         );
                                       }
                                     }
-                                  }
-                                : null,
+                                  },
+                                  onRemoveImage: product.imageUrl != null
+                                      ? () async {
+                                          // Close modal first
+                                          Navigator.pop(context);
+
+                                          try {
+                                            // Show loading dialog
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (BuildContext context) {
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              },
+                                            );
+
+                                            // Remove image and refetch data
+                                            await productNotifier.updateProduct(
+                                              product.id,
+                                              {'imageUrl': null},
+                                            );
+                                            await productNotifier
+                                                .fetchAllProducts();
+
+                                            if (context.mounted) {
+                                              // Pop back to inventory screen
+                                              Navigator.of(context)
+                                                ..pop() // Close loading dialog
+                                                ..pop(); // Return to inventory
+
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Product image removed successfully'),
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                              );
+                                            }
+                                          } catch (e) {
+                                            if (context.mounted) {
+                                              // Close loading dialog
+                                              Navigator.pop(context);
+
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      'Failed to remove image: $e'),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        }
+                                      : null,
+                                ),
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple.shade700,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 20,
+                            ),
                           ),
-                        );
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade700,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
+                        ),
+                      ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              product.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                          _buildStatusBadge(context),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildInfoCard(
+                              context: context,
+                              icon: Icons.category_outlined,
+                              label: 'Type',
+                              value: product.type,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _buildInfoCard(
+                              context: context,
+                              icon: Icons.straighten,
+                              label: 'Size',
+                              value: product.size,
+                            ),
                           ),
                         ],
                       ),
-                      child: const Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
+                      const SizedBox(height: 16),
+                      _buildSerialNumberCard(context),
+                      const SizedBox(height: 16),
+                      _buildDescriptionCard(context),
+                      const SizedBox(height: 16),
+                      _buildPriceStockCard(context),
+                    ],
                   ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          product.name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                      ),
-                      _buildStatusBadge(context),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildInfoCard(
-                          context: context,
-                          icon: Icons.category_outlined,
-                          label: 'Type',
-                          value: product.type,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: _buildInfoCard(
-                          context: context,
-                          icon: Icons.straighten,
-                          label: 'Size',
-                          value: product.size,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _buildSerialNumberCard(context),
-                  const SizedBox(height: 16),
-                  _buildDescriptionCard(context),
-                  const SizedBox(height: 16),
-                  _buildPriceStockCard(context),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

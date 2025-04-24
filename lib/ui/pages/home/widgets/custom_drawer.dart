@@ -17,22 +17,12 @@ class CustomDrawer extends StatelessWidget {
   static const String users = 'Users';
   static const String service = 'Service';
   static const String inventory = 'Inventory';
-  static const String technician = 'Technician';
-  static const String task = 'Task';
-  static const String location = 'Location';
-  static const String stock = 'Stock';
-  static const String tasks = 'Tasks';
   static const String navigation = 'Navigation';
-  static const String offlineMode = 'Offline Mode';
-  static const String customerFeedback = 'Customer Feedback';
   static const String dashboard = 'Dashboard';
-  static const String extinguishers = 'Extinguishers';
-  static const String payments = 'Payments & Billing';
-  static const String support = 'Support';
-  static const String safetyTips = 'Safety Tips';
   static const String home = 'Home';
   static const String profile = 'Profile';
   static const String settings = 'Settings';
+  static const String notifications = 'Notifications';
 
   @override
   Widget build(BuildContext context) {
@@ -88,22 +78,90 @@ class CustomDrawer extends StatelessWidget {
                         context: context,
                         barrierDismissible: true,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Confirm Logout'),
-                            content:
-                                const Text('Are you sure you want to logout?'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Cancel'),
-                                onPressed: () =>
-                                    Navigator.of(context).pop(false),
+                          return Dialog(
+                            // Use Dialog instead of AlertDialog
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            elevation: 5, // More pronounced shadow
+                            backgroundColor:
+                                Theme.of(context).dialogBackgroundColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(
+                                  24.0), // More generous padding
+                              child: Column(
+                                mainAxisSize:
+                                    MainAxisSize.min, // Important for Dialog
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.logout, // Better icon
+                                    size: 48,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary, // Accent color
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Confirm Logout',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    'Are you sure you want to sign out?', // More user-friendly text
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[700],
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceAround, // Even spacing
+                                    children: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.grey[600],
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 12),
+                                        ),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.redAccent,
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                          ),
+                                          elevation:
+                                              3, // Slightly stronger shadow
+                                        ),
+                                        child: const Text(
+                                          'Logout',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              TextButton(
-                                child: const Text('Logout'),
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
-                              ),
-                            ],
+                            ),
                           );
                         },
                       );
@@ -137,24 +195,24 @@ class CustomDrawer extends StatelessWidget {
           );
         }
 
-        final userRole = snapshot.data;
-        final menuItems = _getMenuItemsByRole(context, userRole);
+        final String? userRole = snapshot.data;
+        final bool isAdmin = userRole?.toLowerCase() == 'admin';
+
+        final menuItems = _getAllMenuItems(context, isAdmin);
 
         return Column(
           children: [
-            _buildMenuSection('MENU', menuItems.take(1).toList()),
-            if (menuItems.length > 1) ...[
-              const SizedBox(height: 24),
-              _buildMenuSection(
-                'FEATURES',
-                menuItems.skip(1).take(menuItems.length - 2).toList(),
-              ),
-              const SizedBox(height: 24),
-              _buildMenuSection(
-                'OTHER',
-                menuItems.skip(menuItems.length - 1).toList(),
-              ),
-            ],
+            _buildMenuSection('MENU', [menuItems[0]]),
+            const SizedBox(height: 24),
+            _buildMenuSection(
+              'FEATURES',
+              menuItems.skip(1).take(isAdmin ? 4 : 3).toList(),
+            ),
+            const SizedBox(height: 24),
+            _buildMenuSection(
+              'OTHER',
+              menuItems.skip(isAdmin ? 5 : 4).toList(),
+            ),
           ],
         );
       },
@@ -162,6 +220,13 @@ class CustomDrawer extends StatelessWidget {
   }
 
   Widget _buildMenuSection(String title, List<DrawerItem> items) {
+    // Filter out any null items that might have been added for admin-only features
+    final filteredItems = items.where((item) => item != null).toList();
+
+    if (filteredItems.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -177,7 +242,7 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
         ),
-        ...items,
+        ...filteredItems,
       ],
     );
   }
@@ -185,7 +250,10 @@ class CustomDrawer extends StatelessWidget {
   void _handleNavigation(BuildContext context, String title, int index) {
     onIndexSelected(index);
     switch (title) {
-      // Admin routes
+      case dashboard:
+      case home:
+        AppRoutes.navigateToHome(context);
+        break;
       case users:
         AppRoutes.navigateToUserManagement(context);
         break;
@@ -195,37 +263,8 @@ class CustomDrawer extends StatelessWidget {
       case inventory:
         AppRoutes.navigateToInventory(context);
         break;
-      // Technician routes
-      case tasks:
-        AppRoutes.navigateToMyTasks(context);
-        break;
       case navigation:
         AppRoutes.navigateToTechnicianNavigation(context);
-        break;
-      case service:
-        AppRoutes.navigateToServiceHistory(context);
-        break;
-      case customerFeedback:
-        AppRoutes.navigateToCustomerFeedback(context);
-        break;
-
-      // Client routes
-      case dashboard:
-        AppRoutes.navigateToHome(context);
-        break;
-      case extinguishers:
-        AppRoutes.navigateToMyExtinguishers(context);
-        break;
-      case support:
-        AppRoutes.navigateToSupport(context);
-        break;
-      case safetyTips:
-        AppRoutes.navigateToSafetyTips(context);
-        break;
-
-      // Common routes
-      case home:
-        AppRoutes.navigateToHome(context);
         break;
       case profile:
         AppRoutes.navigateToProfile(context);
@@ -233,70 +272,56 @@ class CustomDrawer extends StatelessWidget {
       case settings:
         AppRoutes.navigateToSettings(context);
         break;
+      case notifications:
+        AppRoutes.navigateToNotification(context);
+        break;
       default:
         AppRoutes.navigateToHome(context);
     }
   }
 
-  List<DrawerItem> _getMenuItemsByRole(BuildContext context, String? userRole) {
-    List<DrawerItem> menuItems = [
+  List<DrawerItem> _getAllMenuItems(BuildContext context, bool isAdmin) {
+    int index = 0;
+    final List<DrawerItem> menuItems = [
+      // Menu section
       DrawerItem(
         icon: Icons.dashboard_outlined,
         selectedIcon: Icons.dashboard,
         title: dashboard,
-        index: 0,
+        index: index++,
         isSelected: selectedIndex == 0,
-        onTap: () => AppRoutes.navigateToDashboard(context),
+        onTap: () => _handleNavigation(context, dashboard, 0),
       ),
     ];
 
-    switch (userRole?.toLowerCase()) {
-      case 'admin':
-        menuItems.addAll(_adminMenuItems(context));
-        break;
-      case 'technician':
-        menuItems.addAll(_technicianMenuItems(context));
-        break;
-      case 'client':
-        menuItems.addAll(_clientMenuItems(context));
-        break;
+    // Features section - Add Users only for admin
+    if (isAdmin) {
+      menuItems.add(_createMenuItem(
+          context, Icons.group_outlined, Icons.group, users, index++));
     }
 
-    menuItems.add(_settingsMenuItem(context, menuItems.length));
+    // Add other feature items that should be visible to all users
+    menuItems.addAll([
+      _createMenuItem(context, Icons.assignment_outlined, Icons.assignment,
+          service, index++),
+      _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
+          inventory, index++),
+      _createMenuItem(context, Icons.map_outlined, Icons.map, navigation,
+          index++), // Navigation in FEATURES section only
+    ]);
+
+    // Other section - Now includes notifications instead of duplicating Navigation
+    menuItems.addAll([
+      _createMenuItem(
+          context, Icons.person_outline, Icons.person, profile, index++),
+      _createMenuItem(
+          context, Icons.settings_outlined, Icons.settings, settings, index++),
+      _createMenuItem(context, Icons.notifications_outlined,
+          Icons.notifications, notifications, index++),
+    ]);
+
     return menuItems;
   }
-
-  List<DrawerItem> _adminMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.group_outlined, Icons.group, users, 2),
-        _createMenuItem(
-            context, Icons.assignment_outlined, Icons.assignment, service, 3),
-        _createMenuItem(context, Icons.inventory_2_outlined, Icons.inventory_2,
-            inventory, 4),
-      ];
-
-  List<DrawerItem> _technicianMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.work_outline, Icons.work, tasks, 1),
-        _createMenuItem(context, Icons.map_outlined, Icons.map, navigation, 2),
-        _createMenuItem(
-            context, Icons.history_outlined, Icons.history, service, 3),
-        _createMenuItem(context, Icons.offline_bolt_outlined,
-            Icons.offline_bolt, offlineMode, 4),
-        _createMenuItem(context, Icons.rate_review_outlined, Icons.rate_review,
-            customerFeedback, 5),
-      ];
-
-  List<DrawerItem> _clientMenuItems(BuildContext context) => [
-        _createMenuItem(context, Icons.fire_extinguisher,
-            Icons.fire_extinguisher, extinguishers, 1),
-        _createMenuItem(
-            context, Icons.history_outlined, Icons.history, service, 2),
-        _createMenuItem(
-            context, Icons.payment_outlined, Icons.payment, payments, 4),
-        _createMenuItem(
-            context, Icons.support_outlined, Icons.support, support, 5),
-        _createMenuItem(context, Icons.safety_check_outlined,
-            Icons.safety_check, safetyTips, 6),
-      ];
 
   DrawerItem _createMenuItem(BuildContext context, IconData icon,
           IconData selectedIcon, String title, int index) =>
@@ -307,14 +332,5 @@ class CustomDrawer extends StatelessWidget {
         index: index,
         isSelected: selectedIndex == index,
         onTap: () => _handleNavigation(context, title, index),
-      );
-
-  DrawerItem _settingsMenuItem(BuildContext context, int index) => DrawerItem(
-        icon: Icons.settings_outlined,
-        selectedIcon: Icons.settings,
-        title: 'Settings',
-        index: index,
-        isSelected: selectedIndex == index,
-        onTap: () => AppRoutes.navigateToSettings(context),
       );
 }

@@ -1,7 +1,9 @@
+import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/routes/auth_gateway.dart';
+import 'package:path/path.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/custom_bottom_nav.dart';
 import 'widgets/custom_app_bar.dart';
@@ -44,7 +46,7 @@ class HomePage extends HookWidget {
           title: 'Home',
           backgroundColor: Colors.deepPurple,
           actions: [
-            _buildNotificationIcon(),
+            _buildNotificationIcon(context),
             const SizedBox(width: 8),
           ],
         ),
@@ -305,7 +307,7 @@ class HomePage extends HookWidget {
     );
   }
 
-  Widget _buildNotificationIcon() {
+  Widget _buildNotificationIcon(BuildContext context) {
     return IconButton(
       icon: Stack(
         children: [
@@ -331,7 +333,7 @@ class HomePage extends HookWidget {
         ],
       ),
       onPressed: () {
-        // Handle notification tap
+        AppRoutes.navigateToNotification(context);
       },
     );
   }
