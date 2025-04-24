@@ -417,7 +417,7 @@ class ProductDetailsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '\$${product.price.toStringAsFixed(2)}',
+                '${product.price.toStringAsFixed(2)} FRW',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
