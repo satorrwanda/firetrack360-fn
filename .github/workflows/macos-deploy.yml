@@ -25,9 +25,9 @@ jobs:
       - name: Build macOS
         run: flutter build macos
 
-      - name: Upload macOS Release
-        if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-release
-          path: build/macos/Build/Products/Release
+      # - name: Upload macOS Release
+      #   if: github.event_name == 'push'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: macos-release
+      #     path: build/macos/Build/Products/Release

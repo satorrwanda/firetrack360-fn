@@ -113,20 +113,20 @@ jobs:
         run: |
           docker cp android-deploy-container:/app/build/app/outputs/flutter-apk/app-release.apk ./app-release.apk
 
-      - name: Upload Build Artifact 📤
-        if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-release
-          path: app-release.apk
-          retention-days: 7
+      # - name: Upload Build Artifact 📤
+      #   if: github.event_name == 'push'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: android-release
+      #     path: app-release.apk
+      #     retention-days: 7
 
-      - name: Create GitHub Release 🎉
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: app-release.apk
-          generate_release_notes: true
+      # - name: Create GitHub Release 🎉
+      #   uses: softprops/action-gh-release@v2
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: app-release.apk
+      #     generate_release_notes: true
 
       - name: Cleanup Docker Resources 🧹
         if: always()
