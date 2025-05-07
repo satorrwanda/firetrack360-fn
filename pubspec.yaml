@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_dotenv: ^5.0.2  
   cupertino_icons: ^1.0.6
   graphql_flutter: ^5.2.0-beta.7
@@ -26,7 +28,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   jwt_decoder: ^2.0.1
   image_picker: ^1.0.7
-  intl: ^0.20.1
+  # intl is already included above
   flutter_riverpod: ^2.6.1
   hooks_riverpod: ^2.6.1
   provider: ^6.1.2
@@ -34,6 +36,7 @@ dependencies:
   path: ^1.8.3
   permission_handler: ^11.2.0
   url_launcher: ^6.1.11
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -41,7 +44,9 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter:
+  generate: true  # Enable generation of localized code
   uses-material-design: true
+    
   assets:
     - assets/images/firetrack_logo.png
     - assets/images/onboarding1.jpg
@@ -49,6 +54,9 @@ flutter:
     - assets/images/onboarding3.jpg
     - .env.development
     - .env.production
+
+  # Correct location for l10n configuration
+  
 
 flutter_native_splash:
   color: "#ffffff"
@@ -78,4 +86,3 @@ flutter_launcher_icons:
   image_path_ios: "assets/images/firetrack_logo.png"          
   adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/images/firetrack_logo.png"
-

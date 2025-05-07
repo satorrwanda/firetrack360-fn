@@ -1,0 +1,34 @@
+{
+    "onboardingTitle1": "Welcome to FireSecure360",
+    "@onboardingTitle1": {
+        "description": "Title for first onboarding screen"
+    },
+    "onboardingDesc1": "Secure your world, one tap at a time",
+    "@onboardingDesc1": {
+        "description": "Description for first onboarding screen"
+    },
+    "onboardingTitle2": "Get Started",
+    "@onboardingTitle2": {
+        "description": "Title for second onboarding screen"
+    },
+    "onboardingDesc2": "Create an account or log in to access all features",
+    "@onboardingDesc2": {
+        "description": "Description for second onboarding screen"
+    },
+    "onboardingTitle3": "Secure and Simple",
+    "@onboardingTitle3": {
+        "description": "Title for third onboarding screen"
+    },
+    "onboardingDesc3": "Streamline your security management",
+    "@onboardingDesc3": {
+        "description": "Description for third onboarding screen"
+    },
+    "register": "Register",
+    "@register": {
+        "description": "Text for register button"
+    },
+    "login": "Login",
+    "@login": {
+        "description": "Text for login button"
+    }
+}

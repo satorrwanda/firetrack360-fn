@@ -7,6 +7,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'routes/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart'; 
 
 enum Environment { development, production }
 
@@ -138,8 +140,7 @@ class ErrorApp extends StatelessWidget {
                     main();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors.deepPurple, // Deep purple retry button
+                    backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
                   ),
                   child: const Text('Retry'),
@@ -188,6 +189,13 @@ class MyApp extends StatelessWidget {
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
           routes: AppRoutes.getRoutes(),
           initialRoute: initialRoute,
           onUnknownRoute: AppRoutes.unknownRoute,

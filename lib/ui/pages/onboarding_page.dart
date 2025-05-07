@@ -7,30 +7,37 @@ import 'package:firetrack360/ui/pages/auth/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingPage extends HookWidget {
   OnboardingPage({Key? key}) : super(key: key);
 
-  final List<OnboardingContent> _onboardingContents = [
-    OnboardingContent(
-      title: 'Welcome to FireSecure360',
-      description: 'Secure your world, one tap at a time',
-      image: 'assets/images/onboarding1.jpg',
-    ),
-    OnboardingContent(
-      title: 'Get Started',
-      description: 'Create an account or log in to access all features',
-      image: 'assets/images/onboarding2.jpg',
-    ),
-    OnboardingContent(
-      title: 'Secure and Simple',
-      description: 'Streamline your security management',
-      image: 'assets/images/onboarding3.jpg',
-    ),
-  ];
+  // Content will be populated from localizations in build method
+  late List<OnboardingContent> _onboardingContents;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    // Initialize the content with localized strings
+    _onboardingContents = [
+      OnboardingContent(
+        title: l10n.onboardingTitle1,
+        description: l10n.onboardingDesc1,
+        image: 'assets/images/onboarding1.jpg',
+      ),
+      OnboardingContent(
+        title: l10n.onboardingTitle2,
+        description: l10n.onboardingDesc2,
+        image: 'assets/images/onboarding2.jpg',
+      ),
+      OnboardingContent(
+        title: l10n.onboardingTitle3,
+        description: l10n.onboardingDesc3,
+        image: 'assets/images/onboarding3.jpg',
+      ),
+    ];
+
     final pageController = usePageController();
     final currentPage = useState(0);
     final isMounted = useIsMounted();
