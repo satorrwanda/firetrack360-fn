@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firetrack360/generated/l10n.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/onboarding_buttons.dart';
 import 'package:firetrack360/ui/models/onboarding_content.dart';
@@ -7,7 +8,6 @@ import 'package:firetrack360/ui/pages/auth/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingPage extends HookWidget {
   OnboardingPage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class OnboardingPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = S.of(context)!;
 
     // Initialize the content with localized strings
     _onboardingContents = [

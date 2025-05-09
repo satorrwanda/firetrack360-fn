@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:firetrack360/generated/l10n.dart';
+import 'package:firetrack360/providers/locale_provider.dart';
+import 'package:firetrack360/ui/widgets/material_localizationsdelegate%20.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -98,10 +100,14 @@ Future<void> main() async {
     final client = GraphQLConfiguration.initializeClient();
     final initialRoute = await _determineInitialRoute();
 
-    runApp(MyApp(
-      client: client,
-      initialRoute: initialRoute,
-    ));
+    runApp(
+      ProviderScope(
+        child: MyApp(
+          client: client,
+          initialRoute: initialRoute,
+        ),
+      ),
+    );
   } catch (e) {
     runApp(ErrorApp(error: e));
   }
@@ -154,7 +160,7 @@ class ErrorApp extends StatelessWidget {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   final ValueNotifier<GraphQLClient> client;
   final String initialRoute;
 
@@ -165,41 +171,47 @@ class MyApp extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      child: GraphQLProvider(
-        client: client,
-        child: MaterialApp(
-          title: 'FireSecure360',
-          themeMode: ThemeMode.system,
-          debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple,
-              brightness: Brightness.light,
-            ),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch the locale provider to rebuild when locale changes
+    final currentLocale = ref.watch(localeProvider);
+
+    return GraphQLProvider(
+      client: client,
+      child: MaterialApp(
+        title: 'FireSecure360',
+        themeMode: ThemeMode.system,
+        debugShowCheckedModeBanner: EnvironmentConfig.isDevelopment,
+
+        // Set the locale from the provider
+        locale: currentLocale,
+
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+            brightness: Brightness.light,
           ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple,
-              brightness: Brightness.dark,
-            ),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.supportedLocales,
-          routes: AppRoutes.getRoutes(),
-          initialRoute: initialRoute,
-          onUnknownRoute: AppRoutes.unknownRoute,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+            brightness: Brightness.dark,
+          ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          MaterialLocalizationsDelegate(),
+        ],
+        supportedLocales: S.supportedLocales,
+        routes: AppRoutes.getRoutes(),
+        initialRoute: initialRoute,
+        onUnknownRoute: AppRoutes.unknownRoute,
       ),
     );
   }
