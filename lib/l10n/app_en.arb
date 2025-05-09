@@ -1,4 +1,5 @@
 {
+    "@@locale": "en",
     "onboardingTitle1": "Welcome to FireSecure360",
     "@onboardingTitle1": {
         "description": "Title for first onboarding screen"

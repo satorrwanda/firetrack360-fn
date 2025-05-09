@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:firetrack360/generated/l10n.dart';
 import 'package:firetrack360/providers/locale_provider.dart';
+import 'package:firetrack360/ui/widgets/kinyarwanda_upertino_localizations.dart';
 import 'package:firetrack360/ui/widgets/material_localizationsdelegate%20.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -207,6 +208,7 @@ class MyApp extends ConsumerWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           MaterialLocalizationsDelegate(),
+          KinyarwandaCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.supportedLocales,
         routes: AppRoutes.getRoutes(),
