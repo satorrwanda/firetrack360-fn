@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class OnboardingPage extends HookWidget {
   OnboardingPage({Key? key}) : super(key: key);
 
@@ -25,17 +24,20 @@ class OnboardingPage extends HookWidget {
       OnboardingContent(
         title: l10n.onboardingTitle1,
         description: l10n.onboardingDesc1,
-        image: 'assets/images/onboarding1.jpg',
+        image:
+            'assets/images/onboarding1.jpg', // Make sure asset paths are correct
       ),
       OnboardingContent(
         title: l10n.onboardingTitle2,
         description: l10n.onboardingDesc2,
-        image: 'assets/images/onboarding2.jpg',
+        image:
+            'assets/images/onboarding2.jpg', // Make sure asset paths are correct
       ),
       OnboardingContent(
         title: l10n.onboardingTitle3,
         description: l10n.onboardingDesc3,
-        image: 'assets/images/onboarding3.jpg',
+        image:
+            'assets/images/onboarding3.jpg', // Make sure asset paths are correct
       ),
     ];
 
@@ -44,12 +46,16 @@ class OnboardingPage extends HookWidget {
     final isMounted = useIsMounted();
     final timerRef = useRef<Timer?>(null);
 
+    // Function to check if onboarding has been completed
     Future<void> checkOnboardingStatus() async {
+      // Check if the widget is still mounted before performing async operations
       if (!isMounted()) return;
+
       final prefs = await SharedPreferences.getInstance();
       final isOnboardingComplete =
           prefs.getBool('isOnboardingComplete') ?? false;
 
+      // If onboarding is complete and widget is mounted, navigate to login
       if (isOnboardingComplete) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (isMounted()) {
@@ -59,15 +65,20 @@ class OnboardingPage extends HookWidget {
       }
     }
 
+    // Function to start automatic page sliding
     void startAutoSlide() {
+      // Cancel any existing timer
       timerRef.value?.cancel();
 
+      // Start a periodic timer for auto-sliding
       timerRef.value = Timer.periodic(const Duration(seconds: 3), (timer) {
+        // Cancel timer if widget is no longer mounted
         if (!isMounted()) {
           timer.cancel();
           return;
         }
 
+        // Animate to the next page if the PageView has clients
         if (pageController.hasClients) {
           final nextPage = ((pageController.page ?? 0).toInt() + 1) %
               _onboardingContents.length;
@@ -80,26 +91,33 @@ class OnboardingPage extends HookWidget {
       });
     }
 
+    // useEffect hook to perform side effects (checking status and starting auto-slide)
     useEffect(() {
       checkOnboardingStatus();
       startAutoSlide();
+      // Cleanup function to cancel the timer when the widget is disposed
       return () {
         timerRef.value?.cancel();
         timerRef.value = null;
       };
-    }, []);
+    }, []); // Empty dependency array means this effect runs only once on mount
 
+    // Function to handle navigation after completing onboarding
     Future<void> handleNavigation(bool isLogin) async {
+      // Check if the widget is still mounted before navigating
       if (!isMounted()) return;
 
       try {
         debugPrint('Starting navigation process');
+        // Cancel the auto-slide timer before navigating
         timerRef.value?.cancel();
         timerRef.value = null;
 
+        // Mark onboarding as complete in SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isOnboardingComplete', true);
 
+        // Navigate after the current frame is built
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (isMounted()) {
             if (isLogin) {
@@ -111,6 +129,7 @@ class OnboardingPage extends HookWidget {
         });
       } catch (e) {
         debugPrint('Navigation error: $e');
+        // Consider showing an error message to the user
       }
     }
 
@@ -128,9 +147,11 @@ class OnboardingPage extends HookWidget {
           ),
         ),
         child: SafeArea(
-          child: Stack( // Use Stack to position the toggler
+          child: Stack(
+            // Use Stack to layer content and the language toggler
             children: [
               Column(
+                // The main content column
                 children: [
                   PageIndicator(
                     currentPage: currentPage.value,
@@ -166,13 +187,6 @@ class OnboardingPage extends HookWidget {
                     onLogin: () => handleNavigation(true),
                   ),
                 ],
-              ),
-              Align( // Position the toggler at the top right
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: LanguageToggler(),
-                ),
               ),
             ],
           ),

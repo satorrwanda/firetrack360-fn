@@ -1,92 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguageToggle extends StatelessWidget {
-  final Function(Locale) onLanguageChanged;
-  final Locale currentLocale;
-  final List<Locale> supportedLocales;
-  final Map<String, String> languageNames;
+class LanguageToggler extends StatefulWidget {
+  const LanguageToggler({Key? key}) : super(key: key);
 
-  const LanguageToggle({
-    super.key,
-    required this.onLanguageChanged,
-    required this.currentLocale,
-    required this.supportedLocales,
-    this.languageNames = const {
-      'en': 'English',
-      'fr': 'Français',
-      'rw': 'Kinyarwanda',
-    },
-  });
+  @override
+  State<LanguageToggler> createState() => _LanguageTogglerState();
+}
+
+class _LanguageTogglerState extends State<LanguageToggler> {
+  Locale? _currentLocale;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocale();
+  }
+
+  Future<void> _loadLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final languageCode = prefs.getString('languageCode') ?? 'en';
+    setState(() {
+      _currentLocale = Locale(languageCode);
+    });
+  }
+
+  Future<void> _changeLanguage(Locale newLocale) async {
+    if (newLocale != _currentLocale) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('languageCode', newLocale.languageCode);
+
+      // Force a rebuild of the MaterialApp with new locale
+      final widget = context.findAncestorWidgetOfExactType<MaterialApp>();
+      if (widget != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => widget.home!,
+          ),
+        );
+      }
+    }
+  }
+
+  String _getLanguageName(String code) {
+    switch (code) {
+      case 'en':
+        return 'English';
+      case 'fr':
+        return 'Français';
+      case 'rw':
+        return 'Kinyarwanda';
+      default:
+        return code.toUpperCase();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.language, color: Colors.white),
-            onPressed: () {
-              _showLanguageMenu(context);
-            },
-            tooltip: 'Change Language',
-          ),
-          Text(
-            languageNames[currentLocale.languageCode] ??
-                currentLocale.languageCode,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showLanguageMenu(BuildContext context) {
-    final RenderBox button = context.findRenderObject() as RenderBox;
-    final RenderBox overlay =
-        Navigator.of(context).overlay!.context.findRenderObject() as RenderBox;
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(Offset.zero, ancestor: overlay),
-        button.localToGlobal(button.size.bottomRight(Offset.zero),
-            ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
-    );
-
-    showMenu<Locale>(
-      context: context,
-      position: position,
-      items: supportedLocales.map((locale) {
-        return PopupMenuItem<Locale>(
+    return DropdownButton<Locale>(
+      value: _currentLocale ?? const Locale('en'),
+      icon: const Icon(Icons.language, color: Colors.white),
+      dropdownColor: Colors.deepPurple.shade700,
+      style: const TextStyle(color: Colors.white),
+      underline: Container(),
+      onChanged: (Locale? newLocale) {
+        if (newLocale != null) {
+          _changeLanguage(newLocale);
+        }
+      },
+      items: AppLocalizations.supportedLocales.map((Locale locale) {
+        return DropdownMenuItem<Locale>(
           value: locale,
-          child: Row(
-            children: [
-              Text(
-                languageNames[locale.languageCode] ?? locale.languageCode,
-                style: TextStyle(
-                  fontWeight: currentLocale.languageCode == locale.languageCode
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                ),
-              ),
-              if (currentLocale.languageCode == locale.languageCode)
-                const Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Icon(Icons.check, size: 18),
-                ),
-            ],
+          child: Text(
+            _getLanguageName(locale.languageCode),
+            style: const TextStyle(color: Colors.white),
           ),
         );
       }).toList(),
-    ).then((selectedLocale) {
-      if (selectedLocale != null) {
-        onLanguageChanged(selectedLocale);
-      }
-    });
+    );
   }
 }

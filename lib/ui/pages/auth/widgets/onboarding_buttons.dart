@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart'; // Import the language toggler
 
 class OnboardingButtons extends StatelessWidget {
   final VoidCallback onRegister;
@@ -15,7 +16,17 @@ class OnboardingButtons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
       child: Column(
+        mainAxisSize: MainAxisSize
+            .min, // Added to make the column take minimum vertical space
         children: [
+          // Add the LanguageToggler here
+          Align(
+            // Using Align to potentially control placement within the column
+            alignment:
+                Alignment.centerRight, // Align to the right within the column
+            child: LanguageToggler(),
+          ),
+          const SizedBox(height: 16), // Add some space below the toggler
           ElevatedButton(
             onPressed: onRegister,
             style: ElevatedButton.styleFrom(
