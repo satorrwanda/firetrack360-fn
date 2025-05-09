@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart'; // Import the language toggler
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart';
 
-class OnboardingButtons extends StatelessWidget {
+class OnboardingButtons extends ConsumerWidget {
   final VoidCallback onRegister;
   final VoidCallback onLogin;
 
@@ -12,21 +13,28 @@ class OnboardingButtons extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
       child: Column(
-        mainAxisSize: MainAxisSize
-            .min, // Added to make the column take minimum vertical space
         children: [
-          // Add the LanguageToggler here
+          // Language toggler positioned above buttons
           Align(
-            // Using Align to potentially control placement within the column
-            alignment:
-                Alignment.centerRight, // Align to the right within the column
-            child: LanguageToggler(),
+            alignment: Alignment.center,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple.shade700.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: LanguageToggler(),
+              ),
+            ),
           ),
-          const SizedBox(height: 16), // Add some space below the toggler
+
+          // Register button
           ElevatedButton(
             onPressed: onRegister,
             style: ElevatedButton.styleFrom(
@@ -49,6 +57,8 @@ class OnboardingButtons extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+
+          // Login button
           OutlinedButton(
             onPressed: onLogin,
             style: OutlinedButton.styleFrom(

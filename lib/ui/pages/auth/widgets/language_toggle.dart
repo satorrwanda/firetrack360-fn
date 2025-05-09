@@ -1,46 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguageToggler extends StatefulWidget {
-  const LanguageToggler({Key? key}) : super(key: key);
+final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
+  return LocaleNotifier();
+});
 
-  @override
-  State<LanguageToggler> createState() => _LanguageTogglerState();
-}
-
-class _LanguageTogglerState extends State<LanguageToggler> {
-  Locale? _currentLocale;
-
-  @override
-  void initState() {
-    super.initState();
+class LocaleNotifier extends StateNotifier<Locale> {
+  LocaleNotifier() : super(const Locale('en')) {
     _loadLocale();
   }
 
   Future<void> _loadLocale() async {
     final prefs = await SharedPreferences.getInstance();
     final languageCode = prefs.getString('languageCode') ?? 'en';
-    setState(() {
-      _currentLocale = Locale(languageCode);
-    });
+    state = Locale(languageCode);
   }
 
-  Future<void> _changeLanguage(Locale newLocale) async {
-    if (newLocale != _currentLocale) {
+  Future<void> setLocale(Locale newLocale) async {
+    if (state != newLocale) {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('languageCode', newLocale.languageCode);
+      state = newLocale;
+    }
+  }
+}
 
-      // Force a rebuild of the MaterialApp with new locale
-      final widget = context.findAncestorWidgetOfExactType<MaterialApp>();
-      if (widget != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => widget.home!,
+class LanguageToggler extends ConsumerWidget {
+  const LanguageToggler({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(localeProvider);
+    final l10n = AppLocalizations.of(context);
+
+    return DropdownButton<Locale>(
+      value: currentLocale,
+      icon: const Icon(Icons.language, color: Colors.white),
+      dropdownColor: Colors.deepPurple.shade700,
+      style: const TextStyle(color: Colors.white),
+      underline: Container(),
+      onChanged: (Locale? newLocale) {
+        if (newLocale != null) {
+          ref.read(localeProvider.notifier).setLocale(newLocale);
+        }
+      },
+      items: AppLocalizations.supportedLocales.map((Locale locale) {
+        return DropdownMenuItem<Locale>(
+          value: locale,
+          child: Text(
+            _getLanguageName(locale.languageCode),
+            style: const TextStyle(color: Colors.white),
           ),
         );
-      }
-    }
+      }).toList(),
+    );
   }
 
   String _getLanguageName(String code) {
@@ -54,30 +69,5 @@ class _LanguageTogglerState extends State<LanguageToggler> {
       default:
         return code.toUpperCase();
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<Locale>(
-      value: _currentLocale ?? const Locale('en'),
-      icon: const Icon(Icons.language, color: Colors.white),
-      dropdownColor: Colors.deepPurple.shade700,
-      style: const TextStyle(color: Colors.white),
-      underline: Container(),
-      onChanged: (Locale? newLocale) {
-        if (newLocale != null) {
-          _changeLanguage(newLocale);
-        }
-      },
-      items: AppLocalizations.supportedLocales.map((Locale locale) {
-        return DropdownMenuItem<Locale>(
-          value: locale,
-          child: Text(
-            _getLanguageName(locale.languageCode),
-            style: const TextStyle(color: Colors.white),
-          ),
-        );
-      }).toList(),
-    );
   }
 }
