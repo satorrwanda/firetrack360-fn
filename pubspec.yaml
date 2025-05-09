@@ -44,7 +44,7 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter:
-  generate: true  # Enable generation of localized code
+  generate: true 
   uses-material-design: true
     
   assets:

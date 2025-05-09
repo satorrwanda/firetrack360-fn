@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firetrack360/configs/graphql_client.dart';
+import 'package:firetrack360/generated/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'routes/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'generated/l10n.dart'; 
 
 enum Environment { development, production }
 
@@ -195,7 +195,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: S.delegate.supportedLocales,
+          supportedLocales: S.supportedLocales,
           routes: AppRoutes.getRoutes(),
           initialRoute: initialRoute,
           onUnknownRoute: AppRoutes.unknownRoute,

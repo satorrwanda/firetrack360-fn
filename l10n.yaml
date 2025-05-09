@@ -3,3 +3,6 @@ template-arb-file: app_en.arb
 output-localization-file: l10n.dart
 output-class: S
 output-dir: lib/generated
+nullable-getter: false
+synthetic-package: false
+supported-locales: [en, fr,rw]

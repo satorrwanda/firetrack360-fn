@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+
 class OnboardingPage extends HookWidget {
   OnboardingPage({Key? key}) : super(key: key);
 
@@ -44,11 +45,12 @@ class OnboardingPage extends HookWidget {
     final timerRef = useRef<Timer?>(null);
 
     Future<void> checkOnboardingStatus() async {
+      if (!isMounted()) return;
       final prefs = await SharedPreferences.getInstance();
       final isOnboardingComplete =
           prefs.getBool('isOnboardingComplete') ?? false;
 
-      if (isOnboardingComplete && isMounted()) {
+      if (isOnboardingComplete) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (isMounted()) {
             AppRoutes.navigateToLogin(context);
@@ -126,40 +128,51 @@ class OnboardingPage extends HookWidget {
           ),
         ),
         child: SafeArea(
-          child: Column(
+          child: Stack( // Use Stack to position the toggler
             children: [
-              PageIndicator(
-                currentPage: currentPage.value,
-                pageCount: _onboardingContents.length,
-                onPageSelect: (index) {
-                  if (!isMounted()) return;
-                  pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOutCubic,
-                  );
-                },
+              Column(
+                children: [
+                  PageIndicator(
+                    currentPage: currentPage.value,
+                    pageCount: _onboardingContents.length,
+                    onPageSelect: (index) {
+                      if (!isMounted()) return;
+                      pageController.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOutCubic,
+                      );
+                    },
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: _onboardingContents.length,
+                      onPageChanged: (page) {
+                        if (isMounted()) {
+                          currentPage.value = page;
+                        }
+                      },
+                      itemBuilder: (context, index) {
+                        return OnboardingItem(
+                          content: _onboardingContents[index],
+                          screenWidth: MediaQuery.of(context).size.width,
+                        );
+                      },
+                    ),
+                  ),
+                  OnboardingButtons(
+                    onRegister: () => handleNavigation(false),
+                    onLogin: () => handleNavigation(true),
+                  ),
+                ],
               ),
-              Expanded(
-                child: PageView.builder(
-                  controller: pageController,
-                  itemCount: _onboardingContents.length,
-                  onPageChanged: (page) {
-                    if (isMounted()) {
-                      currentPage.value = page;
-                    }
-                  },
-                  itemBuilder: (context, index) {
-                    return OnboardingItem(
-                      content: _onboardingContents[index],
-                      screenWidth: MediaQuery.of(context).size.width,
-                    );
-                  },
+              Align( // Position the toggler at the top right
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: LanguageToggler(),
                 ),
-              ),
-              OnboardingButtons(
-                onRegister: () => handleNavigation(false),
-                onLogin: () => handleNavigation(true),
               ),
             ],
           ),
