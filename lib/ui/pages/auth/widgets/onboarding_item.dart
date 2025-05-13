@@ -1,18 +1,49 @@
-import 'package:firetrack360/ui/models/onboarding_content.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 import 'package:flutter/material.dart';
 
 class OnboardingItem extends StatelessWidget {
-  final OnboardingContent content;
+  final int index; // Accept the index
   final double screenWidth;
 
   const OnboardingItem({
     super.key,
-    required this.content,
+    required this.index, // Require the index
     required this.screenWidth,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Access l10n here
+
+    // Determine content based on index
+    String title;
+    String description;
+    String image;
+
+    switch (index) {
+      case 0:
+        title = l10n.onboardingTitle1;
+        description = l10n.onboardingDesc1;
+        image = 'assets/images/onboarding1.jpg';
+        break;
+      case 1:
+        title = l10n.onboardingTitle2;
+        description = l10n.onboardingDesc2;
+        image = 'assets/images/onboarding2.jpg';
+        break;
+      case 2:
+        title = l10n.onboardingTitle3;
+        description = l10n.onboardingDesc3;
+        image = 'assets/images/onboarding3.jpg';
+        break;
+      default:
+        // Handle unexpected index, maybe show an error or default content
+        title = 'Error';
+        description = 'Something went wrong.';
+        image = ''; // Provide a default or placeholder image
+        break;
+    }
+
     return Padding(
       padding: EdgeInsets.all(screenWidth < 600 ? 16 : 24),
       child: Column(
@@ -38,10 +69,11 @@ class OnboardingItem extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(
-                      content.image,
-                      fit: BoxFit.cover,
-                    ),
+                    if (image.isNotEmpty) // Add a check for empty image path
+                      Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -61,7 +93,7 @@ class OnboardingItem extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            content.title,
+            title, // Use the local 'title' variable
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: screenWidth < 600 ? 28 : 32,
@@ -79,7 +111,7 @@ class OnboardingItem extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            content.description,
+            description, // Use the local 'description' variable
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: screenWidth < 600 ? 16 : 18,
