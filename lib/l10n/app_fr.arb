@@ -40,12 +40,52 @@
     "@signUpLink": {
         "description": "Text for the sign up link on the login page"
     },
-    "welcomeBackTitle": "Bon retour", 
+    "welcomeBackTitle": "Bon retour",
     "@welcomeBackTitle": {
         "description": "Main title on the login header"
     },
-    "signInToContinueSubtitle": "Connectez-vous pour continuer" ,
+    "signInToContinueSubtitle": "Connectez-vous pour continuer",
     "@signInToContinueSubtitle": {
         "description": "Subtitle prompting the user to sign in on the login header"
+    },
+    "fillAllFieldsError": "Veuillez remplir tous les champs",
+    "@fillAllFieldsError": {
+        "description": "Error message when not all login fields are filled"
+    },
+    "invalidEmailError": "Veuillez saisir une adresse email valide",
+    "@invalidEmailError": {
+        "description": "Error message for an invalid email format during login"
+    },
+    "loginFailedDefaultError": "Échec de la connexion",
+    "@loginFailedDefaultError": {
+        "description": "Default error message for login failure"
+    },
+    "emailVerificationRequiredError": "Veuillez vérifier votre adresse email avant de vous connecter",
+    "@emailVerificationRequiredError": {
+        "description": "Error message when email verification is required"
+    },
+    "loginSuccessfulMessage": "Connexion réussie !",
+    "@loginSuccessfulMessage": {
+        "description": "Message displayed when login is successful"
+    },
+    "emailSaveFailedError": "Échec de l'enregistrement de l'email. Veuillez réessayer.",
+    "@emailSaveFailedError": {
+        "description": "Error message when saving email fails"
+    },
+    "unexpectedError": "Une erreur inattendue s'est produite",
+    "@unexpectedError": {
+        "description": "General error message for unexpected issues"
+    },
+    "emailHintText": "Adresse email",
+    "@emailHintText": {
+        "description": "Hint text for email input field"
+    },
+    "passwordHintText": "Mot de passe",
+    "@passwordHintText": {
+        "description": "Hint text for password input field"
+    },
+    "forgotPasswordLink": "Mot de passe oublié ?",
+    "@forgotPasswordLink": {
+        "description": "Text for the forgot password link on the login page"
     }
 }

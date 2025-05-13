@@ -47,5 +47,45 @@
     "signInToContinueSubtitle": "Sign in to continue" ,
     "@signInToContinueSubtitle": {
         "description": "Subtitle prompting the user to sign in on the login header"
+    },
+    "fillAllFieldsError": "Please fill in all fields",
+    "@fillAllFieldsError": {
+        "description": "Error message when not all login fields are filled"
+    },
+    "invalidEmailError": "Please enter a valid email",
+    "@invalidEmailError": {
+        "description": "Error message for an invalid email format during login"
+    },
+    "loginFailedDefaultError": "Login failed",
+    "@loginFailedDefaultError": {
+        "description": "Default error message when login fails without a specific message from the server"
+    },
+    "emailVerificationRequiredError": "Please verify your email before logging in",
+    "@emailVerificationRequiredError": {
+        "description": "Error message when a user tries to log in with an unverified email"
+    },
+    "loginSuccessfulMessage": "Login successful!",
+    "@loginSuccessfulMessage": {
+        "description": "Success message after a successful login"
+    },
+    "emailSaveFailedError": "Failed to save email. Please try again.",
+    "@emailSaveFailedError": {
+        "description": "Error message when saving the user's email to SharedPreferences fails"
+    },
+    "unexpectedError": "An unexpected error occurred",
+    "@unexpectedError": {
+        "description": "Generic error message for unexpected issues"
+    },
+    "emailHintText": "Email Address",
+    "@emailHintText": {
+        "description": "Hint text for the email input field on the login form"
+    },
+    "passwordHintText": "Password",
+    "@passwordHintText": {
+        "description": "Hint text for the password input field on the login form"
+    },
+    "forgotPasswordLink": "Forgot Password?",
+    "@forgotPasswordLink": {
+        "description": "Text for the 'Forgot Password?' link on the login form"
     }
 }

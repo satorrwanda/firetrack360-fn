@@ -41,4 +41,34 @@ class SEn extends S {
 
   @override
   String get signInToContinueSubtitle => 'Sign in to continue';
+
+  @override
+  String get fillAllFieldsError => 'Please fill in all fields';
+
+  @override
+  String get invalidEmailError => 'Please enter a valid email';
+
+  @override
+  String get loginFailedDefaultError => 'Login failed';
+
+  @override
+  String get emailVerificationRequiredError => 'Please verify your email before logging in';
+
+  @override
+  String get loginSuccessfulMessage => 'Login successful!';
+
+  @override
+  String get emailSaveFailedError => 'Failed to save email. Please try again.';
+
+  @override
+  String get unexpectedError => 'An unexpected error occurred';
+
+  @override
+  String get emailHintText => 'Email Address';
+
+  @override
+  String get passwordHintText => 'Password';
+
+  @override
+  String get forgotPasswordLink => 'Forgot Password?';
 }

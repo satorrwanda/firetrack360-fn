@@ -168,6 +168,66 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Sign in to continue'**
   String get signInToContinueSubtitle;
+
+  /// Error message when not all login fields are filled
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all fields'**
+  String get fillAllFieldsError;
+
+  /// Error message for an invalid email format during login
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalidEmailError;
+
+  /// Default error message when login fails without a specific message from the server
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed'**
+  String get loginFailedDefaultError;
+
+  /// Error message when a user tries to log in with an unverified email
+  ///
+  /// In en, this message translates to:
+  /// **'Please verify your email before logging in'**
+  String get emailVerificationRequiredError;
+
+  /// Success message after a successful login
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful!'**
+  String get loginSuccessfulMessage;
+
+  /// Error message when saving the user's email to SharedPreferences fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save email. Please try again.'**
+  String get emailSaveFailedError;
+
+  /// Generic error message for unexpected issues
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get unexpectedError;
+
+  /// Hint text for the email input field on the login form
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailHintText;
+
+  /// Hint text for the password input field on the login form
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordHintText;
+
+  /// Text for the 'Forgot Password?' link on the login form
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPasswordLink;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

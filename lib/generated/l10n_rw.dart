@@ -41,4 +41,34 @@ class SRw extends S {
 
   @override
   String get signInToContinueSubtitle => 'Injira kugirango ukomeze';
+
+  @override
+  String get fillAllFieldsError => 'Uzuze ibibanza byose';
+
+  @override
+  String get invalidEmailError => 'Andika imeyili yemewe';
+
+  @override
+  String get loginFailedDefaultError => 'Kwinjira byanze';
+
+  @override
+  String get emailVerificationRequiredError => 'Emeza imeyili yawe mbere yo kwinjira';
+
+  @override
+  String get loginSuccessfulMessage => 'Kwinjira byagenze neza!';
+
+  @override
+  String get emailSaveFailedError => 'Gukoresha imeyili byanze. Ongera ugerageze.';
+
+  @override
+  String get unexpectedError => 'Habayeho ikibazo kitari giteganijwe';
+
+  @override
+  String get emailHintText => 'Imeyili';
+
+  @override
+  String get passwordHintText => 'Ijambo ry\'ibanga';
+
+  @override
+  String get forgotPasswordLink => 'Wibagiwe ijambo ry\'ibanga?';
 }

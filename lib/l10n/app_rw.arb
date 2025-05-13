@@ -47,5 +47,45 @@
     "signInToContinueSubtitle": "Injira kugirango ukomeze",
     "@signInToContinueSubtitle": {
         "description": "Subtitle prompting the user to sign in on the login header"
+    },
+    "fillAllFieldsError": "Uzuze ibibanza byose",
+    "@fillAllFieldsError": {
+        "description": "Error message when not all login fields are filled"
+    },
+    "invalidEmailError": "Andika imeyili yemewe",
+    "@invalidEmailError": {
+        "description": "Error message for an invalid email format during login"
+    },
+    "loginFailedDefaultError": "Kwinjira byanze",
+    "@loginFailedDefaultError": {
+        "description": "Default error message for login failure"
+    },
+    "emailVerificationRequiredError": "Emeza imeyili yawe mbere yo kwinjira",
+    "@emailVerificationRequiredError": {
+        "description": "Error message when email verification is required before login"
+    },
+    "loginSuccessfulMessage": "Kwinjira byagenze neza!",
+    "@loginSuccessfulMessage": {
+        "description": "Message displayed when login is successful"
+    },
+    "emailSaveFailedError": "Gukoresha imeyili byanze. Ongera ugerageze.",
+    "@emailSaveFailedError": {
+        "description": "Error message when saving email fails"
+    },
+    "unexpectedError": "Habayeho ikibazo kitari giteganijwe",
+    "@unexpectedError": {
+        "description": "Error message for unexpected issues"
+    },
+    "emailHintText": "Imeyili",
+    "@emailHintText": {
+        "description": "Hint text for email input field"
+    },
+    "passwordHintText": "Ijambo ry'ibanga",
+    "@passwordHintText": {
+        "description": "Hint text for password input field"
+    },
+    "forgotPasswordLink": "Wibagiwe ijambo ry'ibanga?",
+    "@forgotPasswordLink": {
+        "description": "Text for the forgot password link on the login page"
     }
 }

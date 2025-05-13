@@ -41,4 +41,34 @@ class SFr extends S {
 
   @override
   String get signInToContinueSubtitle => 'Connectez-vous pour continuer';
+
+  @override
+  String get fillAllFieldsError => 'Veuillez remplir tous les champs';
+
+  @override
+  String get invalidEmailError => 'Veuillez saisir une adresse email valide';
+
+  @override
+  String get loginFailedDefaultError => 'Échec de la connexion';
+
+  @override
+  String get emailVerificationRequiredError => 'Veuillez vérifier votre adresse email avant de vous connecter';
+
+  @override
+  String get loginSuccessfulMessage => 'Connexion réussie !';
+
+  @override
+  String get emailSaveFailedError => 'Échec de l\'enregistrement de l\'email. Veuillez réessayer.';
+
+  @override
+  String get unexpectedError => 'Une erreur inattendue s\'est produite';
+
+  @override
+  String get emailHintText => 'Adresse email';
+
+  @override
+  String get passwordHintText => 'Mot de passe';
+
+  @override
+  String get forgotPasswordLink => 'Mot de passe oublié ?';
 }
