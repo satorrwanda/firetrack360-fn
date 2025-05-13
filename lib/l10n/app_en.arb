@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "onboardingTitle1": "Welcome to FireSecure360",
+    "onboardingTitle1": "Welcome to FireTrack360",
     "@onboardingTitle1": {
         "description": "Title for first onboarding screen"
     },
@@ -31,5 +31,21 @@
     "login": "Login",
     "@login": {
         "description": "Text for login button"
+    },
+    "dontHaveAccountPrompt": "Don't have an account?", 
+    "@dontHaveAccountPrompt": {
+        "description": "Prompt for users without an account on the login page"
+    },
+    "signUpLink": "Sign Up",
+    "@signUpLink": {
+        "description": "Text for the sign up link on the login page"
+    },
+    "welcomeBackTitle": "Welcome Back", 
+    "@welcomeBackTitle": {
+        "description": "Main title on the login header"
+    },
+    "signInToContinueSubtitle": "Sign in to continue" ,
+    "@signInToContinueSubtitle": {
+        "description": "Subtitle prompting the user to sign in on the login header"
     }
 }

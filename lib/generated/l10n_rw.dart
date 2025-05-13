@@ -10,7 +10,7 @@ class SRw extends S {
   String get onboardingTitle1 => 'Murakaza neza kuri FireSecure360';
 
   @override
-  String get onboardingDesc1 => 'Rinda isi yawe, kanda rimwe';
+  String get onboardingDesc1 => 'Rinda ibyaawe, Kanda Hano';
 
   @override
   String get onboardingTitle2 => 'Tangira';
@@ -29,4 +29,16 @@ class SRw extends S {
 
   @override
   String get login => 'Injira';
+
+  @override
+  String get dontHaveAccountPrompt => 'Ntabwo ufite konti?';
+
+  @override
+  String get signUpLink => 'Iyandikishe';
+
+  @override
+  String get welcomeBackTitle => 'Murakaza neza ';
+
+  @override
+  String get signInToContinueSubtitle => 'Injira kugirango ukomeze';
 }

@@ -1,11 +1,51 @@
 {
     "@@locale": "rw",
     "onboardingTitle1": "Murakaza neza kuri FireSecure360",
-    "onboardingDesc1": "Rinda isi yawe, kanda rimwe",
+    "@onboardingTitle1": {
+        "description": "Title for first onboarding screen"
+    },
+    "onboardingDesc1": "Rinda ibyaawe, Kanda Hano",
+    "@onboardingDesc1": {
+        "description": "Description for first onboarding screen"
+    },
     "onboardingTitle2": "Tangira",
+    "@onboardingTitle2": {
+        "description": "Title for second onboarding screen"
+    },
     "onboardingDesc2": "Fungura konti cyangwa winjire kugira ngo ubone ibintu byose",
+    "@onboardingDesc2": {
+        "description": "Description for second onboarding screen"
+    },
     "onboardingTitle3": "Umutekano n'Uburyo Bworoshye",
+    "@onboardingTitle3": {
+        "description": "Title for third onboarding screen"
+    },
     "onboardingDesc3": "Gufasha imicungire y'umutekano wawe",
+    "@onboardingDesc3": {
+        "description": "Description for third onboarding screen"
+    },
     "register": "Iyandikishe",
-    "login": "Injira"
+    "@register": {
+        "description": "Text for register button"
+    },
+    "login": "Injira",
+    "@login": {
+        "description": "Text for login button"
+    },
+    "dontHaveAccountPrompt": "Ntabwo ufite konti?",
+    "@dontHaveAccountPrompt": {
+        "description": "Prompt for users without an account on the login page"
+    },
+    "signUpLink": "Iyandikishe",
+    "@signUpLink": {
+        "description": "Text for the sign up link on the login page"
+    },
+    "welcomeBackTitle": "Murakaza neza ",
+    "@welcomeBackTitle": {
+        "description": "Main title on the login header"
+    },
+    "signInToContinueSubtitle": "Injira kugirango ukomeze",
+    "@signInToContinueSubtitle": {
+        "description": "Subtitle prompting the user to sign in on the login header"
+    }
 }

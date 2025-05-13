@@ -7,7 +7,7 @@ class SEn extends S {
   SEn([String locale = 'en']) : super(locale);
 
   @override
-  String get onboardingTitle1 => 'Welcome to FireSecure360';
+  String get onboardingTitle1 => 'Welcome to FireTrack360';
 
   @override
   String get onboardingDesc1 => 'Secure your world, one tap at a time';
@@ -29,4 +29,16 @@ class SEn extends S {
 
   @override
   String get login => 'Login';
+
+  @override
+  String get dontHaveAccountPrompt => 'Don\'t have an account?';
+
+  @override
+  String get signUpLink => 'Sign Up';
+
+  @override
+  String get welcomeBackTitle => 'Welcome Back';
+
+  @override
+  String get signInToContinueSubtitle => 'Sign in to continue';
 }

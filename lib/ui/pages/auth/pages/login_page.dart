@@ -2,12 +2,14 @@ import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import '../widgets/login_header.dart';
 import '../widgets/login_form.dart';
-
+import 'package:firetrack360/generated/l10n.dart'; 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -25,7 +27,8 @@ class LoginPage extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -38,16 +41,18 @@ class LoginPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Don\'t have an account? ',
+                            l10n.dontHaveAccountPrompt, 
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                             ),
                           ),
                           GestureDetector(
                             onTap: () => AppRoutes.navigateToRegister(context),
-                            child: const Text(
-                              'Sign Up',
-                              style: TextStyle(
+                            child: Text(
+                              // Remove const
+                              l10n.signUpLink, 
+                              style: const TextStyle(
+                                // Keep const for static style
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),

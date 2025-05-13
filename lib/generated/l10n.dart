@@ -100,7 +100,7 @@ abstract class S {
   /// Title for first onboarding screen
   ///
   /// In en, this message translates to:
-  /// **'Welcome to FireSecure360'**
+  /// **'Welcome to FireTrack360'**
   String get onboardingTitle1;
 
   /// Description for first onboarding screen
@@ -144,6 +144,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Login'**
   String get login;
+
+  /// Prompt for users without an account on the login page
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccountPrompt;
+
+  /// Text for the sign up link on the login page
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUpLink;
+
+  /// Main title on the login header
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get welcomeBackTitle;
+
+  /// Subtitle prompting the user to sign in on the login header
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue'**
+  String get signInToContinueSubtitle;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

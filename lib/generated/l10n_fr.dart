@@ -7,7 +7,7 @@ class SFr extends S {
   SFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get onboardingTitle1 => 'Bienvenue à FireSecure360';
+  String get onboardingTitle1 => 'Bienvenue à FireTrack360';
 
   @override
   String get onboardingDesc1 => 'Sécurisez votre monde, une touche à la fois';
@@ -29,4 +29,16 @@ class SFr extends S {
 
   @override
   String get login => 'Se connecter';
+
+  @override
+  String get dontHaveAccountPrompt => 'Vous n\'avez pas de compte ?';
+
+  @override
+  String get signUpLink => 'S\'inscrire';
+
+  @override
+  String get welcomeBackTitle => 'Bon retour';
+
+  @override
+  String get signInToContinueSubtitle => 'Connectez-vous pour continuer';
 }

@@ -1,11 +1,51 @@
 {
     "@@locale": "fr",
-    "onboardingTitle1": "Bienvenue à FireSecure360",
+    "onboardingTitle1": "Bienvenue à FireTrack360",
+    "@onboardingTitle1": {
+        "description": "Title for first onboarding screen"
+    },
     "onboardingDesc1": "Sécurisez votre monde, une touche à la fois",
+    "@onboardingDesc1": {
+        "description": "Description for first onboarding screen"
+    },
     "onboardingTitle2": "Commencer",
+    "@onboardingTitle2": {
+        "description": "Title for second onboarding screen"
+    },
     "onboardingDesc2": "Créez un compte ou connectez-vous pour accéder à toutes les fonctionnalités",
+    "@onboardingDesc2": {
+        "description": "Description for second onboarding screen"
+    },
     "onboardingTitle3": "Sécurisé et Simple",
+    "@onboardingTitle3": {
+        "description": "Title for third onboarding screen"
+    },
     "onboardingDesc3": "Simplifiez votre gestion de la sécurité",
+    "@onboardingDesc3": {
+        "description": "Description for third onboarding screen"
+    },
     "register": "S'inscrire",
-    "login": "Se connecter"
+    "@register": {
+        "description": "Text for register button"
+    },
+    "login": "Se connecter",
+    "@login": {
+        "description": "Text for login button"
+    },
+    "dontHaveAccountPrompt": "Vous n'avez pas de compte ?",
+    "@dontHaveAccountPrompt": {
+        "description": "Prompt for users without an account on the login page"
+    },
+    "signUpLink": "S'inscrire",
+    "@signUpLink": {
+        "description": "Text for the sign up link on the login page"
+    },
+    "welcomeBackTitle": "Bon retour", 
+    "@welcomeBackTitle": {
+        "description": "Main title on the login header"
+    },
+    "signInToContinueSubtitle": "Connectez-vous pour continuer" ,
+    "@signInToContinueSubtitle": {
+        "description": "Subtitle prompting the user to sign in on the login header"
+    }
 }

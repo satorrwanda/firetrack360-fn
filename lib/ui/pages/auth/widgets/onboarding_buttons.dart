@@ -1,6 +1,8 @@
+import 'package:firetrack360/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class OnboardingButtons extends ConsumerWidget {
   final VoidCallback onRegister;
@@ -14,6 +16,12 @@ class OnboardingButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Watch the localeProvider here to trigger rebuilds if needed,
+    // although S.of(context)! should handle most cases after MaterialApp locale change.
+    ref.watch(localeProvider);
+
+    final l10n = S.of(context)!; // Access l10n here
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
       child: Column(
@@ -47,9 +55,11 @@ class OnboardingButtons extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child: const Text(
-              'Create Account',
-              style: TextStyle(
+            child: Text(
+              // Use Text instead of const Text
+              l10n.register, // Use the localized string
+              style: const TextStyle(
+                // Keep const TextStyle if style is static
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
@@ -69,9 +79,11 @@ class OnboardingButtons extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child: const Text(
-              'Already have an account? Login',
-              style: TextStyle(
+            child: Text(
+              // Use Text instead of const Text
+              l10n.login, // Use the localized string
+              style: const TextStyle(
+                // Keep const TextStyle if style is static
                 fontSize: 16,
                 letterSpacing: 0.5,
               ),
