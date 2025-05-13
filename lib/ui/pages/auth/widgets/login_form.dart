@@ -3,7 +3,7 @@ import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firetrack360/generated/l10n.dart'; // Import l10n
+import 'package:firetrack360/generated/l10n.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -19,7 +19,7 @@ class _LoginFormState extends State<LoginForm> {
   bool _isLoading = false;
 
   Future<void> _performLogin() async {
-    final l10n = S.of(context)!; // Access l10n here for messages
+    final l10n = S.of(context)!;
 
     if (!_validateInputs()) return;
 
@@ -107,9 +107,7 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             const Icon(Icons.check_circle_outline, color: Colors.white),
             const SizedBox(width: 12),
-            Expanded(
-                child: Text(
-                    message)), // This message is already localized string passed from _performLogin
+            Expanded(child: Text(message)),
           ],
         ),
         backgroundColor: Colors.green.shade600,
@@ -131,9 +129,7 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             const Icon(Icons.error_outline, color: Colors.white),
             const SizedBox(width: 12),
-            Expanded(
-                child: Text(
-                    message)), // This message is already localized string passed from _performLogin or _validateInputs
+            Expanded(child: Text(message)),
           ],
         ),
         backgroundColor: Colors.red.shade600,
@@ -148,7 +144,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = S.of(context)!; // Access l10n here for UI texts
+    final l10n = S.of(context)!;
 
     return Container(
       padding: const EdgeInsets.all(24),
