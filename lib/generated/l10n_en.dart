@@ -228,4 +228,28 @@ class SEn extends S {
 
   @override
   String get resendLink => 'Resend';
+
+  @override
+  String get futureBuilderErrorPrefix => 'Error: ';
+
+  @override
+  String get unexpectedPasswordResetVerificationError => 'An unexpected error occurred';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password';
+
+  @override
+  String get enterEmailToResetPasswordSubtitle => 'Enter your email to reset password';
+
+  @override
+  String get passwordResetOtpSentMessage => 'OTP to reset password has been sent to your email.';
+
+  @override
+  String get resetPasswordButton => 'Reset Password';
+
+  @override
+  String get rememberPasswordPrompt => 'Remember your password?';
+
+  @override
+  String get signInLink => 'Sign In';
 }

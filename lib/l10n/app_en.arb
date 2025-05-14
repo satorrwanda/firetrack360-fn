@@ -297,5 +297,37 @@
     "resendLink": "Resend",
     "@resendLink": {
         "description": "Text for the Resend OTP link"
+    },
+    "futureBuilderErrorPrefix": "Error: ",
+    "@futureBuilderErrorPrefix": {
+        "description": "Prefix for error messages shown in FutureBuilder"
+    },
+    "unexpectedPasswordResetVerificationError": "An unexpected error occurred",
+    "@unexpectedPasswordResetVerificationError": {
+        "description": "Generic error message for unexpected issues during password reset verification"
+    },
+    "forgotPasswordTitle": "Forgot Password",
+    "@forgotPasswordTitle": {
+        "description": "Main title on the Forgot Password header"
+    },
+    "enterEmailToResetPasswordSubtitle": "Enter your email to reset password",
+    "@enterEmailToResetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter email to reset password"
+    },
+    "passwordResetOtpSentMessage": "OTP to reset password has been sent to your email.",
+    "@passwordResetOtpSentMessage": {
+        "description": "Success message after sending password reset OTP"
+    },
+    "resetPasswordButton": "Reset Password",
+    "@resetPasswordButton": {
+        "description": "Text for the Reset Password button"
+    },
+    "rememberPasswordPrompt": "Remember your password?",
+    "@rememberPasswordPrompt": {
+        "description": "Prompt for users who remember their password on the forget password page"
+    },
+    "signInLink": "Sign In",
+    "@signInLink": {
+        "description": "Text for the Sign In link on the forget password page"
     }
 }

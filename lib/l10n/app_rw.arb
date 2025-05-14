@@ -208,11 +208,11 @@
     "@loginFailedDefaultMessage": {
         "description": "Default failure message after login"
     },
-    "resendOtpSuccessDefaultMessage": "Kode yo gushimangira yoherejwe bundi bushya.",
+    "resendOtpSuccessDefaultMessage": "Kode  yoherejwe bundi bushya.",
     "@resendOtpSuccessDefaultMessage": {
         "description": "Default success message after resending OTP"
     },
-    "resendOtpFailedDefaultMessage": "Gusubiza kode yo gushimangira byaranze. Ongera ugerageze.",
+    "resendOtpFailedDefaultMessage": "Gusubiza kode  byaranze. Ongera ugerageze.",
     "@resendOtpFailedDefaultMessage": {
         "description": "Default failure message after failing to resend OTP"
     },
@@ -271,11 +271,11 @@
     "@otpNumbersOnlyError": {
         "description": "Validation error when OTP contains non-numeric characters"
     },
-    "verifyOtpTitle": "Shimangira OTP",
+    "verifyOtpTitle": "Emeza OTP",
     "@verifyOtpTitle": {
         "description": "Title of the Verify OTP page"
     },
-    "enterOtpMessage": "Andika kode yo gushimangira yoherejwe kuri\n{maskedEmail}",
+    "enterOtpMessage": "Andika kode  yoherejwe kuri\n{maskedEmail}",
     "@enterOtpMessage": {
         "description": "Message prompting the user to enter the OTP, includes masked email",
         "placeholders": {
@@ -286,7 +286,7 @@
     "@otpHintText": {
         "description": "Hint text for the OTP input field"
     },
-    "verifyCodeButton": "Shimangira Kode",
+    "verifyCodeButton": "Emeza Kode",
     "@verifyCodeButton": {
         "description": "Text for the Verify Code button"
     },
@@ -297,5 +297,37 @@
     "resendLink": "Ongera wohereze",
     "@resendLink": {
         "description": "Text for the Resend OTP link"
+    },
+    "futureBuilderErrorPrefix": "Ikibazo mu gushaka amakuru",
+    "@futureBuilderErrorPrefix": {
+        "description": "Prefix for error messages shown in FutureBuilder"
+    },
+    "unexpectedPasswordResetVerificationError": "Habayeho ikibazo kitari giteganijwe mu kwemeza ijambo ry'ibanga rishya",
+    "@unexpectedPasswordResetVerificationError": {
+        "description": "Generic error message for unexpected issues during password reset verification"
+    },
+    "forgotPasswordTitle": "Wibagiwe ijambo ry'ibanga",
+    "@forgotPasswordTitle": {
+        "description": "Main title on the Forgot Password header"
+    },
+    "enterEmailToResetPasswordSubtitle": "Andika imeyili yawe kugirango usubizeho ijambo ry'ibanga",
+    "@enterEmailToResetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter email to reset password"
+    },
+    "passwordResetOtpSentMessage": "OTP yo gusubiza ijambo ry'ibanga yoherejwe kuri imeyili yawe.",
+    "@passwordResetOtpSentMessage": {
+        "description": "Message indicating that the password reset OTP has been sent to the user's email"
+    },
+    "resetPasswordButton": "Ohereza",
+    "@resetPasswordButton": {
+        "description": "Text for the Reset Password button"
+    },
+    "rememberPasswordPrompt": "Wibuka ijambo ry'ibanga ryawe?",
+    "@rememberPasswordPrompt": {
+        "description": "Prompt for users who remember their password on the Forgot Password page"
+    },
+    "signInLink": "Injira",
+    "@signInLink": {
+        "description": "Text for the sign in link on the Forgot Password page"
     }
 }

@@ -163,10 +163,10 @@ class SRw extends S {
   String get loginFailedDefaultMessage => 'Kwinjira byaranze. Ongera ugerageze.';
 
   @override
-  String get resendOtpSuccessDefaultMessage => 'Kode yo gushimangira yoherejwe bundi bushya.';
+  String get resendOtpSuccessDefaultMessage => 'Kode  yoherejwe bundi bushya.';
 
   @override
-  String get resendOtpFailedDefaultMessage => 'Gusubiza kode yo gushimangira byaranze. Ongera ugerageze.';
+  String get resendOtpFailedDefaultMessage => 'Gusubiza kode  byaranze. Ongera ugerageze.';
 
   @override
   String get enterEmailError => 'Andika imeyili yawe';
@@ -210,22 +210,46 @@ class SRw extends S {
   String get otpNumbersOnlyError => 'OTP igomba kugira imibare gusa';
 
   @override
-  String get verifyOtpTitle => 'Shimangira OTP';
+  String get verifyOtpTitle => 'Emeza OTP';
 
   @override
   String enterOtpMessage(Object maskedEmail) {
-    return 'Andika kode yo gushimangira yoherejwe kuri\n$maskedEmail';
+    return 'Andika kode  yoherejwe kuri\n$maskedEmail';
   }
 
   @override
   String get otpHintText => 'Andika OTP y\'imibare 6';
 
   @override
-  String get verifyCodeButton => 'Shimangira Kode';
+  String get verifyCodeButton => 'Emeza Kode';
 
   @override
   String get didNotReceiveCodePrompt => 'Ntabwo wakiriye kode?';
 
   @override
   String get resendLink => 'Ongera wohereze';
+
+  @override
+  String get futureBuilderErrorPrefix => 'Ikibazo mu gushaka amakuru';
+
+  @override
+  String get unexpectedPasswordResetVerificationError => 'Habayeho ikibazo kitari giteganijwe mu kwemeza ijambo ry\'ibanga rishya';
+
+  @override
+  String get forgotPasswordTitle => 'Wibagiwe ijambo ry\'ibanga';
+
+  @override
+  String get enterEmailToResetPasswordSubtitle => 'Andika imeyili yawe kugirango usubizeho ijambo ry\'ibanga';
+
+  @override
+  String get passwordResetOtpSentMessage => 'OTP yo gusubiza ijambo ry\'ibanga yoherejwe kuri imeyili yawe.';
+
+  @override
+  String get resetPasswordButton => 'Ohereza';
+
+  @override
+  String get rememberPasswordPrompt => 'Wibuka ijambo ry\'ibanga ryawe?';
+
+  @override
+  String get signInLink => 'Injira';
 }

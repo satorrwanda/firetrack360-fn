@@ -534,6 +534,54 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Resend'**
   String get resendLink;
+
+  /// Prefix for error messages shown in FutureBuilder
+  ///
+  /// In en, this message translates to:
+  /// **'Error: '**
+  String get futureBuilderErrorPrefix;
+
+  /// Generic error message for unexpected issues during password reset verification
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get unexpectedPasswordResetVerificationError;
+
+  /// Main title on the Forgot Password header
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPasswordTitle;
+
+  /// Subtitle prompting the user to enter email to reset password
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email to reset password'**
+  String get enterEmailToResetPasswordSubtitle;
+
+  /// Success message after sending password reset OTP
+  ///
+  /// In en, this message translates to:
+  /// **'OTP to reset password has been sent to your email.'**
+  String get passwordResetOtpSentMessage;
+
+  /// Text for the Reset Password button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordButton;
+
+  /// Prompt for users who remember their password on the forget password page
+  ///
+  /// In en, this message translates to:
+  /// **'Remember your password?'**
+  String get rememberPasswordPrompt;
+
+  /// Text for the Sign In link on the forget password page
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signInLink;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

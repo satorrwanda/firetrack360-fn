@@ -295,5 +295,37 @@
     "resendLink": "Renvoyer",
     "@resendLink": {
         "description": "Text for the resend link for the OTP"
+    },
+    "futureBuilderErrorPrefix": "Erreur de construction",
+    "@futureBuilderErrorPrefix": {
+        "description": "Prefix for error messages shown in FutureBuilder"
+    },
+    "unexpectedPasswordResetVerificationError": "Une erreur inattendue s'est produite lors de la vérification de la réinitialisation du mot de passe",
+    "@unexpectedPasswordResetVerificationError": {
+        "description": "Generic error message for unexpected issues during password reset verification"
+    },
+    "forgotPasswordTitle": "Mot de passe oublié",
+    "@forgotPasswordTitle": {
+        "description": "Main title on the Forgot Password header"
+    },
+    "enterEmailToResetPasswordSubtitle": "Saisissez votre email pour réinitialiser le mot de passe",
+    "@enterEmailToResetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter email to reset password"
+    },
+    "passwordResetOtpSentMessage": "L'OTP pour réinitialiser le mot de passe a été envoyé à votre adresse email.",
+    "@passwordResetOtpSentMessage": {
+        "description": "Message indicating that the OTP for password reset has been sent"
+    },
+    "resetPasswordButton": "Réinitialiser le mot de passe",
+    "@resetPasswordButton": {
+        "description": "Text for the button to reset the password"
+    },
+    "rememberPasswordPrompt": "Vous vous souvenez de votre mot de passe ?",
+    "@rememberPasswordPrompt": {
+        "description": "Prompt for users who remember their password"
+    },
+    "signInLink": "Se connecter",
+    "@signInLink": {
+        "description": "Text for the sign in link on the Forgot Password page"
     }
 }

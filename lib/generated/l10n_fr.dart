@@ -228,4 +228,28 @@ class SFr extends S {
 
   @override
   String get resendLink => 'Renvoyer';
+
+  @override
+  String get futureBuilderErrorPrefix => 'Erreur de construction';
+
+  @override
+  String get unexpectedPasswordResetVerificationError => 'Une erreur inattendue s\'est produite lors de la vérification de la réinitialisation du mot de passe';
+
+  @override
+  String get forgotPasswordTitle => 'Mot de passe oublié';
+
+  @override
+  String get enterEmailToResetPasswordSubtitle => 'Saisissez votre email pour réinitialiser le mot de passe';
+
+  @override
+  String get passwordResetOtpSentMessage => 'L\'OTP pour réinitialiser le mot de passe a été envoyé à votre adresse email.';
+
+  @override
+  String get resetPasswordButton => 'Réinitialiser le mot de passe';
+
+  @override
+  String get rememberPasswordPrompt => 'Vous vous souvenez de votre mot de passe ?';
+
+  @override
+  String get signInLink => 'Se connecter';
 }

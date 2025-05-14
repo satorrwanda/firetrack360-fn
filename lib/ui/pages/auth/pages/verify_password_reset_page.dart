@@ -1,21 +1,26 @@
+import 'dart:async';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class VerifyPasswordResetPage extends StatefulWidget {
   const VerifyPasswordResetPage({super.key});
 
   @override
-  _VerifyPasswordResetPageState createState() => _VerifyPasswordResetPageState();
+  _VerifyPasswordResetPageState createState() =>
+      _VerifyPasswordResetPageState();
 }
 
 class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
   final _formKey = GlobalKey<FormState>();
   final _otpController = TextEditingController();
   bool _isLoading = false;
-  String _email = '';
+  String _email =
+      ''; // This will be populated by _getEmailFromSharedPreferences
 
+  // Your GraphQL mutation string remains here
   final String verifyPasswordForgetMutation = '''
     mutation VerifyPasswordForget(\$email: String!, \$otp: String!) {
       verifyPasswordForget(
@@ -32,6 +37,8 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
   ''';
 
   void _verifyOTP() async {
+    final l10n = S.of(context)!; // Access l10n here for messages
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -43,7 +50,7 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
       final MutationOptions options = MutationOptions(
         document: gql(verifyPasswordForgetMutation),
         variables: {
-          'email': _email,
+          'email': _email, // Use the email populated by FutureBuilder
           'otp': _otpController.text,
         },
       );
@@ -55,31 +62,45 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
       }
 
       if (result.hasException) {
-        _showErrorSnackBar(result.exception?.graphqlErrors.first.message ?? 'An error occurred');
+        // Reusing localization key from AuthService for GraphQL errors
+        _showErrorSnackBar(result.exception?.graphqlErrors.first.message ??
+            l10n.verificationGraphQLErrorDefault);
       } else {
-        final String? verificationToken = result.data?['verifyPasswordForget']['verificationToken'];
+        final String? verificationToken =
+            result.data?['verifyPasswordForget']['verificationToken'];
         if (verificationToken != null) {
           // Store verification token in SharedPreferences
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('verificationToken', verificationToken);
           // Navigate to reset password page with the verification token
           if (mounted) {
+            // You might want a success snackbar here
+            // _showSuccessSnackBar(l10n.passwordResetVerificationSuccessMessage); // Add a key for this
             AppRoutes.navigateToResetPassword(context);
           }
+        } else {
+          // Handle cases where verificationToken is null but no exception
+          _showErrorSnackBar(l10n
+              .verificationFailedDefault); // Reuse verification failed default
         }
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        _showErrorSnackBar('An unexpected error occurred');
+        // Use localized unexpected error
+        _showErrorSnackBar(l10n
+            .unexpectedPasswordResetVerificationError); 
       }
     }
   }
 
   void _showErrorSnackBar(String message) {
+    // Using a simple snackbar here. If you prefer the enhanced style
+    // from AuthService, you would call AuthService()._showErrorSnackBar(context, message)
+    // and ensure AuthService has access to BuildContext.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message), // The message is already localized
         backgroundColor: Colors.red,
         duration: const Duration(seconds: 3),
       ),
@@ -88,6 +109,8 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Access l10n here for UI texts
+
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
@@ -106,10 +129,10 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 40),
-                const Text(
-                  'Verify OTP',
+                Text(
+                  l10n.verifyOtpTitle, // Use localized title
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -120,36 +143,67 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
                   future: _getEmailFromSharedPreferences(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Consider localizing loading text if needed
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
-                      _email = snapshot.data!;
+                      // Use localized error prefix
+                      return Text(
+                          '${l10n.futureBuilderErrorPrefix}${snapshot.error}');
+                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      _email = snapshot.data!; // Populate _email state variable
                       // Masking email logic
                       final localPart = _email.split('@').first;
                       String maskedLocal = localPart;
                       if (localPart.length > 5) {
-                        maskedLocal = localPart.substring(0, 3) + 
-                                      '*' * (localPart.length - 5) + 
-                                      localPart.substring(localPart.length - 2);
+                        maskedLocal = localPart.substring(0, 3) +
+                            '*' * (localPart.length - 5) +
+                            localPart.substring(localPart.length - 2);
                       } else if (localPart.length > 3) {
-                        maskedLocal = localPart.substring(0, 3) + 
-                                      '*' * (localPart.length - 3);
+                        maskedLocal = localPart.substring(0, 3) +
+                            '*' * (localPart.length - 3);
                       }
 
-                      // No masking for domain
+                      // Masking for domain (reusing logic from VerifyLoginPage)
                       final domain = _email.split('@').last;
+                      String maskedDomain = domain;
+                      final domainParts = domain.split('.');
+                      if (domainParts.length > 1) {
+                        final tld = domainParts.last;
+                        final domainName = domainParts.first;
+                        if (domainName.length > 3) {
+                          maskedDomain =
+                              '${domainName.substring(0, 3)}${'*' * (domainName.length - 3)}.${tld}';
+                        } else {
+                          maskedDomain = domainName +
+                              '*' * (domain.length - domainName.length - 1) +
+                              '.' +
+                              tld;
+                        }
+                      } else if (domain.length > 3) {
+                        maskedDomain =
+                            domain.substring(0, 3) + '*' * (domain.length - 3);
+                      }
 
                       return Text(
-                        'Enter the verification code sent to\n${maskedLocal}@${domain}',
+                        l10n.enterOtpMessage(
+                            '${maskedLocal}@${maskedDomain}'), 
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white70,
                         ),
                       );
+                    } else {
+                      // Handle case where no email is found after loading
+                      // This might indicate a navigation issue or a previous error.
+                      // You might want to show a specific message or navigate back.
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        // Navigate back to forget password or login
+                        AppRoutes.navigateToForgetPassword(context);
+                      });
+                      return const SizedBox
+                          .shrink(); // Or a message like l10n.emailNotFoundError
                     }
-                    return Container();
                   },
                 ),
                 const SizedBox(height: 48),
@@ -177,8 +231,9 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
                           keyboardType: TextInputType.number,
                           maxLength: 6,
                           decoration: InputDecoration(
-                            hintText: 'Enter 6-digit OTP',
-                            prefixIcon: const Icon(Icons.lock_outline, color: Colors.deepPurple),
+                            hintText: l10n.otpHintText, 
+                            prefixIcon: const Icon(Icons.lock_outline,
+                                color: Colors.deepPurple),
                             filled: true,
                             fillColor: Colors.grey.shade100,
                             border: OutlineInputBorder(
@@ -188,16 +243,21 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
                             counterText: '',
                           ),
                           validator: (value) {
+                            final l10n = S
+                                .of(context)!; 
                             if (value == null || value.isEmpty) {
-                              return 'Please enter the OTP';
+                              return l10n
+                                  .enterOtpError; // Use localized message
                             }
                             if (value.length != 6) {
-                              return 'OTP must be 6 digits';
+                              return l10n
+                                  .otpLengthError; // Use localized message
                             }
                             if (!RegExp(r'^\d+$').hasMatch(value)) {
-                              return 'OTP must contain only numbers';
+                              return l10n
+                                  .otpNumbersOnlyError; // Use localized message
                             }
-                            return null;
+                            return null; // Return null if validation passes
                           },
                         ),
                         const SizedBox(height: 32),
@@ -218,7 +278,14 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
                                     color: Colors.white,
                                     strokeWidth: 2,
                                   )
-                                : const Text('Verify Code'),
+                                : Text(
+                                    l10n.verifyCodeButton, // Use localized button text
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
                           ),
                         ),
                       ],
@@ -229,17 +296,18 @@ class _VerifyPasswordResetPageState extends State<VerifyPasswordResetPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Didn't receive the code? ",
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      l10n.didNotReceiveCodePrompt,
+                      style: const TextStyle(color: Colors.white70),
                     ),
                     GestureDetector(
                       onTap: () {
-                        AppRoutes.navigateToForgetPassword(context);
+                        AppRoutes.navigateToForgetPassword(
+                            context); 
                       },
-                      child: const Text(
-                        'Resend',
-                        style: TextStyle(
+                      child: Text(
+                        l10n.resendLink, 
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
