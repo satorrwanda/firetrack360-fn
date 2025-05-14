@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class RegisterHeader extends StatelessWidget {
   const RegisterHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Access l10n here
+
     return Column(
       children: [
         // Icon with container
@@ -43,9 +46,11 @@ class RegisterHeader extends StatelessWidget {
             end: Alignment.bottomCenter,
           ).createShader(bounds),
           child: Text(
-            'Create Account',
+            // Remove const
+            l10n.createAccountTitle, // Use localized string (you'll need to add this key)
             textAlign: TextAlign.center,
             style: TextStyle(
+              // Removed const for dynamic style
               fontSize: 36,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -77,9 +82,11 @@ class RegisterHeader extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Sign up to get started',
+            // Remove const
+            l10n.signUpToGetStartedSubtitle, // Use localized string (you'll need to add this key)
             textAlign: TextAlign.center,
             style: TextStyle(
+              // Keep TextStyle for dynamic opacity
               fontSize: 18,
               color: Colors.white.withOpacity(0.9),
               height: 1.4,

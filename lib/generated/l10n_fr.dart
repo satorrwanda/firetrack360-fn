@@ -71,4 +71,109 @@ class SFr extends S {
 
   @override
   String get forgotPasswordLink => 'Mot de passe oublié ?';
+
+  @override
+  String get createAccountTitle => 'Créer un compte';
+
+  @override
+  String get signUpToGetStartedSubtitle => 'Inscrivez-vous pour commencer';
+
+  @override
+  String get enterPhoneNumberError => 'Veuillez saisir votre numéro de téléphone';
+
+  @override
+  String get rwandaPhoneNumberLengthError => 'Les numéros de téléphone au Rwanda doivent comporter 9 chiffres';
+
+  @override
+  String get rwandaPhoneNumberStartError => 'Les numéros de téléphone au Rwanda doivent commencer par 7';
+
+  @override
+  String get phoneNumberMinLengthError => 'Le numéro de téléphone doit comporter au moins 9 chiffres';
+
+  @override
+  String get phoneNumberMaxLengthError => 'Le numéro de téléphone ne peut pas dépasser 10 chiffres';
+
+  @override
+  String get enterPasswordError => 'Veuillez saisir un mot de passe';
+
+  @override
+  String get passwordMinLengthError => 'Le mot de passe doit comporter au moins 8 caractères';
+
+  @override
+  String get passwordUppercaseError => 'Le mot de passe doit contenir au moins une majuscule';
+
+  @override
+  String get passwordLowercaseError => 'Le mot de passe doit contenir au moins une minuscule';
+
+  @override
+  String get passwordDigitError => 'Le mot de passe doit contenir au moins un chiffre';
+
+  @override
+  String get passwordSpecialCharError => 'Le mot de passe doit contenir au moins un caractère spécial';
+
+  @override
+  String get confirmPasswordError => 'Veuillez confirmer votre mot de passe';
+
+  @override
+  String get passwordsDoNotMatchError => 'Les mots de passe ne correspondent pas';
+
+  @override
+  String get phoneNumberLabel => 'Numéro de téléphone';
+
+  @override
+  String get searchCountryHint => 'Rechercher un pays';
+
+  @override
+  String get confirmPasswordHintText => 'Confirmer le mot de passe';
+
+  @override
+  String get emailAlreadyRegisteredError => 'Cette adresse email est déjà enregistrée. Veuillez utiliser une adresse email différente ou essayer de vous connecter.';
+
+  @override
+  String get checkInformationError => 'Veuillez vérifier vos informations et réessayer.';
+
+  @override
+  String get invalidInputError => 'Saisie invalide. Veuillez vérifier vos détails.';
+
+  @override
+  String get connectionError => 'Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.';
+
+  @override
+  String get defaultError => 'Une erreur s\'est produite. Veuillez réessayer.';
+
+  @override
+  String get successSnackBarTitle => 'Succès';
+
+  @override
+  String get errorSnackBarTitle => 'Erreur';
+
+  @override
+  String get dismissSnackBarAction => 'FERMER';
+
+  @override
+  String get registrationSuccessDefaultMessage => 'Inscription réussie ! Veuillez vérifier votre adresse email avec l\'OTP envoyé.';
+
+  @override
+  String get registrationFailedDefaultMessage => 'Échec de l\'inscription. Veuillez réessayer.';
+
+  @override
+  String get unexpectedAuthError => 'Une erreur inattendue s\'est produite. Veuillez réessayer plus tard.';
+
+  @override
+  String get loginFailedDefaultMessage => 'Échec de la connexion. Veuillez réessayer.';
+
+  @override
+  String get resendOtpSuccessDefaultMessage => 'Code de vérification renvoyé avec succès.';
+
+  @override
+  String get resendOtpFailedDefaultMessage => 'Échec du renvoi du code de vérification. Veuillez réessayer.';
+
+  @override
+  String get enterEmailError => 'Veuillez saisir votre adresse email';
+
+  @override
+  String get alreadyRegisteredPrompt => 'Déjà enregistré ?';
+
+  @override
+  String get loginLink => 'Se connecter';
 }

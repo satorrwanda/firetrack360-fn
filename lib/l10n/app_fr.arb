@@ -87,5 +87,149 @@
     "forgotPasswordLink": "Mot de passe oublié ?",
     "@forgotPasswordLink": {
         "description": "Text for the forgot password link on the login page"
+    },
+    "createAccountTitle": "Créer un compte",
+    "@createAccountTitle": {
+        "description": "Main title on the register header"
+    },
+    "signUpToGetStartedSubtitle": "Inscrivez-vous pour commencer",
+    "@signUpToGetStartedSubtitle": {
+        "description": "Subtitle prompting the user to sign up on the register header"
+    },
+    "enterPhoneNumberError": "Veuillez saisir votre numéro de téléphone",
+    "@enterPhoneNumberError": {
+        "description": "Error message when the phone number field is empty"
+    },
+    "enterPhoneNumberHintText": "Numéro de téléphone",
+    "@enterPhoneNumberHintText": {
+        "description": "Hint text for the phone number input field"
+    },
+    "rwandaPhoneNumberLengthError": "Les numéros de téléphone au Rwanda doivent comporter 9 chiffres",
+    "@rwandaPhoneNumberLengthError": {
+        "description": "Error message for incorrect phone number length in Rwanda"
+    },
+    "rwandaPhoneNumberStartError": "Les numéros de téléphone au Rwanda doivent commencer par 7",
+    "@rwandaPhoneNumberStartError": {
+        "description": "Error message for incorrect phone number starting digit in Rwanda"
+    },
+    "phoneNumberMinLengthError": "Le numéro de téléphone doit comporter au moins 9 chiffres",
+    "@phoneNumberMinLengthError": {
+        "description": "Error message for phone number less than minimum required length"
+    },
+    "phoneNumberMaxLengthError": "Le numéro de téléphone ne peut pas dépasser 10 chiffres",
+    "@phoneNumberMaxLengthError": {
+        "description": "Error message for phone number exceeding maximum allowed length"
+    },
+    "enterPasswordError": "Veuillez saisir un mot de passe",
+    "@enterPasswordError": {
+        "description": "Error message when the password field is empty"
+    },
+    "passwordMinLengthError": "Le mot de passe doit comporter au moins 8 caractères",
+    "@passwordMinLengthError": {
+        "description": "Error message for password less than minimum required length"
+    },
+    "passwordUppercaseError": "Le mot de passe doit contenir au moins une majuscule",
+    "@passwordUppercaseError": {
+        "description": "Error message for password missing uppercase letter"
+    },
+    "passwordLowercaseError": "Le mot de passe doit contenir au moins une minuscule",
+    "@passwordLowercaseError": {
+        "description": "Error message for password missing lowercase letter"
+    },
+    "passwordDigitError": "Le mot de passe doit contenir au moins un chiffre",
+    "@passwordDigitError": {
+        "description": "Error message for password missing a digit"
+    },
+    "passwordSpecialCharError": "Le mot de passe doit contenir au moins un caractère spécial",
+    "@passwordSpecialCharError": {
+        "description": "Error message for password missing a special character"
+    },
+    "confirmPasswordError": "Veuillez confirmer votre mot de passe",
+    "@confirmPasswordError": {
+        "description": "Error message when the confirm password field is empty"
+    },
+    "passwordsDoNotMatchError": "Les mots de passe ne correspondent pas",
+    "@passwordsDoNotMatchError": {
+        "description": "Error message when the passwords do not match"
+    },
+    "phoneNumberLabel": "Numéro de téléphone",
+    "@phoneNumberLabel": {
+        "description": "Label text for the phone number input section on the register form"
+    },
+    "searchCountryHint": "Rechercher un pays",
+    "@searchCountryHint": {
+        "description": "Hint text for the country search input in the country code picker"
+    },
+    "confirmPasswordHintText": "Confirmer le mot de passe",
+    "@confirmPasswordHintText": {
+        "description": "Hint text for the confirm password input field on the register form"
+    },
+    "emailAlreadyRegisteredError": "Cette adresse email est déjà enregistrée. Veuillez utiliser une adresse email différente ou essayer de vous connecter.",
+    "@emailAlreadyRegisteredError": {
+        "description": "Error message when the email is already registered"
+    },
+    "checkInformationError": "Veuillez vérifier vos informations et réessayer.",
+    "@checkInformationError": {
+        "description": "Error message for checking information"
+    },
+    "invalidInputError": "Saisie invalide. Veuillez vérifier vos détails.",
+    "@invalidInputError": {
+        "description": "Error message for invalid input"
+    },
+    "connectionError": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.",
+    "@connectionError": {
+        "description": "Error message for connection issues"
+    },
+    "defaultError": "Une erreur s'est produite. Veuillez réessayer.",
+    "@defaultError": {
+        "description": "Default error message for general issues"
+    },
+    "successSnackBarTitle": "Succès",
+    "@successSnackBarTitle": {
+        "description": "Title for success messages in SnackBar"
+    },
+    "errorSnackBarTitle": "Erreur",
+    "@errorSnackBarTitle": {
+        "description": "Title for error messages in SnackBar"
+    },
+    "dismissSnackBarAction": "FERMER",
+    "@dismissSnackBarAction": {
+        "description": "Action text to dismiss the SnackBar"
+    },
+    "registrationSuccessDefaultMessage": "Inscription réussie ! Veuillez vérifier votre adresse email avec l'OTP envoyé.",
+    "@registrationSuccessDefaultMessage": {
+        "description": "Default message for successful registration"
+    },
+    "registrationFailedDefaultMessage": "Échec de l'inscription. Veuillez réessayer.",
+    "@registrationFailedDefaultMessage": {
+        "description": "Default message for failed registration"
+    },
+    "unexpectedAuthError": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+    "@unexpectedAuthError": {
+        "description": "Error message for unexpected authentication issues"
+    },
+    "loginFailedDefaultMessage": "Échec de la connexion. Veuillez réessayer.",
+    "@loginFailedDefaultMessage": {
+        "description": "Default message for failed login"
+    },
+    "resendOtpSuccessDefaultMessage": "Code de vérification renvoyé avec succès.",
+    "@resendOtpSuccessDefaultMessage": {
+        "description": "Default message for successful OTP resend"
+    },
+    "resendOtpFailedDefaultMessage": "Échec du renvoi du code de vérification. Veuillez réessayer.",
+    "@resendOtpFailedDefaultMessage": {
+        "description": "Default message for failed OTP resend"
+    },
+    "enterEmailError": "Veuillez saisir votre adresse email",
+    "@enterEmailError": {
+        "description": "Error message when the email field is empty"
+    },
+    "alreadyRegisteredPrompt": "Déjà enregistré ?",
+    "@alreadyRegisteredPrompt": {
+        "description": "Prompt for users who are already registered"
+    },
+    "loginLink": "Se connecter",
+    "@loginLink": {
+        "description": "Text for the login link on the register page"
     }
 }

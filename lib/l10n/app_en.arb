@@ -32,7 +32,7 @@
     "@login": {
         "description": "Text for login button"
     },
-    "dontHaveAccountPrompt": "Don't have an account?", 
+    "dontHaveAccountPrompt": "Don't have an account?",
     "@dontHaveAccountPrompt": {
         "description": "Prompt for users without an account on the login page"
     },
@@ -40,11 +40,11 @@
     "@signUpLink": {
         "description": "Text for the sign up link on the login page"
     },
-    "welcomeBackTitle": "Welcome Back", 
+    "welcomeBackTitle": "Welcome Back",
     "@welcomeBackTitle": {
         "description": "Main title on the login header"
     },
-    "signInToContinueSubtitle": "Sign in to continue" ,
+    "signInToContinueSubtitle": "Sign in to continue",
     "@signInToContinueSubtitle": {
         "description": "Subtitle prompting the user to sign in on the login header"
     },
@@ -87,5 +87,145 @@
     "forgotPasswordLink": "Forgot Password?",
     "@forgotPasswordLink": {
         "description": "Text for the 'Forgot Password?' link on the login form"
+    },
+    "createAccountTitle": "Create Account",
+    "@createAccountTitle": {
+        "description": "Main title on the register header"
+    },
+    "signUpToGetStartedSubtitle": "Sign up to get started",
+    "@signUpToGetStartedSubtitle": {
+        "description": "Subtitle prompting the user to sign up on the register header"
+    },
+    "enterPhoneNumberError": "Please enter your phone number",
+    "@enterPhoneNumberError": {
+        "description": "Validation error when phone number is empty on the register form"
+    },
+    "rwandaPhoneNumberLengthError": "Rwanda phone numbers must be 9 digits",
+    "@rwandaPhoneNumberLengthError": {
+        "description": "Validation error for incorrect Rwanda phone number length"
+    },
+    "rwandaPhoneNumberStartError": "Rwanda phone numbers must start with 7",
+    "@rwandaPhoneNumberStartError": {
+        "description": "Validation error for incorrect Rwanda phone number starting digit"
+    },
+    "phoneNumberMinLengthError": "Phone number must be at least 9 digits",
+    "@phoneNumberMinLengthError": {
+        "description": "Validation error for phone number less than minimum required length"
+    },
+    "phoneNumberMaxLengthError": "Phone number cannot exceed 10 digits",
+    "@phoneNumberMaxLengthError": {
+        "description": "Validation error for phone number exceeding maximum allowed length"
+    },
+    "enterPasswordError": "Please enter a password",
+    "@enterPasswordError": {
+        "description": "Validation error when password is empty on the register form"
+    },
+    "passwordMinLengthError": "Password must be at least 8 characters long",
+    "@passwordMinLengthError": {
+        "description": "Validation error for password less than minimum required length"
+    },
+    "passwordUppercaseError": "Password must contain at least one uppercase letter",
+    "@passwordUppercaseError": {
+        "description": "Validation error for password missing uppercase letter"
+    },
+    "passwordLowercaseError": "Password must contain at least one lowercase letter",
+    "@passwordLowercaseError": {
+        "description": "Validation error for password missing lowercase letter"
+    },
+    "passwordDigitError": "Password must contain at least one number",
+    "@passwordDigitError": {
+        "description": "Validation error for password missing a digit"
+    },
+    "passwordSpecialCharError": "Password must contain at least one special character",
+    "@passwordSpecialCharError": {
+        "description": "Validation error for password missing a special character"
+    },
+    "confirmPasswordError": "Please confirm your password",
+    "@confirmPasswordError": {
+        "description": "Validation error when confirm password is empty on the register form"
+    },
+    "passwordsDoNotMatchError": "Passwords do not match",
+    "@passwordsDoNotMatchError": {
+        "description": "Validation error when confirm password does not match password"
+    },
+    "phoneNumberLabel": "Phone Number",
+    "@phoneNumberLabel": {
+        "description": "Label text for the phone number input section on the register form"
+    },
+    "searchCountryHint": "Search country",
+    "@searchCountryHint": {
+        "description": "Hint text for the country search input in the country code picker"
+    },
+    "confirmPasswordHintText": "Confirm Password",
+    "@confirmPasswordHintText": {
+        "description": "Hint text for the confirm password input field on the register form"
+    },
+    "emailAlreadyRegisteredError": "This email is already registered. Please use a different email or try logging in.",
+    "@emailAlreadyRegisteredError": {
+        "description": "GraphQL error message for a registered email (status 409)"
+    },
+    "checkInformationError": "Please check your information and try again.",
+    "@checkInformationError": {
+        "description": "GraphQL error message for bad request (status 400)"
+    },
+    "invalidInputError": "Invalid input. Please check your details.",
+    "@invalidInputError": {
+        "description": "GraphQL error message for unprocessable entity (status 422)"
+    },
+    "connectionError": "Unable to connect to the server. Please check your internet connection.",
+    "@connectionError": {
+        "description": "Error message for network connection issues"
+    },
+    "defaultError": "An error occurred. Please try again.",
+    "@defaultError": {
+        "description": "Default generic error message"
+    },
+    "successSnackBarTitle": "Success",
+    "@successSnackBarTitle": {
+        "description": "Title for success snackbars"
+    },
+    "errorSnackBarTitle": "Error",
+    "@errorSnackBarTitle": {
+        "description": "Title for error snackbars"
+    },
+    "dismissSnackBarAction": "DISMISS",
+    "@dismissSnackBarAction": {
+        "description": "Label for the dismiss action in snackbars"
+    },
+    "registrationSuccessDefaultMessage": "Registration successful! Please verify your email with the OTP sent.",
+    "@registrationSuccessDefaultMessage": {
+        "description": "Default success message after registration"
+    },
+    "registrationFailedDefaultMessage": "Registration failed. Please try again.",
+    "@registrationFailedDefaultMessage": {
+        "description": "Default failure message after registration"
+    },
+    "unexpectedAuthError": "An unexpected error occurred. Please try again later.",
+    "@unexpectedAuthError": {
+        "description": "Generic error message for unexpected authentication issues"
+    },
+    "loginFailedDefaultMessage": "Login failed. Please try again.",
+    "@loginFailedDefaultMessage": {
+        "description": "Default failure message after login"
+    },
+    "resendOtpSuccessDefaultMessage": "Verification code has been resent successfully.",
+    "@resendOtpSuccessDefaultMessage": {
+        "description": "Default success message after resending OTP"
+    },
+    "resendOtpFailedDefaultMessage": "Failed to resend verification code. Please try again.",
+    "@resendOtpFailedDefaultMessage": {
+        "description": "Default failure message after failing to resend OTP"
+    },
+    "enterEmailError": "Please enter your email address",
+    "@enterEmailError": {
+        "description": "Validation error when email address is empty on the forgot password form"
+    },
+    "alreadyRegisteredPrompt": "Already have an account?",
+    "@alreadyRegisteredPrompt": {
+        "description": "Prompt for users who already have an account on the forgot password page"
+    },
+    "loginLink": "Login",
+    "@loginLink": {
+        "description": "Text for the login link on the forgot password page"
     }
 }

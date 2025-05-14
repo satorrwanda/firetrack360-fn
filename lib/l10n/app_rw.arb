@@ -80,12 +80,152 @@
     "@emailHintText": {
         "description": "Hint text for email input field"
     },
+    "forgotPasswordLink": "Wibagiwe ijambo ry'ibanga?",
+    "@forgotPasswordLink": {
+        "description": "Text for the forgot password link on the login page"
+    },
+    "createAccountTitle": "Fungura konti",
+    "@createAccountTitle": {
+        "description": "Main title on the register header"
+    },
+    "signUpToGetStartedSubtitle": "Iyandikishe kugirango utangire",
+    "@signUpToGetStartedSubtitle": {
+        "description": "Subtitle prompting the user to sign up on the register header"
+    },
+    "enterPhoneNumberError": "Andika nimero ya telefone yawe",
+    "@enterPhoneNumberError": {
+        "description": "Error message when the phone number field is empty"
+    },
+    "rwandaPhoneNumberLengthError": "Nimero za telefone z'u Rwanda zigomba kugira imibare 9",
+    "@rwandaPhoneNumberLengthError": {
+        "description": "Error message for Rwanda phone numbers that are not 9 digits long"
+    },
+    "rwandaPhoneNumberStartError": "Nimero za telefone z'u Rwanda zigomba gutangira na 7",
+    "@rwandaPhoneNumberStartError": {
+        "description": "Error message for Rwanda phone numbers that do not start with 7"
+    },
+    "phoneNumberMinLengthError": "Nimero ya telefone igomba kugira byibura imibare 9",
+    "@phoneNumberMinLengthError": {
+        "description": "Error message for phone numbers that are less than 9 digits long"
+    },
+    "phoneNumberMaxLengthError": "Nimero ya telefone ntishobora kurenza imibare 10",
+    "@phoneNumberMaxLengthError": {
+        "description": "Error message for phone numbers that exceed 10 digits"
+    },
+    "enterPasswordError": "Andika ijambo ry'ibanga",
+    "@enterPasswordError": {
+        "description": "Error message when the password field is empty"
+    },
     "passwordHintText": "Ijambo ry'ibanga",
     "@passwordHintText": {
         "description": "Hint text for password input field"
     },
-    "forgotPasswordLink": "Wibagiwe ijambo ry'ibanga?",
-    "@forgotPasswordLink": {
-        "description": "Text for the forgot password link on the login page"
+    "passwordMinLengthError": "Ijambo ry'ibanga rigomba kugira byibura inyuguti 8",
+    "@passwordMinLengthError": {
+        "description": "Error message for passwords that are less than 8 characters long"
+    },
+    "passwordUppercaseError": "Ijambo ry'ibanga rigomba kugira byibura inyuguti nkuru imwe",
+    "@passwordUppercaseError": {
+        "description": "Error message for passwords that do not contain at least one uppercase letter"
+    },
+    "passwordLowercaseError": "Ijambo ry'ibanga rigomba kugira byibura inyuguti nto imwe",
+    "@passwordLowercaseError": {
+        "description": "Error message for passwords that do not contain at least one lowercase letter"
+    },
+    "passwordDigitError": "Ijambo ry'ibanga rigomba kugira byibura umubare umwe",
+    "@passwordDigitError": {
+        "description": "Error message for passwords that do not contain at least one digit"
+    },
+    "passwordSpecialCharError": "Ijambo ry'ibanga rigomba kugira byibura akamenyetso kamwe kidasanzwe",
+    "@passwordSpecialCharError": {
+        "description": "Error message for passwords that do not contain at least one special character"
+    },
+    "confirmPasswordError": "Emeza ijambo ry'ibanga",
+    "@confirmPasswordError": {
+        "description": "Error message when the confirm password field is empty"
+    },
+    "passwordsDoNotMatchError": "Amagambo y'ibanga ntabwo ahura",
+    "@passwordsDoNotMatchError": {
+        "description": "Error message when the passwords do not match"
+    },
+    "phoneNumberLabel": "Nimero ya telefone",
+    "@phoneNumberLabel": {
+        "description": "Label text for the phone number input section on the register form"
+    },
+    "searchCountryHint": "Shakisha igihugu",
+    "@searchCountryHint": {
+        "description": "Hint text for the country search input in the country code picker"
+    },
+    "confirmPasswordHintText": "Emeza ijambo ry'ibanga",
+    "@confirmPasswordHintText": {
+        "description": "Hint text for the confirm password input field on the register form"
+    },
+    "emailAlreadyRegisteredError": "Iyi imeyili yamaze kwandikwa. Koresha indi imeyili cyangwa ugerageze kwinjira.",
+    "@emailAlreadyRegisteredError": {
+        "description": "GraphQL error message for a registered email (status 409)"
+    },
+    "checkInformationError": "Reba amakuru yawe maze ungerageze.",
+    "@checkInformationError": {
+        "description": "GraphQL error message for bad request (status 400)"
+    },
+    "invalidInputError": "Ibyinjiye ntibikoze neza. Reba ibyo winjije.",
+    "@invalidInputError": {
+        "description": "GraphQL error message for unprocessable entity (status 422)"
+    },
+    "connectionError": "Ntushobora guhuza na seriveri. Reba interineti yawe.",
+    "@connectionError": {
+        "description": "Error message for network connection issues"
+    },
+    "defaultError": "Habayeho ikibazo. Ongera ugerageze.",
+    "@defaultError": {
+        "description": "Default generic error message"
+    },
+    "successSnackBarTitle": "Byagenze neza",
+    "@successSnackBarTitle": {
+        "description": "Title for success snackbars"
+    },
+    "errorSnackBarTitle": "Ikibazo",
+    "@errorSnackBarTitle": {
+        "description": "Title for error snackbars"
+    },
+    "dismissSnackBarAction": "Funga",
+    "@dismissSnackBarAction": {
+        "description": "Label for the dismiss action in snackbars"
+    },
+    "registrationSuccessDefaultMessage": "Kwiyandikisha byagenze neza! Emeza imeyili yawe ukoresheje OTP yoherejwe.",
+    "@registrationSuccessDefaultMessage": {
+        "description": "Default success message after registration"
+    },
+    "registrationFailedDefaultMessage": "Kwiyandikisha byaranze. Ongera ugerageze.",
+    "@registrationFailedDefaultMessage": {
+        "description": "Default failure message after registration"
+    },
+    "unexpectedAuthError": "Habayeho ikibazo kitari giteganijwe. Ongera ugerageze nyuma.",
+    "@unexpectedAuthError": {
+        "description": "Generic error message for unexpected authentication issues"
+    },
+    "loginFailedDefaultMessage": "Kwinjira byaranze. Ongera ugerageze.",
+    "@loginFailedDefaultMessage": {
+        "description": "Default failure message after login"
+    },
+    "resendOtpSuccessDefaultMessage": "Kode yo gushimangira yoherejwe bundi bushya.",
+    "@resendOtpSuccessDefaultMessage": {
+        "description": "Default success message after resending OTP"
+    },
+    "resendOtpFailedDefaultMessage": "Gusubiza kode yo gushimangira byaranze. Ongera ugerageze.",
+    "@resendOtpFailedDefaultMessage": {
+        "description": "Default failure message after failing to resend OTP"
+    },
+    "enterEmailError": "Andika imeyili yawe",
+    "@enterEmailError": {
+        "description": "Error message when the email field is empty"
+    },
+    "alreadyRegisteredPrompt": "Usanzwe ufite konti?",
+    "@alreadyRegisteredPrompt": {
+        "description": "Prompt for users who already have an account on the register page"
+    },
+    "loginLink": "Injira",
+    "@loginLink": {
+        "description": "Text for the login link on the register page"
     }
 }

@@ -71,4 +71,109 @@ class SEn extends S {
 
   @override
   String get forgotPasswordLink => 'Forgot Password?';
+
+  @override
+  String get createAccountTitle => 'Create Account';
+
+  @override
+  String get signUpToGetStartedSubtitle => 'Sign up to get started';
+
+  @override
+  String get enterPhoneNumberError => 'Please enter your phone number';
+
+  @override
+  String get rwandaPhoneNumberLengthError => 'Rwanda phone numbers must be 9 digits';
+
+  @override
+  String get rwandaPhoneNumberStartError => 'Rwanda phone numbers must start with 7';
+
+  @override
+  String get phoneNumberMinLengthError => 'Phone number must be at least 9 digits';
+
+  @override
+  String get phoneNumberMaxLengthError => 'Phone number cannot exceed 10 digits';
+
+  @override
+  String get enterPasswordError => 'Please enter a password';
+
+  @override
+  String get passwordMinLengthError => 'Password must be at least 8 characters long';
+
+  @override
+  String get passwordUppercaseError => 'Password must contain at least one uppercase letter';
+
+  @override
+  String get passwordLowercaseError => 'Password must contain at least one lowercase letter';
+
+  @override
+  String get passwordDigitError => 'Password must contain at least one number';
+
+  @override
+  String get passwordSpecialCharError => 'Password must contain at least one special character';
+
+  @override
+  String get confirmPasswordError => 'Please confirm your password';
+
+  @override
+  String get passwordsDoNotMatchError => 'Passwords do not match';
+
+  @override
+  String get phoneNumberLabel => 'Phone Number';
+
+  @override
+  String get searchCountryHint => 'Search country';
+
+  @override
+  String get confirmPasswordHintText => 'Confirm Password';
+
+  @override
+  String get emailAlreadyRegisteredError => 'This email is already registered. Please use a different email or try logging in.';
+
+  @override
+  String get checkInformationError => 'Please check your information and try again.';
+
+  @override
+  String get invalidInputError => 'Invalid input. Please check your details.';
+
+  @override
+  String get connectionError => 'Unable to connect to the server. Please check your internet connection.';
+
+  @override
+  String get defaultError => 'An error occurred. Please try again.';
+
+  @override
+  String get successSnackBarTitle => 'Success';
+
+  @override
+  String get errorSnackBarTitle => 'Error';
+
+  @override
+  String get dismissSnackBarAction => 'DISMISS';
+
+  @override
+  String get registrationSuccessDefaultMessage => 'Registration successful! Please verify your email with the OTP sent.';
+
+  @override
+  String get registrationFailedDefaultMessage => 'Registration failed. Please try again.';
+
+  @override
+  String get unexpectedAuthError => 'An unexpected error occurred. Please try again later.';
+
+  @override
+  String get loginFailedDefaultMessage => 'Login failed. Please try again.';
+
+  @override
+  String get resendOtpSuccessDefaultMessage => 'Verification code has been resent successfully.';
+
+  @override
+  String get resendOtpFailedDefaultMessage => 'Failed to resend verification code. Please try again.';
+
+  @override
+  String get enterEmailError => 'Please enter your email address';
+
+  @override
+  String get alreadyRegisteredPrompt => 'Already have an account?';
+
+  @override
+  String get loginLink => 'Login';
 }

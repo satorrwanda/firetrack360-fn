@@ -71,4 +71,109 @@ class SRw extends S {
 
   @override
   String get forgotPasswordLink => 'Wibagiwe ijambo ry\'ibanga?';
+
+  @override
+  String get createAccountTitle => 'Fungura konti';
+
+  @override
+  String get signUpToGetStartedSubtitle => 'Iyandikishe kugirango utangire';
+
+  @override
+  String get enterPhoneNumberError => 'Andika nimero ya telefone yawe';
+
+  @override
+  String get rwandaPhoneNumberLengthError => 'Nimero za telefone z\'u Rwanda zigomba kugira imibare 9';
+
+  @override
+  String get rwandaPhoneNumberStartError => 'Nimero za telefone z\'u Rwanda zigomba gutangira na 7';
+
+  @override
+  String get phoneNumberMinLengthError => 'Nimero ya telefone igomba kugira byibura imibare 9';
+
+  @override
+  String get phoneNumberMaxLengthError => 'Nimero ya telefone ntishobora kurenza imibare 10';
+
+  @override
+  String get enterPasswordError => 'Andika ijambo ry\'ibanga';
+
+  @override
+  String get passwordMinLengthError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti 8';
+
+  @override
+  String get passwordUppercaseError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti nkuru imwe';
+
+  @override
+  String get passwordLowercaseError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti nto imwe';
+
+  @override
+  String get passwordDigitError => 'Ijambo ry\'ibanga rigomba kugira byibura umubare umwe';
+
+  @override
+  String get passwordSpecialCharError => 'Ijambo ry\'ibanga rigomba kugira byibura akamenyetso kamwe kidasanzwe';
+
+  @override
+  String get confirmPasswordError => 'Emeza ijambo ry\'ibanga';
+
+  @override
+  String get passwordsDoNotMatchError => 'Amagambo y\'ibanga ntabwo ahura';
+
+  @override
+  String get phoneNumberLabel => 'Nimero ya telefone';
+
+  @override
+  String get searchCountryHint => 'Shakisha igihugu';
+
+  @override
+  String get confirmPasswordHintText => 'Emeza ijambo ry\'ibanga';
+
+  @override
+  String get emailAlreadyRegisteredError => 'Iyi imeyili yamaze kwandikwa. Koresha indi imeyili cyangwa ugerageze kwinjira.';
+
+  @override
+  String get checkInformationError => 'Reba amakuru yawe maze ungerageze.';
+
+  @override
+  String get invalidInputError => 'Ibyinjiye ntibikoze neza. Reba ibyo winjije.';
+
+  @override
+  String get connectionError => 'Ntushobora guhuza na seriveri. Reba interineti yawe.';
+
+  @override
+  String get defaultError => 'Habayeho ikibazo. Ongera ugerageze.';
+
+  @override
+  String get successSnackBarTitle => 'Byagenze neza';
+
+  @override
+  String get errorSnackBarTitle => 'Ikibazo';
+
+  @override
+  String get dismissSnackBarAction => 'Funga';
+
+  @override
+  String get registrationSuccessDefaultMessage => 'Kwiyandikisha byagenze neza! Emeza imeyili yawe ukoresheje OTP yoherejwe.';
+
+  @override
+  String get registrationFailedDefaultMessage => 'Kwiyandikisha byaranze. Ongera ugerageze.';
+
+  @override
+  String get unexpectedAuthError => 'Habayeho ikibazo kitari giteganijwe. Ongera ugerageze nyuma.';
+
+  @override
+  String get loginFailedDefaultMessage => 'Kwinjira byaranze. Ongera ugerageze.';
+
+  @override
+  String get resendOtpSuccessDefaultMessage => 'Kode yo gushimangira yoherejwe bundi bushya.';
+
+  @override
+  String get resendOtpFailedDefaultMessage => 'Gusubiza kode yo gushimangira byaranze. Ongera ugerageze.';
+
+  @override
+  String get enterEmailError => 'Andika imeyili yawe';
+
+  @override
+  String get alreadyRegisteredPrompt => 'Usanzwe ufite konti?';
+
+  @override
+  String get loginLink => 'Injira';
 }

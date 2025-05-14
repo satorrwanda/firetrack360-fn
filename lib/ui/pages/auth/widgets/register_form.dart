@@ -2,6 +2,7 @@ import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -31,62 +32,73 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
+  // --- Localized Validator Methods ---
+
   String? _validatePhoneNumber(String? value) {
+    final l10n = S.of(context)!; // Access l10n for validation messages
+
     if (value == null || value.isEmpty) {
-      return 'Please enter your phone number';
+      return l10n.enterPhoneNumberError; // Use localized message
     }
 
     if (_selectedCountry.dialCode == '+250') {
       if (value.length != 9) {
-        return 'Rwanda phone numbers must be 9 digits';
+        return l10n.rwandaPhoneNumberLengthError; // Use localized message
       }
       if (!value.startsWith('7')) {
-        return 'Rwanda phone numbers must start with 7';
+        return l10n.rwandaPhoneNumberStartError; // Use localized message
       }
     } else {
       if (value.length < 9) {
-        return 'Phone number must be at least 9 digits';
+        return l10n.phoneNumberMinLengthError; // Use localized message
       }
       if (value.length > 10) {
-        return 'Phone number cannot exceed 10 digits';
+        return l10n.phoneNumberMaxLengthError; // Use localized message
       }
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
+    final l10n = S.of(context)!; // Access l10n for validation messages
+
     if (value == null || value.isEmpty) {
-      return 'Please enter a password';
+      return l10n.enterPasswordError; // Use localized message
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return l10n.passwordMinLengthError; // Use localized message
     }
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+      return l10n.passwordUppercaseError; // Use localized message
     }
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
+      return l10n.passwordLowercaseError; // Use localized message
     }
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number';
+      return l10n.passwordDigitError; // Use localized message
     }
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
+      return l10n.passwordSpecialCharError; // Use localized message
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
+    final l10n = S.of(context)!; // Access l10n for validation messages
+
     if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
+      return l10n.confirmPasswordError; // Use localized message
     }
     if (value != _passwordController.text) {
-      return 'Passwords do not match';
+      return l10n.passwordsDoNotMatchError; // Use localized message
     }
     return null;
   }
+  // --- End Localized Validator Methods ---
 
   Future<void> _registerUser() async {
+    // Note: Validation messages are handled within _validate... methods
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -96,8 +108,12 @@ class _RegisterFormState extends State<RegisterForm> {
     });
 
     try {
-      final fullPhoneNumber = '${_selectedCountry.dialCode}${_phoneController.text}';
-      
+      final fullPhoneNumber =
+          '${_selectedCountry.dialCode}${_phoneController.text}';
+
+      // Assuming AuthService handles showing localized success/error messages internally
+      // or accepts localized strings to display. If AuthService shows hardcoded
+      // messages, you'll need to localize those within AuthService.
       final authService = AuthService();
       final success = await authService.registerUser(
         context: context,
@@ -113,7 +129,7 @@ class _RegisterFormState extends State<RegisterForm> {
         _phoneController.clear();
         _passwordController.clear();
         _confirmPasswordController.clear();
-        
+
         AppRoutes.navigateToActivateAccount(context);
       }
     } finally {
@@ -127,6 +143,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Access l10n for UI texts
+
     return Theme(
       data: Theme.of(context).copyWith(
         dialogTheme: DialogTheme(
@@ -164,8 +182,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                  hintText: 'Email Address',
-                  prefixIcon: const Icon(Icons.email_outlined, color: Colors.deepPurple),
+                  hintText: l10n.emailHintText, // Use localized hint
+                  prefixIcon: const Icon(Icons.email_outlined,
+                      color: Colors.deepPurple),
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   border: OutlineInputBorder(
@@ -173,17 +192,35 @@ class _RegisterFormState extends State<RegisterForm> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                validator: AuthService.validateEmail,
+                validator: (value) {
+                  // LOCALIZED EMAIL VALIDATOR HERE
+                  if (value == null || value.isEmpty) {
+                    return l10n.enterEmailError; // Use localized message
+                  }
+
+                  // Using a simple regex for email validation
+                  final emailRegex = RegExp(
+                    r"^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$",
+                  );
+
+                  if (!emailRegex.hasMatch(value)) {
+                    return l10n.invalidEmailError; // Use localized message
+                  }
+
+                  return null; // Return null if validation passes
+                },
               ),
               const SizedBox(height: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 4, bottom: 8),
+                  Padding(
+                    // Remove const
+                    padding: const EdgeInsets.only(left: 4, bottom: 8),
                     child: Text(
-                      'Phone Number',
-                      style: TextStyle(
+                      l10n.phoneNumberLabel, // Use localized label
+                      style: const TextStyle(
+                        // Keep const if style is static
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.black87,
@@ -227,20 +264,21 @@ class _RegisterFormState extends State<RegisterForm> {
                                   favorite: const ['RW'],
                                   showFlag: true,
                                   showDropDownButton: true,
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   textStyle: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   dialogSize: const Size(320, 450),
-                                  flagWidth: 28,
                                   dialogBackgroundColor: Colors.white,
                                   dialogTextStyle: const TextStyle(
                                     fontSize: 16,
                                     color: Colors.black87,
                                   ),
                                   searchDecoration: InputDecoration(
-                                    hintText: 'Search country',
+                                    hintText: l10n
+                                        .searchCountryHint, // Use localized hint
                                     prefixIcon: const Icon(Icons.search),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
@@ -262,9 +300,12 @@ class _RegisterFormState extends State<RegisterForm> {
                         TextFormField(
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
-                          validator: _validatePhoneNumber,
+                          validator:
+                              _validatePhoneNumber, // This validator uses localized messages
                           decoration: InputDecoration(
-                            hintText: 'Phone Number',
+                            // Consider a more neutral hint here if you don't want the error message as a hint
+                            hintText: l10n
+                                .enterPhoneNumberError, // Using validation error key as hint for simplicity
                             prefixIcon: Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 12,
@@ -296,11 +337,14 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: _passwordController,
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
-                  hintText: 'Password',
-                  prefixIcon: const Icon(Icons.lock_outline, color: Colors.deepPurple),
+                  hintText: l10n.passwordHintText, // Use localized hint
+                  prefixIcon:
+                      const Icon(Icons.lock_outline, color: Colors.deepPurple),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: Colors.grey,
                     ),
                     onPressed: () {
@@ -316,18 +360,22 @@ class _RegisterFormState extends State<RegisterForm> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                validator: _validatePassword,
+                validator:
+                    _validatePassword, // This validator uses localized messages
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
                 decoration: InputDecoration(
-                  hintText: 'Confirm Password',
-                  prefixIcon: const Icon(Icons.lock_outline, color: Colors.deepPurple),
+                  hintText: l10n.confirmPasswordHintText, // Use localized hint
+                  prefixIcon:
+                      const Icon(Icons.lock_outline, color: Colors.deepPurple),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                      _obscureConfirmPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: Colors.grey,
                     ),
                     onPressed: () {
@@ -343,7 +391,8 @@ class _RegisterFormState extends State<RegisterForm> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                validator: _validateConfirmPassword,
+                validator:
+                    _validateConfirmPassword, // This validator uses localized messages
               ),
               const SizedBox(height: 32),
               SizedBox(
@@ -363,7 +412,16 @@ class _RegisterFormState extends State<RegisterForm> {
                           color: Colors.white,
                           strokeWidth: 2,
                         )
-                      : const Text('Create Account'),
+                      : Text(
+                          // Remove const
+                          l10n.createAccountTitle, // Use localized button text
+                          style: const TextStyle(
+                            // Keep const for static style
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                          ),
+                        ),
                 ),
               ),
             ],

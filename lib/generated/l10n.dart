@@ -228,6 +228,216 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Forgot Password?'**
   String get forgotPasswordLink;
+
+  /// Main title on the register header
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccountTitle;
+
+  /// Subtitle prompting the user to sign up on the register header
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to get started'**
+  String get signUpToGetStartedSubtitle;
+
+  /// Validation error when phone number is empty on the register form
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your phone number'**
+  String get enterPhoneNumberError;
+
+  /// Validation error for incorrect Rwanda phone number length
+  ///
+  /// In en, this message translates to:
+  /// **'Rwanda phone numbers must be 9 digits'**
+  String get rwandaPhoneNumberLengthError;
+
+  /// Validation error for incorrect Rwanda phone number starting digit
+  ///
+  /// In en, this message translates to:
+  /// **'Rwanda phone numbers must start with 7'**
+  String get rwandaPhoneNumberStartError;
+
+  /// Validation error for phone number less than minimum required length
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must be at least 9 digits'**
+  String get phoneNumberMinLengthError;
+
+  /// Validation error for phone number exceeding maximum allowed length
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number cannot exceed 10 digits'**
+  String get phoneNumberMaxLengthError;
+
+  /// Validation error when password is empty on the register form
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password'**
+  String get enterPasswordError;
+
+  /// Validation error for password less than minimum required length
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long'**
+  String get passwordMinLengthError;
+
+  /// Validation error for password missing uppercase letter
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one uppercase letter'**
+  String get passwordUppercaseError;
+
+  /// Validation error for password missing lowercase letter
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one lowercase letter'**
+  String get passwordLowercaseError;
+
+  /// Validation error for password missing a digit
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one number'**
+  String get passwordDigitError;
+
+  /// Validation error for password missing a special character
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one special character'**
+  String get passwordSpecialCharError;
+
+  /// Validation error when confirm password is empty on the register form
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get confirmPasswordError;
+
+  /// Validation error when confirm password does not match password
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatchError;
+
+  /// Label text for the phone number input section on the register form
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumberLabel;
+
+  /// Hint text for the country search input in the country code picker
+  ///
+  /// In en, this message translates to:
+  /// **'Search country'**
+  String get searchCountryHint;
+
+  /// Hint text for the confirm password input field on the register form
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPasswordHintText;
+
+  /// GraphQL error message for a registered email (status 409)
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already registered. Please use a different email or try logging in.'**
+  String get emailAlreadyRegisteredError;
+
+  /// GraphQL error message for bad request (status 400)
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your information and try again.'**
+  String get checkInformationError;
+
+  /// GraphQL error message for unprocessable entity (status 422)
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid input. Please check your details.'**
+  String get invalidInputError;
+
+  /// Error message for network connection issues
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to connect to the server. Please check your internet connection.'**
+  String get connectionError;
+
+  /// Default generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred. Please try again.'**
+  String get defaultError;
+
+  /// Title for success snackbars
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get successSnackBarTitle;
+
+  /// Title for error snackbars
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get errorSnackBarTitle;
+
+  /// Label for the dismiss action in snackbars
+  ///
+  /// In en, this message translates to:
+  /// **'DISMISS'**
+  String get dismissSnackBarAction;
+
+  /// Default success message after registration
+  ///
+  /// In en, this message translates to:
+  /// **'Registration successful! Please verify your email with the OTP sent.'**
+  String get registrationSuccessDefaultMessage;
+
+  /// Default failure message after registration
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get registrationFailedDefaultMessage;
+
+  /// Generic error message for unexpected authentication issues
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again later.'**
+  String get unexpectedAuthError;
+
+  /// Default failure message after login
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get loginFailedDefaultMessage;
+
+  /// Default success message after resending OTP
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code has been resent successfully.'**
+  String get resendOtpSuccessDefaultMessage;
+
+  /// Default failure message after failing to resend OTP
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to resend verification code. Please try again.'**
+  String get resendOtpFailedDefaultMessage;
+
+  /// Validation error when email address is empty on the forgot password form
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email address'**
+  String get enterEmailError;
+
+  /// Prompt for users who already have an account on the forgot password page
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyRegisteredPrompt;
+
+  /// Text for the login link on the forgot password page
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginLink;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
