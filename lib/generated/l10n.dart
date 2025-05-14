@@ -438,6 +438,102 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Login'**
   String get loginLink;
+
+  /// Error message when email is not found in SharedPreferences during verification
+  ///
+  /// In en, this message translates to:
+  /// **'No email found. Please log in again.'**
+  String get noEmailFoundError;
+
+  /// Error message when the retrieved email is invalid during verification
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email. Please log in again.'**
+  String get invalidEmailVerificationError;
+
+  /// Error message when there's an error retrieving email from SharedPreferences
+  ///
+  /// In en, this message translates to:
+  /// **'Error retrieving email. Please log in again.'**
+  String get errorRetrievingEmailError;
+
+  /// Default error message for GraphQL exceptions during verification
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get verificationGraphQLErrorDefault;
+
+  /// Error message for an invalid response after successful verification
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid login response'**
+  String get invalidLoginResponseError;
+
+  /// Default failure message for verification
+  ///
+  /// In en, this message translates to:
+  /// **'Verification failed'**
+  String get verificationFailedDefault;
+
+  /// Generic error message for unexpected issues during verification
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred: {error}'**
+  String unexpectedVerificationError(Object error);
+
+  /// Validation error when OTP field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the OTP'**
+  String get enterOtpError;
+
+  /// Validation error for incorrect OTP length
+  ///
+  /// In en, this message translates to:
+  /// **'OTP must be 6 digits'**
+  String get otpLengthError;
+
+  /// Validation error when OTP contains non-numeric characters
+  ///
+  /// In en, this message translates to:
+  /// **'OTP must contain only numbers'**
+  String get otpNumbersOnlyError;
+
+  /// Title of the Verify OTP page
+  ///
+  /// In en, this message translates to:
+  /// **'Verify OTP'**
+  String get verifyOtpTitle;
+
+  /// Message prompting the user to enter the OTP, includes masked email
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the verification code sent to\n{maskedEmail}'**
+  String enterOtpMessage(Object maskedEmail);
+
+  /// Hint text for the OTP input field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 6-digit OTP'**
+  String get otpHintText;
+
+  /// Text for the Verify Code button
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Code'**
+  String get verifyCodeButton;
+
+  /// Prompt asking if the user didn't receive the OTP
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t receive the code? '**
+  String get didNotReceiveCodePrompt;
+
+  /// Text for the Resend OTP link
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get resendLink;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

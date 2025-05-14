@@ -231,5 +231,69 @@
     "loginLink": "Se connecter",
     "@loginLink": {
         "description": "Text for the login link on the register page"
+    },
+    "noEmailFoundError": "Aucune adresse email trouvée. Veuillez vous reconnecter.",
+    "@noEmailFoundError": {
+        "description": "Error message when no email is found"
+    },
+    "invalidEmailVerificationError": "Adresse email invalide. Veuillez vous reconnecter.",
+    "@invalidEmailVerificationError": {
+        "description": "Error message for invalid email verification"
+    },
+    "errorRetrievingEmailError": "Erreur lors de la récupération de l'adresse email. Veuillez vous reconnecter.",
+    "@errorRetrievingEmailError": {
+        "description": "Error message when retrieving email fails"
+    },
+    "verificationGraphQLErrorDefault": "Une erreur s'est produite",
+    "@verificationGraphQLErrorDefault": {
+        "description": "Default error message for GraphQL verification issues"
+    },
+    "invalidLoginResponseError": "Réponse de connexion invalide",
+    "@invalidLoginResponseError": {
+        "description": "Error message for invalid login response"
+    },
+    "verificationFailedDefault": "Échec de la vérification",
+    "@verificationFailedDefault": {
+        "description": "Default message for verification failure"
+    },
+    "unexpectedVerificationError": "Une erreur inattendue s'est produite : {error}",
+    "@unexpectedVerificationError": {
+        "description": "Error message for unexpected verification issues"
+    },
+    "enterOtpError": "Veuillez saisir l'OTP",
+    "@enterOtpError": {
+        "description": "Error message when the OTP field is empty"
+    },
+    "otpLengthError": "L'OTP doit comporter 6 chiffres",
+    "@otpLengthError": {
+        "description": "Error message for OTP length not equal to 6"
+    },
+    "otpNumbersOnlyError": "L'OTP doit contenir uniquement des chiffres",
+    "@otpNumbersOnlyError": {
+        "description": "Error message for OTP containing non-numeric characters"
+    },
+    "verifyOtpTitle": "Vérifier l'OTP",
+    "@verifyOtpTitle": {
+        "description": "Title for the OTP verification screen"
+    },
+    "enterOtpMessage": "Saisissez le code de vérification envoyé à\n{maskedEmail}",
+    "@enterOtpMessage": {
+        "description": "Message prompting the user to enter the OTP sent to their email"
+    },
+    "otpHintText": "Saisissez l'OTP à 6 chiffres",
+    "@otpHintText": {
+        "description": "Hint text for the OTP input field"
+    },
+    "verifyCodeButton": "Vérifier le code",
+    "@verifyCodeButton": {
+        "description": "Text for the button to verify the OTP"
+    },
+    "didNotReceiveCodePrompt": "Vous n'avez pas reçu le code ?",
+    "@didNotReceiveCodePrompt": {
+        "description": "Prompt for users who did not receive the OTP"
+    },
+    "resendLink": "Renvoyer",
+    "@resendLink": {
+        "description": "Text for the resend link for the OTP"
     }
 }

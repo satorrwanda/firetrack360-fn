@@ -176,4 +176,56 @@ class SRw extends S {
 
   @override
   String get loginLink => 'Injira';
+
+  @override
+  String get noEmailFoundError => 'Nta imeyili yabonetse. Nyamuneka ongera winjire.';
+
+  @override
+  String get invalidEmailVerificationError => 'Imeyili ntiyemewe. Nyamuneka ongera winjire.';
+
+  @override
+  String get errorRetrievingEmailError => 'Ikibazo mu gushaka imeyili. Nyamuneka ongera winjire.';
+
+  @override
+  String get verificationGraphQLErrorDefault => 'Habayeho ikibazo';
+
+  @override
+  String get invalidLoginResponseError => 'Igisubizo cyo kwinjira nticikozeneza';
+
+  @override
+  String get verificationFailedDefault => 'Gushimangira byaranze';
+
+  @override
+  String unexpectedVerificationError(Object error) {
+    return 'Habayeho ikibazo kitari giteganijwe: $error';
+  }
+
+  @override
+  String get enterOtpError => 'Nyamuneka andika OTP';
+
+  @override
+  String get otpLengthError => 'OTP igomba kugira imibare 6';
+
+  @override
+  String get otpNumbersOnlyError => 'OTP igomba kugira imibare gusa';
+
+  @override
+  String get verifyOtpTitle => 'Shimangira OTP';
+
+  @override
+  String enterOtpMessage(Object maskedEmail) {
+    return 'Andika kode yo gushimangira yoherejwe kuri\n$maskedEmail';
+  }
+
+  @override
+  String get otpHintText => 'Andika OTP y\'imibare 6';
+
+  @override
+  String get verifyCodeButton => 'Shimangira Kode';
+
+  @override
+  String get didNotReceiveCodePrompt => 'Ntabwo wakiriye kode?';
+
+  @override
+  String get resendLink => 'Ongera wohereze';
 }

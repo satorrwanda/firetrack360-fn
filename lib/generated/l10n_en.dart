@@ -176,4 +176,56 @@ class SEn extends S {
 
   @override
   String get loginLink => 'Login';
+
+  @override
+  String get noEmailFoundError => 'No email found. Please log in again.';
+
+  @override
+  String get invalidEmailVerificationError => 'Invalid email. Please log in again.';
+
+  @override
+  String get errorRetrievingEmailError => 'Error retrieving email. Please log in again.';
+
+  @override
+  String get verificationGraphQLErrorDefault => 'An error occurred';
+
+  @override
+  String get invalidLoginResponseError => 'Invalid login response';
+
+  @override
+  String get verificationFailedDefault => 'Verification failed';
+
+  @override
+  String unexpectedVerificationError(Object error) {
+    return 'An unexpected error occurred: $error';
+  }
+
+  @override
+  String get enterOtpError => 'Please enter the OTP';
+
+  @override
+  String get otpLengthError => 'OTP must be 6 digits';
+
+  @override
+  String get otpNumbersOnlyError => 'OTP must contain only numbers';
+
+  @override
+  String get verifyOtpTitle => 'Verify OTP';
+
+  @override
+  String enterOtpMessage(Object maskedEmail) {
+    return 'Enter the verification code sent to\n$maskedEmail';
+  }
+
+  @override
+  String get otpHintText => 'Enter 6-digit OTP';
+
+  @override
+  String get verifyCodeButton => 'Verify Code';
+
+  @override
+  String get didNotReceiveCodePrompt => 'Didn\'t receive the code? ';
+
+  @override
+  String get resendLink => 'Resend';
 }

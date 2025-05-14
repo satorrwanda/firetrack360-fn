@@ -176,4 +176,56 @@ class SFr extends S {
 
   @override
   String get loginLink => 'Se connecter';
+
+  @override
+  String get noEmailFoundError => 'Aucune adresse email trouvée. Veuillez vous reconnecter.';
+
+  @override
+  String get invalidEmailVerificationError => 'Adresse email invalide. Veuillez vous reconnecter.';
+
+  @override
+  String get errorRetrievingEmailError => 'Erreur lors de la récupération de l\'adresse email. Veuillez vous reconnecter.';
+
+  @override
+  String get verificationGraphQLErrorDefault => 'Une erreur s\'est produite';
+
+  @override
+  String get invalidLoginResponseError => 'Réponse de connexion invalide';
+
+  @override
+  String get verificationFailedDefault => 'Échec de la vérification';
+
+  @override
+  String unexpectedVerificationError(Object error) {
+    return 'Une erreur inattendue s\'est produite : $error';
+  }
+
+  @override
+  String get enterOtpError => 'Veuillez saisir l\'OTP';
+
+  @override
+  String get otpLengthError => 'L\'OTP doit comporter 6 chiffres';
+
+  @override
+  String get otpNumbersOnlyError => 'L\'OTP doit contenir uniquement des chiffres';
+
+  @override
+  String get verifyOtpTitle => 'Vérifier l\'OTP';
+
+  @override
+  String enterOtpMessage(Object maskedEmail) {
+    return 'Saisissez le code de vérification envoyé à\n$maskedEmail';
+  }
+
+  @override
+  String get otpHintText => 'Saisissez l\'OTP à 6 chiffres';
+
+  @override
+  String get verifyCodeButton => 'Vérifier le code';
+
+  @override
+  String get didNotReceiveCodePrompt => 'Vous n\'avez pas reçu le code ?';
+
+  @override
+  String get resendLink => 'Renvoyer';
 }
