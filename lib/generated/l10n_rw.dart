@@ -100,16 +100,7 @@ class SRw extends S {
   String get passwordMinLengthError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti 8';
 
   @override
-  String get passwordUppercaseError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti nkuru imwe';
-
-  @override
-  String get passwordLowercaseError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti nto imwe';
-
-  @override
   String get passwordDigitError => 'Ijambo ry\'ibanga rigomba kugira byibura umubare umwe';
-
-  @override
-  String get passwordSpecialCharError => 'Ijambo ry\'ibanga rigomba kugira byibura akamenyetso kamwe kidasanzwe';
 
   @override
   String get confirmPasswordError => 'Emeza ijambo ry\'ibanga';
@@ -245,11 +236,50 @@ class SRw extends S {
   String get passwordResetOtpSentMessage => 'OTP yo gusubiza ijambo ry\'ibanga yoherejwe kuri imeyili yawe.';
 
   @override
-  String get resetPasswordButton => 'Ohereza';
-
-  @override
   String get rememberPasswordPrompt => 'Wibuka ijambo ry\'ibanga ryawe?';
 
   @override
   String get signInLink => 'Injira';
+
+  @override
+  String get resetPasswordTitle => 'Ongera ushyireho ijambo ry\'ibanga';
+
+  @override
+  String get resetPasswordSubtitle => 'Injiza ijambo ry\'ibanga rishya';
+
+  @override
+  String get newPasswordHint => 'Ijambo ry\'ibanga rishya';
+
+  @override
+  String get confirmPasswordHint => 'Emeza ijambo ry\'ibanga';
+
+  @override
+  String get resetPasswordButton => 'Ohereza';
+
+  @override
+  String get passwordRequired => 'Nyamuneka andika ijambo ry\'ibanga';
+
+  @override
+  String get passwordLengthError => 'Ijambo ry\'ibanga rigomba kuba rirenze inyuguti 8';
+
+  @override
+  String get passwordUppercaseError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti nkuru imwe';
+
+  @override
+  String get passwordLowercaseError => 'Ijambo ry\'ibanga rigomba kugira byibura inyuguti nto imwe';
+
+  @override
+  String get passwordNumberError => 'Ijambo ry\'ibanga rigomba kugira umubare';
+
+  @override
+  String get passwordSpecialCharError => 'Ijambo ry\'ibanga rigomba kugira byibura akamenyetso kamwe kidasanzwe';
+
+  @override
+  String get passwordMismatchError => 'Amajambo y\'ibanga ntiyemewe';
+
+  @override
+  String get passwordResetSuccess => 'Ijambo ry\'ibanga ryawe ryongeweho neza';
+
+  @override
+  String get genericError => 'An error occurred';
 }

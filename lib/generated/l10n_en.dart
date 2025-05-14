@@ -100,16 +100,7 @@ class SEn extends S {
   String get passwordMinLengthError => 'Password must be at least 8 characters long';
 
   @override
-  String get passwordUppercaseError => 'Password must contain at least one uppercase letter';
-
-  @override
-  String get passwordLowercaseError => 'Password must contain at least one lowercase letter';
-
-  @override
   String get passwordDigitError => 'Password must contain at least one number';
-
-  @override
-  String get passwordSpecialCharError => 'Password must contain at least one special character';
 
   @override
   String get confirmPasswordError => 'Please confirm your password';
@@ -245,11 +236,50 @@ class SEn extends S {
   String get passwordResetOtpSentMessage => 'OTP to reset password has been sent to your email.';
 
   @override
-  String get resetPasswordButton => 'Reset Password';
-
-  @override
   String get rememberPasswordPrompt => 'Remember your password?';
 
   @override
   String get signInLink => 'Sign In';
+
+  @override
+  String get resetPasswordTitle => 'Reset Password';
+
+  @override
+  String get resetPasswordSubtitle => 'Enter your new password';
+
+  @override
+  String get newPasswordHint => 'New Password';
+
+  @override
+  String get confirmPasswordHint => 'Confirm Password';
+
+  @override
+  String get resetPasswordButton => 'Reset Password';
+
+  @override
+  String get passwordRequired => 'Please enter a password';
+
+  @override
+  String get passwordLengthError => 'Password must be at least 8 characters long';
+
+  @override
+  String get passwordUppercaseError => 'Password must contain at least one uppercase letter';
+
+  @override
+  String get passwordLowercaseError => 'Password must contain at least one lowercase letter';
+
+  @override
+  String get passwordNumberError => 'Password must contain at least one number';
+
+  @override
+  String get passwordSpecialCharError => 'Password must contain at least one special character';
+
+  @override
+  String get passwordMismatchError => 'Passwords do not match';
+
+  @override
+  String get passwordResetSuccess => 'Your password has been reset successfully';
+
+  @override
+  String get genericError => 'An error occurred';
 }

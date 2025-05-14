@@ -100,16 +100,7 @@ class SFr extends S {
   String get passwordMinLengthError => 'Le mot de passe doit comporter au moins 8 caractères';
 
   @override
-  String get passwordUppercaseError => 'Le mot de passe doit contenir au moins une majuscule';
-
-  @override
-  String get passwordLowercaseError => 'Le mot de passe doit contenir au moins une minuscule';
-
-  @override
   String get passwordDigitError => 'Le mot de passe doit contenir au moins un chiffre';
-
-  @override
-  String get passwordSpecialCharError => 'Le mot de passe doit contenir au moins un caractère spécial';
 
   @override
   String get confirmPasswordError => 'Veuillez confirmer votre mot de passe';
@@ -245,11 +236,50 @@ class SFr extends S {
   String get passwordResetOtpSentMessage => 'L\'OTP pour réinitialiser le mot de passe a été envoyé à votre adresse email.';
 
   @override
-  String get resetPasswordButton => 'Réinitialiser le mot de passe';
-
-  @override
   String get rememberPasswordPrompt => 'Vous vous souvenez de votre mot de passe ?';
 
   @override
   String get signInLink => 'Se connecter';
+
+  @override
+  String get resetPasswordTitle => 'Réinitialiser le mot de passe';
+
+  @override
+  String get resetPasswordSubtitle => 'Entrez votre nouveau mot de passe';
+
+  @override
+  String get newPasswordHint => 'Nouveau mot de passe';
+
+  @override
+  String get confirmPasswordHint => 'Confirmer le mot de passe';
+
+  @override
+  String get resetPasswordButton => 'Réinitialiser le mot de passe';
+
+  @override
+  String get passwordRequired => 'Veuillez entrer un mot de passe';
+
+  @override
+  String get passwordLengthError => 'Le mot de passe doit contenir au moins 8 caractères';
+
+  @override
+  String get passwordUppercaseError => 'Le mot de passe doit contenir au moins une majuscule';
+
+  @override
+  String get passwordLowercaseError => 'Le mot de passe doit contenir au moins une minuscule';
+
+  @override
+  String get passwordNumberError => 'Le mot de passe doit contenir au moins un chiffre';
+
+  @override
+  String get passwordSpecialCharError => 'Le mot de passe doit contenir au moins un caractère spécial';
+
+  @override
+  String get passwordMismatchError => 'Les mots de passe ne correspondent pas';
+
+  @override
+  String get passwordResetSuccess => 'Votre mot de passe a été réinitialisé avec succès';
+
+  @override
+  String get genericError => 'Une erreur s\'est produite';
 }

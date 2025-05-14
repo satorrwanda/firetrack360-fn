@@ -123,22 +123,10 @@
     "passwordMinLengthError": "Password must be at least 8 characters long",
     "@passwordMinLengthError": {
         "description": "Validation error for password less than minimum required length"
-    },
-    "passwordUppercaseError": "Password must contain at least one uppercase letter",
-    "@passwordUppercaseError": {
-        "description": "Validation error for password missing uppercase letter"
-    },
-    "passwordLowercaseError": "Password must contain at least one lowercase letter",
-    "@passwordLowercaseError": {
-        "description": "Validation error for password missing lowercase letter"
-    },
+    },  
     "passwordDigitError": "Password must contain at least one number",
     "@passwordDigitError": {
         "description": "Validation error for password missing a digit"
-    },
-    "passwordSpecialCharError": "Password must contain at least one special character",
-    "@passwordSpecialCharError": {
-        "description": "Validation error for password missing a special character"
     },
     "confirmPasswordError": "Please confirm your password",
     "@confirmPasswordError": {
@@ -318,10 +306,6 @@
     "@passwordResetOtpSentMessage": {
         "description": "Success message after sending password reset OTP"
     },
-    "resetPasswordButton": "Reset Password",
-    "@resetPasswordButton": {
-        "description": "Text for the Reset Password button"
-    },
     "rememberPasswordPrompt": "Remember your password?",
     "@rememberPasswordPrompt": {
         "description": "Prompt for users who remember their password on the forget password page"
@@ -329,5 +313,61 @@
     "signInLink": "Sign In",
     "@signInLink": {
         "description": "Text for the Sign In link on the forget password page"
+    },
+    "resetPasswordTitle": "Reset Password",
+    "@resetPasswordTitle": {
+        "description": "Title for the reset password page"
+    },
+    "resetPasswordSubtitle": "Enter your new password",
+    "@resetPasswordSubtitle": {
+        "description": "Subtitle instruction on reset password page"
+    },
+    "newPasswordHint": "New Password",
+    "@newPasswordHint": {
+        "description": "Hint text for new password field"
+    },
+    "confirmPasswordHint": "Confirm Password",
+    "@confirmPasswordHint": {
+        "description": "Hint text for confirm password field"
+    },
+    "resetPasswordButton": "Reset Password",
+    "@resetPasswordButton": {
+        "description": "Text for reset password button"
+    },
+    "passwordRequired": "Please enter a password",
+    "@passwordRequired": {
+        "description": "Error when password field is empty"
+    },
+    "passwordLengthError": "Password must be at least 8 characters long",
+    "@passwordLengthError": {
+        "description": "Error when password is too short"
+    },
+    "passwordUppercaseError": "Password must contain at least one uppercase letter",
+    "@passwordUppercaseError": {
+        "description": "Error when password lacks uppercase letter"
+    },
+    "passwordLowercaseError": "Password must contain at least one lowercase letter",
+    "@passwordLowercaseError": {
+        "description": "Error when password lacks lowercase letter"
+    },
+    "passwordNumberError": "Password must contain at least one number",
+    "@passwordNumberError": {
+        "description": "Error when password lacks number"
+    },
+    "passwordSpecialCharError": "Password must contain at least one special character",
+    "@passwordSpecialCharError": {
+        "description": "Error when password lacks special character"
+    },
+    "passwordMismatchError": "Passwords do not match",
+    "@passwordMismatchError": {
+        "description": "Error when passwords don't match"
+    },
+    "passwordResetSuccess": "Your password has been reset successfully",
+    "@passwordResetSuccess": {
+        "description": "Success message after password reset"
+    },
+    "genericError": "An error occurred",
+    "@genericError": {
+        "description": "Generic error message"
     }
 }

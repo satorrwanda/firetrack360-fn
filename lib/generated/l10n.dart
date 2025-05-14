@@ -283,29 +283,11 @@ abstract class S {
   /// **'Password must be at least 8 characters long'**
   String get passwordMinLengthError;
 
-  /// Validation error for password missing uppercase letter
-  ///
-  /// In en, this message translates to:
-  /// **'Password must contain at least one uppercase letter'**
-  String get passwordUppercaseError;
-
-  /// Validation error for password missing lowercase letter
-  ///
-  /// In en, this message translates to:
-  /// **'Password must contain at least one lowercase letter'**
-  String get passwordLowercaseError;
-
   /// Validation error for password missing a digit
   ///
   /// In en, this message translates to:
   /// **'Password must contain at least one number'**
   String get passwordDigitError;
-
-  /// Validation error for password missing a special character
-  ///
-  /// In en, this message translates to:
-  /// **'Password must contain at least one special character'**
-  String get passwordSpecialCharError;
 
   /// Validation error when confirm password is empty on the register form
   ///
@@ -565,12 +547,6 @@ abstract class S {
   /// **'OTP to reset password has been sent to your email.'**
   String get passwordResetOtpSentMessage;
 
-  /// Text for the Reset Password button
-  ///
-  /// In en, this message translates to:
-  /// **'Reset Password'**
-  String get resetPasswordButton;
-
   /// Prompt for users who remember their password on the forget password page
   ///
   /// In en, this message translates to:
@@ -582,6 +558,90 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Sign In'**
   String get signInLink;
+
+  /// Title for the reset password page
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordTitle;
+
+  /// Subtitle instruction on reset password page
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password'**
+  String get resetPasswordSubtitle;
+
+  /// Hint text for new password field
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPasswordHint;
+
+  /// Hint text for confirm password field
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPasswordHint;
+
+  /// Text for reset password button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordButton;
+
+  /// Error when password field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password'**
+  String get passwordRequired;
+
+  /// Error when password is too short
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long'**
+  String get passwordLengthError;
+
+  /// Error when password lacks uppercase letter
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one uppercase letter'**
+  String get passwordUppercaseError;
+
+  /// Error when password lacks lowercase letter
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one lowercase letter'**
+  String get passwordLowercaseError;
+
+  /// Error when password lacks number
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one number'**
+  String get passwordNumberError;
+
+  /// Error when password lacks special character
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one special character'**
+  String get passwordSpecialCharError;
+
+  /// Error when passwords don't match
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordMismatchError;
+
+  /// Success message after password reset
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been reset successfully'**
+  String get passwordResetSuccess;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get genericError;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

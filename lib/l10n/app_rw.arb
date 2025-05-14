@@ -329,5 +329,41 @@
     "signInLink": "Injira",
     "@signInLink": {
         "description": "Text for the sign in link on the Forgot Password page"
+    },
+    "resetPasswordTitle": "Ongera ushyireho ijambo ry'ibanga",
+    "@resetPasswordTitle": {
+        "description": "Main title on the Reset Password header"
+    },
+    "resetPasswordSubtitle": "Injiza ijambo ry'ibanga rishya",
+    "@resetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter a new password"
+    },
+    "newPasswordHint": "Ijambo ry'ibanga rishya",
+    "@newPasswordHint": {
+        "description": "Hint text for the new password input field"
+    },
+    "confirmPasswordHint": "Emeza ijambo ry'ibanga",
+    "@confirmPasswordHint": {
+        "description": "Hint text for the confirm password input field"
+    },
+    "passwordRequired": "Nyamuneka andika ijambo ry'ibanga",
+    "@passwordRequired": {
+        "description": "Error message when the password field is empty"
+    },
+    "passwordLengthError": "Ijambo ry'ibanga rigomba kuba rirenze inyuguti 8",
+    "@passwordLengthError": {
+        "description": "Error message for passwords that are less than 8 characters long"
+    },
+    "passwordNumberError": "Ijambo ry'ibanga rigomba kugira umubare",
+    "@passwordNumberError": {
+        "description": "Error message for passwords that do not contain a number"
+    },
+    "passwordMismatchError": "Amajambo y'ibanga ntiyemewe",
+    "@passwordMismatchError": {
+        "description": "Error message when the passwords do not match"
+    },
+    "passwordResetSuccess": "Ijambo ry'ibanga ryawe ryongeweho neza",
+    "@passwordResetSuccess": {
+        "description": "Message indicating that the password has been successfully reset"
     }
 }

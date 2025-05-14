@@ -1,4 +1,5 @@
 import 'package:firetrack360/graphql/mutations/auth_mutations.dart';
+import 'package:firetrack360/generated/l10n.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -36,23 +37,24 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   String? _validatePassword(String? value) {
+    final l10n = S.of(context);
     if (value == null || value.isEmpty) {
-      return 'Please enter a password';
+      return l10n.passwordRequired;
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return l10n.passwordLengthError;
     }
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+      return l10n.passwordUppercaseError;
     }
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
+      return l10n.passwordLowercaseError;
     }
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number';
+      return l10n.passwordNumberError;
     }
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
+      return l10n.passwordSpecialCharError;
     }
     return null;
   }
@@ -84,14 +86,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
       if (result.hasException) {
         _showErrorSnackBar(result.exception?.graphqlErrors.first.message ??
-            'An error occurred');
+            S.of(context).genericError);
       } else {
         _showSuccessSnackBar();
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        _showErrorSnackBar('An unexpected error occurred');
+        _showErrorSnackBar(S.of(context).unexpectedError);
       }
     }
   }
@@ -106,12 +108,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   void _showSuccessSnackBar() {
+    final l10n = S.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Your password has been reset successfully.'),
+        content: Text(l10n.passwordResetSuccess),
         backgroundColor: Colors.green,
         action: SnackBarAction(
-          label: 'Sign In',
+          label: l10n.login,
           onPressed: () {
             Navigator.of(context).pop();
             AppRoutes.navigateToLogin(context);
@@ -124,6 +127,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context);
+
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
@@ -142,20 +147,20 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 40),
-                const Text(
-                  'Reset Password',
+                Text(
+                  l10n.resetPasswordTitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Enter your new password',
+                Text(
+                  l10n.resetPasswordSubtitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white70,
                   ),
@@ -184,7 +189,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           controller: _passwordController,
                           obscureText: _obscurePassword,
                           decoration: InputDecoration(
-                            hintText: 'New Password',
+                            hintText: l10n.newPasswordHint,
                             prefixIcon: const Icon(Icons.lock_outline,
                                 color: Colors.deepPurple),
                             suffixIcon: IconButton(
@@ -214,7 +219,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           controller: _confirmPasswordController,
                           obscureText: _obscureConfirmPassword,
                           decoration: InputDecoration(
-                            hintText: 'Confirm Password',
+                            hintText: l10n.confirmPasswordHint,
                             prefixIcon: const Icon(Icons.lock_outline,
                                 color: Colors.deepPurple),
                             suffixIcon: IconButton(
@@ -240,7 +245,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           ),
                           validator: (value) {
                             if (value != _passwordController.text) {
-                              return 'Passwords do not match';
+                              return l10n.passwordMismatchError;
                             }
                             return null;
                           },
@@ -263,7 +268,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                                     color: Colors.white,
                                     strokeWidth: 2,
                                   )
-                                : const Text('Reset Password'),
+                                : Text(l10n.resetPasswordButton),
                           ),
                         ),
                       ],

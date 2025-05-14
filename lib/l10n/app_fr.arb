@@ -327,5 +327,47 @@
     "signInLink": "Se connecter",
     "@signInLink": {
         "description": "Text for the sign in link on the Forgot Password page"
+    },
+    
+    "resetPasswordTitle": "Réinitialiser le mot de passe",
+    "@resetPasswordTitle": {
+        "description": "Main title on the Reset Password header"
+    },
+    "resetPasswordSubtitle": "Entrez votre nouveau mot de passe",
+    "@resetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter a new password"
+    },
+    "newPasswordHint": "Nouveau mot de passe",
+    "@newPasswordHint": {
+        "description": "Hint text for the new password input field"
+    },
+    "confirmPasswordHint": "Confirmer le mot de passe",
+    "@confirmPasswordHint": {
+        "description": "Hint text for the confirm password input field"
+    },
+    "passwordRequired": "Veuillez entrer un mot de passe",
+    "@passwordRequired": {
+        "description": "Error message when the password field is empty"
+    },
+    "passwordLengthError": "Le mot de passe doit contenir au moins 8 caractères",
+    "@passwordLengthError": {
+        "description": "Error message for password less than minimum required length"
+    },
+    "passwordNumberError": "Le mot de passe doit contenir au moins un chiffre",
+    "@passwordNumberError": {
+        "description": "Error message for password missing a digit"
+    },
+    "passwordMismatchError": "Les mots de passe ne correspondent pas",
+    "@passwordMismatchError": {
+        "description": "Error message when the passwords do not match"
+    },
+    "passwordResetSuccess": "Votre mot de passe a été réinitialisé avec succès",
+    "@passwordResetSuccess": {
+        "description": "Message indicating that the password has been reset successfully"
+    },
+    "genericError": "Une erreur s'est produite",
+    "@genericError": {
+        "description": "Generic error message for various issues"
     }
+    
 }
