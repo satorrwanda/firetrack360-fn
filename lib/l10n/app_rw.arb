@@ -365,5 +365,17 @@
     "passwordResetSuccess": "Ijambo ry'ibanga ryawe ryongeweho neza",
     "@passwordResetSuccess": {
         "description": "Message indicating that the password has been successfully reset"
+    },
+    "termsAndConditionsText": "Amategeko n'Amabwiriza",
+    "@termsAndConditionsText": {
+        "description": "Text for the Terms and Conditions link"
+    },
+    "termsPageTitle": "Amategeko n'Amabwiriza",
+    "@termsPageTitle": {
+        "description": "Title for the Terms and Conditions page"
+    },
+    "errorLoadingTerms": "Ikibazo mu gukurura amategeko n'amabwiriza",
+    "@errorLoadingTerms": {
+        "description": "Error message when loading the Terms and Conditions page"
     }
 }

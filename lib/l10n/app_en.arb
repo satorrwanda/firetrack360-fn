@@ -369,5 +369,17 @@
     "genericError": "An error occurred",
     "@genericError": {
         "description": "Generic error message"
+    },
+    "termsAndConditionsText": "By using this app, you agree to our Terms and Conditions",
+    "@termsAndConditionsText": {
+        "description": "Text for terms and conditions agreement"
+    },
+    "termsPageTitle": "Terms and Conditions",
+    "@termsPageTitle": {
+        "description": "Title for the Terms and Conditions page"
+    },
+    "errorLoadingTerms": "Error loading terms and conditions. Please try again.",
+    "@errorLoadingTerms": {
+        "description": "Error message when loading terms and conditions fails"
     }
 }

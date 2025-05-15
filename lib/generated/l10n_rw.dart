@@ -282,4 +282,13 @@ class SRw extends S {
 
   @override
   String get genericError => 'An error occurred';
+
+  @override
+  String get termsAndConditionsText => 'Amategeko n\'Amabwiriza';
+
+  @override
+  String get termsPageTitle => 'Amategeko n\'Amabwiriza';
+
+  @override
+  String get errorLoadingTerms => 'Ikibazo mu gukurura amategeko n\'amabwiriza';
 }

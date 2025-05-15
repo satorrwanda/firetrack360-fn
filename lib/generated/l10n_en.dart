@@ -282,4 +282,13 @@ class SEn extends S {
 
   @override
   String get genericError => 'An error occurred';
+
+  @override
+  String get termsAndConditionsText => 'By using this app, you agree to our Terms and Conditions';
+
+  @override
+  String get termsPageTitle => 'Terms and Conditions';
+
+  @override
+  String get errorLoadingTerms => 'Error loading terms and conditions. Please try again.';
 }

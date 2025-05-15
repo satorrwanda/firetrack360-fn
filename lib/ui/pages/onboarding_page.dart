@@ -9,15 +9,22 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OnboardingPage extends HookConsumerWidget {
-  // Changed to ConsumerHookWidget
   const OnboardingPage({Key? key}) : super(key: key);
+
+  // Helper function to launch URL
+  Future<void> _launchURL(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    } else {
+      debugPrint('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Added WidgetRef ref
-    // Watch the localeProvider here to trigger rebuilds
     ref.watch(localeProvider);
 
     final l10n = S.of(context)!;
@@ -26,20 +33,18 @@ class OnboardingPage extends HookConsumerWidget {
     final isMounted = useIsMounted();
     final timerRef = useRef<Timer?>(null);
 
-    // Keep this list for image paths
     final onboardingImages = [
       'assets/images/onboarding1.jpg',
       'assets/images/onboarding2.jpg',
       'assets/images/onboarding3.jpg',
     ];
 
-    // Auto-slide setup
     void startAutoSlide() {
       timerRef.value?.cancel();
       timerRef.value = Timer.periodic(const Duration(seconds: 3), (timer) {
         if (!isMounted()) return timer.cancel();
-        final next = ((pageController.page ?? 0).toInt() + 1) %
-            onboardingImages.length; // Use onboardingImages.length
+        final next =
+            ((pageController.page ?? 0).toInt() + 1) % onboardingImages.length;
         pageController.animateToPage(
           next,
           duration: const Duration(milliseconds: 300),
@@ -48,7 +53,6 @@ class OnboardingPage extends HookConsumerWidget {
       });
     }
 
-    // Handle onboarding check
     Future<void> checkOnboardingStatus() async {
       if (!isMounted()) return;
       final prefs = await SharedPreferences.getInstance();
@@ -59,7 +63,6 @@ class OnboardingPage extends HookConsumerWidget {
       }
     }
 
-    // Trigger setup and cleanup
     useEffect(() {
       checkOnboardingStatus();
       startAutoSlide();
@@ -69,7 +72,6 @@ class OnboardingPage extends HookConsumerWidget {
       };
     }, []);
 
-    // Handle user navigation
     Future<void> handleNavigation(bool toLogin) async {
       if (!isMounted()) return;
       try {
@@ -108,8 +110,7 @@ class OnboardingPage extends HookConsumerWidget {
                 children: [
                   PageIndicator(
                     currentPage: currentPage.value,
-                    pageCount:
-                        onboardingImages.length, // Use onboardingImages.length
+                    pageCount: onboardingImages.length,
                     onPageSelect: (index) {
                       if (isMounted()) {
                         pageController.animateToPage(
@@ -123,11 +124,10 @@ class OnboardingPage extends HookConsumerWidget {
                   Expanded(
                     child: PageView.builder(
                       controller: pageController,
-                      itemCount: onboardingImages
-                          .length, // Use onboardingImages.length
+                      itemCount: onboardingImages.length,
                       onPageChanged: (index) => currentPage.value = index,
                       itemBuilder: (_, index) => OnboardingItem(
-                        index: index, // Pass the index
+                        index: index,
                         screenWidth: MediaQuery.of(context).size.width,
                       ),
                     ),
@@ -135,6 +135,26 @@ class OnboardingPage extends HookConsumerWidget {
                   OnboardingButtons(
                     onRegister: () => handleNavigation(false),
                     onLogin: () => handleNavigation(true),
+                  ),
+                  // Add the Terms and Conditions link here
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 20.0), 
+                    child: TextButton(
+                      onPressed: () {
+                        AppRoutes.navigateToTerms(context);
+                      },
+                      child: Text(
+                        l10n.termsAndConditionsText, 
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white70,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
