@@ -9,6 +9,7 @@ export 'package:firetrack360/ui/pages/auth/pages/unknown_route_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/verify_login_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/verify_password_reset_page.dart';
 export 'package:firetrack360/ui/pages/onboarding_page.dart';
+export 'package:firetrack360/ui/pages/terms/terms_page.dart';
 
 // Main pages
 export 'package:firetrack360/ui/pages/home/home_page.dart';

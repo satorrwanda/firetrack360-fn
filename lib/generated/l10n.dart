@@ -642,6 +642,24 @@ abstract class S {
   /// In en, this message translates to:
   /// **'An error occurred'**
   String get genericError;
+
+  /// Text for terms and conditions agreement
+  ///
+  /// In en, this message translates to:
+  /// **'By using this app, you agree to our Terms and Conditions'**
+  String get termsAndConditionsText;
+
+  /// Title for the Terms and Conditions page
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions'**
+  String get termsPageTitle;
+
+  /// Error message when loading terms and conditions fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading terms and conditions. Please try again.'**
+  String get errorLoadingTerms;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

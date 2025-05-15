@@ -328,7 +328,6 @@
     "@signInLink": {
         "description": "Text for the sign in link on the Forgot Password page"
     },
-    
     "resetPasswordTitle": "Réinitialiser le mot de passe",
     "@resetPasswordTitle": {
         "description": "Main title on the Reset Password header"
@@ -368,6 +367,21 @@
     "genericError": "Une erreur s'est produite",
     "@genericError": {
         "description": "Generic error message for various issues"
+    },
+    "termsAndConditionsText": "En vous inscrivant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
+    "@termsAndConditionsText": {
+        "description": "Text for terms and conditions agreement during registration"
+    },
+    "termsAndConditionsLink": "Conditions d'utilisation",
+    "@termsAndConditionsLink": {
+        "description": "Text for the terms and conditions link"
+    },
+    "termsPageTitle": "Conditions d'utilisation",
+    "@termsPageTitle": {
+        "description": "Title for the terms and conditions page"
+    },
+    "errorLoadingTerms": "Erreur lors du chargement des conditions d'utilisation",
+    "@errorLoadingTerms": {
+        "description": "Error message when loading terms and conditions"
     }
-    
 }

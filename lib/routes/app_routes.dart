@@ -14,6 +14,7 @@ class AppRoutes {
   static const String verifyLogin = '/verify-login';
   static const String verifyPasswordReset = '/verify-password-reset';
   static const String resetPassword = '/reset-password';
+  static const String terms = '/terms';
 
   // Main App Routes
   static const String home = '/home';
@@ -90,6 +91,7 @@ class AppRoutes {
       // common routes
       settings: (_) => const SettingsScreen(),
       notification: (_) => const NotificationPage(),
+      terms: (_) => const TermsPage(),
     };
   }
 
@@ -249,6 +251,10 @@ class AppRoutes {
   // common routes
   static void navigateToSettings(BuildContext context) {
     Navigator.of(context).pushNamed(settings);
+  }
+
+  static void navigateToTerms(BuildContext context) {
+    Navigator.of(context).pushNamed(terms);
   }
 
   static void navigateToNotification(BuildContext context) {

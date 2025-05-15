@@ -282,4 +282,13 @@ class SFr extends S {
 
   @override
   String get genericError => 'Une erreur s\'est produite';
+
+  @override
+  String get termsAndConditionsText => 'En vous inscrivant, vous acceptez nos Conditions d\'utilisation et notre Politique de confidentialité.';
+
+  @override
+  String get termsPageTitle => 'Conditions d\'utilisation';
+
+  @override
+  String get errorLoadingTerms => 'Erreur lors du chargement des conditions d\'utilisation';
 }
