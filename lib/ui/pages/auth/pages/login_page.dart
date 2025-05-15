@@ -1,8 +1,10 @@
 import 'package:firetrack360/routes/app_routes.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart';
 import 'package:flutter/material.dart';
 import '../widgets/login_header.dart';
 import '../widgets/login_form.dart';
-import 'package:firetrack360/generated/l10n.dart'; 
+import 'package:firetrack360/generated/l10n.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -41,7 +43,7 @@ class LoginPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            l10n.dontHaveAccountPrompt, 
+                            l10n.dontHaveAccountPrompt,
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.9),
                             ),
@@ -49,16 +51,19 @@ class LoginPage extends StatelessWidget {
                           GestureDetector(
                             onTap: () => AppRoutes.navigateToRegister(context),
                             child: Text(
-                              // Remove const
-                              l10n.signUpLink, 
+                              l10n.signUpLink,
                               style: const TextStyle(
-                                // Keep const for static style
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 24),
+                      Center(
+                        child:
+                            LanguageToggler(), // Added here below the account text
                       ),
                     ],
                   ),
