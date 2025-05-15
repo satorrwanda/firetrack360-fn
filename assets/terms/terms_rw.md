@@ -1,47 +1,164 @@
-# FireTrack 360 Amategeko y'Imikoreshereze na Politiki y'Ubwihisho
+# **FireTrack 360 – Amategeko y’Imikoreshereze na Politiki y’Ubwihisho**
 
 **Iheruka guhindurwa:** 15 Gicurasi 2025
 
-Paliza gusoma aya mategeko y'imikoreshereze na politiki y'ubwihisho neza mbere yo gufungura konti no gukoresha Serivisi yacu.
+Murakaza neza kuri FireTrack 360. Turasaba gusoma no gusobanukirwa neza aya mategeko y’imikoreshereze hamwe na politiki y’ubwihisho mbere yo gukoresha porogaramu cyangwa gufungura konti.
 
-## Amategeko y'Imikoreshereze
+---
 
-### Gusobanura no Gusobanukirwa
+## **Amategeko y’Imikoreshereze**
 
-*   **Porogaramu (Application)** bivuze porogaramu ya software yatanzwe na Sosiyete, mwadownloade kuri mudasobwa cyangwa ikindi gikoresho cy'ikoranabuhanga, yitwa FireTrack 360, igenzurira imicungire ya serivisi z'imyotsi yica, ibikoresho, no gukurikirana.
-*   **Sosiyete (Company)** (yerekanwa nka "Sosiyete", "Twebwe", "Yacu" cyangwa "Izacu" muri iyi Masezerano) bivuga [Izina rya Sosiyete yanyu], [Aderesi ya Sosiyete yanyu].
-*   **Serivisi (Service)** bivuga ibikoresho bya porogaramu bitangwa, harimo ariko ntabwo byonyine, gusaba gutanga, kuzura, gukora, no gukurikirana imyotsi yica.
-*   **Amategeko y'Imikoreshereze (Terms of Service)** (yanitwa "Amategeko") bivuze aya Mategeko y'Imikoreshereze agize amasezerano yose hagati yawe na Sosiyete yerekeye imikoreshereze ya Serivisi.
-*   **Wowe (You)** bivuga umuntu ku giti cye ugenzura cyangwa ukoresha Serivisi, cyangwa sosiyete, cyangwa indi ngingo yemewe n'amategeko mu izina ryayo uwo muntu ageze cyangwa akoresha Serivisi, nkuko bikwiye.
+### I. Gusobanura Amagambo
 
-### Kwemera
+* **Porogaramu (Application)**: FireTrack 360 ni porogaramu y'ikoranabuhanga y’ifashishwa mu gucunga no gukurikirana serivisi z’extincteurs, igenzura ry’ibikoresho n’ubugenzuzi.
+* **Sosiyete (Company)**: \[Izina rya Sosiyete yanyu], ifite icyicaro i \[Aderesi ya Sosiyete yanyu].
+* **Serivisi (Service)**: Serivisi zitangwa n’iyi porogaramu harimo gusaba serivisi zo gutanga, gukora, kuzura no kugenzura extinguishers.
+* **Wowe (You)**: Ukoresha cyangwa ushaka gukoresha Serivisi, yaba ku giti cyawe cyangwa uhagarariye ikigo cyemewe.
+* **Amategeko y’Imikoreshereze (Terms)**: Aya mategeko agenga uburyo porogaramu ikoreshwa.
 
-Aya Mategeko y'Imikoreshereze agenga imikoreshereze yawe ya porogaramu igendanwa ya FireTrack 360 (Serivisi). Muri gufungura konti no gukoresha Serivisi, wemera kubahiriza aya Mategeko y'Imikoreshereze. Niba utemera igice cy'aya Mategeko, ntushobora gukoresha Serivisi.
+---
 
-Uraharanira ko ufite imyaka irenga 18. Sosiyete ntabwo yemera abari munsi y'imyaka 18 gukoresha Serivisi.
+### II. Kwemera n’Ubushobozi
 
-Kugera no gukoresha Serivisi na byo bigengwa no kwemera kwawe no kubahiriza Politiki y'Ubwihisho ya Sosiyete. Politiki yacu y'Ubwihisho isobanura politiki zacu n'imikorere yacu yo gukusanya, gukoresha no kugaragaza amakuru yawe bwite iyo ukoresha Porogaramu kandi irakubwira ibyerekeye uburenganzira bwawe ku bwihisho n'uko amategeko akurinda. Paliza gusoma Politiki yacu y'Ubwihisho neza mbere yo gukoresha Serivisi yacu.
+* Ukoresheje FireTrack 360, wemera ibi byose byavuzwe haruguru.
+* Ugaragaza ko ufite imyaka 18 kuzamura. Abari munsi y’iyo myaka ntibemerewe gukoresha Serivisi.
+* Kwemera politiki y’ubwihisho ni igice cy’ingenzi cyo gukomeza gukoresha Serivisi.
 
-*(Shyiramo ibice birebana na Konti z'Abakoresha, Ibyifuzo bya Serivisi, Kwishyura (niba bikoreshwa), Inshingano z'Abakoresha, Imikoreshereze Itemewe, Ubwiteganyirize bw'Imitungo, Links zerekeza kuri Indi Mbuga, Gusesa Amasezerano, Igabanywa ry'Inshingano, Igabanywa ry'Amasezerano "AS IS" na "AS AVAILABLE", Amategeko Agenga, Gukemura Amakimbirane, Kubakoresha muri Uniyo y'Uburayi (EU), Kubahiriza Amategeko y'Amerika, Gutandukana no Kwirengagiza, Igabanywa ry'Amasezerano y'Umuvugo, no Guhindura Aya Mategeko y'Imikoreshereze. **Uhindure ibi bice bikurikije Serivisi ya porogaramu yanyu yo gucunga imyotsi yica.**)*
+---
 
-## Politiki y'Ubwihisho
+### III. Konti z’Abakoresha
 
-*(Aha ni ho uzashyiramo ibikubiye muri Politiki y'Ubwihisho. Nkuko byavuzwe mbere, ibi bigomba kwandikwa na umuhanga mu by'amategeko. Shingira ku bikurikira:)*
+* Ushinzwe gutanga amakuru yizewe kandi yuzuye igihe wiyandikisha.
+* Ushinzwe umutekano wa konti yawe (izina n'ijambo ry’ibanga).
+* Twebwe dufite uburenganzira bwo gufunga cyangwa guhagarika konti iyo habayeho gukoresha nabi cyangwa kwica amategeko.
 
-*   **Gukusanya Amakuru:** Ni ayahe makuru bwite mukusanya (urugero, izina, amakuru yo kuboneka, amakuru ya sosiyete, amakuru y'aho uri ahujwe n'imyotsi yica/serivisi, amateka ya serivisi)? Ni gute bikusanywa?
-*   **Gukoresha Amakuru:** Ni gute amakuru yakusanyijwe akoreshwa (urugero, gusohoza ibyifuzo bya serivisi, gucunga konti yawe, gutanga ubufasha, kunoza serivisi)?
-*   **Kubika Amakuru no Kuyarinze:** Ni gute amakuru abikwa, kandi ni ayahe mabwiriza yo kuyarinze ahari?
-*   **Gusaranganya no Kugaragaza Amakuru:** Musaranganya amakuru na abandi bantu (urugero, abatanga serivisi, abo mufitanye isano)? Mu gihe ki, kandi ni ayahe mabwiriza yo kubirinze ahari? (Urabisobanure neza cyane hano).
-*   **Uburenganzira Bwawe:** Ni ubuhe burenganzira abakoresha bafite ku makuru yabo (urugero, kugera kuri yo, kuyakosora, kuyahanagura, kurega imikorere)?
-*   **Kubika Amakuru ku Gikoresho:** Ni kangahe amakuru y'umukoresha abikwa?
-*   **Ubwihisho bw'Abana:** Uvuge neza ko serivisi idahabwa abakoresha bari munsi y'imyaka 18.
-*   **Guhatura Kuri Politiki y'Ubwihisho.**
+---
 
-*(Hindura hano section ya Politiki y'Ubwihisho)*
+### IV. Ibyifuzo bya Serivisi
 
-## Twandikire
+* Ushobora gusaba serivisi binyuze kuri porogaramu harimo:
 
-Niba ufite ibibazo kuri aya Mategeko y'Imikoreshereze na Politiki y'Ubwihisho, ushobora kutwandikira:
+  * Gutanga no gushaka extincteurs
+  * Serivisi yo kuzura
+  * Igenzura ry’ibi bikoresho
+* Serivisi zose zizikorwa hakurikijwe gahunda na amasezerano hagati yawe na Sosiyete.
 
-*   Kuri imeri: [Adresi ya E-mail yanyu ya Support]
-*   Ugasure iyi page ku rubuga rwacu: [Link kuri Page Yanyu ya Contact (ni ku bushake, niba mufite urubuga)]
+---
+
+### V. Kwishyura (Niba Bikoreshwa)
+
+* Niba hari serivisi zishyurwa, uko kwishyura kuzajya gukorwa binyuze mu buryo buteganyijwe (Momo, banki, ikarita...).
+* Turatanga inyemezabwishyu ku cyemezo cyose cyishyuwe.
+
+---
+
+### VI. Inshingano zawe
+
+* Kwitwararika mu gukoresha Serivisi
+* Kutayikoresha mu buryo bwangiza, bw’amanyanga cyangwa bunyuranyije n’amategeko
+
+---
+
+### VII. Imikoreshereze Itemewe
+
+Ntubyemerewe:
+
+* Gusesengura, gusenya cyangwa guhindura porogaramu
+* Gukoresha serivisi mu bikorwa bihungabanya umutekano
+* Gukoresha konti y’undi muntu nta burenganzira
+
+---
+
+### VIII. Uburenganzira n’Umuryango w’Ibihangano (Propriété Intellectuelle)
+
+* FireTrack 360 n’ibiyigize byose (ikimenyetso cy’ubucuruzi, porogaramu, design, code) ni umutungo bwite wa Sosiyete.
+* Ntibikwiye ko ubyigana cyangwa ubisangiza abandi utabyemerewe.
+
+---
+
+### IX. Gusesa Amasezerano
+
+Sosiyete ifite uburenganzira bwo guhagarika konti iyo:
+
+* Habayeho kubangamira serivisi
+* Hari ikindi cyaha kiremereye cyagaragaye
+* Bitajyanye n’amategeko
+
+---
+
+### X. Kwirengera
+
+* Serivisi zitangwa “uko ziri” (AS IS) kandi “uko ziboneka” (AS AVAILABLE).
+* Nta garanti dutanga y’uko Serivisi zizaba zidafite amakosa cyangwa interruptions.
+
+---
+
+### XI. Amategeko Agenga n’Ubwumvikane
+
+* Aya mategeko agengwa n’amategeko agenderwaho mu gihugu FireTrack 360 ikoreramo.
+* Amakimbirane azakemurwa mu buryo bw’ubwumvikane, bitakunda hakitabazwa inkiko zibifitiye ububasha.
+
+---
+
+## **Politiki y’Ubwihisho**
+
+### 1. Amakuru Dukusanya
+
+* Amazina yawe, nimero za telefoni, aderesi ya e-mail
+* Ibiranga isosiyete yawe n’aho iherereye
+* Amakuru yerekeye aho extinguishers ziherereye (location data)
+* Amateka y’imikoreshereze ya serivisi (logs, requests)
+
+### 2. Uko Amakuru Akoreshwa
+
+* Gushyira mu bikorwa serivisi wasabye
+* Kuguha ubufasha n’itumanaho
+* Gukora ubushakashatsi no kunoza serivisi
+* Gukoresha amakuru mu buryo bwemewe n’amategeko gusa
+
+### 3. Kubika no Kurinda Amakuru
+
+* Amakuru abikwa ku buryo bwizewe, afite uburinzi (encryption, firewalls)
+* Twiyemeje kurinda amakuru yawe ku buryo ntaho yajya atabifitiye uburenganzira
+
+### 4. Gusangira Amakuru
+
+* Amakuru ntazashyirwa ku bandi bantu batabifitiye uburenganzira, keretse:
+
+  * Iyo ari ngombwa mu gutanga serivisi
+  * Ku babifitanye amasezerano y’ibanga
+  * Iyo amategeko abidusaba
+
+### 5. Uburenganzira bwawe
+
+* Kugera ku makuru yawe
+* Kuyakosora cyangwa kuyahanagura
+* Kwigaragambya ku ikoreshwa ry’aya makuru
+* Gusaba ko amakuru yawe atongera gukoreshwa
+
+### 6. Igihe Dufataho Amakuru
+
+* Amakuru abikwa igihe kingana n’icyo dukenera ku nyungu z’ubucuruzi cyangwa amategeko
+* Dushobora kuyahanagura mu gihe uyasabye cyangwa igihe amaze igihe kirekire atari gukoreshwa
+
+### 7. Abana
+
+* FireTrack 360 ntabwo igenewe abana bari munsi y’imyaka 18
+* Ntidufata amakuru ku bushake y’abana batarageza kuri iyo myaka
+
+### 8. Impinduka kuri Politiki
+
+* Turashobora guhindura Politiki y’Ubwihisho igihe cyose
+* Tuzakumenyesha binyuze kuri porogaramu cyangwa e-mail igihe habaye impinduka
+
+---
+
+## **Twandikire**
+
+Niba ufite ikibazo cyangwa icyifuzo:
+
+
+* Kuri email: [ai.suport.windows@gmail.com](mailto:ai.suport.windows@gmail.com)
+* No kure web site: [https://firetrack360.satorrwanda.rw](https://firetrack360.satorrwanda.rw/)
+
+
