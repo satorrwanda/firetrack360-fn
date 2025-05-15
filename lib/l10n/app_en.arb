@@ -1,0 +1,373 @@
+{
+    "@@locale": "en",
+    "onboardingTitle1": "Welcome to FireTrack360",
+    "@onboardingTitle1": {
+        "description": "Title for first onboarding screen"
+    },
+    "onboardingDesc1": "Secure your world, one tap at a time",
+    "@onboardingDesc1": {
+        "description": "Description for first onboarding screen"
+    },
+    "onboardingTitle2": "Get Started",
+    "@onboardingTitle2": {
+        "description": "Title for second onboarding screen"
+    },
+    "onboardingDesc2": "Create an account or log in to access all features",
+    "@onboardingDesc2": {
+        "description": "Description for second onboarding screen"
+    },
+    "onboardingTitle3": "Secure and Simple",
+    "@onboardingTitle3": {
+        "description": "Title for third onboarding screen"
+    },
+    "onboardingDesc3": "Streamline your security management",
+    "@onboardingDesc3": {
+        "description": "Description for third onboarding screen"
+    },
+    "register": "Register",
+    "@register": {
+        "description": "Text for register button"
+    },
+    "login": "Login",
+    "@login": {
+        "description": "Text for login button"
+    },
+    "dontHaveAccountPrompt": "Don't have an account?",
+    "@dontHaveAccountPrompt": {
+        "description": "Prompt for users without an account on the login page"
+    },
+    "signUpLink": "Sign Up",
+    "@signUpLink": {
+        "description": "Text for the sign up link on the login page"
+    },
+    "welcomeBackTitle": "Welcome Back",
+    "@welcomeBackTitle": {
+        "description": "Main title on the login header"
+    },
+    "signInToContinueSubtitle": "Sign in to continue",
+    "@signInToContinueSubtitle": {
+        "description": "Subtitle prompting the user to sign in on the login header"
+    },
+    "fillAllFieldsError": "Please fill in all fields",
+    "@fillAllFieldsError": {
+        "description": "Error message when not all login fields are filled"
+    },
+    "invalidEmailError": "Please enter a valid email",
+    "@invalidEmailError": {
+        "description": "Error message for an invalid email format during login"
+    },
+    "loginFailedDefaultError": "Login failed",
+    "@loginFailedDefaultError": {
+        "description": "Default error message when login fails without a specific message from the server"
+    },
+    "emailVerificationRequiredError": "Please verify your email before logging in",
+    "@emailVerificationRequiredError": {
+        "description": "Error message when a user tries to log in with an unverified email"
+    },
+    "loginSuccessfulMessage": "Login successful!",
+    "@loginSuccessfulMessage": {
+        "description": "Success message after a successful login"
+    },
+    "emailSaveFailedError": "Failed to save email. Please try again.",
+    "@emailSaveFailedError": {
+        "description": "Error message when saving the user's email to SharedPreferences fails"
+    },
+    "unexpectedError": "An unexpected error occurred",
+    "@unexpectedError": {
+        "description": "Generic error message for unexpected issues"
+    },
+    "emailHintText": "Email Address",
+    "@emailHintText": {
+        "description": "Hint text for the email input field on the login form"
+    },
+    "passwordHintText": "Password",
+    "@passwordHintText": {
+        "description": "Hint text for the password input field on the login form"
+    },
+    "forgotPasswordLink": "Forgot Password?",
+    "@forgotPasswordLink": {
+        "description": "Text for the 'Forgot Password?' link on the login form"
+    },
+    "createAccountTitle": "Create Account",
+    "@createAccountTitle": {
+        "description": "Main title on the register header"
+    },
+    "signUpToGetStartedSubtitle": "Sign up to get started",
+    "@signUpToGetStartedSubtitle": {
+        "description": "Subtitle prompting the user to sign up on the register header"
+    },
+    "enterPhoneNumberError": "Please enter your phone number",
+    "@enterPhoneNumberError": {
+        "description": "Validation error when phone number is empty on the register form"
+    },
+    "rwandaPhoneNumberLengthError": "Rwanda phone numbers must be 9 digits",
+    "@rwandaPhoneNumberLengthError": {
+        "description": "Validation error for incorrect Rwanda phone number length"
+    },
+    "rwandaPhoneNumberStartError": "Rwanda phone numbers must start with 7",
+    "@rwandaPhoneNumberStartError": {
+        "description": "Validation error for incorrect Rwanda phone number starting digit"
+    },
+    "phoneNumberMinLengthError": "Phone number must be at least 9 digits",
+    "@phoneNumberMinLengthError": {
+        "description": "Validation error for phone number less than minimum required length"
+    },
+    "phoneNumberMaxLengthError": "Phone number cannot exceed 10 digits",
+    "@phoneNumberMaxLengthError": {
+        "description": "Validation error for phone number exceeding maximum allowed length"
+    },
+    "enterPasswordError": "Please enter a password",
+    "@enterPasswordError": {
+        "description": "Validation error when password is empty on the register form"
+    },
+    "passwordMinLengthError": "Password must be at least 8 characters long",
+    "@passwordMinLengthError": {
+        "description": "Validation error for password less than minimum required length"
+    },  
+    "passwordDigitError": "Password must contain at least one number",
+    "@passwordDigitError": {
+        "description": "Validation error for password missing a digit"
+    },
+    "confirmPasswordError": "Please confirm your password",
+    "@confirmPasswordError": {
+        "description": "Validation error when confirm password is empty on the register form"
+    },
+    "passwordsDoNotMatchError": "Passwords do not match",
+    "@passwordsDoNotMatchError": {
+        "description": "Validation error when confirm password does not match password"
+    },
+    "phoneNumberLabel": "Phone Number",
+    "@phoneNumberLabel": {
+        "description": "Label text for the phone number input section on the register form"
+    },
+    "searchCountryHint": "Search country",
+    "@searchCountryHint": {
+        "description": "Hint text for the country search input in the country code picker"
+    },
+    "confirmPasswordHintText": "Confirm Password",
+    "@confirmPasswordHintText": {
+        "description": "Hint text for the confirm password input field on the register form"
+    },
+    "emailAlreadyRegisteredError": "This email is already registered. Please use a different email or try logging in.",
+    "@emailAlreadyRegisteredError": {
+        "description": "GraphQL error message for a registered email (status 409)"
+    },
+    "checkInformationError": "Please check your information and try again.",
+    "@checkInformationError": {
+        "description": "GraphQL error message for bad request (status 400)"
+    },
+    "invalidInputError": "Invalid input. Please check your details.",
+    "@invalidInputError": {
+        "description": "GraphQL error message for unprocessable entity (status 422)"
+    },
+    "connectionError": "Unable to connect to the server. Please check your internet connection.",
+    "@connectionError": {
+        "description": "Error message for network connection issues"
+    },
+    "defaultError": "An error occurred. Please try again.",
+    "@defaultError": {
+        "description": "Default generic error message"
+    },
+    "successSnackBarTitle": "Success",
+    "@successSnackBarTitle": {
+        "description": "Title for success snackbars"
+    },
+    "errorSnackBarTitle": "Error",
+    "@errorSnackBarTitle": {
+        "description": "Title for error snackbars"
+    },
+    "dismissSnackBarAction": "DISMISS",
+    "@dismissSnackBarAction": {
+        "description": "Label for the dismiss action in snackbars"
+    },
+    "registrationSuccessDefaultMessage": "Registration successful! Please verify your email with the OTP sent.",
+    "@registrationSuccessDefaultMessage": {
+        "description": "Default success message after registration"
+    },
+    "registrationFailedDefaultMessage": "Registration failed. Please try again.",
+    "@registrationFailedDefaultMessage": {
+        "description": "Default failure message after registration"
+    },
+    "unexpectedAuthError": "An unexpected error occurred. Please try again later.",
+    "@unexpectedAuthError": {
+        "description": "Generic error message for unexpected authentication issues"
+    },
+    "loginFailedDefaultMessage": "Login failed. Please try again.",
+    "@loginFailedDefaultMessage": {
+        "description": "Default failure message after login"
+    },
+    "resendOtpSuccessDefaultMessage": "Verification code has been resent successfully.",
+    "@resendOtpSuccessDefaultMessage": {
+        "description": "Default success message after resending OTP"
+    },
+    "resendOtpFailedDefaultMessage": "Failed to resend verification code. Please try again.",
+    "@resendOtpFailedDefaultMessage": {
+        "description": "Default failure message after failing to resend OTP"
+    },
+    "enterEmailError": "Please enter your email address",
+    "@enterEmailError": {
+        "description": "Validation error when email address is empty on the forgot password form"
+    },
+    "alreadyRegisteredPrompt": "Already have an account?",
+    "@alreadyRegisteredPrompt": {
+        "description": "Prompt for users who already have an account on the forgot password page"
+    },
+    "loginLink": "Login",
+    "@loginLink": {
+        "description": "Text for the login link on the forgot password page"
+    },
+    "noEmailFoundError": "No email found. Please log in again.",
+    "@noEmailFoundError": {
+        "description": "Error message when email is not found in SharedPreferences during verification"
+    },
+    "invalidEmailVerificationError": "Invalid email. Please log in again.",
+    "@invalidEmailVerificationError": {
+        "description": "Error message when the retrieved email is invalid during verification"
+    },
+    "errorRetrievingEmailError": "Error retrieving email. Please log in again.",
+    "@errorRetrievingEmailError": {
+        "description": "Error message when there's an error retrieving email from SharedPreferences"
+    },
+    "verificationGraphQLErrorDefault": "An error occurred",
+    "@verificationGraphQLErrorDefault": {
+        "description": "Default error message for GraphQL exceptions during verification"
+    },
+    "invalidLoginResponseError": "Invalid login response",
+    "@invalidLoginResponseError": {
+        "description": "Error message for an invalid response after successful verification"
+    },
+    "verificationFailedDefault": "Verification failed",
+    "@verificationFailedDefault": {
+        "description": "Default failure message for verification"
+    },
+    "unexpectedVerificationError": "An unexpected error occurred: {error}",
+    "@unexpectedVerificationError": {
+        "description": "Generic error message for unexpected issues during verification",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "enterOtpError": "Please enter the OTP",
+    "@enterOtpError": {
+        "description": "Validation error when OTP field is empty"
+    },
+    "otpLengthError": "OTP must be 6 digits",
+    "@otpLengthError": {
+        "description": "Validation error for incorrect OTP length"
+    },
+    "otpNumbersOnlyError": "OTP must contain only numbers",
+    "@otpNumbersOnlyError": {
+        "description": "Validation error when OTP contains non-numeric characters"
+    },
+    "verifyOtpTitle": "Verify OTP",
+    "@verifyOtpTitle": {
+        "description": "Title of the Verify OTP page"
+    },
+    "enterOtpMessage": "Enter the verification code sent to\n{maskedEmail}",
+    "@enterOtpMessage": {
+        "description": "Message prompting the user to enter the OTP, includes masked email",
+        "placeholders": {
+            "maskedEmail": {}
+        }
+    },
+    "otpHintText": "Enter 6-digit OTP",
+    "@otpHintText": {
+        "description": "Hint text for the OTP input field"
+    },
+    "verifyCodeButton": "Verify Code",
+    "@verifyCodeButton": {
+        "description": "Text for the Verify Code button"
+    },
+    "didNotReceiveCodePrompt": "Didn't receive the code? ",
+    "@didNotReceiveCodePrompt": {
+        "description": "Prompt asking if the user didn't receive the OTP"
+    },
+    "resendLink": "Resend",
+    "@resendLink": {
+        "description": "Text for the Resend OTP link"
+    },
+    "futureBuilderErrorPrefix": "Error: ",
+    "@futureBuilderErrorPrefix": {
+        "description": "Prefix for error messages shown in FutureBuilder"
+    },
+    "unexpectedPasswordResetVerificationError": "An unexpected error occurred",
+    "@unexpectedPasswordResetVerificationError": {
+        "description": "Generic error message for unexpected issues during password reset verification"
+    },
+    "forgotPasswordTitle": "Forgot Password",
+    "@forgotPasswordTitle": {
+        "description": "Main title on the Forgot Password header"
+    },
+    "enterEmailToResetPasswordSubtitle": "Enter your email to reset password",
+    "@enterEmailToResetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter email to reset password"
+    },
+    "passwordResetOtpSentMessage": "OTP to reset password has been sent to your email.",
+    "@passwordResetOtpSentMessage": {
+        "description": "Success message after sending password reset OTP"
+    },
+    "rememberPasswordPrompt": "Remember your password?",
+    "@rememberPasswordPrompt": {
+        "description": "Prompt for users who remember their password on the forget password page"
+    },
+    "signInLink": "Sign In",
+    "@signInLink": {
+        "description": "Text for the Sign In link on the forget password page"
+    },
+    "resetPasswordTitle": "Reset Password",
+    "@resetPasswordTitle": {
+        "description": "Title for the reset password page"
+    },
+    "resetPasswordSubtitle": "Enter your new password",
+    "@resetPasswordSubtitle": {
+        "description": "Subtitle instruction on reset password page"
+    },
+    "newPasswordHint": "New Password",
+    "@newPasswordHint": {
+        "description": "Hint text for new password field"
+    },
+    "confirmPasswordHint": "Confirm Password",
+    "@confirmPasswordHint": {
+        "description": "Hint text for confirm password field"
+    },
+    "resetPasswordButton": "Reset Password",
+    "@resetPasswordButton": {
+        "description": "Text for reset password button"
+    },
+    "passwordRequired": "Please enter a password",
+    "@passwordRequired": {
+        "description": "Error when password field is empty"
+    },
+    "passwordLengthError": "Password must be at least 8 characters long",
+    "@passwordLengthError": {
+        "description": "Error when password is too short"
+    },
+    "passwordUppercaseError": "Password must contain at least one uppercase letter",
+    "@passwordUppercaseError": {
+        "description": "Error when password lacks uppercase letter"
+    },
+    "passwordLowercaseError": "Password must contain at least one lowercase letter",
+    "@passwordLowercaseError": {
+        "description": "Error when password lacks lowercase letter"
+    },
+    "passwordNumberError": "Password must contain at least one number",
+    "@passwordNumberError": {
+        "description": "Error when password lacks number"
+    },
+    "passwordSpecialCharError": "Password must contain at least one special character",
+    "@passwordSpecialCharError": {
+        "description": "Error when password lacks special character"
+    },
+    "passwordMismatchError": "Passwords do not match",
+    "@passwordMismatchError": {
+        "description": "Error when passwords don't match"
+    },
+    "passwordResetSuccess": "Your password has been reset successfully",
+    "@passwordResetSuccess": {
+        "description": "Success message after password reset"
+    },
+    "genericError": "An error occurred",
+    "@genericError": {
+        "description": "Generic error message"
+    }
+}

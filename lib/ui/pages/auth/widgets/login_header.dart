@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Access l10n here
+
     return Column(
       children: [
         Container(
@@ -42,7 +45,8 @@ class LoginHeader extends StatelessWidget {
             end: Alignment.bottomCenter,
           ).createShader(bounds),
           child: Text(
-            'Welcome Back',
+            // Remove const
+            l10n.welcomeBackTitle, // Use localized string
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 36,
@@ -53,12 +57,12 @@ class LoginHeader extends StatelessWidget {
                 Shadow(
                   blurRadius: 10.0,
                   color: Colors.black.withOpacity(0.3),
-                  offset: const Offset(2.0, 2.0),
+                  offset: Offset(2.0, 2.0),
                 ),
                 Shadow(
                   blurRadius: 20.0,
                   color: Colors.black.withOpacity(0.2),
-                  offset: const Offset(4.0, 4.0),
+                  offset: Offset(4.0, 4.0),
                 ),
               ],
             ),
@@ -75,9 +79,11 @@ class LoginHeader extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Sign in to continue',
+            // Remove const
+            l10n.signInToContinueSubtitle, // Use localized string
             textAlign: TextAlign.center,
             style: TextStyle(
+              // Keep TextStyle for dynamic opacity
               fontSize: 18,
               color: Colors.white.withOpacity(0.9),
               height: 1.4,

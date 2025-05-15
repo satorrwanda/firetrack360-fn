@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../../graphql/mutations/auth_mutations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
@@ -17,7 +18,19 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   final _emailController = TextEditingController();
   bool _isLoading = false;
 
+  // Your GraphQL mutation string remains here
+  final String forgetPasswordMutation = '''
+    mutation ForgetPassword(\$userEmail: String!) {
+      forgetPassword(userEmail: \$userEmail) {
+        message
+        status
+      }
+    }
+  ''';
+
   void _resetPassword() async {
+    final l10n = S.of(context)!; // Access l10n here for messages
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -40,8 +53,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
       }
 
       if (result.hasException) {
+        // Reusing localization key for generic GraphQL errors or a specific one
         _showErrorSnackBar(result.exception?.graphqlErrors.first.message ??
-            'An error occurred');
+            l10n.verificationGraphQLErrorDefault); // Or l10n.defaultError
       } else {
         _showResetConfirmationSnackBar();
         // Store email in SharedPreferences
@@ -52,15 +66,17 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        _showErrorSnackBar('An unexpected error occurred');
+        // Using a specific localized unexpected error for this page
+        _showErrorSnackBar(l10n.unexpectedPasswordResetVerificationError);
       }
     }
   }
 
   void _showErrorSnackBar(String message) {
+    // You could replicate the enhanced snackbar style from AuthService here
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message), // The message is already localized
         backgroundColor: Colors.red,
         duration: const Duration(seconds: 3),
       ),
@@ -68,17 +84,23 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   }
 
   void _showResetConfirmationSnackBar() {
+    final l10n = S.of(context)!; // Access l10n here
+
+    // You could replicate the enhanced snackbar style from AuthService here
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('OTP to reset password has been sent to your email.'),
+      SnackBar(
+        content:
+            Text(l10n.passwordResetOtpSentMessage), // Use localized message
         backgroundColor: Colors.green,
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Access l10n here for UI texts
+
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       appBar: AppBar(
@@ -97,6 +119,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 40),
+                // Assuming ForgetPasswordHeader handles its own localization
                 const ForgetPasswordHeader(),
                 const SizedBox(height: 48),
                 Container(
@@ -122,7 +145,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            hintText: 'Email Address',
+                            hintText: l10n.emailHintText, // Use localized hint
                             prefixIcon: const Icon(Icons.email_outlined,
                                 color: Colors.deepPurple),
                             filled: true,
@@ -133,12 +156,16 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                             ),
                           ),
                           validator: (value) {
+                            final l10n = S
+                                .of(context)!; // Access l10n here for validator
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return l10n
+                                  .enterEmailError; // Use localized message
                             }
                             if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                                 .hasMatch(value)) {
-                              return 'Please enter a valid email';
+                              return l10n
+                                  .invalidEmailError; // Use localized message
                             }
                             return null;
                           },
@@ -161,7 +188,16 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                                     color: Colors.white,
                                     strokeWidth: 2,
                                   )
-                                : const Text('Reset Password'),
+                                : Text(
+                                    // Remove const
+                                    l10n.resetPasswordButton, // Use localized button text
+                                    style: const TextStyle(
+                                      // Keep const for static style
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
                           ),
                         ),
                       ],
@@ -172,17 +208,22 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Remember your password? ',
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      // Remove const
+                      l10n.rememberPasswordPrompt, // Use localized prompt
+                      style: const TextStyle(
+                          color: Colors.white70), // Keep const for static style
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed('/login');
+                        Navigator.of(context).pushReplacementNamed(
+                            '/login'); // Using named route directly
                       },
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(
+                      child: Text(
+                        // Remove const
+                        l10n.signInLink, // Use localized link text
+                        style: const TextStyle(
+                          // Keep const for static style
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),

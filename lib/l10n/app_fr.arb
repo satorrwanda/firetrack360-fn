@@ -1,0 +1,373 @@
+{
+    "@@locale": "fr",
+    "onboardingTitle1": "Bienvenue à FireTrack360",
+    "@onboardingTitle1": {
+        "description": "Title for first onboarding screen"
+    },
+    "onboardingDesc1": "Sécurisez votre monde, une touche à la fois",
+    "@onboardingDesc1": {
+        "description": "Description for first onboarding screen"
+    },
+    "onboardingTitle2": "Commencer",
+    "@onboardingTitle2": {
+        "description": "Title for second onboarding screen"
+    },
+    "onboardingDesc2": "Créez un compte ou connectez-vous pour accéder à toutes les fonctionnalités",
+    "@onboardingDesc2": {
+        "description": "Description for second onboarding screen"
+    },
+    "onboardingTitle3": "Sécurisé et Simple",
+    "@onboardingTitle3": {
+        "description": "Title for third onboarding screen"
+    },
+    "onboardingDesc3": "Simplifiez votre gestion de la sécurité",
+    "@onboardingDesc3": {
+        "description": "Description for third onboarding screen"
+    },
+    "register": "S'inscrire",
+    "@register": {
+        "description": "Text for register button"
+    },
+    "login": "Se connecter",
+    "@login": {
+        "description": "Text for login button"
+    },
+    "dontHaveAccountPrompt": "Vous n'avez pas de compte ?",
+    "@dontHaveAccountPrompt": {
+        "description": "Prompt for users without an account on the login page"
+    },
+    "signUpLink": "S'inscrire",
+    "@signUpLink": {
+        "description": "Text for the sign up link on the login page"
+    },
+    "welcomeBackTitle": "Bon retour",
+    "@welcomeBackTitle": {
+        "description": "Main title on the login header"
+    },
+    "signInToContinueSubtitle": "Connectez-vous pour continuer",
+    "@signInToContinueSubtitle": {
+        "description": "Subtitle prompting the user to sign in on the login header"
+    },
+    "fillAllFieldsError": "Veuillez remplir tous les champs",
+    "@fillAllFieldsError": {
+        "description": "Error message when not all login fields are filled"
+    },
+    "invalidEmailError": "Veuillez saisir une adresse email valide",
+    "@invalidEmailError": {
+        "description": "Error message for an invalid email format during login"
+    },
+    "loginFailedDefaultError": "Échec de la connexion",
+    "@loginFailedDefaultError": {
+        "description": "Default error message for login failure"
+    },
+    "emailVerificationRequiredError": "Veuillez vérifier votre adresse email avant de vous connecter",
+    "@emailVerificationRequiredError": {
+        "description": "Error message when email verification is required"
+    },
+    "loginSuccessfulMessage": "Connexion réussie !",
+    "@loginSuccessfulMessage": {
+        "description": "Message displayed when login is successful"
+    },
+    "emailSaveFailedError": "Échec de l'enregistrement de l'email. Veuillez réessayer.",
+    "@emailSaveFailedError": {
+        "description": "Error message when saving email fails"
+    },
+    "unexpectedError": "Une erreur inattendue s'est produite",
+    "@unexpectedError": {
+        "description": "General error message for unexpected issues"
+    },
+    "emailHintText": "Adresse email",
+    "@emailHintText": {
+        "description": "Hint text for email input field"
+    },
+    "passwordHintText": "Mot de passe",
+    "@passwordHintText": {
+        "description": "Hint text for password input field"
+    },
+    "forgotPasswordLink": "Mot de passe oublié ?",
+    "@forgotPasswordLink": {
+        "description": "Text for the forgot password link on the login page"
+    },
+    "createAccountTitle": "Créer un compte",
+    "@createAccountTitle": {
+        "description": "Main title on the register header"
+    },
+    "signUpToGetStartedSubtitle": "Inscrivez-vous pour commencer",
+    "@signUpToGetStartedSubtitle": {
+        "description": "Subtitle prompting the user to sign up on the register header"
+    },
+    "enterPhoneNumberError": "Veuillez saisir votre numéro de téléphone",
+    "@enterPhoneNumberError": {
+        "description": "Error message when the phone number field is empty"
+    },
+    "enterPhoneNumberHintText": "Numéro de téléphone",
+    "@enterPhoneNumberHintText": {
+        "description": "Hint text for the phone number input field"
+    },
+    "rwandaPhoneNumberLengthError": "Les numéros de téléphone au Rwanda doivent comporter 9 chiffres",
+    "@rwandaPhoneNumberLengthError": {
+        "description": "Error message for incorrect phone number length in Rwanda"
+    },
+    "rwandaPhoneNumberStartError": "Les numéros de téléphone au Rwanda doivent commencer par 7",
+    "@rwandaPhoneNumberStartError": {
+        "description": "Error message for incorrect phone number starting digit in Rwanda"
+    },
+    "phoneNumberMinLengthError": "Le numéro de téléphone doit comporter au moins 9 chiffres",
+    "@phoneNumberMinLengthError": {
+        "description": "Error message for phone number less than minimum required length"
+    },
+    "phoneNumberMaxLengthError": "Le numéro de téléphone ne peut pas dépasser 10 chiffres",
+    "@phoneNumberMaxLengthError": {
+        "description": "Error message for phone number exceeding maximum allowed length"
+    },
+    "enterPasswordError": "Veuillez saisir un mot de passe",
+    "@enterPasswordError": {
+        "description": "Error message when the password field is empty"
+    },
+    "passwordMinLengthError": "Le mot de passe doit comporter au moins 8 caractères",
+    "@passwordMinLengthError": {
+        "description": "Error message for password less than minimum required length"
+    },
+    "passwordUppercaseError": "Le mot de passe doit contenir au moins une majuscule",
+    "@passwordUppercaseError": {
+        "description": "Error message for password missing uppercase letter"
+    },
+    "passwordLowercaseError": "Le mot de passe doit contenir au moins une minuscule",
+    "@passwordLowercaseError": {
+        "description": "Error message for password missing lowercase letter"
+    },
+    "passwordDigitError": "Le mot de passe doit contenir au moins un chiffre",
+    "@passwordDigitError": {
+        "description": "Error message for password missing a digit"
+    },
+    "passwordSpecialCharError": "Le mot de passe doit contenir au moins un caractère spécial",
+    "@passwordSpecialCharError": {
+        "description": "Error message for password missing a special character"
+    },
+    "confirmPasswordError": "Veuillez confirmer votre mot de passe",
+    "@confirmPasswordError": {
+        "description": "Error message when the confirm password field is empty"
+    },
+    "passwordsDoNotMatchError": "Les mots de passe ne correspondent pas",
+    "@passwordsDoNotMatchError": {
+        "description": "Error message when the passwords do not match"
+    },
+    "phoneNumberLabel": "Numéro de téléphone",
+    "@phoneNumberLabel": {
+        "description": "Label text for the phone number input section on the register form"
+    },
+    "searchCountryHint": "Rechercher un pays",
+    "@searchCountryHint": {
+        "description": "Hint text for the country search input in the country code picker"
+    },
+    "confirmPasswordHintText": "Confirmer le mot de passe",
+    "@confirmPasswordHintText": {
+        "description": "Hint text for the confirm password input field on the register form"
+    },
+    "emailAlreadyRegisteredError": "Cette adresse email est déjà enregistrée. Veuillez utiliser une adresse email différente ou essayer de vous connecter.",
+    "@emailAlreadyRegisteredError": {
+        "description": "Error message when the email is already registered"
+    },
+    "checkInformationError": "Veuillez vérifier vos informations et réessayer.",
+    "@checkInformationError": {
+        "description": "Error message for checking information"
+    },
+    "invalidInputError": "Saisie invalide. Veuillez vérifier vos détails.",
+    "@invalidInputError": {
+        "description": "Error message for invalid input"
+    },
+    "connectionError": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.",
+    "@connectionError": {
+        "description": "Error message for connection issues"
+    },
+    "defaultError": "Une erreur s'est produite. Veuillez réessayer.",
+    "@defaultError": {
+        "description": "Default error message for general issues"
+    },
+    "successSnackBarTitle": "Succès",
+    "@successSnackBarTitle": {
+        "description": "Title for success messages in SnackBar"
+    },
+    "errorSnackBarTitle": "Erreur",
+    "@errorSnackBarTitle": {
+        "description": "Title for error messages in SnackBar"
+    },
+    "dismissSnackBarAction": "FERMER",
+    "@dismissSnackBarAction": {
+        "description": "Action text to dismiss the SnackBar"
+    },
+    "registrationSuccessDefaultMessage": "Inscription réussie ! Veuillez vérifier votre adresse email avec l'OTP envoyé.",
+    "@registrationSuccessDefaultMessage": {
+        "description": "Default message for successful registration"
+    },
+    "registrationFailedDefaultMessage": "Échec de l'inscription. Veuillez réessayer.",
+    "@registrationFailedDefaultMessage": {
+        "description": "Default message for failed registration"
+    },
+    "unexpectedAuthError": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+    "@unexpectedAuthError": {
+        "description": "Error message for unexpected authentication issues"
+    },
+    "loginFailedDefaultMessage": "Échec de la connexion. Veuillez réessayer.",
+    "@loginFailedDefaultMessage": {
+        "description": "Default message for failed login"
+    },
+    "resendOtpSuccessDefaultMessage": "Code de vérification renvoyé avec succès.",
+    "@resendOtpSuccessDefaultMessage": {
+        "description": "Default message for successful OTP resend"
+    },
+    "resendOtpFailedDefaultMessage": "Échec du renvoi du code de vérification. Veuillez réessayer.",
+    "@resendOtpFailedDefaultMessage": {
+        "description": "Default message for failed OTP resend"
+    },
+    "enterEmailError": "Veuillez saisir votre adresse email",
+    "@enterEmailError": {
+        "description": "Error message when the email field is empty"
+    },
+    "alreadyRegisteredPrompt": "Déjà enregistré ?",
+    "@alreadyRegisteredPrompt": {
+        "description": "Prompt for users who are already registered"
+    },
+    "loginLink": "Se connecter",
+    "@loginLink": {
+        "description": "Text for the login link on the register page"
+    },
+    "noEmailFoundError": "Aucune adresse email trouvée. Veuillez vous reconnecter.",
+    "@noEmailFoundError": {
+        "description": "Error message when no email is found"
+    },
+    "invalidEmailVerificationError": "Adresse email invalide. Veuillez vous reconnecter.",
+    "@invalidEmailVerificationError": {
+        "description": "Error message for invalid email verification"
+    },
+    "errorRetrievingEmailError": "Erreur lors de la récupération de l'adresse email. Veuillez vous reconnecter.",
+    "@errorRetrievingEmailError": {
+        "description": "Error message when retrieving email fails"
+    },
+    "verificationGraphQLErrorDefault": "Une erreur s'est produite",
+    "@verificationGraphQLErrorDefault": {
+        "description": "Default error message for GraphQL verification issues"
+    },
+    "invalidLoginResponseError": "Réponse de connexion invalide",
+    "@invalidLoginResponseError": {
+        "description": "Error message for invalid login response"
+    },
+    "verificationFailedDefault": "Échec de la vérification",
+    "@verificationFailedDefault": {
+        "description": "Default message for verification failure"
+    },
+    "unexpectedVerificationError": "Une erreur inattendue s'est produite : {error}",
+    "@unexpectedVerificationError": {
+        "description": "Error message for unexpected verification issues"
+    },
+    "enterOtpError": "Veuillez saisir l'OTP",
+    "@enterOtpError": {
+        "description": "Error message when the OTP field is empty"
+    },
+    "otpLengthError": "L'OTP doit comporter 6 chiffres",
+    "@otpLengthError": {
+        "description": "Error message for OTP length not equal to 6"
+    },
+    "otpNumbersOnlyError": "L'OTP doit contenir uniquement des chiffres",
+    "@otpNumbersOnlyError": {
+        "description": "Error message for OTP containing non-numeric characters"
+    },
+    "verifyOtpTitle": "Vérifier l'OTP",
+    "@verifyOtpTitle": {
+        "description": "Title for the OTP verification screen"
+    },
+    "enterOtpMessage": "Saisissez le code de vérification envoyé à\n{maskedEmail}",
+    "@enterOtpMessage": {
+        "description": "Message prompting the user to enter the OTP sent to their email"
+    },
+    "otpHintText": "Saisissez l'OTP à 6 chiffres",
+    "@otpHintText": {
+        "description": "Hint text for the OTP input field"
+    },
+    "verifyCodeButton": "Vérifier le code",
+    "@verifyCodeButton": {
+        "description": "Text for the button to verify the OTP"
+    },
+    "didNotReceiveCodePrompt": "Vous n'avez pas reçu le code ?",
+    "@didNotReceiveCodePrompt": {
+        "description": "Prompt for users who did not receive the OTP"
+    },
+    "resendLink": "Renvoyer",
+    "@resendLink": {
+        "description": "Text for the resend link for the OTP"
+    },
+    "futureBuilderErrorPrefix": "Erreur de construction",
+    "@futureBuilderErrorPrefix": {
+        "description": "Prefix for error messages shown in FutureBuilder"
+    },
+    "unexpectedPasswordResetVerificationError": "Une erreur inattendue s'est produite lors de la vérification de la réinitialisation du mot de passe",
+    "@unexpectedPasswordResetVerificationError": {
+        "description": "Generic error message for unexpected issues during password reset verification"
+    },
+    "forgotPasswordTitle": "Mot de passe oublié",
+    "@forgotPasswordTitle": {
+        "description": "Main title on the Forgot Password header"
+    },
+    "enterEmailToResetPasswordSubtitle": "Saisissez votre email pour réinitialiser le mot de passe",
+    "@enterEmailToResetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter email to reset password"
+    },
+    "passwordResetOtpSentMessage": "L'OTP pour réinitialiser le mot de passe a été envoyé à votre adresse email.",
+    "@passwordResetOtpSentMessage": {
+        "description": "Message indicating that the OTP for password reset has been sent"
+    },
+    "resetPasswordButton": "Réinitialiser le mot de passe",
+    "@resetPasswordButton": {
+        "description": "Text for the button to reset the password"
+    },
+    "rememberPasswordPrompt": "Vous vous souvenez de votre mot de passe ?",
+    "@rememberPasswordPrompt": {
+        "description": "Prompt for users who remember their password"
+    },
+    "signInLink": "Se connecter",
+    "@signInLink": {
+        "description": "Text for the sign in link on the Forgot Password page"
+    },
+    
+    "resetPasswordTitle": "Réinitialiser le mot de passe",
+    "@resetPasswordTitle": {
+        "description": "Main title on the Reset Password header"
+    },
+    "resetPasswordSubtitle": "Entrez votre nouveau mot de passe",
+    "@resetPasswordSubtitle": {
+        "description": "Subtitle prompting the user to enter a new password"
+    },
+    "newPasswordHint": "Nouveau mot de passe",
+    "@newPasswordHint": {
+        "description": "Hint text for the new password input field"
+    },
+    "confirmPasswordHint": "Confirmer le mot de passe",
+    "@confirmPasswordHint": {
+        "description": "Hint text for the confirm password input field"
+    },
+    "passwordRequired": "Veuillez entrer un mot de passe",
+    "@passwordRequired": {
+        "description": "Error message when the password field is empty"
+    },
+    "passwordLengthError": "Le mot de passe doit contenir au moins 8 caractères",
+    "@passwordLengthError": {
+        "description": "Error message for password less than minimum required length"
+    },
+    "passwordNumberError": "Le mot de passe doit contenir au moins un chiffre",
+    "@passwordNumberError": {
+        "description": "Error message for password missing a digit"
+    },
+    "passwordMismatchError": "Les mots de passe ne correspondent pas",
+    "@passwordMismatchError": {
+        "description": "Error message when the passwords do not match"
+    },
+    "passwordResetSuccess": "Votre mot de passe a été réinitialisé avec succès",
+    "@passwordResetSuccess": {
+        "description": "Message indicating that the password has been reset successfully"
+    },
+    "genericError": "Une erreur s'est produite",
+    "@genericError": {
+        "description": "Generic error message for various issues"
+    }
+    
+}

@@ -3,6 +3,7 @@ import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -18,6 +19,8 @@ class _LoginFormState extends State<LoginForm> {
   bool _isLoading = false;
 
   Future<void> _performLogin() async {
+    final l10n = S.of(context)!;
+
     if (!_validateInputs()) return;
 
     setState(() => _isLoading = true);
@@ -35,9 +38,11 @@ class _LoginFormState extends State<LoginForm> {
       );
 
       if (result.hasException) {
-        final errorMessage = result.exception?.graphqlErrors.first.message ?? 'Login failed';
+        final errorMessage = result.exception?.graphqlErrors.first.message ??
+            l10n.loginFailedDefaultError; // Use localized fallback
         _showErrorSnackBar(errorMessage);
-        if (errorMessage == 'Please verify your email before logging in') {
+        if (errorMessage == l10n.emailVerificationRequiredError) {
+          // Compare with localized string
           AppRoutes.navigateToActivateAccount(context);
         }
         return;
@@ -46,7 +51,8 @@ class _LoginFormState extends State<LoginForm> {
       final loginResult = result.data?['login'];
       if (loginResult['status'] == 200) {
         if (mounted) {
-          _showSuccessSnackBar('Login successful!');
+          _showSuccessSnackBar(
+              l10n.loginSuccessfulMessage); // Use localized message
 
           // Store email and verify storage
           final prefs = await SharedPreferences.getInstance();
@@ -56,17 +62,20 @@ class _LoginFormState extends State<LoginForm> {
           // Double-check email was stored correctly
           final storedEmail = prefs.getString('email');
           if (storedEmail == null || storedEmail != email) {
-            _showErrorSnackBar('Failed to save email. Please try again.');
+            _showErrorSnackBar(
+                l10n.emailSaveFailedError); // Use localized message
             return;
           }
 
           AppRoutes.navigateToVerifyLogin(context);
         }
       } else {
-        _showErrorSnackBar(loginResult['message'] ?? 'Login failed');
+        // If the server provides a specific message, use it, otherwise use the localized fallback
+        _showErrorSnackBar(
+            loginResult['message'] ?? l10n.loginFailedDefaultError);
       }
     } catch (e) {
-      _showErrorSnackBar('An unexpected error occurred');
+      _showErrorSnackBar(l10n.unexpectedError); // Use localized message
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -75,13 +84,15 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   bool _validateInputs() {
+    final l10n = S.of(context)!; // Access l10n here for messages
+
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      _showErrorSnackBar('Please fill in all fields');
+      _showErrorSnackBar(l10n.fillAllFieldsError); // Use localized message
       return false;
     }
     if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
         .hasMatch(_emailController.text)) {
-      _showErrorSnackBar('Please enter a valid email');
+      _showErrorSnackBar(l10n.invalidEmailError); // Use localized message
       return false;
     }
     return true;
@@ -133,6 +144,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -152,14 +165,14 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           _buildTextField(
             controller: _emailController,
-            hint: 'Email Address',
+            hint: l10n.emailHintText, // Use localized hint
             icon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
           ),
           const SizedBox(height: 16),
           _buildTextField(
             controller: _passwordController,
-            hint: 'Password',
+            hint: l10n.passwordHintText, // Use localized hint
             icon: Icons.lock_outline,
             obscureText: _obscurePassword,
             suffixIcon: IconButton(
@@ -179,7 +192,8 @@ class _LoginFormState extends State<LoginForm> {
             child: TextButton(
               onPressed: () => AppRoutes.navigateToForgetPassword(context),
               child: Text(
-                'Forgot Password?',
+                // Remove const
+                l10n.forgotPasswordLink, // Use localized text
                 style: TextStyle(
                   color: Colors.deepPurple.shade300,
                 ),
@@ -206,9 +220,12 @@ class _LoginFormState extends State<LoginForm> {
                       strokeWidth: 2,
                     ),
                   )
-                : const Text(
-                    'LOGIN',
-                    style: TextStyle(
+                : Text(
+                    // Remove const
+                    l10n.login
+                        .toUpperCase(), // Use localized text and convert to uppercase
+                    style: const TextStyle(
+                      // Keep const for static style
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,
@@ -222,7 +239,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildTextField({
     required TextEditingController controller,
-    required String hint,
+    required String hint, // This hint is now expected to be a localized string
     required IconData icon,
     bool obscureText = false,
     TextInputType keyboardType = TextInputType.text,
@@ -236,7 +253,7 @@ class _LoginFormState extends State<LoginForm> {
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: Colors.deepPurple),
         suffixIcon: suffixIcon,
-        hintText: hint,
+        hintText: hint, // The localized hint string is used directly here
         hintStyle: TextStyle(color: Colors.grey.shade600),
         filled: true,
         fillColor: Colors.grey.shade100,

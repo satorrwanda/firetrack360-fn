@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class ForgetPasswordHeader extends StatelessWidget {
   const ForgetPasswordHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+
     return Column(
       children: [
         // Icon with container
@@ -43,7 +46,8 @@ class ForgetPasswordHeader extends StatelessWidget {
             end: Alignment.bottomCenter,
           ).createShader(bounds),
           child: Text(
-            'Forgot Password',
+            // Remove const
+            l10n.forgotPasswordTitle, // Use localized string
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 36,
@@ -66,7 +70,6 @@ class ForgetPasswordHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        // Subtitle with container
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
           decoration: BoxDecoration(
@@ -77,7 +80,7 @@ class ForgetPasswordHeader extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Enter your email to reset password',
+            l10n.enterEmailToResetPasswordSubtitle, 
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,

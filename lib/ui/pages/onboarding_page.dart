@@ -1,76 +1,65 @@
 import 'dart:async';
+import 'package:firetrack360/generated/l10n.dart';
+import 'package:firetrack360/providers/locale_provider.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/onboarding_buttons.dart';
-import 'package:firetrack360/ui/models/onboarding_content.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/onboarding_item.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class OnboardingPage extends HookWidget {
-  OnboardingPage({Key? key}) : super(key: key);
-
-  final List<OnboardingContent> _onboardingContents = [
-    OnboardingContent(
-      title: 'Welcome to FireSecure360',
-      description: 'Secure your world, one tap at a time',
-      image: 'assets/images/onboarding1.jpg',
-    ),
-    OnboardingContent(
-      title: 'Get Started',
-      description: 'Create an account or log in to access all features',
-      image: 'assets/images/onboarding2.jpg',
-    ),
-    OnboardingContent(
-      title: 'Secure and Simple',
-      description: 'Streamline your security management',
-      image: 'assets/images/onboarding3.jpg',
-    ),
-  ];
+class OnboardingPage extends HookConsumerWidget {
+  // Changed to ConsumerHookWidget
+  const OnboardingPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Added WidgetRef ref
+    // Watch the localeProvider here to trigger rebuilds
+    ref.watch(localeProvider);
+
+    final l10n = S.of(context)!;
     final pageController = usePageController();
     final currentPage = useState(0);
     final isMounted = useIsMounted();
     final timerRef = useRef<Timer?>(null);
 
-    Future<void> checkOnboardingStatus() async {
-      final prefs = await SharedPreferences.getInstance();
-      final isOnboardingComplete =
-          prefs.getBool('isOnboardingComplete') ?? false;
+    // Keep this list for image paths
+    final onboardingImages = [
+      'assets/images/onboarding1.jpg',
+      'assets/images/onboarding2.jpg',
+      'assets/images/onboarding3.jpg',
+    ];
 
-      if (isOnboardingComplete && isMounted()) {
+    // Auto-slide setup
+    void startAutoSlide() {
+      timerRef.value?.cancel();
+      timerRef.value = Timer.periodic(const Duration(seconds: 3), (timer) {
+        if (!isMounted()) return timer.cancel();
+        final next = ((pageController.page ?? 0).toInt() + 1) %
+            onboardingImages.length; // Use onboardingImages.length
+        pageController.animateToPage(
+          next,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      });
+    }
+
+    // Handle onboarding check
+    Future<void> checkOnboardingStatus() async {
+      if (!isMounted()) return;
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool('isOnboardingComplete') ?? false) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (isMounted()) {
-            AppRoutes.navigateToLogin(context);
-          }
+          if (isMounted()) AppRoutes.navigateToLogin(context);
         });
       }
     }
 
-    void startAutoSlide() {
-      timerRef.value?.cancel();
-
-      timerRef.value = Timer.periodic(const Duration(seconds: 3), (timer) {
-        if (!isMounted()) {
-          timer.cancel();
-          return;
-        }
-
-        if (pageController.hasClients) {
-          final nextPage = ((pageController.page ?? 0).toInt() + 1) %
-              _onboardingContents.length;
-          pageController.animateToPage(
-            nextPage,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        }
-      });
-    }
-
+    // Trigger setup and cleanup
     useEffect(() {
       checkOnboardingStatus();
       startAutoSlide();
@@ -80,24 +69,18 @@ class OnboardingPage extends HookWidget {
       };
     }, []);
 
-    Future<void> handleNavigation(bool isLogin) async {
+    // Handle user navigation
+    Future<void> handleNavigation(bool toLogin) async {
       if (!isMounted()) return;
-
       try {
-        debugPrint('Starting navigation process');
         timerRef.value?.cancel();
-        timerRef.value = null;
-
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isOnboardingComplete', true);
-
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (isMounted()) {
-            if (isLogin) {
-              AppRoutes.navigateToLogin(context);
-            } else {
-              AppRoutes.navigateToRegister(context);
-            }
+            toLogin
+                ? AppRoutes.navigateToLogin(context)
+                : AppRoutes.navigateToRegister(context);
           }
         });
       } catch (e) {
@@ -119,40 +102,41 @@ class OnboardingPage extends HookWidget {
           ),
         ),
         child: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
-              PageIndicator(
-                currentPage: currentPage.value,
-                pageCount: _onboardingContents.length,
-                onPageSelect: (index) {
-                  if (!isMounted()) return;
-                  pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOutCubic,
-                  );
-                },
-              ),
-              Expanded(
-                child: PageView.builder(
-                  controller: pageController,
-                  itemCount: _onboardingContents.length,
-                  onPageChanged: (page) {
-                    if (isMounted()) {
-                      currentPage.value = page;
-                    }
-                  },
-                  itemBuilder: (context, index) {
-                    return OnboardingItem(
-                      content: _onboardingContents[index],
-                      screenWidth: MediaQuery.of(context).size.width,
-                    );
-                  },
-                ),
-              ),
-              OnboardingButtons(
-                onRegister: () => handleNavigation(false),
-                onLogin: () => handleNavigation(true),
+              Column(
+                children: [
+                  PageIndicator(
+                    currentPage: currentPage.value,
+                    pageCount:
+                        onboardingImages.length, // Use onboardingImages.length
+                    onPageSelect: (index) {
+                      if (isMounted()) {
+                        pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOutCubic,
+                        );
+                      }
+                    },
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: onboardingImages
+                          .length, // Use onboardingImages.length
+                      onPageChanged: (index) => currentPage.value = index,
+                      itemBuilder: (_, index) => OnboardingItem(
+                        index: index, // Pass the index
+                        screenWidth: MediaQuery.of(context).size.width,
+                      ),
+                    ),
+                  ),
+                  OnboardingButtons(
+                    onRegister: () => handleNavigation(false),
+                    onLogin: () => handleNavigation(true),
+                  ),
+                ],
               ),
             ],
           ),

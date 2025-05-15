@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import l10n
 
 class AuthService {
   Future<bool> registerUser({
@@ -13,6 +14,8 @@ class AuthService {
     required String password,
     required String confirmPassword,
   }) async {
+    final l10n = S.of(context)!; // Access l10n here
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final client = GraphQLProvider.of(context).value;
@@ -36,7 +39,8 @@ class AuthService {
       if (result.hasException) {
         debugPrint('GraphQL Errors: ${result.exception?.graphqlErrors}');
         debugPrint('Link Error: ${result.exception?.linkException}');
-        final error = _handleGraphQLException(result.exception!);
+        final error =
+            _handleGraphQLException(context, result.exception!); // Pass context
         _showErrorSnackBar(context, error);
         return false;
       }
@@ -57,7 +61,7 @@ class AuthService {
         _showSuccessSnackBar(
           context,
           data['message'] ??
-              'Registration successful! Please verify your email with the OTP sent.',
+              l10n.registrationSuccessDefaultMessage, // Use localized fallback
         );
 
         AppRoutes.navigateToActivateAccount(context);
@@ -66,7 +70,8 @@ class AuthService {
       } else {
         _showErrorSnackBar(
           context,
-          data?['message'] ?? 'Registration failed. Please try again.',
+          data?['message'] ??
+              l10n.registrationFailedDefaultMessage, // Use localized fallback
         );
       }
     } catch (e, stackTrace) {
@@ -74,7 +79,7 @@ class AuthService {
       debugPrint('Stack trace: $stackTrace');
       _showErrorSnackBar(
         context,
-        'An unexpected error occurred. Please try again later.',
+        l10n.unexpectedAuthError, // Use localized message
       );
     }
     return false;
@@ -85,6 +90,8 @@ class AuthService {
     required String otp,
     required BuildContext context,
   }) async {
+    // Localization in this method is not directly needed for text display,
+    // as it primarily handles logic.
     try {
       final GraphQLClient client = GraphQLProvider.of(context).value;
 
@@ -99,42 +106,53 @@ class AuthService {
       final QueryResult result = await client.mutate(options);
 
       if (result.hasException) {
+        // Consider showing a localized error here as well if verification fails
         return false;
       }
 
       final dynamic data = result.data?['verifyAccount'];
       return data?['status'] == 200;
     } catch (e) {
+      // Consider showing a localized error here as well
       return false;
     }
   }
 
-  String _handleGraphQLException(OperationException exception) {
+  String _handleGraphQLException(
+      BuildContext context, OperationException exception) {
+    // Added BuildContext
+    final l10n = S.of(context)!; // Access l10n here
+
     if (exception.graphqlErrors.isNotEmpty) {
       final firstError = exception.graphqlErrors.first;
 
       final errorCode = firstError.extensions?['status'] as int?;
       switch (errorCode) {
         case 409:
-          return 'This email is already registered. Please use a different email or try logging in.';
+          return l10n.emailAlreadyRegisteredError; // Use localized message
         case 400:
-          return 'Please check your information and try again.';
+          return l10n.checkInformationError; // Use localized message
         case 422:
-          return 'Invalid input. Please check your details.';
+          return l10n.invalidInputError; // Use localized message
         default:
-          return firstError.message;
+          // If the server provides a specific message, use it.
+          // Otherwise, fall back to a localized default error.
+          return firstError.message.isNotEmpty
+              ? firstError.message
+              : l10n.defaultError;
       }
     }
 
     if (exception.linkException != null) {
-      return 'Unable to connect to the server. Please check your internet connection.';
+      return l10n.connectionError; // Use localized message
     }
 
-    return 'An error occurred. Please try again.';
+    return l10n.defaultError; // Use localized message
   }
 
   void _showSuccessSnackBar(BuildContext context, String message) {
     final theme = Theme.of(context);
+    final l10n = S.of(context)!; // Access l10n here
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -154,7 +172,7 @@ class AuthService {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Success',
+                      l10n.successSnackBarTitle, // Use localized title
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -162,7 +180,7 @@ class AuthService {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      message,
+                      message, // This message is already localized
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: Colors.white.withOpacity(0.9),
                       ),
@@ -182,7 +200,7 @@ class AuthService {
         margin: const EdgeInsets.all(16),
         duration: const Duration(seconds: 5),
         action: SnackBarAction(
-          label: 'DISMISS',
+          label: l10n.dismissSnackBarAction, // Use localized action label
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -194,6 +212,7 @@ class AuthService {
 
   void _showErrorSnackBar(BuildContext context, String message) {
     final theme = Theme.of(context);
+    final l10n = S.of(context)!; // Access l10n here
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -213,7 +232,7 @@ class AuthService {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Error',
+                      l10n.errorSnackBarTitle, // Use localized title
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -221,7 +240,7 @@ class AuthService {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      message,
+                      message, // This message is already localized
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: Colors.white.withOpacity(0.9),
                       ),
@@ -241,7 +260,7 @@ class AuthService {
         margin: const EdgeInsets.all(16),
         duration: const Duration(seconds: 5),
         action: SnackBarAction(
-          label: 'DISMISS',
+          label: l10n.dismissSnackBarAction, // Use localized action label
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -256,6 +275,8 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    final l10n = S.of(context)!; // Access l10n here
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final client = GraphQLProvider.of(context).value;
@@ -272,7 +293,10 @@ class AuthService {
       final result = await client.mutate(options);
 
       if (result.hasException) {
-        _showErrorSnackBar(context, _handleGraphQLException(result.exception!));
+        _showErrorSnackBar(
+            context,
+            _handleGraphQLException(
+                context, result.exception!)); // Pass context
         return false;
       }
 
@@ -283,13 +307,14 @@ class AuthService {
       } else {
         _showErrorSnackBar(
           context,
-          data?['message'] ?? 'Login failed. Please try again.',
+          data?['message'] ??
+              l10n.loginFailedDefaultMessage, // Use localized fallback
         );
       }
     } catch (e) {
       _showErrorSnackBar(
         context,
-        'An unexpected error occurred. Please try again later.',
+        l10n.unexpectedAuthError, // Use localized message
       );
       debugPrint('Login error: $e');
     }
@@ -301,6 +326,8 @@ class AuthService {
     required String email,
     required String otp,
   }) async {
+    // You could access l10n here if you need to show snackbars
+    // in this method directly based on the result.
     try {
       final client = GraphQLProvider.of(context).value;
       debugPrint('Verifying login for email: $email');
@@ -317,6 +344,7 @@ class AuthService {
 
       if (result.hasException) {
         debugPrint('Verification error: ${result.exception}');
+        // Consider showing a localized error here as well if verification fails
         return result;
       }
 
@@ -335,7 +363,12 @@ class AuthService {
           final decodedToken = JwtDecoder.decode(accessToken);
           debugPrint('Decoded token contents: $decodedToken');
 
-          // Save tokens - this will extract and save the ID
+          // Decode refresh token for user ID
+          final Map<String, dynamic> decodedRefreshToken =
+              JwtDecoder.decode(refreshToken);
+          debugPrint('Decoded Refresh Token: $decodedRefreshToken');
+
+          // Save tokens - this will extract and save the ID and role
           await AuthService.saveTokens(
             accessToken: accessToken,
             refreshToken: refreshToken,
@@ -351,6 +384,7 @@ class AuthService {
     } catch (e, stackTrace) {
       debugPrint('Verification error: $e');
       debugPrint('Stack trace: $stackTrace');
+      // Consider showing a localized error here as well
       throw Exception('Verification error: $e');
     }
   }
@@ -359,6 +393,8 @@ class AuthService {
     required BuildContext context,
     required String email,
   }) async {
+    final l10n = S.of(context)!; // Access l10n here
+
     try {
       final client = GraphQLProvider.of(context).value;
 
@@ -374,7 +410,10 @@ class AuthService {
       final result = await client.mutate(options);
 
       if (result.hasException) {
-        _showErrorSnackBar(context, _handleGraphQLException(result.exception!));
+        _showErrorSnackBar(
+            context,
+            _handleGraphQLException(
+                context, result.exception!)); // Pass context
         return false;
       }
 
@@ -382,29 +421,38 @@ class AuthService {
       if (data != null && (data['status'] == 200 || data['status'] == 201)) {
         _showSuccessSnackBar(
           context,
-          data['message'] ?? 'Verification code has been resent successfully.',
+          data['message'] ??
+              l10n.resendOtpSuccessDefaultMessage, // Use localized fallback
         );
         return true;
       } else {
         _showErrorSnackBar(
           context,
           data?['message'] ??
-              'Failed to resend verification code. Please try again.',
+              l10n.resendOtpFailedDefaultMessage, // Use localized fallback
         );
       }
     } catch (e) {
       _showErrorSnackBar(
         context,
-        'An unexpected error occurred. Please try again later.',
+        l10n.unexpectedAuthError, // Use localized message
       );
       debugPrint('Resend OTP error: $e');
     }
     return false;
   }
 
-  static String? validateEmail(String? value) {
+  // --- Static Validation Methods (These are separate from the service instance methods) ---
+
+  // These static validator methods need to be called from a widget's
+  // validator property using a lambda to access BuildContext.
+
+  static String? validateEmail(BuildContext context, String? value) {
+    // Added BuildContext
+    final l10n = S.of(context)!; // Access l10n here
+
     if (value == null || value.isEmpty) {
-      return 'Please enter your email address';
+      return l10n.enterEmailError; // Use localized message
     }
 
     final emailRegex = RegExp(
@@ -412,69 +460,82 @@ class AuthService {
     );
 
     if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
+      return l10n.invalidEmailError; // Use localized message
     }
 
     return null;
   }
 
-  static String? validatePassword(String? value) {
+  static String? validatePassword(BuildContext context, String? value) {
+    // Added BuildContext
+    final l10n = S.of(context)!; // Access l10n here
+
     if (value == null || value.isEmpty) {
-      return 'Please enter a password';
+      return l10n.enterPasswordError; // Use localized message
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return l10n.passwordMinLengthError; // Use localized message
     }
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+      return l10n.passwordUppercaseError; // Use localized message
     }
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
+      return l10n.passwordLowercaseError; // Use localized message
     }
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number';
+      return l10n.passwordDigitError; // Use localized message
     }
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
+      return l10n.passwordSpecialCharError; // Use localized message
     }
     return null;
   }
 
-  static String? validateConfirmPassword(String? value, String password) {
+  static String? validateConfirmPassword(
+      BuildContext context, String? value, String password) {
+    // Added BuildContext
+    final l10n = S.of(context)!; // Access l10n here
+
     if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
+      return l10n.confirmPasswordError; // Use localized message
     }
     if (value != password) {
-      return 'Passwords do not match';
+      return l10n.passwordsDoNotMatchError; // Use localized message
     }
     return null;
   }
 
-  static String? validatePhone(String? value, String? countryCode) {
+  static String? validatePhone(
+      BuildContext context, String? value, String? countryCode) {
+    // Added BuildContext
+    final l10n = S.of(context)!; // Access l10n here
+
     if (value == null || value.isEmpty) {
-      return 'Please enter your phone number';
+      return l10n.enterPhoneNumberError; // Use localized message
     }
 
     if (countryCode == '+250') {
       // Rwanda
       if (value.length != 9) {
-        return 'Rwanda phone numbers must be 9 digits';
+        return l10n.rwandaPhoneNumberLengthError; // Use localized message
       }
       if (!value.startsWith('7')) {
-        return 'Rwanda phone numbers must start with 7';
+        return l10n.rwandaPhoneNumberStartError; // Use localized message
       }
     } else {
       if (value.length < 9) {
-        return 'Phone number must be at least 9 digits';
+        return l10n.phoneNumberMinLengthError; // Use localized message
       }
       if (value.length > 10) {
-        return 'Phone number cannot exceed 10 digits';
+        // This validation seems off, max length 10 is less than 9 digits.
+        // Consider if this is intended or a typo. Assuming it's intended based on original code.
+        return l10n.phoneNumberMaxLengthError; // Use localized message
       }
     }
     return null;
   }
 
-  // Token management
+  // Token management methods (localization not directly needed here)
   static Future<void> clearAllTokens() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('accessToken');
@@ -495,7 +556,8 @@ class AuthService {
 
   static Future<void> logout() async {
     await clearAllTokens();
-    debugPrint('Logged out successfully');
+    debugPrint(
+        'Logged out successfully'); // Consider localizing this if shown to user
   }
 
   static const String _accessTokenKey = 'accessToken';
@@ -528,26 +590,30 @@ class AuthService {
       if (decodedAccessToken.containsKey('role')) {
         final role = decodedAccessToken['role'].toString().toLowerCase();
         await prefs.setString(_userRoleKey, role);
-        debugPrint('Saved Role: $role');
+        debugPrint('Saved Role: $role'); // Consider localizing
       }
 
       // Extract ID from refresh token
       if (decodedRefreshToken.containsKey('id')) {
         final id = decodedRefreshToken['id'].toString();
         await prefs.setString(_userIdKey, id);
-        debugPrint('Saved ID from refresh token: $id');
+        debugPrint('Saved ID from refresh token: $id'); // Consider localizing
       } else {
-        debugPrint('No ID found in refresh token');
+        debugPrint('No ID found in refresh token'); // Consider localizing
       }
 
       // Verify saved data
       final savedId = await prefs.getString(_userIdKey);
       final savedRole = await prefs.getString(_userRoleKey);
-      debugPrint('Verification - Saved ID: $savedId, Saved Role: $savedRole');
+      debugPrint(
+          'Verification - Saved ID: $savedId, Saved Role: $savedRole'); // Consider localizing
     } catch (e, stackTrace) {
-      debugPrint('Error saving tokens: $e');
-      debugPrint('Stack trace: $stackTrace');
-      throw Exception('Failed to save authentication data');
+      debugPrint(
+          'Error saving tokens: $e'); // Consider localizing if shown to user
+      debugPrint(
+          'Stack trace: $stackTrace'); // Consider localizing if shown to user
+      throw Exception(
+          'Failed to save authentication data'); // Consider localizing
     }
   }
 
@@ -558,7 +624,7 @@ class AuthService {
       if (token == null) return null;
       return JwtDecoder.decode(token);
     } catch (e) {
-      debugPrint('Error decoding token: $e');
+      debugPrint('Error decoding token: $e'); // Consider localizing if shown
       return null;
     }
   }
@@ -568,7 +634,7 @@ class AuthService {
       final prefs = await SharedPreferences.getInstance();
       return prefs.getString(_userRoleKey);
     } catch (e) {
-      debugPrint('Error getting role: $e');
+      debugPrint('Error getting role: $e'); // Consider localizing if shown
       return null;
     }
   }
@@ -580,7 +646,8 @@ class AuthService {
       if (token == null) return false;
       return !JwtDecoder.isExpired(token);
     } catch (e) {
-      debugPrint('Error checking authentication: $e');
+      debugPrint(
+          'Error checking authentication: $e'); // Consider localizing if shown
       return false;
     }
   }

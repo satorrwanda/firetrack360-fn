@@ -3,6 +3,7 @@ import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firetrack360/services/auth_service.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class VerifyLoginPage extends StatefulWidget {
   const VerifyLoginPage({super.key});
@@ -24,14 +25,59 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
     _loadCredentials();
   }
 
+  // --- Helper method to mask email (moved up) ---
+  String _maskEmail(String email) {
+    if (email.isEmpty) return '';
+
+    final parts = email.split('@');
+    if (parts.length != 2) return email;
+
+    final localPart = parts[0];
+    final domain = parts[1];
+
+    // Keep first 3 and last 2 characters of local part, mask the rest
+    String maskedLocal = localPart;
+    if (localPart.length > 5) {
+      maskedLocal = localPart.substring(0, 3) +
+          '*' * (localPart.length - 5) +
+          localPart.substring(localPart.length - 2);
+    } else if (localPart.length > 3) {
+      maskedLocal = localPart.substring(0, 3) + '*' * (localPart.length - 3);
+    }
+
+    // Mask domain except the TLD
+    final domainParts = domain.split('.');
+    String maskedDomain = domain;
+    if (domainParts.length > 1) {
+      final tld = domainParts.last;
+      final domainName = domainParts.first;
+      if (domainName.length > 3) {
+        maskedDomain =
+            '${domainName.substring(0, 3)}${'*' * (domainName.length - 3)}.${tld}';
+      } else {
+        maskedDomain = domainName +
+            '*' * (domain.length - domainName.length - 1) +
+            '.' +
+            tld;
+      }
+    } else if (domain.length > 3) {
+      maskedDomain = domain.substring(0, 3) + '*' * (domain.length - 3);
+    }
+
+    return '$maskedLocal@$maskedDomain';
+  }
+  // --- End Helper method ---
+
   Future<void> _loadCredentials() async {
+    final l10n = S.of(context)!;
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final email = prefs.getString('email');
 
       if (email == null || email.isEmpty) {
-        // No email stored, navigate back to login
-        _showErrorAndNavigateToLogin('No email found. Please log in again.');
+        _showErrorAndNavigateToLogin(
+            l10n.noEmailFoundError); // Use localized message
         return;
       }
 
@@ -41,47 +87,38 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
       });
 
       if (!_isEmailValid) {
-        _showErrorAndNavigateToLogin('Invalid email. Please log in again.');
+        _showErrorAndNavigateToLogin(
+            l10n.invalidEmailVerificationError); // Use localized message
       }
     } catch (e) {
       _showErrorAndNavigateToLogin(
-          'Error retrieving email. Please log in again.');
+          l10n.errorRetrievingEmailError); // Use localized message
     }
   }
 
   // Email validation method
   bool _isValidEmail(String email) {
-    // Comprehensive email validation
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
       caseSensitive: false,
     );
-
-    // Additional checks
     if (email.isEmpty) return false;
-    if (email.length > 254) return false; // RFC 5321
-    if (email.contains('..')) return false; // No consecutive dots
-
+    if (email.length > 254) return false;
+    if (email.contains('..')) return false;
     return emailRegex.hasMatch(email);
   }
 
   void _showErrorAndNavigateToLogin(String message) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Show error first
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.red,
-        ),
-      );
+      _showErrorSnackBar(message); // Use the local error snackbar
 
-      // Then navigate to login
       AppRoutes.navigateToLogin(context);
     });
   }
 
   Future<void> _verifyLogin() async {
-    // Validate form before proceeding
+    final l10n = S.of(context)!; // Access l10n here
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -93,7 +130,7 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
       final email = prefs.getString('email') ?? '';
 
       if (email.isEmpty) {
-        _showErrorSnackBar('Email not found. Please log in again.');
+        _showErrorSnackBar(l10n.noEmailFoundError); // Use localized message
         return;
       }
 
@@ -107,7 +144,7 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
 
       if (result.hasException) {
         _showErrorSnackBar(result.exception?.graphqlErrors.first.message ??
-            'An error occurred');
+            l10n.verificationGraphQLErrorDefault); // Use localized fallback
         return;
       }
 
@@ -117,48 +154,165 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
         final String? refreshToken = loginResult['refreshToken'];
 
         if (accessToken != null && refreshToken != null) {
-          // Store tokens in SharedPreferences
-          final prefs = await SharedPreferences.getInstance();
-          await Future.wait([
-            prefs.setString('accessToken', accessToken),
-            prefs.setString('refreshToken', refreshToken),
-          ]);
+          // Store tokens (AuthService handles localization of this step's messages if implemented)
+          // If AuthService saves tokens and shows a success message internally,
+          // you might not need a success snackbar here. If you want a specific
+          // snackbar on THIS page, you can add it and use _showSuccessSnackBar.
+          // _showSuccessSnackBar(l10n.verificationSuccessfulMessage); // Add a key for this if needed
 
           // Navigate to home page
           if (mounted) {
             AppRoutes.navigateToHome(context);
           }
         } else {
-          _showErrorSnackBar('Invalid login response');
+          _showErrorSnackBar(
+              l10n.invalidLoginResponseError); // Use localized message
         }
       } else {
-        _showErrorSnackBar(loginResult['message'] ?? 'Verification failed');
+        _showErrorSnackBar(loginResult['message'] ??
+            l10n.verificationFailedDefault); // Use localized fallback
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        _showErrorSnackBar('An unexpected error occurred: $e');
+        _showErrorSnackBar(l10n.unexpectedVerificationError(
+            e.toString())); // Use localized message with placeholder
       }
     }
   }
 
-  void _showErrorSnackBar(String message) {
+  // --- Local SnackBar methods using localized strings ---
+  void _showSuccessSnackBar(String message) {
+    final l10n = S.of(context)!; // Access l10n for title/action
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
+        content: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.check_circle_outline_rounded,
+                color: Colors.white,
+                size: 28,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l10n.successSnackBarTitle, // Use localized title
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      message, // This message is already localized
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: const Color(0xFF00A36C),
+        behavior: SnackBarBehavior.floating,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: l10n.dismissSnackBarAction, // Use localized action label
+          textColor: Colors.white,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
       ),
     );
   }
 
+  void _showErrorSnackBar(String message) {
+    final l10n = S.of(context)!; // Access l10n for title/action
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.error_outline_rounded,
+                color: Colors.white,
+                size: 28,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l10n.errorSnackBarTitle, // Use localized title
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      message, // This message is already localized
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.red.shade600,
+        behavior: SnackBarBehavior.floating,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: l10n.dismissSnackBarAction, // Use localized action label
+          textColor: Colors.white,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      ),
+    );
+  }
+  // --- End Local SnackBar methods ---
+
   @override
   Widget build(BuildContext context) {
-    // If email is empty, return empty container or loading indicator
+    final l10n = S.of(context)!; // Access l10n here for UI texts
+
     if (_email.isEmpty) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+          ),
         ),
+        backgroundColor: Colors.deepPurple,
       );
     }
 
@@ -180,10 +334,10 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 40),
-                const Text(
-                  'Verify OTP',
+                Text(
+                  l10n.verifyOtpTitle, // Use localized title
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -191,7 +345,8 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Enter the verification code sent to\n${_maskEmail(_email)}',
+                  l10n.enterOtpMessage(_maskEmail(
+                      _email)), // Use localized message with placeholder
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,
@@ -223,7 +378,7 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
                           keyboardType: TextInputType.number,
                           maxLength: 6,
                           decoration: InputDecoration(
-                            hintText: 'Enter 6-digit OTP',
+                            hintText: l10n.otpHintText, // Use localized hint
                             prefixIcon: const Icon(Icons.lock_outline,
                                 color: Colors.deepPurple),
                             filled: true,
@@ -235,16 +390,22 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
                             counterText: '',
                           ),
                           validator: (value) {
+                            final l10n = S
+                                .of(context)!; // Access l10n here for validator
+
                             if (value == null || value.isEmpty) {
-                              return 'Please enter the OTP';
+                              return l10n
+                                  .enterOtpError; // Use localized message
                             }
                             if (value.length != 6) {
-                              return 'OTP must be 6 digits';
+                              return l10n
+                                  .otpLengthError; // Use localized message
                             }
                             if (!RegExp(r'^\d+$').hasMatch(value)) {
-                              return 'OTP must contain only numbers';
+                              return l10n
+                                  .otpNumbersOnlyError; // Use localized message
                             }
-                            return null;
+                            return null; // Return null if validation passes
                           },
                         ),
                         const SizedBox(height: 32),
@@ -265,7 +426,14 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
                                     color: Colors.white,
                                     strokeWidth: 2,
                                   )
-                                : const Text('Verify Code'),
+                                : Text(
+                                    l10n.verifyCodeButton, // Use localized button text
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
                           ),
                         ),
                       ],
@@ -276,17 +444,21 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Didn't receive the code? ",
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      l10n.didNotReceiveCodePrompt, // Use localized prompt
+                      style: const TextStyle(color: Colors.white70),
                     ),
                     GestureDetector(
                       onTap: () {
-                        AppRoutes.navigateToLogin(context);
+                        // Optionally, call AuthService to resend OTP
+                        // AuthService().resendVerificationOtp(context: context, email: _email);
+                        // Then navigate or update UI
+                        AppRoutes.navigateToLogin(
+                            context); // Navigating to login on tap
                       },
-                      child: const Text(
-                        'Resend',
-                        style: TextStyle(
+                      child: Text(
+                        l10n.resendLink, // Use localized link text
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -300,40 +472,6 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
         ),
       ),
     );
-  }
-
-  String _maskEmail(String email) {
-    if (email.isEmpty) return '';
-
-    final parts = email.split('@');
-    if (parts.length != 2) return email;
-
-    final localPart = parts[0];
-    final domain = parts[1];
-
-    // Keep first 3 and last 2 characters of local part, mask the rest
-    String maskedLocal = localPart;
-    if (localPart.length > 5) {
-      maskedLocal = localPart.substring(0, 3) +
-          '*' * (localPart.length - 5) +
-          localPart.substring(localPart.length - 2);
-    } else if (localPart.length > 3) {
-      maskedLocal = localPart.substring(0, 3) + '*' * (localPart.length - 3);
-    }
-
-    // Mask domain except the TLD
-    final domainParts = domain.split('.');
-    String maskedDomain = domain;
-    if (domainParts.length > 1) {
-      final tld = domainParts.last;
-      final domainName = domainParts.first;
-      if (domainName.length > 3) {
-        maskedDomain =
-            '${domainName.substring(0, 3)}${'*' * (domainName.length - 3)}.$tld';
-      }
-    }
-
-    return '$maskedLocal@$maskedDomain';
   }
 
   @override

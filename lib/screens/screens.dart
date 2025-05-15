@@ -2,13 +2,13 @@
 export 'package:firetrack360/ui/pages/auth/pages/account_activation_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/forget_password_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/login_page.dart';
-export 'package:firetrack360/ui/pages/auth/pages/onboarding_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/register_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/reset_password_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/unauthorized_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/unknown_route_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/verify_login_page.dart';
 export 'package:firetrack360/ui/pages/auth/pages/verify_password_reset_page.dart';
+export 'package:firetrack360/ui/pages/onboarding_page.dart';
 
 // Main pages
 export 'package:firetrack360/ui/pages/home/home_page.dart';
