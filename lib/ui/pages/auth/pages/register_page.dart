@@ -2,15 +2,15 @@ import 'package:firetrack360/ui/pages/auth/widgets/register_form.dart';
 import 'package:firetrack360/ui/pages/auth/widgets/register_header.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:firetrack360/generated/l10n.dart'; // Import l10n
-import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart'; // Import LanguageToggler
+import 'package:firetrack360/generated/l10n.dart';
+import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final l10n = S.of(context)!; // Access l10n here
+    final l10n = S.of(context)!;
 
     return Scaffold(
       body: Stack(
@@ -55,9 +55,9 @@ class RegisterPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24), // Added spacing
+                    const SizedBox(height: 24),
                     Center(
-                      child: LanguageToggler(), // Added LanguageToggler here
+                      child: LanguageToggler(),
                     ),
                   ],
                 ),
