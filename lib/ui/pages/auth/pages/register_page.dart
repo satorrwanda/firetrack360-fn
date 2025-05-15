@@ -3,6 +3,7 @@ import 'package:firetrack360/ui/pages/auth/widgets/register_header.dart';
 import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:firetrack360/generated/l10n.dart'; // Import l10n
+import 'package:firetrack360/ui/pages/auth/widgets/language_toggle.dart'; // Import LanguageToggler
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -53,6 +54,10 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 24), // Added spacing
+                    Center(
+                      child: LanguageToggler(), // Added LanguageToggler here
                     ),
                   ],
                 ),
