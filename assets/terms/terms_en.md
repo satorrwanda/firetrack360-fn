@@ -212,5 +212,5 @@ We may update this Privacy Policy periodically. You will be notified through the
 If you have any questions about these Terms of Service and Privacy Policy, you can contact us:
 
 * By email: [ai.suport.windows@gmail.com](mailto:ai.suport.windows@gmail.com)
-* By visiting this page on our website: [https://firetrack360.com](https://firetrack360.satorrwanda.rw/)
+* By visiting this page on our website: [https://firetrack360.satorrwanda.rw](https://firetrack360.satorrwanda.rw/)
 

@@ -1,47 +1,166 @@
-# FireTrack 360 Conditions d'Utilisation et Politique de Confidentialité
+# FireTrack 360 — Conditions d'Utilisation et Politique de Confidentialité
 
 **Dernière mise à jour :** 15 mai 2025
 
-Veuillez lire attentivement ces conditions d'utilisation et cette politique de confidentialité avant de créer un compte et d'utiliser Notre Service.
+Veuillez lire attentivement ces conditions d'utilisation et cette politique de confidentialité avant de créer un compte et d'utiliser notre service.
+
+---
 
 ## Conditions d'Utilisation
 
 ### Interprétation et Définitions
 
-*   **Application** désigne le programme logiciel fourni par la Société, téléchargé par Vous sur un appareil électronique, nommé FireTrack 360, pour la gestion des services d'extincteurs, de l'inventaire et du suivi.
-*   **Société** (désignée dans le présent Contrat par "la Société", "Nous", "Notre" ou "Nos") fait référence à [Nom de Votre Entreprise], [Adresse de Votre Entreprise].
-*   **Service** désigne les fonctionnalités fournies par l'Application, y compris, sans s'y limiter, la demande de fourniture, de recharge, de maintenance et le suivi des extincteurs.
-*   **Conditions d'Utilisation** (également appelées "Conditions") désignent les présentes Conditions d'Utilisation qui constituent l'intégralité de l'accord entre Vous et la Société concernant l'utilisation du Service.
-*   **Vous** désigne la personne physique accédant ou utilisant le Service, ou la société, ou autre entité juridique pour le compte de laquelle cette personne accède ou utilise le Service, selon le cas.
+* **Application** : programme logiciel fourni par la Société, téléchargé sur un appareil électronique, nommé *FireTrack 360*, destiné à la gestion des services d’extincteurs, du stock et du suivi.
+* **Société** : \[Nom de Votre Entreprise], située à \[Adresse de Votre Entreprise].
+* **Service** : fonctionnalités de l’application, y compris la demande de fourniture, de recharge, de maintenance, de vérification périodique, de géolocalisation et de suivi des extincteurs.
+* **Conditions** : ces conditions d'utilisation qui régissent l'accès et l'utilisation du Service.
+* **Vous** : la personne physique ou morale qui accède ou utilise le Service.
 
 ### Reconnaissance
 
-Ces Conditions d'Utilisation régissent Votre utilisation de l'application mobile FireTrack 360 (le "Service"). En créant un compte et en utilisant le Service, Vous acceptez d'être lié par ces Conditions d'Utilisation. Si Vous n'êtes pas d'accord avec une partie de ces Conditions, Vous ne pouvez pas utiliser le Service.
+En créant un compte et en utilisant le Service, Vous acceptez d’être lié par ces Conditions. Si Vous n’êtes pas d’accord avec une partie quelconque, n’utilisez pas le Service.
 
-Vous déclarez avoir plus de 18 ans. La Société n'autorise pas les personnes de moins de 18 ans à utiliser le Service.
+Vous devez avoir au moins 18 ans pour utiliser le Service.
 
-Votre accès et votre utilisation du Service sont également conditionnés par Votre acceptation et Votre respect de la Politique de Confidentialité de la Société. Notre Politique de Confidentialité décrit Nos politiques et procédures en matière de collecte, d'utilisation et de divulgation de Vos informations personnelles lorsque Vous utilisez l'Application et Vous informe sur Vos droits en matière de confidentialité et sur la manière dont la loi Vous protège. Veuillez lire attentivement Notre Politique de Confidentialité avant d'utiliser Notre Service.
+Votre utilisation est aussi régie par notre [Politique de Confidentialité](#politique-de-confidentialité), que vous devez lire attentivement.
 
-*(Inclure les sections sur les Comptes Utilisateurs, les Demandes de Service, les Paiements (si applicable), les Responsabilités de l'Utilisateur, les Utilisations Interdites, la Propriété Intellectuelle, les Liens Vers d'Autres Sites Web, la Résiliation, la Limitation de Responsabilité, la Clause de Non-responsabilité "TEL QUEL" et "TEL QUE DISPONIBLE", le Droit Applicable, la Résolution des Litiges, Pour les Utilisateurs de l'Union Européenne (UE), la Conformité Légale aux États-Unis, la Divisibilité et la Renonciation, l'Exclusion de Responsabilité de Traduction et les Modifications des Présentes Conditions d'Utilisation. **Adaptez ces sections pour qu'elles soient spécifiques à une application de services d'extincteurs.**)*
+### Comptes Utilisateurs
+
+* Vous devez fournir des informations exactes, complètes et à jour lors de la création de votre compte.
+* Vous êtes responsable de la confidentialité de votre mot de passe et de toute activité sur votre compte.
+* Nous nous réservons le droit de suspendre ou de supprimer un compte si des informations inexactes, frauduleuses ou interdites sont utilisées.
+
+### Demandes de Service
+
+* Vous pouvez faire des demandes de service pour inspection, recharge, ou remplacement d’extincteurs.
+* Les demandes sont traitées selon les disponibilités et la couverture géographique de la Société.
+
+### Paiements (le cas échéant)
+
+* Les services peuvent être payants. Les prix, les moyens de paiement acceptés, et les politiques de remboursement seront précisés dans l’application.
+* Toutes les transactions sont sécurisées via des prestataires de paiement certifiés.
+
+### Responsabilités de l'Utilisateur
+
+* Vous acceptez d’utiliser l’Application conformément à la loi et de ne pas tenter de compromettre la sécurité ou l’intégrité du Service.
+* Vous ne devez pas transmettre de contenu illégal, nuisible, ou diffamatoire via l’Application.
+
+### Utilisations Interdites
+
+* Ingénierie inverse ou copie non autorisée du logiciel.
+* Utilisation du Service à des fins illégales ou pour promouvoir des activités interdites.
+* Collecte automatique de données de l’application sans autorisation.
+
+### Propriété Intellectuelle
+
+Tous les droits de propriété intellectuelle sur l’Application et son contenu appartiennent à la Société. Vous ne pouvez pas copier, distribuer ou exploiter commercialement le contenu sans autorisation écrite préalable.
+
+### Liens vers des Sites Tiers
+
+L’Application peut contenir des liens vers des sites tiers. La Société n’est pas responsable du contenu ou des pratiques de confidentialité de ces sites.
+
+### Résiliation
+
+Nous pouvons suspendre ou résilier votre accès à l’Application en cas de non-respect des présentes Conditions.
+
+### Limitation de Responsabilité
+
+Le Service est fourni **"TEL QUEL"** et **"TEL QUE DISPONIBLE"**. La Société ne garantit pas que le Service sera exempt d’erreurs ou ininterrompu.
+
+### Droit Applicable
+
+Ces Conditions sont régies par les lois du pays dans lequel est établie la Société, sans égard aux principes de conflits de lois.
+
+### Résolution des Litiges
+
+En cas de litige, une résolution amiable sera privilégiée avant tout recours judiciaire.
+
+### Utilisateurs de l’Union Européenne (UE)
+
+Conformément au RGPD, vous avez des droits supplémentaires concernant vos données personnelles. Veuillez consulter la Politique de Confidentialité pour plus de détails.
+
+### Conformité aux Lois Américaines
+
+Si vous accédez au Service depuis les États-Unis, vous acceptez de respecter toutes les lois locales, étatiques et fédérales applicables.
+
+### Divisibilité et Renonciation
+
+Si une disposition est jugée invalide, les autres resteront en vigueur. Le fait de ne pas exercer un droit ne constitue pas une renonciation à ce droit.
+
+### Traductions
+
+La version française prévaut. Les traductions sont fournies à titre informatif uniquement.
+
+### Modifications
+
+Nous nous réservons le droit de modifier ces Conditions. Vous serez notifié(e) via l’Application. Votre utilisation continue vaut acceptation.
+
+---
 
 ## Politique de Confidentialité
 
-*(C'est ici que vous ajouterez le contenu détaillé de la Politique de Confidentialité. Comme mentionné précédemment, cela doit être rédigé par un professionnel du droit. Inclure des informations sur :)*
+### Collecte de Données
 
-*   **Collecte de Données :** Quelles informations personnelles collectez-vous (par exemple, nom, coordonnées, détails de l'entreprise, données de localisation liées aux extincteurs/services, historique des services) ? Comment sont-elles collectées ?
-*   **Utilisation des Données :** Comment les données collectées sont-elles utilisées (par exemple, pour exécuter les demandes de service, gérer votre compte, fournir une assistance, améliorer les services) ?
-*   **Stockage et Sécurité des Données :** Comment les données sont-elles stockées et quelles mesures de sécurité sont en place pour les protéger ?
-*   **Partage et Divulgation de Données :** Partagez-vous des données avec des tiers (par exemple, prestataires de services, sociétés affiliées) ? Dans quelles circonstances et avec quelles garanties ? (Soyez très précis ici).
-*   **Vos Droits :** Quels droits les utilisateurs ont-ils concernant leurs données (par exemple, accès, rectification, suppression, opposition au traitement) ?
-*   **Conservation des Données :** Combien de temps conservez-vous les données utilisateur ?
-*   **Confidentialité des Enfants :** Indiquez clairement que le service n'est pas destiné aux utilisateurs de moins de 18 ans.
-*   **Modifications de la Politique de Confidentialité.**
+Nous collectons les données suivantes :
 
-*(Fin de la section Politique de Confidentialité ici)*
+* Informations personnelles : nom, email, téléphone, nom de la société, adresse.
+* Données de localisation des extincteurs (GPS).
+* Historique des services demandés.
+* Données techniques de l’appareil utilisé (modèle, système d’exploitation, adresse IP).
+
+### Utilisation des Données
+
+Les données sont utilisées pour :
+
+* Traiter vos demandes de services.
+* Gérer et sécuriser votre compte.
+* Améliorer nos services et notre assistance.
+* Respecter nos obligations légales.
+
+### Stockage et Sécurité
+
+Les données sont stockées dans des bases sécurisées hébergées dans l’UE. Des mesures techniques (chiffrement, pare-feu) et organisationnelles (contrôle d’accès) sont mises en œuvre pour protéger vos données.
+
+### Partage avec Tiers
+
+Nous pouvons partager vos données uniquement avec :
+
+* Prestataires techniques (hébergement, paiement, notifications).
+* Techniciens partenaires agréés par la Société pour assurer les services sur le terrain.
+* Autorités légales, en cas d’obligation juridique.
+
+Aucun transfert de données à des fins publicitaires ou commerciales sans votre consentement explicite.
+
+### Vos Droits
+
+Conformément à la loi :
+
+* Vous pouvez demander l'accès à vos données, leur rectification, suppression ou limitation.
+* Vous pouvez vous opposer à certains traitements.
+* Vous avez droit à la portabilité de vos données.
+* Contactez-nous à \[Votre Adresse Email de Support] pour exercer ces droits.
+
+### Conservation des Données
+
+Vos données sont conservées :
+
+* Tant que votre compte est actif.
+* Jusqu’à 3 ans après la dernière activité, sauf obligation légale de conservation plus longue.
+
+### Confidentialité des Enfants
+
+Le Service n’est pas destiné aux personnes de moins de 18 ans. Aucune donnée n’est collectée sciemment sur des mineurs.
+
+### Modifications de cette Politique
+
+Nous pouvons actualiser cette Politique. Toute modification substantielle vous sera notifiée via l’Application.
+
+---
 
 ## Nous Contacter
 
-Si Vous avez des questions concernant ces Conditions d'Utilisation et cette Politique de Confidentialité, Vous pouvez nous contacter :
+Pour toute question concernant ces Conditions ou cette Politique :
 
-*   Par e-mail : [Votre Adresse E-mail de Support]
-*   En visitant cette page sur notre site web : [Lien vers Votre Page de Contact (Facultatif, si vous avez un site web)]
+* By email: [ai.suport.windows@gmail.com](mailto:ai.suport.windows@gmail.com)
+* By visiting this page on our website: [https://firetrack360.satorrwanda.rw](https://firetrack360.satorrwanda.rw/)
+
