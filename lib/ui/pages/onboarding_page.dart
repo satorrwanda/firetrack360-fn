@@ -32,6 +32,8 @@ class OnboardingPage extends HookConsumerWidget {
     final currentPage = useState(0);
     final isMounted = useIsMounted();
     final timerRef = useRef<Timer?>(null);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLargeScreen = screenWidth > 800; // Breakpoint for large screens
 
     final onboardingImages = [
       'assets/images/onboarding1.jpg',
@@ -90,6 +92,94 @@ class OnboardingPage extends HookConsumerWidget {
       }
     }
 
+    // Widget for large screens - content on left, buttons on right
+    Widget buildLargeScreenLayout() {
+      return Row(
+        children: [
+          // Left side: Onboarding content (images and descriptions)
+          Expanded(
+            flex: 3, // Takes 60% of the width
+            child: Column(
+              children: [
+                PageIndicator(
+                  currentPage: currentPage.value,
+                  pageCount: onboardingImages.length,
+                  onPageSelect: (index) {
+                    if (isMounted()) {
+                      pageController.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOutCubic,
+                      );
+                    }
+                  },
+                ),
+                Expanded(
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: onboardingImages.length,
+                    onPageChanged: (index) => currentPage.value = index,
+                    itemBuilder: (_, index) => OnboardingItem(
+                      index: index,
+                      screenWidth: screenWidth * 0.6, // 60% of screen width
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Right side: Buttons (vertically centered)
+          Expanded(
+            flex: 2, // Takes 40% of the width
+            child: Center(
+              child: OnboardingButtons(
+                onRegister: () => handleNavigation(false),
+                onLogin: () => handleNavigation(true),
+                isVertical: true, // Use vertical layout for large screens
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    // Widget for small screens - vertical layout (unchanged)
+    Widget buildSmallScreenLayout() {
+      return Column(
+        children: [
+          PageIndicator(
+            currentPage: currentPage.value,
+            pageCount: onboardingImages.length,
+            onPageSelect: (index) {
+              if (isMounted()) {
+                pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOutCubic,
+                );
+              }
+            },
+          ),
+          Expanded(
+            child: PageView.builder(
+              controller: pageController,
+              itemCount: onboardingImages.length,
+              onPageChanged: (index) => currentPage.value = index,
+              itemBuilder: (_, index) => OnboardingItem(
+                index: index,
+                screenWidth: screenWidth,
+              ),
+            ),
+          ),
+          OnboardingButtons(
+            onRegister: () => handleNavigation(false),
+            onLogin: () => handleNavigation(true),
+            isVertical: false, // Use horizontal layout for small screens
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -104,62 +194,9 @@ class OnboardingPage extends HookConsumerWidget {
           ),
         ),
         child: SafeArea(
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  PageIndicator(
-                    currentPage: currentPage.value,
-                    pageCount: onboardingImages.length,
-                    onPageSelect: (index) {
-                      if (isMounted()) {
-                        pageController.animateToPage(
-                          index,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOutCubic,
-                        );
-                      }
-                    },
-                  ),
-                  Expanded(
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemCount: onboardingImages.length,
-                      onPageChanged: (index) => currentPage.value = index,
-                      itemBuilder: (_, index) => OnboardingItem(
-                        index: index,
-                        screenWidth: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                  ),
-                  OnboardingButtons(
-                    onRegister: () => handleNavigation(false),
-                    onLogin: () => handleNavigation(true),
-                  ),
-                  // Add the Terms and Conditions link here
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 20.0), 
-                    child: TextButton(
-                      onPressed: () {
-                        AppRoutes.navigateToTerms(context);
-                      },
-                      child: Text(
-                        l10n.termsAndConditionsText, 
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.white70,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          child: isLargeScreen
+              ? buildLargeScreenLayout()
+              : buildSmallScreenLayout(),
         ),
       ),
     );
