@@ -223,9 +223,8 @@ class _LoginFormState extends State<LoginForm> {
                 : Text(
                     // Remove const
                     l10n.login
-                        .toUpperCase(), // Use localized text and convert to uppercase
+                        .toUpperCase(), 
                     style: const TextStyle(
-                      // Keep const for static style
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,

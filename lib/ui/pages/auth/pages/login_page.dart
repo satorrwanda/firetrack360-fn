@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 24),
                       Center(
                         child:
-                            LanguageToggler(), // Added here below the account text
+                            LanguageToggler(), 
                       ),
                     ],
                   ),
