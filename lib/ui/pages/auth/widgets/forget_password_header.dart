@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firetrack360/generated/l10n.dart'; // Import l10n
+import 'package:firetrack360/generated/l10n.dart';
 
 class ForgetPasswordHeader extends StatelessWidget {
   const ForgetPasswordHeader({super.key});
@@ -35,38 +35,27 @@ class ForgetPasswordHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 32),
-        // Forgot Password text with enhanced styling
-        ShaderMask(
-          shaderCallback: (bounds) => LinearGradient(
-            colors: [
-              Colors.white,
-              Colors.white.withOpacity(0.9),
+        // Forgot Password text with enhanced styling and improved visibility
+        Text(
+          l10n.forgotPasswordTitle,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            letterSpacing: 1.2,
+            shadows: [
+              Shadow(
+                blurRadius: 10.0,
+                color: Colors.black.withOpacity(0.3),
+                offset: const Offset(2.0, 2.0),
+              ),
+              Shadow(
+                blurRadius: 20.0,
+                color: Colors.black.withOpacity(0.2),
+                offset: const Offset(4.0, 4.0),
+              ),
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ).createShader(bounds),
-          child: Text(
-            // Remove const
-            l10n.forgotPasswordTitle, // Use localized string
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              letterSpacing: 1.2,
-              shadows: [
-                Shadow(
-                  blurRadius: 10.0,
-                  color: Colors.black.withOpacity(0.3),
-                  offset: const Offset(2.0, 2.0),
-                ),
-                Shadow(
-                  blurRadius: 20.0,
-                  color: Colors.black.withOpacity(0.2),
-                  offset: const Offset(4.0, 4.0),
-                ),
-              ],
-            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -80,7 +69,7 @@ class ForgetPasswordHeader extends StatelessWidget {
             ),
           ),
           child: Text(
-            l10n.enterEmailToResetPasswordSubtitle, 
+            l10n.enterEmailToResetPasswordSubtitle,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,
