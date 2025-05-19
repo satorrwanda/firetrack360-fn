@@ -3,7 +3,7 @@ import 'package:firetrack360/services/auth_service.dart';
 import 'package:firetrack360/ui/pages/home/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'drawer_item.dart';
-import 'package:firetrack360/generated/l10n.dart'; // Import localization
+import 'package:firetrack360/generated/l10n.dart';
 
 class CustomDrawer extends StatelessWidget {
   final int selectedIndex;
@@ -16,7 +16,7 @@ class CustomDrawer extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final l10n = S.of(context)!; 
+    final l10n = S.of(context)!;
 
     return Drawer(
       elevation: 0,
@@ -70,7 +70,8 @@ class CustomDrawer extends StatelessWidget {
                         context: context,
                         barrierDismissible: true,
                         builder: (BuildContext context) {
-                           final dialogL10n = S.of(context)!; // Access l10n in dialog builder
+                          final dialogL10n =
+                              S.of(context)!; 
                           return Dialog(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
@@ -87,15 +88,17 @@ class CustomDrawer extends StatelessWidget {
                                   Icon(
                                     Icons.logout,
                                     size: 48,
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                   const SizedBox(height: 16),
                                   Text(
-                                    dialogL10n.confirmLogoutTitle, 
+                                    dialogL10n.confirmLogoutTitle,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -110,7 +113,8 @@ class CustomDrawer extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 24),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       TextButton(
                                         onPressed: () =>
@@ -120,7 +124,8 @@ class CustomDrawer extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 16, vertical: 12),
                                         ),
-                                        child: Text(dialogL10n.cancelButton), // Localized button text
+                                        child: Text(dialogL10n
+                                            .cancelButton), // Localized button text
                                       ),
                                       ElevatedButton(
                                         onPressed: () =>
@@ -137,7 +142,8 @@ class CustomDrawer extends StatelessWidget {
                                           elevation: 3,
                                         ),
                                         child: Text(
-                                          dialogL10n.logoutButton, // Localized button text
+                                          dialogL10n
+                                              .logoutButton, // Localized button text
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -188,7 +194,7 @@ class CustomDrawer extends StatelessWidget {
 
         return Column(
           children: [
-            _buildMenuSection(l10n.drawerMenuTitle, [menuItems[0]]), 
+            _buildMenuSection(l10n.drawerMenuTitle, [menuItems[0]]),
             const SizedBox(height: 24),
             _buildMenuSection(
               l10n.drawerFeaturesTitle, // Localized section title
@@ -232,7 +238,8 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  void _handleNavigation(BuildContext context, String title, int index, S l10n) {
+  void _handleNavigation(
+      BuildContext context, String title, int index, S l10n) {
     onIndexSelected(index);
     if (title == l10n.drawerItemDashboard || title == l10n.drawerItemHome) {
       AppRoutes.navigateToHome(context);
@@ -255,7 +262,8 @@ class CustomDrawer extends StatelessWidget {
     }
   }
 
-  List<DrawerItem> _getAllMenuItems(BuildContext context, bool isAdmin, S l10n) {
+  List<DrawerItem> _getAllMenuItems(
+      BuildContext context, bool isAdmin, S l10n) {
     int index = 0;
     final List<DrawerItem> menuItems = [
       // Menu section
@@ -329,7 +337,6 @@ class CustomDrawer extends StatelessWidget {
           l10n), // Pass l10n
     ]);
 
-
     return menuItems;
   }
 
@@ -342,6 +349,7 @@ class CustomDrawer extends StatelessWidget {
         title: title, // This title is already localized when passed in
         index: index,
         isSelected: selectedIndex == index,
-        onTap: () => _handleNavigation(context, title, index, l10n), // Pass l10n
+        onTap: () =>
+            _handleNavigation(context, title, index, l10n), // Pass l10n
       );
 }
