@@ -291,4 +291,52 @@ class SRw extends S {
 
   @override
   String get errorLoadingTerms => 'Ikibazo mu gukurura amategeko n\'amabwiriza';
+
+  @override
+  String get errorLoadingPage => 'Ntabwo kubona amakuru';
+
+  @override
+  String get selectLanguageTitle => 'Hitamo Ururimi';
+
+  @override
+  String get bottomNavHome => 'Ahabanza';
+
+  @override
+  String get bottomNavProfile => 'Umwirondoro';
+
+  @override
+  String get bottomNavLanguage => 'Ururimi';
+
+  @override
+  String get homePageTitle => 'Ahabanza';
+
+  @override
+  String get welcomeBackSubtitle => 'Cunga neza ibikoresho by\'umutekano wo kwirinda inkongi y\'umuriro';
+
+  @override
+  String get quickActionsTitle => 'Ibikorwa Byihuse';
+
+  @override
+  String get actionCardInventory => 'ububiko';
+
+  @override
+  String get actionCardServices => 'Serivisi';
+
+  @override
+  String get actionCardSettings => 'Amahitamo';
+
+  @override
+  String get actionCardNotifications => 'Ubutumwa';
+
+  @override
+  String get actionCardNavigation => 'Kuyobora';
+
+  @override
+  String get statusTitle => 'Imiterere';
+
+  @override
+  String get roleLabel => 'Uruhare';
+
+  @override
+  String get notificationsTooltip => 'Ubutumwa';
 }

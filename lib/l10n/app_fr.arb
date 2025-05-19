@@ -383,5 +383,65 @@
     "errorLoadingTerms": "Erreur lors du chargement des conditions d'utilisation",
     "@errorLoadingTerms": {
         "description": "Error message when loading terms and conditions"
+    },
+    "selectLanguageTitle": "Sélectionner la langue",
+    "@selectLanguageTitle": {
+        "description": "Title for the language selection screen"
+    },
+    "bottomNavHome": "Accueil",
+    "@bottomNavHome": {
+        "description": "Label for the home tab in the bottom navigation"
+    },
+    "bottomNavProfile": "Profil",
+    "@bottomNavProfile": {
+        "description": "Label for the profile tab in the bottom navigation"
+    },
+    "bottomNavLanguage": "Langues",
+    "@bottomNavLanguage": {
+        "description": "Label for the language tab in the bottom navigation"
+    },
+    "homePageTitle": "Accueil",
+    "@homePageTitle": {
+        "description": "Title for the home page"
+    },
+    "welcomeBackSubtitle": "Gérez efficacement votre équipement de sécurité incendie",
+    "@welcomeBackSubtitle": {
+        "description": "Subtitle for the welcome back message"
+    },
+    "quickActionsTitle": "Actions Rapides",
+    "@quickActionsTitle": {
+        "description": "Title for the quick actions section"
+    },
+    "actionCardInventory": "Inventaire",
+    "@actionCardInventory": {
+        "description": "Label for the inventory action card"
+    },
+    "actionCardServices": "Serivisi",
+    "@actionCardServices": {
+        "description": "Label for the services action card"
+    },
+    "actionCardSettings": "Paramètres",
+    "@actionCardSettings": {
+        "description": "Label for the settings action card"
+    },
+    "actionCardNotifications": "Notifications",
+    "@actionCardNotifications": {
+        "description": "Label for the notifications action card"
+    },
+    "actionCardNavigation": "Navigation",
+    "@actionCardNavigation": {
+        "description": "Label for the navigation action card"
+    },
+    "statusTitle": "Statut",
+    "@statusTitle": {
+        "description": "Title for the status section"
+    },
+    "roleLabel": "Rôle",
+    "@roleLabel": {
+        "description": "Label for the role section"
+    },
+    "notificationsTooltip": "Notifications",
+    "@notificationsTooltip": {
+        "description": "Tooltip text for the notifications icon"
     }
 }

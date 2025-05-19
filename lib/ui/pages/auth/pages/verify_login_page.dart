@@ -22,6 +22,13 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
   @override
   void initState() {
     super.initState();
+    // No longer calling _loadCredentials here
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Call _loadCredentials here after dependencies are ready
     _loadCredentials();
   }
 
@@ -69,6 +76,7 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
   // --- End Helper method ---
 
   Future<void> _loadCredentials() async {
+    // Access l10n here is safe in didChangeDependencies
     final l10n = S.of(context)!;
 
     try {
@@ -109,10 +117,14 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
   }
 
   void _showErrorAndNavigateToLogin(String message) {
+    // Using a post-frame callback to show the snackbar after the build cycle
+    // completes, preventing potential issues with context during navigation.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showErrorSnackBar(message); // Use the local error snackbar
-
-      AppRoutes.navigateToLogin(context);
+      if (mounted) {
+        // Check if the widget is still mounted
+        _showErrorSnackBar(message); // Use the local error snackbar
+        AppRoutes.navigateToLogin(context);
+      }
     });
   }
 
@@ -130,7 +142,10 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
       final email = prefs.getString('email') ?? '';
 
       if (email.isEmpty) {
-        _showErrorSnackBar(l10n.noEmailFoundError); // Use localized message
+        if (mounted) {
+          _showErrorSnackBar(l10n.noEmailFoundError); // Use localized message
+          setState(() => _isLoading = false);
+        }
         return;
       }
 
@@ -143,13 +158,15 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
       }
 
       if (result.hasException) {
-        _showErrorSnackBar(result.exception?.graphqlErrors.first.message ??
-            l10n.verificationGraphQLErrorDefault); // Use localized fallback
+        if (mounted) {
+          _showErrorSnackBar(result.exception?.graphqlErrors.first.message ??
+              l10n.verificationGraphQLErrorDefault); // Use localized fallback
+        }
         return;
       }
 
       final loginResult = result.data?['verifyLogin'];
-      if (loginResult['status'] == 200) {
+      if (loginResult != null && loginResult['status'] == 200) {
         final String? accessToken = loginResult['accessToken'];
         final String? refreshToken = loginResult['refreshToken'];
 
@@ -165,12 +182,16 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
             AppRoutes.navigateToHome(context);
           }
         } else {
-          _showErrorSnackBar(
-              l10n.invalidLoginResponseError); // Use localized message
+          if (mounted) {
+            _showErrorSnackBar(
+                l10n.invalidLoginResponseError); // Use localized message
+          }
         }
       } else {
-        _showErrorSnackBar(loginResult['message'] ??
-            l10n.verificationFailedDefault); // Use localized fallback
+        if (mounted) {
+          _showErrorSnackBar(loginResult?['message'] ??
+              l10n.verificationFailedDefault); // Use localized fallback
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -183,7 +204,9 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
 
   // --- Local SnackBar methods using localized strings ---
   void _showSuccessSnackBar(String message) {
-    final l10n = S.of(context)!; // Access l10n for title/action
+    // Ensure context is valid before accessing l10n and showing snackbar
+    if (!mounted) return;
+    final l10n = S.of(context)!;
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -242,7 +265,9 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
   }
 
   void _showErrorSnackBar(String message) {
-    final l10n = S.of(context)!; // Access l10n for title/action
+    // Ensure context is valid before accessing l10n and showing snackbar
+    if (!mounted) return;
+    final l10n = S.of(context)!;
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -303,13 +328,35 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = S.of(context)!; // Access l10n here for UI texts
+    // Access l10n here for UI texts is always safe
+    final l10n = S.of(context)!;
 
-    if (_email.isEmpty) {
+    if (_email.isEmpty && !_isLoading) {
+      // Added _isLoading check
+      // Show a loading indicator while email is being fetched
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+          ),
+        ),
+        backgroundColor: Colors.deepPurple,
+      );
+    }
+
+    // If email fetching failed and we navigated away, we shouldn't build the rest of the page.
+    // The _showErrorAndNavigateToLogin handles the navigation. If it returns,
+    // we should probably not build the form. A simple check for _email being empty
+    // after _loadCredentials has been called should be sufficient.
+    if (_email.isEmpty) {
+      // This case should ideally not be reached if _showErrorAndNavigateToLogin
+      // is called correctly, but as a fallback, show an error or go back.
+      return Scaffold(
+        body: Center(
+          child: Text(
+            l10n.errorLoadingPage, // Localized error message
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
           ),
         ),
         backgroundColor: Colors.deepPurple,
@@ -345,8 +392,11 @@ class _VerifyLoginPageState extends State<VerifyLoginPage> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  l10n.enterOtpMessage(_maskEmail(
-                      _email)), // Use localized message with placeholder
+                  _isEmailValid // Only mask if email is considered valid
+                      ? l10n.enterOtpMessage(_maskEmail(
+                          _email)) // Use localized message with placeholder
+                      : l10n.enterOtpMessage(
+                          _email), // Show full email if not valid (optional, based on desired UX)
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,

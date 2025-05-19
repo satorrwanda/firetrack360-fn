@@ -377,5 +377,69 @@
     "errorLoadingTerms": "Ikibazo mu gukurura amategeko n'amabwiriza",
     "@errorLoadingTerms": {
         "description": "Error message when loading the Terms and Conditions page"
+    },
+    "errorLoadingPage": "Ntabwo kubona amakuru",
+    "@errorLoadingPage": {
+        "description": "Error message when loading a page"
+    },
+    "selectLanguageTitle": "Hitamo Ururimi",
+    "@selectLanguageTitle": {
+        "description": "Title for the Select Language page"
+    },
+    "bottomNavHome": "Ahabanza",
+    "@bottomNavHome": {
+        "description": "Label for the Home tab in the bottom navigation bar"
+    },
+    "bottomNavProfile": "Umwirondoro",
+    "@bottomNavProfile": {
+        "description": "Label for the Profile tab in the bottom navigation bar"
+    },
+    "bottomNavLanguage": "Ururimi",
+    "@bottomNavLanguage": {
+        "description": "Label for the Language tab in the bottom navigation bar"
+    },
+    "homePageTitle": "Ahabanza",
+    "@homePageTitle": {
+        "description": "Title for the Home page"
+    },
+    "welcomeBackSubtitle": "Cunga neza ibikoresho by'umutekano wo kwirinda inkongi y'umuriro",
+    "@welcomeBackSubtitle": {
+        "description": "Subtitle for the welcome back message"
+    },
+    "quickActionsTitle": "Ibikorwa Byihuse",
+    "@quickActionsTitle": {
+        "description": "Title for the quick actions section"
+    },
+    "actionCardInventory": "ububiko",
+    "@actionCardInventory": {
+        "description": "Label for the inventory action card"
+    },
+    "actionCardServices": "Serivisi",
+    "@actionCardServices": {
+        "description": "Label for the services action card"
+    },
+    "actionCardSettings": "Amahitamo",
+    "@actionCardSettings": {
+        "description": "Label for the settings action card"
+    },
+    "actionCardNotifications": "Ubutumwa",
+    "@actionCardNotifications": {
+        "description": "Label for the notifications action card"
+    },
+    "actionCardNavigation": "Kuyobora",
+    "@actionCardNavigation": {
+        "description": "Label for the navigation action card"
+    },
+    "statusTitle": "Imiterere",
+    "@statusTitle": {
+        "description": "Title for the status section"
+    },
+    "roleLabel": "Uruhare",
+    "@roleLabel": {
+        "description": "Label for the role section"
+    },
+    "notificationsTooltip": "Ubutumwa",
+    "@notificationsTooltip": {
+        "description": "Tooltip text for the notifications icon"
     }
 }

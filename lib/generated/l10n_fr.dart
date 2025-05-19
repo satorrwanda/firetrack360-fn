@@ -291,4 +291,52 @@ class SFr extends S {
 
   @override
   String get errorLoadingTerms => 'Erreur lors du chargement des conditions d\'utilisation';
+
+  @override
+  String get errorLoadingPage => 'Error loading page. Please try again.';
+
+  @override
+  String get selectLanguageTitle => 'Sélectionner la langue';
+
+  @override
+  String get bottomNavHome => 'Accueil';
+
+  @override
+  String get bottomNavProfile => 'Profil';
+
+  @override
+  String get bottomNavLanguage => 'Langues';
+
+  @override
+  String get homePageTitle => 'Accueil';
+
+  @override
+  String get welcomeBackSubtitle => 'Gérez efficacement votre équipement de sécurité incendie';
+
+  @override
+  String get quickActionsTitle => 'Actions Rapides';
+
+  @override
+  String get actionCardInventory => 'Inventaire';
+
+  @override
+  String get actionCardServices => 'Serivisi';
+
+  @override
+  String get actionCardSettings => 'Paramètres';
+
+  @override
+  String get actionCardNotifications => 'Notifications';
+
+  @override
+  String get actionCardNavigation => 'Navigation';
+
+  @override
+  String get statusTitle => 'Statut';
+
+  @override
+  String get roleLabel => 'Rôle';
+
+  @override
+  String get notificationsTooltip => 'Notifications';
 }

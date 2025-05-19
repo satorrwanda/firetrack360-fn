@@ -157,7 +157,7 @@ abstract class S {
   /// **'Sign Up'**
   String get signUpLink;
 
-  /// Main title on the login header
+  /// Title for the welcome back message
   ///
   /// In en, this message translates to:
   /// **'Welcome Back'**
@@ -660,6 +660,102 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Error loading terms and conditions. Please try again.'**
   String get errorLoadingTerms;
+
+  /// Error message when loading a page fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading page. Please try again.'**
+  String get errorLoadingPage;
+
+  /// Title for the language selection page
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguageTitle;
+
+  /// Label for the Home tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottomNavHome;
+
+  /// Label for the Profile tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get bottomNavProfile;
+
+  /// Label for the Language tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get bottomNavLanguage;
+
+  /// Title for the Home page
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homePageTitle;
+
+  /// Subtitle for the welcome back message
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your fire safety equipment efficiently'**
+  String get welcomeBackSubtitle;
+
+  /// Title for the quick actions section
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActionsTitle;
+
+  /// Label for the inventory action card
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get actionCardInventory;
+
+  /// Label for the services action card
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get actionCardServices;
+
+  /// Label for the settings action card
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get actionCardSettings;
+
+  /// Label for the notifications action card
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get actionCardNotifications;
+
+  /// Label for the navigation action card
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get actionCardNavigation;
+
+  /// Title for the status section
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusTitle;
+
+  /// Label for the role section
+  ///
+  /// In en, this message translates to:
+  /// **'Role:'**
+  String get roleLabel;
+
+  /// Tooltip text for the notifications icon
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTooltip;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

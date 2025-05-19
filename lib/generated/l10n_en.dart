@@ -291,4 +291,52 @@ class SEn extends S {
 
   @override
   String get errorLoadingTerms => 'Error loading terms and conditions. Please try again.';
+
+  @override
+  String get errorLoadingPage => 'Error loading page. Please try again.';
+
+  @override
+  String get selectLanguageTitle => 'Select Language';
+
+  @override
+  String get bottomNavHome => 'Home';
+
+  @override
+  String get bottomNavProfile => 'Profile';
+
+  @override
+  String get bottomNavLanguage => 'Language';
+
+  @override
+  String get homePageTitle => 'Home';
+
+  @override
+  String get welcomeBackSubtitle => 'Manage your fire safety equipment efficiently';
+
+  @override
+  String get quickActionsTitle => 'Quick Actions';
+
+  @override
+  String get actionCardInventory => 'Inventory';
+
+  @override
+  String get actionCardServices => 'Services';
+
+  @override
+  String get actionCardSettings => 'Settings';
+
+  @override
+  String get actionCardNotifications => 'Notifications';
+
+  @override
+  String get actionCardNavigation => 'Navigation';
+
+  @override
+  String get statusTitle => 'Status';
+
+  @override
+  String get roleLabel => 'Role:';
+
+  @override
+  String get notificationsTooltip => 'Notifications';
 }

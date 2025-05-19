@@ -123,7 +123,7 @@
     "passwordMinLengthError": "Password must be at least 8 characters long",
     "@passwordMinLengthError": {
         "description": "Validation error for password less than minimum required length"
-    },  
+    },
     "passwordDigitError": "Password must contain at least one number",
     "@passwordDigitError": {
         "description": "Validation error for password missing a digit"
@@ -381,5 +381,73 @@
     "errorLoadingTerms": "Error loading terms and conditions. Please try again.",
     "@errorLoadingTerms": {
         "description": "Error message when loading terms and conditions fails"
+    },
+    "errorLoadingPage": "Error loading page. Please try again.",
+    "@errorLoadingPage": {
+        "description": "Error message when loading a page fails"
+    },
+    "selectLanguageTitle": "Select Language",
+    "@selectLanguageTitle": {
+        "description": "Title for the language selection page"
+    },
+    "bottomNavHome": "Home",
+    "@bottomNavHome": {
+        "description": "Label for the Home tab in the bottom navigation"
+    },
+    "bottomNavProfile": "Profile",
+    "@bottomNavProfile": {
+        "description": "Label for the Profile tab in the bottom navigation"
+    },
+    "bottomNavLanguage": "Language",
+    "@bottomNavLanguage": {
+        "description": "Label for the Language tab in the bottom navigation"
+    },
+    "homePageTitle": "Home",
+    "@homePageTitle": {
+        "description": "Title for the Home page"
+    },
+    "welcomeBackTitle": "Welcome Back",
+    "@welcomeBackTitle": {
+        "description": "Title for the welcome back message"
+    },
+    "welcomeBackSubtitle": "Manage your fire safety equipment efficiently",
+    "@welcomeBackSubtitle": {
+        "description": "Subtitle for the welcome back message"
+    },
+    "quickActionsTitle": "Quick Actions",
+    "@quickActionsTitle": {
+        "description": "Title for the quick actions section"
+    },
+    "actionCardInventory": "Inventory",
+    "@actionCardInventory": {
+        "description": "Label for the inventory action card"
+    },
+    "actionCardServices": "Services",
+    "@actionCardServices": {
+        "description": "Label for the services action card"
+    },
+    "actionCardSettings": "Settings",
+    "@actionCardSettings": {
+        "description": "Label for the settings action card"
+    },
+    "actionCardNotifications": "Notifications",
+    "@actionCardNotifications": {
+        "description": "Label for the notifications action card"
+    },
+    "actionCardNavigation": "Navigation",
+    "@actionCardNavigation": {
+        "description": "Label for the navigation action card"
+    },
+   "statusTitle": "Status",
+    "@statusTitle": {
+    "description": "Title for the status section"
+    },
+    "roleLabel": "Role:",
+    "@roleLabel": {
+        "description": "Label for the role section"
+    },
+    "notificationsTooltip": "Notifications",
+    "@notificationsTooltip": {
+        "description": "Tooltip text for the notifications icon"
     }
 }
