@@ -339,4 +339,52 @@ class SRw extends S {
 
   @override
   String get notificationsTooltip => 'Ubutumwa';
+
+  @override
+  String get confirmLogoutTitle => 'Emeza Gusohoka';
+
+  @override
+  String get confirmLogoutMessage => 'Urifuza gusohoka?';
+
+  @override
+  String get cancelButton => 'Kureka';
+
+  @override
+  String get logoutButton => 'Gusohoka';
+
+  @override
+  String get drawerMenuTitle => 'MENU';
+
+  @override
+  String get drawerFeaturesTitle => 'IBIKORWA';
+
+  @override
+  String get drawerOtherTitle => 'IBINDI';
+
+  @override
+  String get drawerItemDashboard => 'Ijambo ry\'ibikorwa';
+
+  @override
+  String get drawerItemHome => 'Ahabanza';
+
+  @override
+  String get drawerItemUsers => 'Abakoresha';
+
+  @override
+  String get drawerItemService => 'Serivisi';
+
+  @override
+  String get drawerItemInventory => 'Urubiko';
+
+  @override
+  String get drawerItemNavigation => 'Kuyobora';
+
+  @override
+  String get drawerItemProfile => 'Umwirondoro';
+
+  @override
+  String get drawerItemSettings => 'Amahitamo';
+
+  @override
+  String get drawerItemNotifications => 'Ubutumwa';
 }

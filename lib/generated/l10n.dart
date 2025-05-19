@@ -756,6 +756,102 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Notifications'**
   String get notificationsTooltip;
+
+  /// Title for the logout confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Logout'**
+  String get confirmLogoutTitle;
+
+  /// Message for the logout confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out?'**
+  String get confirmLogoutMessage;
+
+  /// Text for the cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelButton;
+
+  /// Text for the logout button
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutButton;
+
+  /// Title for the main menu section in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'MENU'**
+  String get drawerMenuTitle;
+
+  /// Title for the features section in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURES'**
+  String get drawerFeaturesTitle;
+
+  /// Title for the other section in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'OTHER'**
+  String get drawerOtherTitle;
+
+  /// Label for the Dashboard menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get drawerItemDashboard;
+
+  /// Label for the Home menu item in the drawer (if used)
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get drawerItemHome;
+
+  /// Label for the Users menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get drawerItemUsers;
+
+  /// Label for the Service menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get drawerItemService;
+
+  /// Label for the Inventory menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get drawerItemInventory;
+
+  /// Label for the Navigation menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get drawerItemNavigation;
+
+  /// Label for the Profile menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get drawerItemProfile;
+
+  /// Label for the Settings menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get drawerItemSettings;
+
+  /// Label for the Notifications menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get drawerItemNotifications;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

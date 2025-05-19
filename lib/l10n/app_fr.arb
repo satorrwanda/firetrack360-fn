@@ -443,5 +443,69 @@
     "notificationsTooltip": "Notifications",
     "@notificationsTooltip": {
         "description": "Tooltip text for the notifications icon"
+    },
+    "confirmLogoutTitle": "Confirmer la déconnexion",
+    "@confirmLogoutTitle": {
+        "description": "Title for the logout confirmation dialog"
+    },
+    "confirmLogoutMessage": "Êtes-vous sûr(e) de vouloir vous déconnecter ?",
+    "@confirmLogoutMessage": {
+        "description": "Message for the logout confirmation dialog"
+    },
+    "cancelButton": "Annuler",
+    "@cancelButton": {
+        "description": "Text for the cancel button"
+    },
+    "logoutButton": "Déconnexion",
+    "@logoutButton": {
+        "description": "Text for the logout button"
+    },
+    "drawerMenuTitle": "MENU",
+    "@drawerMenuTitle": {
+        "description": "Title for the main menu section in the drawer"
+    },
+    "drawerFeaturesTitle": "FONCTIONNALITÉS",
+    "@drawerFeaturesTitle": {
+        "description": "Title for the features section in the drawer"
+    },
+    "drawerOtherTitle": "AUTRES",
+    "@drawerOtherTitle": {
+        "description": "Title for the other section in the drawer"
+    },
+    "drawerItemDashboard": "Tableau de bord",
+    "@drawerItemDashboard": {
+        "description": "Label for the Dashboard menu item in the drawer"
+    },
+    "drawerItemHome": "Accueil",
+    "@drawerItemHome": {
+        "description": "Label for the Home menu item in the drawer (if used)"
+    },
+    "drawerItemUsers": "Utilisateurs",
+    "@drawerItemUsers": {
+        "description": "Label for the Users menu item in the drawer"
+    },
+    "drawerItemService": "Service",
+    "@drawerItemService": {
+        "description": "Label for the Service menu item in the drawer"
+    },
+    "drawerItemInventory": "Inventaire",
+    "@drawerItemInventory": {
+        "description": "Label for the Inventory menu item in the drawer"
+    },
+    "drawerItemNavigation": "Navigation",
+    "@drawerItemNavigation": {
+        "description": "Label for the Navigation menu item in the drawer"
+    },
+    "drawerItemProfile": "Profil",
+    "@drawerItemProfile": {
+        "description": "Label for the Profile menu item in the drawer"
+    },
+    "drawerItemSettings": "Paramètres",
+    "@drawerItemSettings": {
+        "description": "Label for the Settings menu item in the drawer"
+    },
+    "drawerItemNotifications": "Notifications",
+    "@drawerItemNotifications": {
+        "description": "Label for the Notifications menu item in the drawer"
     }
 }

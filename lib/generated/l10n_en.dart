@@ -339,4 +339,52 @@ class SEn extends S {
 
   @override
   String get notificationsTooltip => 'Notifications';
+
+  @override
+  String get confirmLogoutTitle => 'Confirm Logout';
+
+  @override
+  String get confirmLogoutMessage => 'Are you sure you want to sign out?';
+
+  @override
+  String get cancelButton => 'Cancel';
+
+  @override
+  String get logoutButton => 'Logout';
+
+  @override
+  String get drawerMenuTitle => 'MENU';
+
+  @override
+  String get drawerFeaturesTitle => 'FEATURES';
+
+  @override
+  String get drawerOtherTitle => 'OTHER';
+
+  @override
+  String get drawerItemDashboard => 'Dashboard';
+
+  @override
+  String get drawerItemHome => 'Home';
+
+  @override
+  String get drawerItemUsers => 'Users';
+
+  @override
+  String get drawerItemService => 'Service';
+
+  @override
+  String get drawerItemInventory => 'Inventory';
+
+  @override
+  String get drawerItemNavigation => 'Navigation';
+
+  @override
+  String get drawerItemProfile => 'Profile';
+
+  @override
+  String get drawerItemSettings => 'Settings';
+
+  @override
+  String get drawerItemNotifications => 'Notifications';
 }

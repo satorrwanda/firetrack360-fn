@@ -339,4 +339,52 @@ class SFr extends S {
 
   @override
   String get notificationsTooltip => 'Notifications';
+
+  @override
+  String get confirmLogoutTitle => 'Confirmer la déconnexion';
+
+  @override
+  String get confirmLogoutMessage => 'Êtes-vous sûr(e) de vouloir vous déconnecter ?';
+
+  @override
+  String get cancelButton => 'Annuler';
+
+  @override
+  String get logoutButton => 'Déconnexion';
+
+  @override
+  String get drawerMenuTitle => 'MENU';
+
+  @override
+  String get drawerFeaturesTitle => 'FONCTIONNALITÉS';
+
+  @override
+  String get drawerOtherTitle => 'AUTRES';
+
+  @override
+  String get drawerItemDashboard => 'Tableau de bord';
+
+  @override
+  String get drawerItemHome => 'Accueil';
+
+  @override
+  String get drawerItemUsers => 'Utilisateurs';
+
+  @override
+  String get drawerItemService => 'Service';
+
+  @override
+  String get drawerItemInventory => 'Inventaire';
+
+  @override
+  String get drawerItemNavigation => 'Navigation';
+
+  @override
+  String get drawerItemProfile => 'Profil';
+
+  @override
+  String get drawerItemSettings => 'Paramètres';
+
+  @override
+  String get drawerItemNotifications => 'Notifications';
 }
