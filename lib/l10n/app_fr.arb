@@ -615,7 +615,21 @@
     },
     "showingRecords": "Affichage de {startIndex}-{endIndex} sur {totalItems}",
     "@showingRecords": {
-        "description": "Text showing the range of records displayed"
+        "description": "Text showing the range of records displayed",
+        "placeholders": {
+            "startIndex": {
+                "type": "int",
+                "example": "1"
+            },
+            "endIndex": {
+                "type": "int",
+                "example": "10"
+            },
+            "totalItems": {
+                "type": "int",
+                "example": "50"
+            }
+        }
     },
     "rowsLabel": "Lignes : ",
     "@rowsLabel": {

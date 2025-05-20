@@ -619,10 +619,17 @@
         "description": "Message indicating the range of records being displayed",
         "placeholders": {
             "startIndex": {
-                "type": "int"
+                "type": "int",
+                "example": "1"
             },
-            "endIndex": {},
-            "totalItems": {}
+            "endIndex": {
+                "type": "int",
+                "example": "10"
+            },
+            "totalItems": {
+                "type": "int",
+                "example": "50"
+            }
         }
     },
     "rowsLabel": "Imirongo: ",
