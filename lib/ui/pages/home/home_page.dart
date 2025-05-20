@@ -62,6 +62,7 @@ class HomePage extends HookWidget {
 
     return AuthGateway(
       child: Scaffold(
+        extendBody: true, // <--- ADDED THIS LINE
         appBar: CustomAppBar(
           title: l10n.homePageTitle,
           backgroundColor: appBarColor,
@@ -88,12 +89,15 @@ class HomePage extends HookWidget {
             ),
           ),
           child: SafeArea(
+            // Removed top padding from SafeArea
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.fromLTRB(
+                  16.0, 0, 16.0, 0), // Adjusted padding
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 16.0), // Added space at the top
                     _buildWelcomeSection(
                         context,
                         l10n,
@@ -118,6 +122,9 @@ class HomePage extends HookWidget {
                         textColor,
                         secondaryTextColor,
                         isDarkMode), // Pass colors and isDarkMode
+                    SizedBox(
+                        height: MediaQuery.of(context).padding.bottom +
+                            16), // Add padding at the bottom considering bottom nav bar height
                   ],
                 ),
               ),

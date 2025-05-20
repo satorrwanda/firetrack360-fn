@@ -486,7 +486,7 @@
     "@drawerItemService": {
         "description": "Label for the Service menu item in the drawer"
     },
-    "drawerItemInventory": "Urubiko",
+    "drawerItemInventory": "ububiko",
     "@drawerItemInventory": {
         "description": "Label for the Inventory menu item in the drawer"
     },
@@ -505,5 +505,267 @@
     "drawerItemNotifications": "Ubutumwa",
     "@drawerItemNotifications": {
         "description": "Label for the Notifications menu item in the drawer"
+    },
+    "serviceRequestsTitle": " Serivisi",
+    "@serviceRequestsTitle": {
+        "description": "Title for the Service Requests page"
+    },
+    "refreshTooltip": "Ongera utangire",
+    "@refreshTooltip": {
+        "description": "Tooltip text for the refresh button"
+    },
+    "createServiceRequestTooltip": "Kora icyifuzo cya Serivisi",
+    "@createServiceRequestTooltip": {
+        "description": "Tooltip text for the create service request button"
+    },
+    "searchServiceRequestsHint": "Shakisha  serivisi...",
+    "@searchServiceRequestsHint": {
+        "description": "Hint text for the search input field in the service requests page"
+    },
+    "errorLoadingServiceRequests": "Ikibazo mu gufata  serivisi",
+    "@errorLoadingServiceRequests": {
+        "description": "Error message when loading service requests"
+    },
+    "retryButton": "Ongera ugerageze",
+    "@retryButton": {
+        "description": "Text for the retry button"
+    },
+    "noServiceRequestsFound": "Nta byifuzo bya Serivisi byabonetse",
+    "@noServiceRequestsFound": {
+        "description": "Message displayed when no service requests are found"
+    },
+    "adjustSearchOrFilters": "Gerageza guhindura uburyo bwo gushakisha cyangwa kugenwa",
+    "@adjustSearchOrFilters": {
+        "description": "Message suggesting to adjust search or filters"
+    },
+    "columnTitle": "SERIVISI",
+    "@columnTitle": {
+        "description": "Column title for the service requests table"
+    },
+    "columnStatus": "Ahobigeze",
+    "@columnStatus": {
+        "description": "Column status for the service requests table"
+    },
+    "columnTechnician": "TEKINISIYE",
+    "@columnTechnician": {
+        "description": "Column technician for the service requests table"
+    },
+    "columnDate": "ITALIKI",
+    "@columnDate": {
+        "description": "Column date for the service requests table"
+    },
+    "columnActions": "IBIKORWA",
+    "@columnActions": {
+        "description": "Column actions for the service requests table"
+    },
+    "noTechnicianAssigned": "Nta wasanze wagenwe",
+    "@noTechnicianAssigned": {
+        "description": "Message displayed when no technician is assigned to a service request"
+    },
+    "viewDetailsTooltip": "Reba ibisobanuro",
+    "@viewDetailsTooltip": {
+        "description": "Tooltip text for the view details button"
+    },
+    "serviceRequestDetailsTitle": "Serivisi Yasabwe",
+    "@serviceRequestDetailsTitle": {
+        "description": "Title for the Service Request Details page"
+    },
+    "requestInformationTitle": "Amakuru kuri serivisi",
+    "@requestInformationTitle": {
+        "description": "Title for the Request Information section"
+    },
+    "titleLabel": "Umutwe",
+    "@titleLabel": {
+        "description": "Label for the title field in the service request details"
+    },
+    "statusLabel": "Umwanzuro",
+    "@statusLabel": {
+        "description": "Label for the status field in the service request details"
+    },
+    "dateLabel": "Italiki",
+    "@dateLabel": {
+        "description": "Label for the date field in the service request details"
+    },
+    "descriptionLabel": "Ibisobanuro",
+    "@descriptionLabel": {
+        "description": "Label for the description field in the service request details"
+    },
+    "clientInformationTitle": "Amakuru y'Umukiriya",
+    "@clientInformationTitle": {
+        "description": "Title for the Client Information section"
+    },
+    "emailLabel": "Email",
+    "@emailLabel": {
+        "description": "Label for the email field in the client information"
+    },
+    "phoneLabel": "Nimero ya telefone",
+    "@phoneLabel": {
+        "description": "Label for the phone number field in the client information"
+    },
+    "technicianInformationTitle": "Amakuru y'umutekinisiye",
+    "@technicianInformationTitle": {
+        "description": "Title for the Technician Information section"
+    },
+    "notAvailable": "Ntibibonetse",
+    "@notAvailable": {
+        "description": "Label for unavailable items"
+    },
+    "closeButton": "Funga",
+    "@closeButton": {
+        "description": "Text for the close button"
+    },
+    "showingRecords": "Erekana {startIndex}-{endIndex} muri {totalItems}",
+    "@showingRecords": {
+        "description": "Message indicating the range of records being displayed",
+        "placeholders": {
+            "startIndex": {},
+            "endIndex": {},
+            "totalItems": {}
+        }
+    },
+    "rowsLabel": "Imirongo: ",
+    "@rowsLabel": {
+        "description": "Label for the number of rows in the table"
+    },
+    "rowsPerPageLabel": "Imirongo kuri buri rupapuro: ",
+    "@rowsPerPageLabel": {
+        "description": "Label for the number of rows per page in the table"
+    },
+    "statusPending": "Byategetswe",
+    "@statusPending": {
+        "description": "Status label for pending service requests"
+    },
+    "statusInProgress": "Birimo gukorwa",
+    "@statusInProgress": {
+        "description": "Status label for service requests in progress"
+    },
+    "statusCompleted": "Byarangiye",
+    "@statusCompleted": {
+        "description": "Status label for completed service requests"
+    },
+    "statusCancelled": "Byavanyweho",
+    "@statusCancelled": {
+        "description": "Status label for cancelled service requests"
+    },
+    "inventoryTitle": "Ububiko",
+    "@inventoryTitle": {
+        "description": "Title for the Inventory page"
+    },
+    "productCreatedSuccess": "Produit yakozwe neza",
+    "@productCreatedSuccess": {
+        "description": "Message indicating that the product has been successfully created"
+    },
+    "errorCreatingProduct": "Ikibazo mu gukora produit : {error}",
+    "@errorCreatingProduct": {
+        "description": "Error message when creating a product fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "deleteProductTitle": "Siba produit",
+    "@deleteProductTitle": {
+        "description": "Title for the delete product confirmation dialog"
+    },
+    "deleteProductConfirmation": "Wizeye ko ushaka gusiba {productName}?",
+    "@deleteProductConfirmation": {
+        "description": "Confirmation message for deleting a product",
+        "placeholders": {
+            "productName": {}
+        }
+    },
+    "deleteButton": "Siba",
+    "@deleteButton": {
+        "description": "Text for the delete button"
+    },
+    "productDeletedSuccess": "Produit yasibwe neza",
+    "@productDeletedSuccess": {
+        "description": "Message indicating that the product has been successfully deleted"
+    },
+    "errorDeletingProduct": "Ikibazo mu gusiba produit : {error}",
+    "@errorDeletingProduct": {
+        "description": "Error message when deleting a product fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "productUpdatedSuccess": "Produit yavuguruwe neza",
+    "@productUpdatedSuccess": {
+        "description": "Message indicating that the product has been successfully updated"
+    },
+    "errorUpdatingProduct": "Ikibazo mu kuvugurura produit : {error}",
+    "@errorUpdatingProduct": {
+        "description": "Error message when updating a product fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRefresh": "Kunanirwa gufata : {error}",
+    "@failedToRefresh": {
+        "description": "Error message when refreshing data fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "newButton": "Gishya",
+    "@newButton": {
+        "description": "Text for the new button"
+    },
+    "searchExtinguishersHint": "Shakisha Kizimyamwoto...",
+    "@searchExtinguishersHint": {
+        "description": "Hint text for the search input field in the extinguishers page"
+    },
+    "availableExtinguishersTitle": "Kizimyamwoto zihari",
+    "@availableExtinguishersTitle": {
+        "description": "Title for the Available Extinguishers page"
+    },
+    "itemCount": "{count, plural, =0{Nta bikoresho bihari} one{{count} ikikoresho} other{{count} ibikoresho}}",
+    "@itemCount": {
+        "description": "Message indicating the number of available extinguishers",
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "noExtinguishersAvailable": "Nta Kizimyamwoto zihari",
+    "@noExtinguishersAvailable": {
+        "description": "Message displayed when no extinguishers are available"
+    },
+    "noExtinguishersMatchSearch": "Nta Kizimyamwoto bijyanye n'ibyo ushakisha",
+    "@noExtinguishersMatchSearch": {
+        "description": "Message displayed when no extinguishers match the search criteria"
+    },
+    "addExtinguisherButton": "Ongeraho Kizimyamwoto",
+    "@addExtinguisherButton": {
+        "description": "Text for the add extinguisher button"
+    },
+    "unknownType": "Ubwoko butazwi",
+    "@unknownType": {
+        "description": "Label for unknown type of extinguisher"
+    },
+    "stockLabel": "Ububiko: {quantity}",
+    "@stockLabel": {
+        "description": "Label for the stock quantity of extinguishers",
+        "placeholders": {
+            "quantity": {}
+        }
+    },
+    "editTooltip": "Hindura",
+    "@editTooltip": {
+        "description": "Tooltip text for the edit button"
+    },
+    "deleteTooltip": "Siba",
+    "@deleteTooltip": {
+        "description": "Tooltip text for the delete button"
+    },
+    "errorLoadingProducts": "Ikibazo mu gufata ibikoresho",
+    "@errorLoadingProducts": {
+        "description": "Error message when loading products"
+    },
+    "paginationPage": "Urupapuro {currentPage} rwa {totalPages}",
+    "@paginationPage": {
+        "description": "Message indicating the current page and total pages in pagination",
+        "placeholders": {
+            "currentPage": {},
+            "totalPages": {}
+        }
     }
 }

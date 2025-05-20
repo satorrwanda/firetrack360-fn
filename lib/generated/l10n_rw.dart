@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'l10n.dart';
 
 // ignore_for_file: type=lint
@@ -374,7 +376,7 @@ class SRw extends S {
   String get drawerItemService => 'Serivisi';
 
   @override
-  String get drawerItemInventory => 'Urubiko';
+  String get drawerItemInventory => 'ububiko';
 
   @override
   String get drawerItemNavigation => 'Kuyobora';
@@ -387,4 +389,203 @@ class SRw extends S {
 
   @override
   String get drawerItemNotifications => 'Ubutumwa';
+
+  @override
+  String get serviceRequestsTitle => ' Serivisi';
+
+  @override
+  String get refreshTooltip => 'Ongera utangire';
+
+  @override
+  String get createServiceRequestTooltip => 'Kora icyifuzo cya Serivisi';
+
+  @override
+  String get searchServiceRequestsHint => 'Shakisha  serivisi...';
+
+  @override
+  String get errorLoadingServiceRequests => 'Ikibazo mu gufata  serivisi';
+
+  @override
+  String get retryButton => 'Ongera ugerageze';
+
+  @override
+  String get noServiceRequestsFound => 'Nta byifuzo bya Serivisi byabonetse';
+
+  @override
+  String get adjustSearchOrFilters => 'Gerageza guhindura uburyo bwo gushakisha cyangwa kugenwa';
+
+  @override
+  String get columnTitle => 'SERIVISI';
+
+  @override
+  String get columnStatus => 'Ahobigeze';
+
+  @override
+  String get columnTechnician => 'TEKINISIYE';
+
+  @override
+  String get columnDate => 'ITALIKI';
+
+  @override
+  String get columnActions => 'IBIKORWA';
+
+  @override
+  String get noTechnicianAssigned => 'Nta wasanze wagenwe';
+
+  @override
+  String get viewDetailsTooltip => 'Reba ibisobanuro';
+
+  @override
+  String get serviceRequestDetailsTitle => 'Serivisi Yasabwe';
+
+  @override
+  String get requestInformationTitle => 'Amakuru kuri serivisi';
+
+  @override
+  String get titleLabel => 'Umutwe';
+
+  @override
+  String get statusLabel => 'Umwanzuro';
+
+  @override
+  String get dateLabel => 'Italiki';
+
+  @override
+  String get descriptionLabel => 'Ibisobanuro';
+
+  @override
+  String get clientInformationTitle => 'Amakuru y\'Umukiriya';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Nimero ya telefone';
+
+  @override
+  String get technicianInformationTitle => 'Amakuru y\'umutekinisiye';
+
+  @override
+  String get notAvailable => 'Ntibibonetse';
+
+  @override
+  String get closeButton => 'Funga';
+
+  @override
+  String showingRecords(int startIndex, int endIndex, int totalItems) {
+    return 'Erekana $startIndex-$endIndex muri $totalItems';
+  }
+
+  @override
+  String get rowsLabel => 'Imirongo: ';
+
+  @override
+  String get rowsPerPageLabel => 'Imirongo kuri buri rupapuro: ';
+
+  @override
+  String get statusPending => 'Byategetswe';
+
+  @override
+  String get statusInProgress => 'Birimo gukorwa';
+
+  @override
+  String get statusCompleted => 'Byarangiye';
+
+  @override
+  String get statusCancelled => 'Byavanyweho';
+
+  @override
+  String get inventoryTitle => 'Ububiko';
+
+  @override
+  String get productCreatedSuccess => 'Produit yakozwe neza';
+
+  @override
+  String errorCreatingProduct(Object error) {
+    return 'Ikibazo mu gukora produit : $error';
+  }
+
+  @override
+  String get deleteProductTitle => 'Siba produit';
+
+  @override
+  String deleteProductConfirmation(Object productName) {
+    return 'Wizeye ko ushaka gusiba $productName?';
+  }
+
+  @override
+  String get deleteButton => 'Siba';
+
+  @override
+  String get productDeletedSuccess => 'Produit yasibwe neza';
+
+  @override
+  String errorDeletingProduct(Object error) {
+    return 'Ikibazo mu gusiba produit : $error';
+  }
+
+  @override
+  String get productUpdatedSuccess => 'Produit yavuguruwe neza';
+
+  @override
+  String errorUpdatingProduct(Object error) {
+    return 'Ikibazo mu kuvugurura produit : $error';
+  }
+
+  @override
+  String failedToRefresh(Object error) {
+    return 'Kunanirwa gufata : $error';
+  }
+
+  @override
+  String get newButton => 'Gishya';
+
+  @override
+  String get searchExtinguishersHint => 'Shakisha Kizimyamwoto...';
+
+  @override
+  String get availableExtinguishersTitle => 'Kizimyamwoto zihari';
+
+  @override
+  String itemCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ibikoresho',
+      one: '$count ikikoresho',
+      zero: 'Nta bikoresho bihari',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noExtinguishersAvailable => 'Nta Kizimyamwoto zihari';
+
+  @override
+  String get noExtinguishersMatchSearch => 'Nta Kizimyamwoto bijyanye n\'ibyo ushakisha';
+
+  @override
+  String get addExtinguisherButton => 'Ongeraho Kizimyamwoto';
+
+  @override
+  String get unknownType => 'Ubwoko butazwi';
+
+  @override
+  String stockLabel(Object quantity) {
+    return 'Ububiko: $quantity';
+  }
+
+  @override
+  String get editTooltip => 'Hindura';
+
+  @override
+  String get deleteTooltip => 'Siba';
+
+  @override
+  String get errorLoadingProducts => 'Ikibazo mu gufata ibikoresho';
+
+  @override
+  String paginationPage(Object currentPage, Object totalPages) {
+    return 'Urupapuro $currentPage rwa $totalPages';
+  }
 }

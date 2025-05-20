@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:firetrack360/generated/l10n.dart'; // Import localization
 
 final currentPageProvider = StateProvider<int>((ref) => 0);
 final pageSizeProvider = StateProvider<int>((ref) => 10);
@@ -21,9 +22,11 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     final pageSize = ref.watch(pageSizeProvider);
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 600;
+    final l10n = S.of(context)!; // Get localized strings
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Theme.of(context)
+          .scaffoldBackgroundColor, // Use theme background color
       body: Column(
         children: [
           // Header
@@ -35,16 +38,19 @@ class ServiceRequestsScreen extends HookConsumerWidget {
               bottom: 16,
             ),
             decoration: BoxDecoration(
-              color: Colors.deepPurple,
+              color: Theme.of(context)
+                  .primaryColor, // Use primary color for header
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x40000000),
+                  color: Theme.of(context)
+                      .shadowColor
+                      .withOpacity(0.2), // Use theme shadow color
                   blurRadius: 4,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -53,29 +59,41 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      icon: Icon(Icons.arrow_back,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary), // Use color on primary
                       onPressed: () => Navigator.pop(context),
                     ),
-                    const Text(
-                      'Service Requests',
+                    Text(
+                      l10n.serviceRequestsTitle, // Localized title
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary, // Use color on primary
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const Spacer(),
                     IconButton(
-                      icon: const Icon(Icons.refresh, color: Colors.white),
+                      icon: Icon(Icons.refresh,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary), // Use color on primary
                       onPressed: () {
                         ref
                             .read(serviceRequestNotifierProvider.notifier)
                             .refreshServiceRequests();
                       },
+                      tooltip: l10n.refreshTooltip, // Localized tooltip
                     ),
                     if (userRole == 'CLIENT')
                       IconButton(
-                        icon: const Icon(Icons.add, color: Colors.white),
+                        icon: Icon(Icons.add,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary), // Use color on primary
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -87,6 +105,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                 .refreshServiceRequests();
                           });
                         },
+                        tooltip: l10n
+                            .createServiceRequestTooltip, // Localized tooltip
                       ),
                   ],
                 ),
@@ -94,11 +114,13 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 // Search Bar
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor, // Use theme card color
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Theme.of(context)
+                            .shadowColor
+                            .withOpacity(0.1), // Use theme shadow color
                         spreadRadius: 2,
                         blurRadius: 8,
                         offset: const Offset(0, 3),
@@ -106,12 +128,22 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ],
                   ),
                   child: TextField(
-                    style: const TextStyle(color: Colors.black87),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium, // Use theme text style
                     decoration: InputDecoration(
-                      hintText: 'Search service requests...',
-                      hintStyle: TextStyle(color: Colors.grey.shade600),
-                      prefixIcon:
-                          const Icon(Icons.search, color: Colors.deepPurple),
+                      hintText:
+                          l10n.searchServiceRequestsHint, // Localized hint text
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
+                              color: Theme.of(context)
+                                  .hintColor), // Use theme hint color
+                      prefixIcon: Icon(Icons.search,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary), // Use secondary color for icon
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -132,57 +164,64 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           // Content
           Expanded(
             child: serviceRequestsAsync.when(
-              loading: () => const Center(
+              loading: () => Center(
                 child: CircularProgressIndicator(
-                  color: Colors.deepPurple,
+                  color:
+                      Theme.of(context).primaryColor, // Use theme primary color
                 ),
               ),
               error: (error, stack) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 64,
-                      color: Colors.red[400],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Error loading service requests',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 64,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .error, // Use theme error color
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      error.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 14,
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.errorLoadingServiceRequests, // Localized error message
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium, // Use theme text style
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                      const SizedBox(height: 8),
+                      Text(
+                        error.toString(),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context)
+                                .hintColor), // Use theme text style and hint color
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context)
+                              .primaryColor, // Use theme primary color
+                          foregroundColor: Theme.of(context)
+                              .colorScheme
+                              .onPrimary, // Use color on primary
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 12),
+                        onPressed: () {
+                          ref
+                              .read(serviceRequestNotifierProvider.notifier)
+                              .refreshServiceRequests();
+                        },
+                        child: Text(l10n.retryButton), // Localized button text
                       ),
-                      onPressed: () {
-                        ref
-                            .read(serviceRequestNotifierProvider.notifier)
-                            .refreshServiceRequests();
-                      },
-                      child: const Text('Retry'),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               data: (requests) {
@@ -194,24 +233,22 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                         Icon(
                           Icons.assignment_outlined,
                           size: 64,
-                          color: Colors.grey[400],
+                          color: Theme.of(context)
+                              .hintColor, // Use theme hint color
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'No Service Requests Found',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          l10n.noServiceRequestsFound, // Localized empty message
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium, // Use theme text style
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Try adjusting your search or filters',
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 14,
-                          ),
+                          l10n.adjustSearchOrFilters, // Localized hint text
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context)
+                                  .hintColor), // Use theme text style and hint color
                         ),
                       ],
                     ),
@@ -240,11 +277,15 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Theme.of(context)
+                                    .cardColor, // Use theme card color
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
+                                    color: Theme.of(context)
+                                        .shadowColor
+                                        .withOpacity(
+                                            0.05), // Use theme shadow color
                                     blurRadius: 6,
                                     offset: const Offset(0, 3),
                                   ),
@@ -253,38 +294,45 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                               child: SingleChildScrollView(
                                 child: DataTable(
                                   headingRowColor: MaterialStateProperty.all(
-                                      Colors.deepPurple.withOpacity(0.1)),
-                                  headingTextStyle: const TextStyle(
-                                    color: Colors.deepPurple,
+                                      Theme.of(context).primaryColor.withOpacity(
+                                          0.1)), // Use primary color with opacity
+                                  headingTextStyle: TextStyle(
+                                    color: Theme.of(context)
+                                        .primaryColor, // Use theme primary color
                                     fontWeight: FontWeight.bold,
                                   ),
                                   dataRowMinHeight: 60,
                                   dataRowMaxHeight: 60,
                                   columnSpacing: 20,
-                                  columns: const [
+                                  columns: [
                                     DataColumn(
                                       label: Expanded(
-                                        child: Text('TITLE'),
+                                        child:
+                                            Text(l10n.columnTitle), // Localized
                                       ),
                                     ),
                                     DataColumn(
                                       label: Expanded(
-                                        child: Text('STATUS'),
+                                        child: Text(
+                                            l10n.columnStatus), // Localized
                                       ),
                                     ),
                                     DataColumn(
                                       label: Expanded(
-                                        child: Text('TECHNICIAN'),
+                                        child: Text(
+                                            l10n.columnTechnician), // Localized
                                       ),
                                     ),
                                     DataColumn(
                                       label: Expanded(
-                                        child: Text('DATE'),
+                                        child:
+                                            Text(l10n.columnDate), // Localized
                                       ),
                                     ),
                                     DataColumn(
                                       label: Expanded(
-                                        child: Text('ACTIONS'),
+                                        child: Text(
+                                            l10n.columnActions), // Localized
                                       ),
                                     ),
                                   ],
@@ -295,9 +343,13 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                             DataCell(
                                               Text(
                                                 request.title,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ), // Use theme text style
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -316,7 +368,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                       BorderRadius.circular(12),
                                                 ),
                                                 child: Text(
-                                                  request.status,
+                                                  _localizeStatus(
+                                                      request.status,
+                                                      l10n), // Localize status
                                                   style: TextStyle(
                                                     color: _getStatusColor(
                                                         request.status),
@@ -329,11 +383,11 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                             ),
                                             DataCell(
                                               Text(
-                                                request.technician.phone ??
-                                                    'No technician assigned',
-                                                style: const TextStyle(
-                                                  fontSize: 13,
-                                                ),
+                                                request.technician?.phone ??
+                                                    l10n.noTechnicianAssigned, // Localized
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall, // Use theme text style
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -342,9 +396,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                               Text(
                                                 DateFormat('MMM dd').format(
                                                     request.requestDate),
-                                                style: const TextStyle(
-                                                  fontSize: 13,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall, // Use theme text style
                                               ),
                                             ),
                                             DataCell(
@@ -352,18 +406,23 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   IconButton(
-                                                    icon: const Icon(
+                                                    icon: Icon(
                                                         Icons
                                                             .remove_red_eye_outlined,
                                                         size: 20,
-                                                        color:
-                                                            Colors.deepPurple),
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary), // Use theme primary color
                                                     onPressed: () {
                                                       // Show client info dialog
-                                                      _showClientInfoDialog(
-                                                          context, request);
+                                                      _showServiceRequestDetailsDialog(
+                                                          // Renamed for clarity
+                                                          context,
+                                                          request,
+                                                          l10n); // Pass l10n
                                                     },
-                                                    tooltip: "View Client Info",
+                                                    tooltip: l10n
+                                                        .viewDetailsTooltip, // Localized tooltip
                                                   ),
                                                 ],
                                               ),
@@ -390,6 +449,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                           startIndex,
                           endIndex,
                           requests.length,
+                          l10n, // Pass l10n
                         )
                       else
                         _buildRegularPagination(
@@ -401,6 +461,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                           startIndex,
                           endIndex,
                           requests.length,
+                          l10n, // Pass l10n
                         ),
                     ],
                   ),
@@ -413,7 +474,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     );
   }
 
-  void _showClientInfoDialog(BuildContext context, dynamic request) {
+  // Renamed and added l10n parameter
+  void _showServiceRequestDetailsDialog(
+      BuildContext context, dynamic request, S l10n) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -425,6 +488,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           child: Container(
             padding: const EdgeInsets.all(24),
             constraints: const BoxConstraints(maxWidth: 500),
+            color: Theme.of(context)
+                .cardColor, // Use theme card color for dialog background
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -433,12 +498,15 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade100,
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withOpacity(0.1), // Use primary color with opacity
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.article_outlined,
-                        color: Colors.deepPurple.shade800,
+                        color: Theme.of(context)
+                            .primaryColor, // Use theme primary color
                         size: 28,
                       ),
                     ),
@@ -448,18 +516,27 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Service Request Details',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.deepPurple.shade800,
-                            ),
+                            l10n.serviceRequestDetailsTitle, // Localized title
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.color,
+                                ), // Use theme text style
                           ),
                         ],
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close),
+                      icon: Icon(Icons.close,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.color), // Use theme text color
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
@@ -468,36 +545,58 @@ class ServiceRequestsScreen extends HookConsumerWidget {
 
                 // Service Request Info
                 _buildInfoSection(
-                  'Request Information',
+                  l10n.requestInformationTitle, // Localized title
                   [
-                    _buildInfoRow('Title', request.title),
-                    _buildInfoRow('Status', request.status),
-                    _buildInfoRow('Date',
-                        DateFormat('MMM dd, yyyy').format(request.requestDate)),
-                    _buildInfoRow('Description', request.description),
+                    _buildInfoRow(l10n.titleLabel, request.title,
+                        context), // Pass context for text style
+                    _buildInfoRow(
+                        l10n.statusLabel,
+                        _localizeStatus(request.status, l10n),
+                        context), // Localize and pass context
+                    _buildInfoRow(
+                        l10n.dateLabel,
+                        DateFormat('MMM dd, yyyy').format(request.requestDate),
+                        context), // Pass context
+                    _buildInfoRow(l10n.descriptionLabel, request.description,
+                        context), // Pass context
                   ],
+                  context, // Pass context to section builder
                 ),
 
                 const SizedBox(height: 16),
 
                 // Client Info
                 _buildInfoSection(
-                  'Client Information',
+                  l10n.clientInformationTitle, // Localized title
                   [
-                    _buildInfoRow('Email', request.client?.email ?? 'N/A'),
-                    _buildInfoRow('Phone', request.client?.phone ?? 'N/A'),
+                    _buildInfoRow(
+                        l10n.emailLabel,
+                        request.client?.email ?? l10n.notAvailable,
+                        context), // Localized and pass context
+                    _buildInfoRow(
+                        l10n.phoneLabel,
+                        request.client?.phone ?? l10n.notAvailable,
+                        context), // Localized and pass context
                   ],
+                  context, // Pass context to section builder
                 ),
 
                 const SizedBox(height: 16),
 
                 // Technician Info
                 _buildInfoSection(
-                  'Technician Information',
+                  l10n.technicianInformationTitle, // Localized title
                   [
-                    _buildInfoRow('Email', request.technician?.email ?? 'N/A'),
-                    _buildInfoRow('Phone', request.technician?.phone ?? 'N/A'),
+                    _buildInfoRow(
+                        l10n.emailLabel,
+                        request.technician?.email ?? l10n.notAvailable,
+                        context), // Localized and pass context
+                    _buildInfoRow(
+                        l10n.phoneLabel,
+                        request.technician?.phone ?? l10n.notAvailable,
+                        context), // Localized and pass context
                   ],
+                  context, // Pass context to section builder
                 ),
 
                 const SizedBox(height: 24),
@@ -509,12 +608,19 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
                       style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.deepPurple[700],
+                        foregroundColor: Theme.of(context)
+                            .colorScheme
+                            .onPrimary, // Use color on primary
+                        backgroundColor: Theme.of(context)
+                            .primaryColor, // Use theme primary color
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 5),
+                            horizontal: 12, vertical: 8), // Adjusted padding
+                        shape: RoundedRectangleBorder(
+                          // Added shape for consistency
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                      child: const Text('Close'),
+                      child: Text(l10n.closeButton), // Localized button text
                     ),
                     const SizedBox(width: 8),
                   ],
@@ -527,25 +633,30 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildInfoSection(String title, List<Widget> rows) {
+  Widget _buildInfoSection(
+      String title, List<Widget> rows, BuildContext context) {
+    // Added context parameter
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: Theme.of(context).hoverColor.withOpacity(
+            0.05), // Use hoverColor with opacity for a subtle background
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
+        border: Border.all(
+            color: Theme.of(context).dividerColor), // Use theme divider color
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.deepPurple[700],
-            ),
+            title, // Use the localized section title
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary, // Use theme primary color for section title
+                ), // Use theme text style
           ),
           const SizedBox(height: 12),
           ...rows,
@@ -554,7 +665,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(String label, String value, BuildContext context) {
+    // Added context parameter
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -563,20 +675,24 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           SizedBox(
             width: 100,
             child: Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[700],
-              ),
+              label, // Use the localized label
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.color
+                        ?.withOpacity(0.7), // Adjust opacity for label
+                  ), // Use theme text style
             ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              value,
-              style: const TextStyle(
-                color: Colors.black87,
-              ),
+              value, // Use the localized value
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium, // Use theme text style
             ),
           ),
         ],
@@ -593,6 +709,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     int startIndex,
     int endIndex,
     int totalItems,
+    S l10n, // Added l10n parameter
   ) {
     return Column(
       children: [
@@ -602,21 +719,28 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           children: [
             // Records info
             Text(
-              'Showing ${startIndex + 1}-$endIndex of $totalItems',
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 14,
-              ),
+              l10n.showingRecords(
+                  startIndex + 1, endIndex, totalItems), // Localized
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.color
+                        ?.withOpacity(0.7),
+                  ), // Use theme text style
             ),
             // Page size dropdown
             Row(
               children: [
                 Text(
-                  'Rows: ',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
+                  l10n.rowsLabel, // Localized
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.color
+                            ?.withOpacity(0.7),
+                      ), // Use theme text style
                 ),
                 DropdownButton<int>(
                   value: pageSize,
@@ -625,7 +749,10 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                   items: [5, 10, 15, 20].map((size) {
                     return DropdownMenuItem<int>(
                       value: size,
-                      child: Text('$size'),
+                      child: Text('$size',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium), // Use theme text style
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -634,6 +761,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                       ref.read(currentPageProvider.notifier).state = 0;
                     }
                   },
+                  dropdownColor: Theme.of(context)
+                      .cardColor, // Use theme card color for dropdown
                 ),
               ],
             ),
@@ -645,27 +774,33 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: const Icon(Icons.first_page, size: 20),
+              icon: Icon(Icons.first_page,
+                  size: 20,
+                  color: currentPage > 0
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).disabledColor), // Use theme colors
               onPressed: currentPage > 0
                   ? () {
                       ref.read(currentPageProvider.notifier).state = 0;
                     }
                   : null,
-              color: currentPage > 0 ? Colors.deepPurple : Colors.grey,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               visualDensity: VisualDensity.compact,
             ),
             const SizedBox(width: 4),
             IconButton(
-              icon: const Icon(Icons.chevron_left, size: 20),
+              icon: Icon(Icons.chevron_left,
+                  size: 20,
+                  color: currentPage > 0
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).disabledColor), // Use theme colors
               onPressed: currentPage > 0
                   ? () {
                       ref.read(currentPageProvider.notifier).state =
                           currentPage - 1;
                     }
                   : null,
-              color: currentPage > 0 ? Colors.deepPurple : Colors.grey,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               visualDensity: VisualDensity.compact,
@@ -674,45 +809,50 @@ class ServiceRequestsScreen extends HookConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color:
+                    Theme.of(context).primaryColor, // Use theme primary color
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
                 '${currentPage + 1}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onPrimary, // Use color on primary
+                      fontWeight: FontWeight.bold,
+                    ), // Use theme text style
               ),
             ),
             const SizedBox(width: 8),
             IconButton(
-              icon: const Icon(Icons.chevron_right, size: 20),
+              icon: Icon(Icons.chevron_right,
+                  size: 20,
+                  color: currentPage < totalPages - 1
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).disabledColor), // Use theme colors
               onPressed: currentPage < totalPages - 1
                   ? () {
                       ref.read(currentPageProvider.notifier).state =
                           currentPage + 1;
                     }
                   : null,
-              color: currentPage < totalPages - 1
-                  ? Colors.deepPurple
-                  : Colors.grey,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               visualDensity: VisualDensity.compact,
             ),
             const SizedBox(width: 4),
             IconButton(
-              icon: const Icon(Icons.last_page, size: 20),
+              icon: Icon(Icons.last_page,
+                  size: 20,
+                  color: currentPage < totalPages - 1
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).disabledColor), // Use theme colors
               onPressed: currentPage < totalPages - 1
                   ? () {
                       ref.read(currentPageProvider.notifier).state =
                           totalPages - 1;
                     }
                   : null,
-              color: currentPage < totalPages - 1
-                  ? Colors.deepPurple
-                  : Colors.grey,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               visualDensity: VisualDensity.compact,
@@ -732,6 +872,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     int startIndex,
     int endIndex,
     int totalItems,
+    S l10n, // Added l10n parameter
   ) {
     return Row(
       children: [
@@ -739,11 +880,15 @@ class ServiceRequestsScreen extends HookConsumerWidget {
         Expanded(
           flex: 2,
           child: Text(
-            'Showing ${startIndex + 1}-$endIndex of $totalItems',
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 14,
-            ),
+            l10n.showingRecords(
+                startIndex + 1, endIndex, totalItems), // Localized
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.color
+                      ?.withOpacity(0.7),
+                ), // Use theme text style
           ),
         ),
         // Page size dropdown
@@ -753,11 +898,14 @@ class ServiceRequestsScreen extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Rows per page: ',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 14,
-                ),
+                l10n.rowsPerPageLabel, // Localized
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.color
+                          ?.withOpacity(0.7),
+                    ), // Use theme text style
               ),
               DropdownButton<int>(
                 value: pageSize,
@@ -765,7 +913,10 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 items: [5, 10, 15, 20].map((size) {
                   return DropdownMenuItem<int>(
                     value: size,
-                    child: Text('$size'),
+                    child: Text('$size',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium), // Use theme text style
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -774,6 +925,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ref.read(currentPageProvider.notifier).state = 0;
                   }
                 },
+                dropdownColor: Theme.of(context)
+                    .cardColor, // Use theme card color for dropdown
               ),
             ],
           ),
@@ -785,65 +938,72 @@ class ServiceRequestsScreen extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                icon: const Icon(Icons.first_page),
+                icon: Icon(Icons.first_page,
+                    color: currentPage > 0
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).disabledColor), // Use theme colors
                 onPressed: currentPage > 0
                     ? () {
                         ref.read(currentPageProvider.notifier).state = 0;
                       }
                     : null,
-                color: currentPage > 0 ? Colors.deepPurple : Colors.grey,
                 visualDensity: VisualDensity.compact,
               ),
               IconButton(
-                icon: const Icon(Icons.chevron_left),
+                icon: Icon(Icons.chevron_left,
+                    color: currentPage > 0
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).disabledColor), // Use theme colors
                 onPressed: currentPage > 0
                     ? () {
                         ref.read(currentPageProvider.notifier).state =
                             currentPage - 1;
                       }
                     : null,
-                color: currentPage > 0 ? Colors.deepPurple : Colors.grey,
                 visualDensity: VisualDensity.compact,
               ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple,
+                  color:
+                      Theme.of(context).primaryColor, // Use theme primary color
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   '${currentPage + 1}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary, // Use color on primary
+                        fontWeight: FontWeight.bold,
+                      ), // Use theme text style
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.chevron_right),
+                icon: Icon(Icons.chevron_right,
+                    color: currentPage < totalPages - 1
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).disabledColor), // Use theme colors
                 onPressed: currentPage < totalPages - 1
                     ? () {
                         ref.read(currentPageProvider.notifier).state =
                             currentPage + 1;
                       }
                     : null,
-                color: currentPage < totalPages - 1
-                    ? Colors.deepPurple
-                    : Colors.grey,
                 visualDensity: VisualDensity.compact,
               ),
               IconButton(
-                icon: const Icon(Icons.last_page),
+                icon: Icon(Icons.last_page,
+                    color: currentPage < totalPages - 1
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).disabledColor), // Use theme colors
                 onPressed: currentPage < totalPages - 1
                     ? () {
                         ref.read(currentPageProvider.notifier).state =
                             totalPages - 1;
                       }
                     : null,
-                color: currentPage < totalPages - 1
-                    ? Colors.deepPurple
-                    : Colors.grey,
                 visualDensity: VisualDensity.compact,
               ),
             ],
@@ -865,6 +1025,22 @@ class ServiceRequestsScreen extends HookConsumerWidget {
         return Colors.red;
       default:
         return Colors.grey;
+    }
+  }
+
+  // Helper to localize status strings
+  String _localizeStatus(String status, S l10n) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return l10n.statusPending;
+      case 'in progress':
+        return l10n.statusInProgress;
+      case 'completed':
+        return l10n.statusCompleted;
+      case 'cancelled':
+        return l10n.statusCancelled;
+      default:
+        return status;
     }
   }
 }

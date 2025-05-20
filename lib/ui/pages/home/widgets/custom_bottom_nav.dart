@@ -106,14 +106,16 @@ class CustomBottomNav extends HookConsumerWidget {
 
     // Define colors similar to the drawer, adapted for bottom nav
     final startColor =
-        isDarkMode ? Colors.deepPurple.shade900 : Colors.deepPurple.shade700;
+        isDarkMode ? Colors.deepPurple.shade800 : Colors.deepPurple.shade700;
     final endColor = isDarkMode ? Colors.black : Colors.deepPurple.shade400;
-    final selectedItemColor = isDarkMode
-        ? Colors.white
-        : Colors.deepPurple; // White for selected in dark mode
-    final unselectedItemColor = isDarkMode
-        ? Colors.white60
-        : Colors.grey.shade600; // Less prominent white in dark mode
+
+    // Item colors will focus on label visibility, icons will be white
+    final selectedLabelColor = isDarkMode
+        ? Colors.white // White label for selected in dark mode
+        : Colors.white; // White label for selected in light mode
+    final unselectedLabelColor = isDarkMode
+        ? Colors.white70 // Slightly less prominent white label
+        : Colors.white70; // Slightly less prominent white label
 
     void handleNavigation(String label) {
       selectedLabel.value = label; // Update hook state
@@ -146,18 +148,24 @@ class CustomBottomNav extends HookConsumerWidget {
 
     final items = [
       BottomNavigationBarItem(
-        icon: const Icon(Icons.home_outlined),
-        activeIcon: const Icon(Icons.home),
+        icon:
+            const Icon(Icons.home_outlined, color: Colors.white), // White icon
+        activeIcon:
+            const Icon(Icons.home, color: Colors.white), // White active icon
         label: l10n.bottomNavHome,
       ),
       BottomNavigationBarItem(
-        icon: const Icon(Icons.person_outline),
-        activeIcon: const Icon(Icons.person),
+        icon:
+            const Icon(Icons.person_outline, color: Colors.white), // White icon
+        activeIcon:
+            const Icon(Icons.person, color: Colors.white), // White active icon
         label: l10n.bottomNavProfile,
       ),
       BottomNavigationBarItem(
-        icon: const Icon(Icons.language_outlined),
-        activeIcon: const Icon(Icons.language),
+        icon: const Icon(Icons.language_outlined,
+            color: Colors.white), // White icon
+        activeIcon: const Icon(Icons.language,
+            color: Colors.white), // White active icon
         label: l10n.bottomNavLanguage,
       ),
     ];
@@ -179,8 +187,7 @@ class CustomBottomNav extends HookConsumerWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black
-                  .withOpacity(isDarkMode ? 0.4 : 0.1), // Adjust shadow opacity
+              color: Colors.black.withOpacity(isDarkMode ? 0.4 : 0.1),
               blurRadius: 10,
               offset: const Offset(0, -5),
             ),
@@ -193,15 +200,12 @@ class CustomBottomNav extends HookConsumerWidget {
               final tappedLabel = ['Home', 'Profile', 'Language'][index];
               handleNavigation(tappedLabel);
             },
-            selectedItemColor:
-                selectedItemColor, // Use theme-based selected color
-            unselectedItemColor:
-                unselectedItemColor, // Use theme-based unselected color
+            selectedItemColor: selectedLabelColor,
+            unselectedItemColor: unselectedLabelColor,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            elevation: 0, // Remove elevation here as Container provides it
-            backgroundColor: Colors
-                .transparent, // Make background transparent to show gradient
+            elevation: 0,
+            backgroundColor: Colors.transparent,
             items: items,
           ),
         ),

@@ -438,9 +438,9 @@
     "@actionCardNavigation": {
         "description": "Label for the navigation action card"
     },
-   "statusTitle": "Status",
+    "statusTitle": "Status",
     "@statusTitle": {
-    "description": "Title for the status section"
+        "description": "Title for the status section"
     },
     "roleLabel": "Role:",
     "@roleLabel": {
@@ -513,6 +513,268 @@
     "drawerItemNotifications": "Notifications",
     "@drawerItemNotifications": {
         "description": "Label for the Notifications menu item in the drawer"
+    },
+    "serviceRequestsTitle": "Service Requests",
+    "@serviceRequestsTitle": {
+        "description": "Title for the service requests screen"
+    },
+    "refreshTooltip": "Refresh",
+    "@refreshTooltip": {
+        "description": "Tooltip for the refresh button"
+    },
+    "createServiceRequestTooltip": "Create Service Request",
+    "@createServiceRequestTooltip": {
+        "description": "Tooltip for the create service request button"
+    },
+    "searchServiceRequestsHint": "Search service requests...",
+    "@searchServiceRequestsHint": {
+        "description": "Hint text for the service requests search bar"
+    },
+    "errorLoadingServiceRequests": "Error loading service requests",
+    "@errorLoadingServiceRequests": {
+        "description": "Error message when service requests fail to load"
+    },
+    "retryButton": "Retry",
+    "@retryButton": {
+        "description": "Text for the retry button"
+    },
+    "noServiceRequestsFound": "No Service Requests Found",
+    "@noServiceRequestsFound": {
+        "description": "Message displayed when no service requests are found"
+    },
+    "adjustSearchOrFilters": "Try adjusting your search or filters",
+    "@adjustSearchOrFilters": {
+        "description": "Hint text when no service requests are found"
+    },
+    "columnTitle": "TITLE",
+    "@columnTitle": {
+        "description": "Header for the 'Title' column in the data table"
+    },
+    "columnStatus": "STATUS",
+    "@columnStatus": {
+        "description": "Header for the 'Status' column in the data table"
+    },
+    "columnTechnician": "TECHNICIAN",
+    "@columnTechnician": {
+        "description": "Header for the 'Technician' column in the data table"
+    },
+    "columnDate": "DATE",
+    "@columnDate": {
+        "description": "Header for the 'Date' column in the data table"
+    },
+    "columnActions": "ACTIONS",
+    "@columnActions": {
+        "description": "Header for the 'Actions' column in the data table"
+    },
+    "noTechnicianAssigned": "No technician assigned",
+    "@noTechnicianAssigned": {
+        "description": "Text displayed when no technician is assigned to a service request"
+    },
+    "viewDetailsTooltip": "View Details",
+    "@viewDetailsTooltip": {
+        "description": "Tooltip for the view details button"
+    },
+    "serviceRequestDetailsTitle": "Service Request Details",
+    "@serviceRequestDetailsTitle": {
+        "description": "Title for the service request details dialog"
+    },
+    "requestInformationTitle": "Request Information",
+    "@requestInformationTitle": {
+        "description": "Title for the request information section in the details dialog"
+    },
+    "titleLabel": "Title",
+    "@titleLabel": {
+        "description": "Label for the 'Title' field in the details dialog"
+    },
+    "statusLabel": "Status",
+    "@statusLabel": {
+        "description": "Label for the 'Status' field in the details dialog"
+    },
+    "dateLabel": "Date",
+    "@dateLabel": {
+        "description": "Label for the 'Date' field in the details dialog"
+    },
+    "descriptionLabel": "Description",
+    "@descriptionLabel": {
+        "description": "Label for the 'Description' field in the details dialog"
+    },
+    "clientInformationTitle": "Client Information",
+    "@clientInformationTitle": {
+        "description": "Title for the client information section in the details dialog"
+    },
+    "emailLabel": "Email",
+    "@emailLabel": {
+        "description": "Label for the 'Email' field in the details dialog"
+    },
+    "phoneLabel": "Phone",
+    "@phoneLabel": {
+        "description": "Label for the 'Phone' field in the details dialog"
+    },
+    "technicianInformationTitle": "Technician Information",
+    "@technicianInformationTitle": {
+        "description": "Title for the technician information section in the details dialog"
+    },
+    "notAvailable": "N/A",
+    "@notAvailable": {
+        "description": "Abbreviation for Not Available"
+    },
+    "closeButton": "Close",
+    "@closeButton": {
+        "description": "Text for the close button"
+    },
+    "showingRecords": "Showing {startIndex}-{endIndex} of {totalItems}",
+    "@showingRecords": {
+        "description": "Text showing the range of records displayed",
+        "placeholders": {
+            "startIndex": {
+                "type": "int",
+                "example": "1"
+            },
+            "endIndex": {
+                "type": "int",
+                "example": "10"
+            },
+            "totalItems": {
+                "type": "int",
+                "example": "50"
+            }
+        }
+    },
+    "rowsLabel": "Rows: ",
+    "@rowsLabel": {
+        "description": "Label for the rows per page dropdown (small screen)"
+    },
+    "rowsPerPageLabel": "Rows per page: ",
+    "@rowsPerPageLabel": {
+        "description": "Label for the rows per page dropdown (regular screen)"
+    },
+    "statusPending": "Pending",
+    "@statusPending": {
+        "description": "Status: Pending"
+    },
+    "statusInProgress": "In Progress",
+    "@statusInProgress": {
+        "description": "Status: In Progress"
+    },
+    "statusCompleted": "Completed",
+    "@statusCompleted": {
+        "description": "Status: Completed"
+    },
+    "statusCancelled": "Cancelled",
+    "@statusCancelled": {
+        "description": "Status: Cancelled"
+    },
+    "inventoryTitle": "Inventory",
+    "@inventoryTitle": {
+        "description": "Title for the inventory page"
+    },
+    "productCreatedSuccess": "Product created successfully",
+    "@productCreatedSuccess": {
+        "description": "Success message after creating a product"
+    },
+    "errorCreatingProduct": "Error creating product: {error}",
+    "@errorCreatingProduct": {
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "deleteProductTitle": "Delete Product",
+    "@deleteProductTitle": {
+        "description": "Title for the delete product dialog"
+    },
+    "deleteProductConfirmation": "Are you sure you want to delete {productName}?",
+    "@deleteProductConfirmation": {
+        "placeholders": {
+            "productName": {}
+        }
+    },
+    "deleteButton": "Delete",
+    "@deleteButton": {
+        "description": "Text for the delete button"
+    },
+    "productDeletedSuccess": "Product deleted successfully",
+    "@productDeletedSuccess": {
+        "description": "Success message after deleting a product"
+    },
+    "errorDeletingProduct": "Error deleting product: {error}",
+    "@errorDeletingProduct": {
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "productUpdatedSuccess": "Product updated successfully",
+    "@productUpdatedSuccess": {
+        "description": "Success message after updating a product"
+    },
+    "errorUpdatingProduct": "Error updating product: {error}",
+    "@errorUpdatingProduct": {
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRefresh": "Failed to refresh: {error}",
+    "@failedToRefresh": {
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "newButton": "New",
+    "@newButton": {
+        "description": "Text for the new button"
+    },
+    "searchExtinguishersHint": "Search extinguishers...",
+    "@searchExtinguishersHint": {
+        "description": "Hint text for the extinguishers search bar"
+    },
+    "availableExtinguishersTitle": "Available Extinguishers",
+    "@availableExtinguishersTitle": {
+        "description": "Title for the available extinguishers section"
+    },
+    "itemCount": "{count, plural, =0{No items} one{{count} item} other{{count} items}}",
+    "@itemCount": {
+        "placeholders": {
+            "count": {}
+        }
+    },
+    "noExtinguishersAvailable": "No extinguishers available",
+    "@noExtinguishersAvailable": {
+        "description": "Message displayed when no extinguishers are available"
+    },
+    "noExtinguishersMatchSearch": "No extinguishers match your search",
+    "@noExtinguishersMatchSearch": {
+        "description": "Message displayed when no extinguishers match the search criteria"
+    },
+    "addExtinguisherButton": "Add Extinguisher",
+    "@addExtinguisherButton": {
+        "description": "Text for the add extinguisher button"
+    },
+    "unknownType": "Unknown Type",
+    "@unknownType": {
+        "description": "Label for unknown extinguisher type"
+    },
+    "stockLabel": "Stock: {quantity}",
+    "@stockLabel": {
+        "placeholders": {
+            "quantity": {}
+        }
+    },
+    "editTooltip": "Edit",
+    "@editTooltip": {
+        "description": "Tooltip for the edit button"
+    },
+    "deleteTooltip": "Delete",
+    "@deleteTooltip": {
+        "description": "Tooltip for the delete button"
+    },
+    "errorLoadingProducts": "Error loading products",
+    "@errorLoadingProducts": {
+        "description": "Error message when loading products fails"
+    },
+    "paginationPage": "Page {currentPage} of {totalPages}",
+    "@paginationPage": {
+        "placeholders": {
+            "currentPage": {},
+            "totalPages": {}
+        }
     }
-    
 }
