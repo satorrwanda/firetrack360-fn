@@ -618,7 +618,9 @@
     "@showingRecords": {
         "description": "Message indicating the range of records being displayed",
         "placeholders": {
-            "startIndex": {},
+            "startIndex": {
+                "type": "int"
+            },
             "endIndex": {},
             "totalItems": {}
         }
