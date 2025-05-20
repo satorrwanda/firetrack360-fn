@@ -470,7 +470,7 @@
     "@drawerOtherTitle": {
         "description": "Title for the other section in the drawer"
     },
-    "drawerItemDashboard": "Ijambo ry'ibikorwa",
+    "drawerItemDashboard": "Ahabanza",
     "@drawerItemDashboard": {
         "description": "Label for the Dashboard menu item in the drawer"
     },

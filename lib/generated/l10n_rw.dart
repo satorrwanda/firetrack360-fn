@@ -364,7 +364,7 @@ class SRw extends S {
   String get drawerOtherTitle => 'IBINDI';
 
   @override
-  String get drawerItemDashboard => 'Ijambo ry\'ibikorwa';
+  String get drawerItemDashboard => 'Ahabanza';
 
   @override
   String get drawerItemHome => 'Ahabanza';
