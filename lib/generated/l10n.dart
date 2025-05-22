@@ -157,7 +157,7 @@ abstract class S {
   /// **'Sign Up'**
   String get signUpLink;
 
-  /// Main title on the login header
+  /// Title for the welcome back message
   ///
   /// In en, this message translates to:
   /// **'Welcome Back'**
@@ -660,6 +660,546 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Error loading terms and conditions. Please try again.'**
   String get errorLoadingTerms;
+
+  /// Error message when loading a page fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading page. Please try again.'**
+  String get errorLoadingPage;
+
+  /// Title for the language selection page
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguageTitle;
+
+  /// Label for the Home tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottomNavHome;
+
+  /// Label for the Profile tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get bottomNavProfile;
+
+  /// Label for the Language tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get bottomNavLanguage;
+
+  /// Title for the Home page
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homePageTitle;
+
+  /// Subtitle for the welcome back message
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your fire safety equipment efficiently'**
+  String get welcomeBackSubtitle;
+
+  /// Title for the quick actions section
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActionsTitle;
+
+  /// Label for the inventory action card
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get actionCardInventory;
+
+  /// Label for the services action card
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get actionCardServices;
+
+  /// Label for the settings action card
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get actionCardSettings;
+
+  /// Label for the notifications action card
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get actionCardNotifications;
+
+  /// Label for the navigation action card
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get actionCardNavigation;
+
+  /// Title for the status section
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusTitle;
+
+  /// Label for the role section
+  ///
+  /// In en, this message translates to:
+  /// **'Role:'**
+  String get roleLabel;
+
+  /// Tooltip text for the notifications icon
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTooltip;
+
+  /// Title for the logout confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Logout'**
+  String get confirmLogoutTitle;
+
+  /// Message for the logout confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out?'**
+  String get confirmLogoutMessage;
+
+  /// Text for the cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelButton;
+
+  /// Text for the logout button
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutButton;
+
+  /// Title for the main menu section in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'MENU'**
+  String get drawerMenuTitle;
+
+  /// Title for the features section in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURES'**
+  String get drawerFeaturesTitle;
+
+  /// Title for the other section in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'OTHER'**
+  String get drawerOtherTitle;
+
+  /// Label for the Dashboard menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get drawerItemDashboard;
+
+  /// Label for the Home menu item in the drawer (if used)
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get drawerItemHome;
+
+  /// Label for the Users menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get drawerItemUsers;
+
+  /// Label for the Service menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get drawerItemService;
+
+  /// Label for the Inventory menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get drawerItemInventory;
+
+  /// Label for the Navigation menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get drawerItemNavigation;
+
+  /// Label for the Profile menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get drawerItemProfile;
+
+  /// Label for the Settings menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get drawerItemSettings;
+
+  /// Label for the Notifications menu item in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get drawerItemNotifications;
+
+  /// Title for the service requests screen
+  ///
+  /// In en, this message translates to:
+  /// **'Service Requests'**
+  String get serviceRequestsTitle;
+
+  /// Tooltip for the refresh button
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refreshTooltip;
+
+  /// Tooltip for the create service request button
+  ///
+  /// In en, this message translates to:
+  /// **'Create Service Request'**
+  String get createServiceRequestTooltip;
+
+  /// Hint text for the service requests search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search service requests...'**
+  String get searchServiceRequestsHint;
+
+  /// Error message when service requests fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading service requests'**
+  String get errorLoadingServiceRequests;
+
+  /// Text for the retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
+
+  /// Message displayed when no service requests are found
+  ///
+  /// In en, this message translates to:
+  /// **'No Service Requests Found'**
+  String get noServiceRequestsFound;
+
+  /// Hint text when no service requests are found
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or filters'**
+  String get adjustSearchOrFilters;
+
+  /// Header for the 'Title' column in the data table
+  ///
+  /// In en, this message translates to:
+  /// **'TITLE'**
+  String get columnTitle;
+
+  /// Header for the 'Status' column in the data table
+  ///
+  /// In en, this message translates to:
+  /// **'STATUS'**
+  String get columnStatus;
+
+  /// Header for the 'Technician' column in the data table
+  ///
+  /// In en, this message translates to:
+  /// **'TECHNICIAN'**
+  String get columnTechnician;
+
+  /// Header for the 'Date' column in the data table
+  ///
+  /// In en, this message translates to:
+  /// **'DATE'**
+  String get columnDate;
+
+  /// Header for the 'Actions' column in the data table
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIONS'**
+  String get columnActions;
+
+  /// Text displayed when no technician is assigned to a service request
+  ///
+  /// In en, this message translates to:
+  /// **'No technician assigned'**
+  String get noTechnicianAssigned;
+
+  /// Tooltip for the view details button
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get viewDetailsTooltip;
+
+  /// Title for the service request details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Service Request Details'**
+  String get serviceRequestDetailsTitle;
+
+  /// Title for the request information section in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Request Information'**
+  String get requestInformationTitle;
+
+  /// Label for the 'Title' field in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get titleLabel;
+
+  /// Label for the 'Status' field in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusLabel;
+
+  /// Label for the 'Date' field in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateLabel;
+
+  /// Label for the 'Description' field in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// Title for the client information section in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Client Information'**
+  String get clientInformationTitle;
+
+  /// Label for the 'Email' field in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// Label for the 'Phone' field in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneLabel;
+
+  /// Title for the technician information section in the details dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Technician Information'**
+  String get technicianInformationTitle;
+
+  /// Abbreviation for Not Available
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get notAvailable;
+
+  /// Text for the close button
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeButton;
+
+  /// Text showing the range of records displayed
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {startIndex}-{endIndex} of {totalItems}'**
+  String showingRecords(int startIndex, int endIndex, int totalItems);
+
+  /// Label for the rows per page dropdown (small screen)
+  ///
+  /// In en, this message translates to:
+  /// **'Rows: '**
+  String get rowsLabel;
+
+  /// Label for the rows per page dropdown (regular screen)
+  ///
+  /// In en, this message translates to:
+  /// **'Rows per page: '**
+  String get rowsPerPageLabel;
+
+  /// Status: Pending
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// Status: In Progress
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get statusInProgress;
+
+  /// Status: Completed
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statusCompleted;
+
+  /// Status: Cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
+
+  /// Title for the inventory page
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get inventoryTitle;
+
+  /// Success message after creating a product
+  ///
+  /// In en, this message translates to:
+  /// **'Product created successfully'**
+  String get productCreatedSuccess;
+
+  /// No description provided for @errorCreatingProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating product: {error}'**
+  String errorCreatingProduct(Object error);
+
+  /// Title for the delete product dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Product'**
+  String get deleteProductTitle;
+
+  /// No description provided for @deleteProductConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete {productName}?'**
+  String deleteProductConfirmation(Object productName);
+
+  /// Text for the delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteButton;
+
+  /// Success message after deleting a product
+  ///
+  /// In en, this message translates to:
+  /// **'Product deleted successfully'**
+  String get productDeletedSuccess;
+
+  /// No description provided for @errorDeletingProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting product: {error}'**
+  String errorDeletingProduct(Object error);
+
+  /// Success message after updating a product
+  ///
+  /// In en, this message translates to:
+  /// **'Product updated successfully'**
+  String get productUpdatedSuccess;
+
+  /// No description provided for @errorUpdatingProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating product: {error}'**
+  String errorUpdatingProduct(Object error);
+
+  /// No description provided for @failedToRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to refresh: {error}'**
+  String failedToRefresh(Object error);
+
+  /// Text for the new button
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newButton;
+
+  /// Hint text for the extinguishers search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search extinguishers...'**
+  String get searchExtinguishersHint;
+
+  /// Title for the available extinguishers section
+  ///
+  /// In en, this message translates to:
+  /// **'Available Extinguishers'**
+  String get availableExtinguishersTitle;
+
+  /// No description provided for @itemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No items} one{{count} item} other{{count} items}}'**
+  String itemCount(num count);
+
+  /// Message displayed when no extinguishers are available
+  ///
+  /// In en, this message translates to:
+  /// **'No extinguishers available'**
+  String get noExtinguishersAvailable;
+
+  /// Message displayed when no extinguishers match the search criteria
+  ///
+  /// In en, this message translates to:
+  /// **'No extinguishers match your search'**
+  String get noExtinguishersMatchSearch;
+
+  /// Text for the add extinguisher button
+  ///
+  /// In en, this message translates to:
+  /// **'Add Extinguisher'**
+  String get addExtinguisherButton;
+
+  /// Label for unknown extinguisher type
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Type'**
+  String get unknownType;
+
+  /// No description provided for @stockLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock: {quantity}'**
+  String stockLabel(Object quantity);
+
+  /// Tooltip for the edit button
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editTooltip;
+
+  /// Tooltip for the delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteTooltip;
+
+  /// Error message when loading products fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading products'**
+  String get errorLoadingProducts;
+
+  /// No description provided for @paginationPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {currentPage} of {totalPages}'**
+  String paginationPage(Object currentPage, Object totalPages);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

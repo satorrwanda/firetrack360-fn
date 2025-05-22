@@ -72,12 +72,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 AppRoutes.navigateToHome(context);
               })
           : leading,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
       actions: actions ??
           [
             _buildNotificationButton(context),

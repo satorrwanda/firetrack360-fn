@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'l10n.dart';
 
 // ignore_for_file: type=lint
@@ -291,4 +293,299 @@ class SFr extends S {
 
   @override
   String get errorLoadingTerms => 'Erreur lors du chargement des conditions d\'utilisation';
+
+  @override
+  String get errorLoadingPage => 'Error loading page. Please try again.';
+
+  @override
+  String get selectLanguageTitle => 'Sélectionner la langue';
+
+  @override
+  String get bottomNavHome => 'Accueil';
+
+  @override
+  String get bottomNavProfile => 'Profil';
+
+  @override
+  String get bottomNavLanguage => 'Langues';
+
+  @override
+  String get homePageTitle => 'Accueil';
+
+  @override
+  String get welcomeBackSubtitle => 'Gérez efficacement votre équipement de sécurité incendie';
+
+  @override
+  String get quickActionsTitle => 'Actions Rapides';
+
+  @override
+  String get actionCardInventory => 'Inventaire';
+
+  @override
+  String get actionCardServices => 'Serivisi';
+
+  @override
+  String get actionCardSettings => 'Paramètres';
+
+  @override
+  String get actionCardNotifications => 'Notifications';
+
+  @override
+  String get actionCardNavigation => 'Navigation';
+
+  @override
+  String get statusTitle => 'Statut';
+
+  @override
+  String get roleLabel => 'Rôle';
+
+  @override
+  String get notificationsTooltip => 'Notifications';
+
+  @override
+  String get confirmLogoutTitle => 'Confirmer la déconnexion';
+
+  @override
+  String get confirmLogoutMessage => 'Êtes-vous sûr(e) de vouloir vous déconnecter ?';
+
+  @override
+  String get cancelButton => 'Annuler';
+
+  @override
+  String get logoutButton => 'Déconnexion';
+
+  @override
+  String get drawerMenuTitle => 'MENU';
+
+  @override
+  String get drawerFeaturesTitle => 'FONCTIONNALITÉS';
+
+  @override
+  String get drawerOtherTitle => 'AUTRES';
+
+  @override
+  String get drawerItemDashboard => 'Tableau de bord';
+
+  @override
+  String get drawerItemHome => 'Accueil';
+
+  @override
+  String get drawerItemUsers => 'Utilisateurs';
+
+  @override
+  String get drawerItemService => 'Service';
+
+  @override
+  String get drawerItemInventory => 'Inventaire';
+
+  @override
+  String get drawerItemNavigation => 'Navigation';
+
+  @override
+  String get drawerItemProfile => 'Profil';
+
+  @override
+  String get drawerItemSettings => 'Paramètres';
+
+  @override
+  String get drawerItemNotifications => 'Notifications';
+
+  @override
+  String get serviceRequestsTitle => 'Demandes de service';
+
+  @override
+  String get refreshTooltip => 'Actualiser';
+
+  @override
+  String get createServiceRequestTooltip => 'Créer une demande de service';
+
+  @override
+  String get searchServiceRequestsHint => 'Rechercher les demandes de service...';
+
+  @override
+  String get errorLoadingServiceRequests => 'Erreur lors du chargement des demandes de service';
+
+  @override
+  String get retryButton => 'Réessayer';
+
+  @override
+  String get noServiceRequestsFound => 'Aucune demande de service trouvée';
+
+  @override
+  String get adjustSearchOrFilters => 'Essayez d\'ajuster votre recherche ou vos filtres';
+
+  @override
+  String get columnTitle => 'TITRE';
+
+  @override
+  String get columnStatus => 'STATUT';
+
+  @override
+  String get columnTechnician => 'TECHNICIEN';
+
+  @override
+  String get columnDate => 'DATE';
+
+  @override
+  String get columnActions => 'ACTIONS';
+
+  @override
+  String get noTechnicianAssigned => 'Aucun technicien assigné';
+
+  @override
+  String get viewDetailsTooltip => 'Voir les détails';
+
+  @override
+  String get serviceRequestDetailsTitle => 'Détails de la demande de service';
+
+  @override
+  String get requestInformationTitle => 'Informations sur la demande';
+
+  @override
+  String get titleLabel => 'Titre';
+
+  @override
+  String get statusLabel => 'Statut';
+
+  @override
+  String get dateLabel => 'Date';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get clientInformationTitle => 'Informations client';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Téléphone';
+
+  @override
+  String get technicianInformationTitle => 'Informations technicien';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get closeButton => 'Fermer';
+
+  @override
+  String showingRecords(int startIndex, int endIndex, int totalItems) {
+    return 'Affichage de $startIndex-$endIndex sur $totalItems';
+  }
+
+  @override
+  String get rowsLabel => 'Lignes : ';
+
+  @override
+  String get rowsPerPageLabel => 'Lignes par page : ';
+
+  @override
+  String get statusPending => 'En attente';
+
+  @override
+  String get statusInProgress => 'En cours';
+
+  @override
+  String get statusCompleted => 'Terminée';
+
+  @override
+  String get statusCancelled => 'Annulée';
+
+  @override
+  String get inventoryTitle => 'Inventaire';
+
+  @override
+  String get productCreatedSuccess => 'Produit créé avec succès';
+
+  @override
+  String errorCreatingProduct(Object error) {
+    return 'Erreur lors de la création du produit : $error';
+  }
+
+  @override
+  String get deleteProductTitle => 'Supprimer le produit';
+
+  @override
+  String deleteProductConfirmation(Object productName) {
+    return 'Êtes-vous sûr de vouloir supprimer $productName ?';
+  }
+
+  @override
+  String get deleteButton => 'Supprimer';
+
+  @override
+  String get productDeletedSuccess => 'Produit supprimé avec succès';
+
+  @override
+  String errorDeletingProduct(Object error) {
+    return 'Erreur lors de la suppression du produit : $error';
+  }
+
+  @override
+  String get productUpdatedSuccess => 'Produit mis à jour avec succès';
+
+  @override
+  String errorUpdatingProduct(Object error) {
+    return 'Erreur lors de la mise à jour du produit : $error';
+  }
+
+  @override
+  String failedToRefresh(Object error) {
+    return 'Échec de l l\'actualisation : $error';
+  }
+
+  @override
+  String get newButton => 'Nouveau';
+
+  @override
+  String get searchExtinguishersHint => 'Rechercher les extincteurs...';
+
+  @override
+  String get availableExtinguishersTitle => 'Extincteurs disponibles';
+
+  @override
+  String itemCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count éléments',
+      one: '$count élément',
+      zero: 'Aucun élément',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noExtinguishersAvailable => 'Aucun extincteur disponible';
+
+  @override
+  String get noExtinguishersMatchSearch => 'Aucun extincteur ne correspond à votre recherche';
+
+  @override
+  String get addExtinguisherButton => 'Ajouter un extincteur';
+
+  @override
+  String get unknownType => 'Type inconnu';
+
+  @override
+  String stockLabel(Object quantity) {
+    return 'Stock : $quantity';
+  }
+
+  @override
+  String get editTooltip => 'Modifier';
+
+  @override
+  String get deleteTooltip => 'Supprimer';
+
+  @override
+  String get errorLoadingProducts => 'Erreur lors du chargement des produits';
+
+  @override
+  String paginationPage(Object currentPage, Object totalPages) {
+    return 'Page $currentPage sur $totalPages';
+  }
 }

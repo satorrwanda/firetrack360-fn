@@ -383,5 +383,369 @@
     "errorLoadingTerms": "Erreur lors du chargement des conditions d'utilisation",
     "@errorLoadingTerms": {
         "description": "Error message when loading terms and conditions"
+    },
+    "selectLanguageTitle": "Sélectionner la langue",
+    "@selectLanguageTitle": {
+        "description": "Title for the language selection screen"
+    },
+    "bottomNavHome": "Accueil",
+    "@bottomNavHome": {
+        "description": "Label for the home tab in the bottom navigation"
+    },
+    "bottomNavProfile": "Profil",
+    "@bottomNavProfile": {
+        "description": "Label for the profile tab in the bottom navigation"
+    },
+    "bottomNavLanguage": "Langues",
+    "@bottomNavLanguage": {
+        "description": "Label for the language tab in the bottom navigation"
+    },
+    "homePageTitle": "Accueil",
+    "@homePageTitle": {
+        "description": "Title for the home page"
+    },
+    "welcomeBackSubtitle": "Gérez efficacement votre équipement de sécurité incendie",
+    "@welcomeBackSubtitle": {
+        "description": "Subtitle for the welcome back message"
+    },
+    "quickActionsTitle": "Actions Rapides",
+    "@quickActionsTitle": {
+        "description": "Title for the quick actions section"
+    },
+    "actionCardInventory": "Inventaire",
+    "@actionCardInventory": {
+        "description": "Label for the inventory action card"
+    },
+    "actionCardServices": "Serivisi",
+    "@actionCardServices": {
+        "description": "Label for the services action card"
+    },
+    "actionCardSettings": "Paramètres",
+    "@actionCardSettings": {
+        "description": "Label for the settings action card"
+    },
+    "actionCardNotifications": "Notifications",
+    "@actionCardNotifications": {
+        "description": "Label for the notifications action card"
+    },
+    "actionCardNavigation": "Navigation",
+    "@actionCardNavigation": {
+        "description": "Label for the navigation action card"
+    },
+    "statusTitle": "Statut",
+    "@statusTitle": {
+        "description": "Title for the status section"
+    },
+    "roleLabel": "Rôle",
+    "@roleLabel": {
+        "description": "Label for the role section"
+    },
+    "notificationsTooltip": "Notifications",
+    "@notificationsTooltip": {
+        "description": "Tooltip text for the notifications icon"
+    },
+    "confirmLogoutTitle": "Confirmer la déconnexion",
+    "@confirmLogoutTitle": {
+        "description": "Title for the logout confirmation dialog"
+    },
+    "confirmLogoutMessage": "Êtes-vous sûr(e) de vouloir vous déconnecter ?",
+    "@confirmLogoutMessage": {
+        "description": "Message for the logout confirmation dialog"
+    },
+    "cancelButton": "Annuler",
+    "@cancelButton": {
+        "description": "Text for the cancel button"
+    },
+    "logoutButton": "Déconnexion",
+    "@logoutButton": {
+        "description": "Text for the logout button"
+    },
+    "drawerMenuTitle": "MENU",
+    "@drawerMenuTitle": {
+        "description": "Title for the main menu section in the drawer"
+    },
+    "drawerFeaturesTitle": "FONCTIONNALITÉS",
+    "@drawerFeaturesTitle": {
+        "description": "Title for the features section in the drawer"
+    },
+    "drawerOtherTitle": "AUTRES",
+    "@drawerOtherTitle": {
+        "description": "Title for the other section in the drawer"
+    },
+    "drawerItemDashboard": "Tableau de bord",
+    "@drawerItemDashboard": {
+        "description": "Label for the Dashboard menu item in the drawer"
+    },
+    "drawerItemHome": "Accueil",
+    "@drawerItemHome": {
+        "description": "Label for the Home menu item in the drawer (if used)"
+    },
+    "drawerItemUsers": "Utilisateurs",
+    "@drawerItemUsers": {
+        "description": "Label for the Users menu item in the drawer"
+    },
+    "drawerItemService": "Service",
+    "@drawerItemService": {
+        "description": "Label for the Service menu item in the drawer"
+    },
+    "drawerItemInventory": "Inventaire",
+    "@drawerItemInventory": {
+        "description": "Label for the Inventory menu item in the drawer"
+    },
+    "drawerItemNavigation": "Navigation",
+    "@drawerItemNavigation": {
+        "description": "Label for the Navigation menu item in the drawer"
+    },
+    "drawerItemProfile": "Profil",
+    "@drawerItemProfile": {
+        "description": "Label for the Profile menu item in the drawer"
+    },
+    "drawerItemSettings": "Paramètres",
+    "@drawerItemSettings": {
+        "description": "Label for the Settings menu item in the drawer"
+    },
+    "drawerItemNotifications": "Notifications",
+    "@drawerItemNotifications": {
+        "description": "Label for the Notifications menu item in the drawer"
+    },
+    "serviceRequestsTitle": "Demandes de service",
+    "@serviceRequestsTitle": {
+        "description": "Title for the service requests section"
+    },
+    "refreshTooltip": "Actualiser",
+    "@refreshTooltip": {
+        "description": "Tooltip text for the refresh button"
+    },
+    "createServiceRequestTooltip": "Créer une demande de service",
+    "@createServiceRequestTooltip": {
+        "description": "Tooltip text for the create service request button"
+    },
+    "searchServiceRequestsHint": "Rechercher les demandes de service...",
+    "@searchServiceRequestsHint": {
+        "description": "Hint text for the search input in the service requests section"
+    },
+    "errorLoadingServiceRequests": "Erreur lors du chargement des demandes de service",
+    "@errorLoadingServiceRequests": {
+        "description": "Error message when loading service requests fails"
+    },
+    "retryButton": "Réessayer",
+    "noServiceRequestsFound": "Aucune demande de service trouvée",
+    "@noServiceRequestsFound": {
+        "description": "Message displayed when no service requests are found"
+    },
+    "adjustSearchOrFilters": "Essayez d'ajuster votre recherche ou vos filtres",
+    "@adjustSearchOrFilters": {
+        "description": "Message suggesting to adjust search or filters"
+    },
+    "columnTitle": "TITRE",
+    "@columnTitle": {
+        "description": "Label for the title column in the service requests table"
+    },
+    "columnStatus": "STATUT",
+    "@columnStatus": {
+        "description": "Label for the status column in the service requests table"
+    },
+    "columnTechnician": "TECHNICIEN",
+    "@columnTechnician": {
+        "description": "Label for the technician column in the service requests table"
+    },
+    "columnDate": "DATE",
+    "@columnDate": {
+        "description": "Label for the date column in the service requests table"
+    },
+    "columnActions": "ACTIONS",
+    "@columnActions": {
+        "description": "Label for the actions column in the service requests table"
+    },
+    "noTechnicianAssigned": "Aucun technicien assigné",
+    "@noTechnicianAssigned": {
+        "description": "Message displayed when no technician is assigned to a service request"
+    },
+    "viewDetailsTooltip": "Voir les détails",
+    "@viewDetailsTooltip": {
+        "description": "Tooltip text for the view details button"
+    },
+    "serviceRequestDetailsTitle": "Détails de la demande de service",
+    "@serviceRequestDetailsTitle": {
+        "description": "Title for the service request details screen"
+    },
+    "requestInformationTitle": "Informations sur la demande",
+    "@requestInformationTitle": {
+        "description": "Title for the request information section"
+    },
+    "titleLabel": "Titre",
+    "@titleLabel": {
+        "description": "Label for the title field in the service request details"
+    },
+    "statusLabel": "Statut",
+    "@statusLabel": {
+        "description": "Label for the status field in the service request details"
+    },
+    "dateLabel": "Date",
+    "@dateLabel": {
+        "description": "Label for the date field in the service request details"
+    },
+    "descriptionLabel": "Description",
+    "@descriptionLabel": {
+        "description": "Label for the description field in the service request details"
+    },
+    "clientInformationTitle": "Informations client",
+    "@clientInformationTitle": {
+        "description": "Title for the client information section"
+    },
+    "emailLabel": "Email",
+    "@emailLabel": {
+        "description": "Label for the email field in the client information section"
+    },
+    "phoneLabel": "Téléphone",
+    "@phoneLabel": {
+        "description": "Label for the phone field in the client information section"
+    },
+    "technicianInformationTitle": "Informations technicien",
+    "@technicianInformationTitle": {
+        "description": "Title for the technician information section"
+    },
+    "notAvailable": "N/A",
+    "@notAvailable": {
+        "description": "Label for not available information"
+    },
+    "closeButton": "Fermer",
+    "@closeButton": {
+        "description": "Text for the close button"
+    },
+    "showingRecords": "Affichage de {startIndex}-{endIndex} sur {totalItems}",
+    "@showingRecords": {
+        "description": "Text showing the range of records displayed",
+        "placeholders": {
+            "startIndex": {
+                "type": "int",
+                "example": "1"
+            },
+            "endIndex": {
+                "type": "int",
+                "example": "10"
+            },
+            "totalItems": {
+                "type": "int",
+                "example": "50"
+            }
+        }
+    },
+    "rowsLabel": "Lignes : ",
+    "@rowsLabel": {
+        "description": "Label for the rows section in the table"
+    },
+    "rowsPerPageLabel": "Lignes par page : ",
+    "@rowsPerPageLabel": {
+        "description": "Label for the rows per page section in the table"
+    },
+    "statusPending": "En attente",
+    "@statusPending": {
+        "description": "Label for the pending status in the service requests"
+    },
+    "statusInProgress": "En cours",
+    "@statusInProgress": {
+        "description": "Label for the in progress status in the service requests"
+    },
+    "statusCompleted": "Terminée",
+    "@statusCompleted": {
+        "description": "Label for the completed status in the service requests"
+    },
+    "statusCancelled": "Annulée",
+    "@statusCancelled": {
+        "description": "Label for the cancelled status in the service requests"
+    },
+    "inventoryTitle": "Inventaire",
+    "@inventoryTitle": {
+        "description": "Title for the inventory section"
+    },
+    "productCreatedSuccess": "Produit créé avec succès",
+    "@productCreatedSuccess": {
+        "description": "Message indicating that the product has been created successfully"
+    },
+    "errorCreatingProduct": "Erreur lors de la création du produit : {error}",
+    "@errorCreatingProduct": {
+        "description": "Error message when creating a product fails"
+    },
+    "deleteProductTitle": "Supprimer le produit",
+    "@deleteProductTitle": {
+        "description": "Title for the delete product confirmation dialog"
+    },
+    "deleteProductConfirmation": "Êtes-vous sûr de vouloir supprimer {productName} ?",
+    "@deleteProductConfirmation": {
+        "description": "Confirmation message for deleting a product"
+    },
+    "deleteButton": "Supprimer",
+    "@deleteButton": {
+        "description": "Text for the delete button"
+    },
+    "productDeletedSuccess": "Produit supprimé avec succès",
+    "@productDeletedSuccess": {
+        "description": "Message indicating that the product has been deleted successfully"
+    },
+    "errorDeletingProduct": "Erreur lors de la suppression du produit : {error}",
+    "@errorDeletingProduct": {
+        "description": "Error message when deleting a product fails"
+    },
+    "productUpdatedSuccess": "Produit mis à jour avec succès",
+    "@productUpdatedSuccess": {
+        "description": "Message indicating that the product has been updated successfully"
+    },
+    "errorUpdatingProduct": "Erreur lors de la mise à jour du produit : {error}",
+    "@errorUpdatingProduct": {
+        "description": "Error message when updating a product fails"
+    },
+    "failedToRefresh": "Échec de l l'actualisation : {error}",
+    "@failedToRefresh": {
+        "description": "Error message when refreshing fails"
+    },
+    "newButton": "Nouveau",
+    "searchExtinguishersHint": "Rechercher les extincteurs...",
+    "@searchExtinguishersHint": {
+        "description": "Hint text for the search input in the extinguishers section"
+    },
+    "availableExtinguishersTitle": "Extincteurs disponibles",
+    "@availableExtinguishersTitle": {
+        "description": "Title for the available extinguishers section"
+    },
+    "itemCount": "{count, plural, =0{Aucun élément} one{{count} élément} other{{count} éléments}}",
+    "@itemCount": {
+        "description": "Text showing the count of items"
+    },
+    "noExtinguishersAvailable": "Aucun extincteur disponible",
+    "@noExtinguishersAvailable": {
+        "description": "Message displayed when no extinguishers are available"
+    },
+    "noExtinguishersMatchSearch": "Aucun extincteur ne correspond à votre recherche",
+    "@noExtinguishersMatchSearch": {
+        "description": "Message displayed when no extinguishers match the search"
+    },
+    "addExtinguisherButton": "Ajouter un extincteur",
+    "@addExtinguisherButton": {
+        "description": "Text for the button to add a new extinguisher"
+    },
+    "unknownType": "Type inconnu",
+    "@unknownType": {
+        "description": "Label for unknown type"
+    },
+    "stockLabel": "Stock : {quantity}",
+    "@stockLabel": {
+        "description": "Label for the stock quantity of a product"
+    },
+    "editTooltip": "Modifier",
+    "@editTooltip": {
+        "description": "Tooltip text for the edit button"
+    },
+    "deleteTooltip": "Supprimer",
+    "@deleteTooltip": {
+        "description": "Tooltip text for the delete button"
+    },
+    "errorLoadingProducts": "Erreur lors du chargement des produits",
+    "@errorLoadingProducts": {
+        "description": "Error message when loading products fails"
+    },
+    "paginationPage": "Page {currentPage} sur {totalPages}",
+    "@paginationPage": {
+        "description": "Text showing the current page and total pages"
     }
 }

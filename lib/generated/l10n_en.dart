@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'l10n.dart';
 
 // ignore_for_file: type=lint
@@ -291,4 +293,299 @@ class SEn extends S {
 
   @override
   String get errorLoadingTerms => 'Error loading terms and conditions. Please try again.';
+
+  @override
+  String get errorLoadingPage => 'Error loading page. Please try again.';
+
+  @override
+  String get selectLanguageTitle => 'Select Language';
+
+  @override
+  String get bottomNavHome => 'Home';
+
+  @override
+  String get bottomNavProfile => 'Profile';
+
+  @override
+  String get bottomNavLanguage => 'Language';
+
+  @override
+  String get homePageTitle => 'Home';
+
+  @override
+  String get welcomeBackSubtitle => 'Manage your fire safety equipment efficiently';
+
+  @override
+  String get quickActionsTitle => 'Quick Actions';
+
+  @override
+  String get actionCardInventory => 'Inventory';
+
+  @override
+  String get actionCardServices => 'Services';
+
+  @override
+  String get actionCardSettings => 'Settings';
+
+  @override
+  String get actionCardNotifications => 'Notifications';
+
+  @override
+  String get actionCardNavigation => 'Navigation';
+
+  @override
+  String get statusTitle => 'Status';
+
+  @override
+  String get roleLabel => 'Role:';
+
+  @override
+  String get notificationsTooltip => 'Notifications';
+
+  @override
+  String get confirmLogoutTitle => 'Confirm Logout';
+
+  @override
+  String get confirmLogoutMessage => 'Are you sure you want to sign out?';
+
+  @override
+  String get cancelButton => 'Cancel';
+
+  @override
+  String get logoutButton => 'Logout';
+
+  @override
+  String get drawerMenuTitle => 'MENU';
+
+  @override
+  String get drawerFeaturesTitle => 'FEATURES';
+
+  @override
+  String get drawerOtherTitle => 'OTHER';
+
+  @override
+  String get drawerItemDashboard => 'Dashboard';
+
+  @override
+  String get drawerItemHome => 'Home';
+
+  @override
+  String get drawerItemUsers => 'Users';
+
+  @override
+  String get drawerItemService => 'Service';
+
+  @override
+  String get drawerItemInventory => 'Inventory';
+
+  @override
+  String get drawerItemNavigation => 'Navigation';
+
+  @override
+  String get drawerItemProfile => 'Profile';
+
+  @override
+  String get drawerItemSettings => 'Settings';
+
+  @override
+  String get drawerItemNotifications => 'Notifications';
+
+  @override
+  String get serviceRequestsTitle => 'Service Requests';
+
+  @override
+  String get refreshTooltip => 'Refresh';
+
+  @override
+  String get createServiceRequestTooltip => 'Create Service Request';
+
+  @override
+  String get searchServiceRequestsHint => 'Search service requests...';
+
+  @override
+  String get errorLoadingServiceRequests => 'Error loading service requests';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get noServiceRequestsFound => 'No Service Requests Found';
+
+  @override
+  String get adjustSearchOrFilters => 'Try adjusting your search or filters';
+
+  @override
+  String get columnTitle => 'TITLE';
+
+  @override
+  String get columnStatus => 'STATUS';
+
+  @override
+  String get columnTechnician => 'TECHNICIAN';
+
+  @override
+  String get columnDate => 'DATE';
+
+  @override
+  String get columnActions => 'ACTIONS';
+
+  @override
+  String get noTechnicianAssigned => 'No technician assigned';
+
+  @override
+  String get viewDetailsTooltip => 'View Details';
+
+  @override
+  String get serviceRequestDetailsTitle => 'Service Request Details';
+
+  @override
+  String get requestInformationTitle => 'Request Information';
+
+  @override
+  String get titleLabel => 'Title';
+
+  @override
+  String get statusLabel => 'Status';
+
+  @override
+  String get dateLabel => 'Date';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get clientInformationTitle => 'Client Information';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Phone';
+
+  @override
+  String get technicianInformationTitle => 'Technician Information';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get closeButton => 'Close';
+
+  @override
+  String showingRecords(int startIndex, int endIndex, int totalItems) {
+    return 'Showing $startIndex-$endIndex of $totalItems';
+  }
+
+  @override
+  String get rowsLabel => 'Rows: ';
+
+  @override
+  String get rowsPerPageLabel => 'Rows per page: ';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusInProgress => 'In Progress';
+
+  @override
+  String get statusCompleted => 'Completed';
+
+  @override
+  String get statusCancelled => 'Cancelled';
+
+  @override
+  String get inventoryTitle => 'Inventory';
+
+  @override
+  String get productCreatedSuccess => 'Product created successfully';
+
+  @override
+  String errorCreatingProduct(Object error) {
+    return 'Error creating product: $error';
+  }
+
+  @override
+  String get deleteProductTitle => 'Delete Product';
+
+  @override
+  String deleteProductConfirmation(Object productName) {
+    return 'Are you sure you want to delete $productName?';
+  }
+
+  @override
+  String get deleteButton => 'Delete';
+
+  @override
+  String get productDeletedSuccess => 'Product deleted successfully';
+
+  @override
+  String errorDeletingProduct(Object error) {
+    return 'Error deleting product: $error';
+  }
+
+  @override
+  String get productUpdatedSuccess => 'Product updated successfully';
+
+  @override
+  String errorUpdatingProduct(Object error) {
+    return 'Error updating product: $error';
+  }
+
+  @override
+  String failedToRefresh(Object error) {
+    return 'Failed to refresh: $error';
+  }
+
+  @override
+  String get newButton => 'New';
+
+  @override
+  String get searchExtinguishersHint => 'Search extinguishers...';
+
+  @override
+  String get availableExtinguishersTitle => 'Available Extinguishers';
+
+  @override
+  String itemCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '$count item',
+      zero: 'No items',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get noExtinguishersAvailable => 'No extinguishers available';
+
+  @override
+  String get noExtinguishersMatchSearch => 'No extinguishers match your search';
+
+  @override
+  String get addExtinguisherButton => 'Add Extinguisher';
+
+  @override
+  String get unknownType => 'Unknown Type';
+
+  @override
+  String stockLabel(Object quantity) {
+    return 'Stock: $quantity';
+  }
+
+  @override
+  String get editTooltip => 'Edit';
+
+  @override
+  String get deleteTooltip => 'Delete';
+
+  @override
+  String get errorLoadingProducts => 'Error loading products';
+
+  @override
+  String paginationPage(Object currentPage, Object totalPages) {
+    return 'Page $currentPage of $totalPages';
+  }
 }
