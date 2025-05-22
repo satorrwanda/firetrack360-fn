@@ -17,7 +17,6 @@ class HomePage extends HookWidget {
     final selectedIndex = useState(0);
     final l10n = S.of(context)!;
 
-    // Handle errors globally
     useEffect(() {
       if (authState.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -41,34 +40,30 @@ class HomePage extends HookWidget {
       return null;
     }, [authState.error]);
 
-    // Determine colors based on theme brightness, but keeping deepPurple prominent
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final appBarColor = isDarkMode
-        ? Colors.deepPurple.shade900
-        : Colors.deepPurple; // Darker deepPurple for dark mode app bar
-    final gradientStartColor = isDarkMode
-        ? Colors.deepPurple.shade900
-        : Colors.deepPurple.shade700; // Darker deepPurple gradient start
-    final gradientEndColor = isDarkMode
-        ? Colors.black
-        : Colors.deepPurple.shade400; // Fade to black or a mid-range deepPurple
-    final cardBackgroundColor = isDarkMode
-        ? Colors.deepPurple.shade800
-        : Colors.white; // Darker deepPurple for cards
-    final textColor = isDarkMode ? Colors.white : Colors.black87; // Text color
-    final secondaryTextColor = isDarkMode
-        ? Colors.white70
-        : Colors.grey.shade600; // Secondary text color
+    final appBarColor =
+        isDarkMode ? Colors.deepPurple.shade900 : Colors.deepPurple;
+    final gradientStartColor =
+        isDarkMode ? Colors.deepPurple.shade900 : Colors.deepPurple.shade700;
+    final gradientEndColor =
+        isDarkMode ? Colors.black : Colors.deepPurple.shade400;
+    final cardBackgroundColor =
+        isDarkMode ? Colors.deepPurple.shade800 : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black87;
+    final secondaryTextColor =
+        isDarkMode ? Colors.white70 : Colors.grey.shade600;
+
+    final double bottomNavBarHeight =
+        MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight;
 
     return AuthGateway(
       child: Scaffold(
-        extendBody: true, // <--- ADDED THIS LINE
+        extendBody: true,
         appBar: CustomAppBar(
           title: l10n.homePageTitle,
           backgroundColor: appBarColor,
           actions: [
-            _buildNotificationIcon(
-                context, l10n, isDarkMode), // Pass isDarkMode
+            _buildNotificationIcon(context, l10n, isDarkMode),
             const SizedBox(width: 8),
           ],
         ),
@@ -89,30 +84,25 @@ class HomePage extends HookWidget {
             ),
           ),
           child: SafeArea(
-            // Removed top padding from SafeArea
+            left: true,
+            top: false,
+            right: true,
+            bottom: false,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  16.0, 0, 16.0, 0), // Adjusted padding
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SingleChildScrollView(
+                padding: EdgeInsets.only(
+                  top: 16.0,
+                  bottom: bottomNavBarHeight + 16.0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 16.0), // Added space at the top
-                    _buildWelcomeSection(
-                        context,
-                        l10n,
-                        cardBackgroundColor,
-                        textColor,
-                        secondaryTextColor,
-                        isDarkMode), // Pass colors and isDarkMode
+                    _buildWelcomeSection(context, l10n, cardBackgroundColor,
+                        textColor, secondaryTextColor, isDarkMode),
                     const SizedBox(height: 24),
-                    _buildQuickActions(
-                        context,
-                        l10n,
-                        cardBackgroundColor,
-                        textColor,
-                        secondaryTextColor,
-                        isDarkMode), // Pass colors and isDarkMode
+                    _buildQuickActions(context, l10n, cardBackgroundColor,
+                        textColor, secondaryTextColor, isDarkMode),
                     const SizedBox(height: 24),
                     _buildStatusSection(
                         context,
@@ -121,10 +111,7 @@ class HomePage extends HookWidget {
                         cardBackgroundColor,
                         textColor,
                         secondaryTextColor,
-                        isDarkMode), // Pass colors and isDarkMode
-                    SizedBox(
-                        height: MediaQuery.of(context).padding.bottom +
-                            16), // Add padding at the bottom considering bottom nav bar height
+                        isDarkMode),
                   ],
                 ),
               ),
@@ -151,8 +138,7 @@ class HomePage extends HookWidget {
           BoxShadow(
             color: isDarkMode
                 ? Colors.black.withOpacity(0.4)
-                : Colors.black
-                    .withOpacity(0.1), // More prominent shadow in dark mode
+                : Colors.black.withOpacity(0.1),
             spreadRadius: 3,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -209,13 +195,11 @@ class HomePage extends HookWidget {
                 context,
                 icon: Icons.inventory,
                 title: l10n.actionCardInventory,
-                color: isDarkMode
-                    ? Colors.deepPurple.shade300
-                    : Colors.deepPurple, // Use deepPurple shades
-                cardBackgroundColor:
-                    cardBackgroundColor, // Pass card background color
-                textColor: textColor, // Pass text color
-                isDarkMode: isDarkMode, // Pass isDarkMode
+                color:
+                    isDarkMode ? Colors.deepPurple.shade300 : Colors.deepPurple,
+                cardBackgroundColor: cardBackgroundColor,
+                textColor: textColor,
+                isDarkMode: isDarkMode,
                 onTap: () => Navigator.pushNamed(context, AppRoutes.inventory),
               ),
             ),
@@ -227,11 +211,10 @@ class HomePage extends HookWidget {
                 title: l10n.actionCardServices,
                 color: isDarkMode
                     ? Colors.deepPurple.shade200
-                    : Colors.deepPurple.shade300, // Use deepPurple shades
-                cardBackgroundColor:
-                    cardBackgroundColor, // Pass card background color
-                textColor: textColor, // Pass text color
-                isDarkMode: isDarkMode, // Pass isDarkMode
+                    : Colors.deepPurple.shade300,
+                cardBackgroundColor: cardBackgroundColor,
+                textColor: textColor,
+                isDarkMode: isDarkMode,
                 onTap: () =>
                     Navigator.pushNamed(context, AppRoutes.serviceRequests),
               ),
@@ -248,11 +231,10 @@ class HomePage extends HookWidget {
                 title: l10n.actionCardSettings,
                 color: isDarkMode
                     ? Colors.deepPurple.shade400
-                    : Colors.deepPurple.shade400, // Use deepPurple shades
-                cardBackgroundColor:
-                    cardBackgroundColor, // Pass card background color
-                textColor: textColor, // Pass text color
-                isDarkMode: isDarkMode, // Pass isDarkMode
+                    : Colors.deepPurple.shade400,
+                cardBackgroundColor: cardBackgroundColor,
+                textColor: textColor,
+                isDarkMode: isDarkMode,
                 onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
               ),
             ),
@@ -264,11 +246,10 @@ class HomePage extends HookWidget {
                 title: l10n.actionCardNotifications,
                 color: isDarkMode
                     ? Colors.deepPurple.shade500
-                    : Colors.deepPurple.shade500, // Use deepPurple shades
-                cardBackgroundColor:
-                    cardBackgroundColor, // Pass card background color
-                textColor: textColor, // Pass text color
-                isDarkMode: isDarkMode, // Pass isDarkMode
+                    : Colors.deepPurple.shade500,
+                cardBackgroundColor: cardBackgroundColor,
+                textColor: textColor,
+                isDarkMode: isDarkMode,
                 onTap: () =>
                     Navigator.pushNamed(context, AppRoutes.notification),
               ),
@@ -285,11 +266,10 @@ class HomePage extends HookWidget {
                 title: l10n.actionCardNavigation,
                 color: isDarkMode
                     ? Colors.deepPurple.shade600
-                    : Colors.deepPurple.shade600, // Use deepPurple shades
-                cardBackgroundColor:
-                    cardBackgroundColor, // Pass card background color
-                textColor: textColor, // Pass text color
-                isDarkMode: isDarkMode, // Pass isDarkMode
+                    : Colors.deepPurple.shade600,
+                cardBackgroundColor: cardBackgroundColor,
+                textColor: textColor,
+                isDarkMode: isDarkMode,
                 onTap: () => Navigator.pushNamed(context, AppRoutes.navigation),
               ),
             ),
@@ -307,21 +287,20 @@ class HomePage extends HookWidget {
     required IconData icon,
     required String title,
     required Color color,
-    required Color cardBackgroundColor, // Receive card background color
-    required Color textColor, // Receive text color
-    required bool isDarkMode, // Receive isDarkMode
+    required Color cardBackgroundColor,
+    required Color textColor,
+    required bool isDarkMode,
     VoidCallback? onTap,
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: cardBackgroundColor, // Use the passed card background color
+        color: cardBackgroundColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: isDarkMode
                 ? Colors.black.withOpacity(0.3)
-                : Colors.black
-                    .withOpacity(0.05), // More prominent shadow in dark mode
+                : Colors.black.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -344,7 +323,7 @@ class HomePage extends HookWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: textColor, // Use the passed text color
+                    color: textColor,
                   ),
                 ),
               ],
@@ -366,14 +345,13 @@ class HomePage extends HookWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: cardBackgroundColor, // Use the passed card background color
+        color: cardBackgroundColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: isDarkMode
                 ? Colors.black.withOpacity(0.4)
-                : Colors.black
-                    .withOpacity(0.1), // More prominent shadow in dark mode
+                : Colors.black.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -388,7 +366,7 @@ class HomePage extends HookWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: textColor, // Use the passed text color
+              color: textColor,
             ),
           ),
           const SizedBox(height: 12),
@@ -400,14 +378,13 @@ class HomePage extends HookWidget {
                   size: 20,
                   color: isDarkMode
                       ? Colors.deepPurple.shade300
-                      : Colors.deepPurple, // Use deepPurple shade
+                      : Colors.deepPurple,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   '${l10n.roleLabel}: ${authState.userRole}',
                   style: TextStyle(
-                    color:
-                        secondaryTextColor, // Use the passed secondary text color
+                    color: secondaryTextColor,
                     fontSize: 14,
                   ),
                 ),
@@ -424,7 +401,7 @@ class HomePage extends HookWidget {
         children: [
           Icon(
             Icons.notifications_outlined,
-            color: Colors.white, // Keep icon color consistent for the app bar
+            color: Colors.white,
           ),
           Positioned(
             right: 0,
@@ -432,7 +409,7 @@ class HomePage extends HookWidget {
             child: Container(
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: Colors.red.shade600, // Red notification badge
+                color: Colors.red.shade600,
                 borderRadius: BorderRadius.circular(6),
               ),
               constraints: const BoxConstraints(

@@ -214,19 +214,6 @@ class InventoryScreen extends HookConsumerWidget {
                   .onPrimary), // Use color on primary
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_outlined,
-                color: Theme.of(context)
-                    .colorScheme
-                    .onPrimary), // Use color on primary
-            onPressed: () {
-              // Navigate to notifications screen if you have one
-              // AppRoutes.navigateToNotification(context);
-            },
-            tooltip: l10n.notificationsTooltip, // Localized tooltip
-          ),
-        ],
       ),
       floatingActionButton: isAdmin
           ? FloatingActionButton.extended(
