@@ -777,6 +777,10 @@
             "totalPages": {}
         }
     },
+    "columnEmail": "Email",
+    "@columnEmail": {
+        "description": "Header for the Email column in the user table"
+    },
     "columnPhone": "Phone",
     "@columnPhone": {
         "description": "Header for the Phone column in the user table"
@@ -830,190 +834,202 @@
         "description": "Message displayed when no users match the search criteria"
     },
     "userManagementTitle": "User Management",
-  "@userManagementTitle": {
-    "description": "Title for the User Management screen"
-  },
-  "userListRefreshed": "User list refreshed",
-  "@userListRefreshed": {
-    "description": "Snackbar message when the user list is refreshed"
-  },
-  "searchUsersHint": "Search users...",
-  "@searchUsersHint": {
-    "description": "Hint text for the user search bar"
-  },
-  "noUsersFound": "No users found",
-  "@noUsersFound": {
-    "description": "Message displayed when no users are available"
-  },
-  "noUsersMatchSearch": "No users match your search",
-  "@noUsersMatchSearch": {
-    "description": "Message displayed when a search yields no results"
-  },
-  "errorLoadingUsers": "Failed to load users",
-  "@errorLoadingUsers": {
-    "description": "Header for the error message when loading users fails"
-  },
-  "retryButton": "RETRY",
-  "@retryButton": {
-    "description": "Text for the retry button"
-  },
-  "refreshTooltip": "Refresh Users",
-  "@refreshTooltip": {
-    "description": "Tooltip for the refresh button"
-  },
-  "addUserTooltip": "Add User",
-  "@addUserTooltip": {
-    "description": "Tooltip for the add user button"
-  },
-  "loadingMessage": "Loading users...",
-   "@loadingMessage": {
-    "description": "Message displayed while users are loading"
-  },
-  "adjustSearchOrFilters": "Try adjusting your search or filters.",
-  "@adjustSearchOrFilters": {
-    "description": "Message suggesting to adjust search or filters when no results are found"
-  },
-  "columnEmail": "Email",
-  "@columnEmail": {
-    "description": "Header for the Email column in the user table"
-  },
-  "columnPhone": "Phone",
-  "@columnPhone": {
-    "description": "Header for the Phone column in the user table"
-  },
-  "columnRole": "Role",
-  "@columnRole": {
-    "description": "Header for the Role column in the user table"
-  },
-  "columnStatus": "Status",
-  "@columnStatus": {
-    "description": "Header for the Status column in the user table"
-  },
-  "columnActions": "Actions",
-  "@columnActions": {
-    "description": "Header for the Actions column in the user table"
-  },
-  "emailLabel": "Email",
-  "@emailLabel": {
-    "description": "Label for Email in user details"
-  },
-  "phoneLabel": "Phone",
-  "@phoneLabel": {
-    "description": "Label for Phone in user details"
-  },
-  "roleLabel": "Role",
-  "@roleLabel": {
-    "description": "Label for Role in user details"
-  },
-  "statusLabel": "Status",
-  "@statusLabel": {
-    "description": "Label for Status in user details"
-  },
-  "locationLabel": "Location",
-  "@locationLabel": {
-    "description": "Label for Location in user details"
-  },
-  "notAvailable": "N/A",
-  "@notAvailable": {
-    "description": "Placeholder for unavailable information"
-  },
-  "statusVerified": "Verified",
-  "@statusVerified": {
-    "description": "Status text for a verified user"
-  },
-  "statusUnverified": "Unverified",
-  "@statusUnverified": {
-    "description": "Status text for an unverified user"
-  },
-  "closeButton": "Close",
-  "@closeButton": {
-    "description": "Text for the close button"
-  },
-   "rowsPerPageLabel": "Rows per page:",
-  "@rowsPerPageLabel": {
-    "description": "Label for the number of rows displayed per page"
-  },
-  
-  "requestForServiceTitle": "Request for Service",
-   "@requestForServiceTitle": {
-    "description": "Title of the service request modal"
-  },
-  "refillService": "Refill",
-  "@refillService": {
-    "description": "Service option: Refill"
-  },
-  "maintenanceService": "Maintenance",
-   "@maintenanceService": {
-    "description": "Service option: Maintenance"
-  },
-  "supplyService": "Supply",
-   "@supplyService": {
-    "description": "Service option: Supply"
-  },
-  "otherServices": "Other Services",
-   "@otherServices": {
-    "description": "Service option: Other Services"
-  },
-  "selectServiceLabel": "Select Service",
-   "@selectServiceLabel": {
-    "description": "Label for the service selection dropdown"
-  },
-  "selectTechnicianLabel": "Select Technician",
-   "@selectTechnicianLabel": {
-    "description": "Label for the technician selection dropdown"
-  },
-  "descriptionLabel": "Description",
-   "@descriptionLabel": {
-    "description": "Label for the service request description field"
-  },
-  "pleaseSelectService": "Please select a service",
-   "@pleaseSelectService": {
-    "description": "Validation message: Service selection required"
-  },
-  "pleaseSelectTechnician": "Please select a technician",
-   "@pleaseSelectTechnician": {
-    "description": "Validation message: Technician selection required"
-  },
-  "pleaseEnterDescription": "Please enter a description",
-   "@pleaseEnterDescription": {
-    "description": "Validation message: Description required"
-  },
-  "descriptionTooLong": "Description too long (max 500 characters)",
-   "@descriptionTooLong": {
-    "description": "Validation message: Description exceeds character limit"
-  },
-  "describeServiceRequestHint": "Describe your service request...",
-   "@describeServiceRequestHint": {
-    "description": "Hint text for the service request description field"
-  },
-  "unknownErrorOccurred": "Unknown error occurred",
-   "@unknownErrorOccurred": {
-    "description": "Generic error message"
-  },
-  "networkErrorOccurred": "Network error occurred. Please check your connection.",
-   "@networkErrorOccurred": {
-    "description": "Network connection error message"
-  },
-  "errorLoadingTechnicians": "An error occurred while loading technicians",
-   "@errorLoadingTechnicians": {
-    "description": "Error message when technicians fail to load"
-  },
-  "noAvailableTechniciansFound": "No available technicians found",
-   "@noAvailableTechniciansFound": {
-    "description": "Message when no technicians are available"
-  },
-  "failedToCreateRequest": "Failed to create request: {errorMessage}",
-   "@failedToCreateRequest": {
-    "description": "Error message when service request creation fails",
-    "placeholders": {
-      "errorMessage": {}
-    }
-  },
-  "submitButton": "Submit",
-   "@submitButton": {
-    "description": "Text for the submit button"
-  },
-  "userNotAuthenticated": "User not authenticated",
+    "@userManagementTitle": {
+        "description": "Title for the User Management screen"
+    },
+    "userListRefreshed": "User list refreshed",
+    "@userListRefreshed": {
+        "description": "Snackbar message when the user list is refreshed"
+    },
+    "searchUsersHint": "Search users...",
+    "@searchUsersHint": {
+        "description": "Hint text for the user search bar"
+    },
+    "noUsersFound": "No users found",
+    "@noUsersFound": {
+        "description": "Message displayed when no users are available"
+    },
+    "noUsersMatchSearch": "No users match your search",
+    "@noUsersMatchSearch": {
+        "description": "Message displayed when a search yields no results"
+    },
+    "errorLoadingUsers": "Failed to load users",
+    "@errorLoadingUsers": {
+        "description": "Header for the error message when loading users fails"
+    },
+    "retryButton": "RETRY",
+    "@retryButton": {
+        "description": "Text for the retry button"
+    },
+    "refreshTooltip": "Refresh Users",
+    "@refreshTooltip": {
+        "description": "Tooltip for the refresh button"
+    },
+    "addUserTooltip": "Add User",
+    "@addUserTooltip": {
+        "description": "Tooltip for the add user button"
+    },
+    "loadingMessage": "Loading users...",
+    "@loadingMessage": {
+        "description": "Message displayed while users are loading"
+    },
+    "adjustSearchOrFilters": "Try adjusting your search or filters.",
+    "@adjustSearchOrFilters": {
+        "description": "Message suggesting to adjust search or filters when no results are found"
+    },
+    "columnEmail": "Email",
+    "@columnEmail": {
+        "description": "Header for the Email column in the user table"
+    },
+    "columnPhone": "Phone",
+    "@columnPhone": {
+        "description": "Header for the Phone column in the user table"
+    },
+    "columnRole": "Role",
+    "@columnRole": {
+        "description": "Header for the Role column in the user table"
+    },
+    "columnStatus": "Status",
+    "@columnStatus": {
+        "description": "Header for the Status column in the user table"
+    },
+    "columnActions": "Actions",
+    "@columnActions": {
+        "description": "Header for the Actions column in the user table"
+    },
+    "emailLabel": "Email",
+    "@emailLabel": {
+        "description": "Label for Email in user details"
+    },
+    "phoneLabel": "Phone",
+    "@phoneLabel": {
+        "description": "Label for Phone in user details"
+    },
+    "roleLabel": "Role",
+    "@roleLabel": {
+        "description": "Label for Role in user details"
+    },
+    "statusLabel": "Status",
+    "@statusLabel": {
+        "description": "Label for Status in user details"
+    },
+    "locationLabel": "Location",
+    "@locationLabel": {
+        "description": "Label for Location in user details"
+    },
+    "notAvailable": "N/A",
+    "@notAvailable": {
+        "description": "Placeholder for unavailable information"
+    },
+    "statusVerified": "Verified",
+    "@statusVerified": {
+        "description": "Status text for a verified user"
+    },
+    "statusUnverified": "Unverified",
+    "@statusUnverified": {
+        "description": "Status text for an unverified user"
+    },
+    "closeButton": "Close",
+    "@closeButton": {
+        "description": "Text for the close button"
+    },
+    "rowsPerPageLabel": "Rows per page:",
+    "@rowsPerPageLabel": {
+        "description": "Label for the number of rows displayed per page"
+    },
+    "showingRecords": "Showing {startIndex}-{endIndex} of {totalCount}",
+    "@showingRecords": {
+        "description": "Text showing the range of records being displayed",
+        "placeholders": {
+            "startIndex": {},
+            "endIndex": {},
+            "totalCount": {}
+        }
+    },
+    "viewDetailsTooltip": "View Details",
+    "@viewDetailsTooltip": {
+        "description": "Tooltip for the view details button"
+    },
+    "requestForServiceTitle": "Request for Service",
+    "@requestForServiceTitle": {
+        "description": "Title of the service request modal"
+    },
+    "refillService": "Refill",
+    "@refillService": {
+        "description": "Service option: Refill"
+    },
+    "maintenanceService": "Maintenance",
+    "@maintenanceService": {
+        "description": "Service option: Maintenance"
+    },
+    "supplyService": "Supply",
+    "@supplyService": {
+        "description": "Service option: Supply"
+    },
+    "otherServices": "Other Services",
+    "@otherServices": {
+        "description": "Service option: Other Services"
+    },
+    "selectServiceLabel": "Select Service",
+    "@selectServiceLabel": {
+        "description": "Label for the service selection dropdown"
+    },
+    "selectTechnicianLabel": "Select Technician",
+    "@selectTechnicianLabel": {
+        "description": "Label for the technician selection dropdown"
+    },
+    "descriptionLabel": "Description",
+    "@descriptionLabel": {
+        "description": "Label for the service request description field"
+    },
+    "pleaseSelectService": "Please select a service",
+    "@pleaseSelectService": {
+        "description": "Validation message: Service selection required"
+    },
+    "pleaseSelectTechnician": "Please select a technician",
+    "@pleaseSelectTechnician": {
+        "description": "Validation message: Technician selection required"
+    },
+    "pleaseEnterDescription": "Please enter a description",
+    "@pleaseEnterDescription": {
+        "description": "Validation message: Description required"
+    },
+    "descriptionTooLong": "Description too long (max 500 characters)",
+    "@descriptionTooLong": {
+        "description": "Validation message: Description exceeds character limit"
+    },
+    "describeServiceRequestHint": "Describe your service request...",
+    "@describeServiceRequestHint": {
+        "description": "Hint text for the service request description field"
+    },
+    "unknownErrorOccurred": "Unknown error occurred",
+    "@unknownErrorOccurred": {
+        "description": "Generic error message"
+    },
+    "networkErrorOccurred": "Network error occurred. Please check your connection.",
+    "@networkErrorOccurred": {
+        "description": "Network connection error message"
+    },
+    "errorLoadingTechnicians": "An error occurred while loading technicians",
+    "@errorLoadingTechnicians": {
+        "description": "Error message when technicians fail to load"
+    },
+    "noAvailableTechniciansFound": "No available technicians found",
+    "@noAvailableTechniciansFound": {
+        "description": "Message when no technicians are available"
+    },
+    "failedToCreateRequest": "Failed to create request: {errorMessage}",
+    "@failedToCreateRequest": {
+        "description": "Error message when service request creation fails",
+        "placeholders": {
+            "errorMessage": {}
+        }
+    },
+    "submitButton": "Submit",
+    "@submitButton": {
+        "description": "Text for the submit button"
+    },
+    "userNotAuthenticated": "User not authenticated",
     "@userNotAuthenticated": {
         "description": "Error message when the user is not authenticated"
     },

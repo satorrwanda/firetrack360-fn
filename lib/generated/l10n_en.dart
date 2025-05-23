@@ -472,8 +472,8 @@ class SEn extends S {
   String get closeButton => 'Close';
 
   @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
-    return 'Showing $startIndex-$endIndex of $totalItems';
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return 'Showing $startIndex-$endIndex of $totalCount';
   }
 
   @override
@@ -590,6 +590,9 @@ class SEn extends S {
   }
 
   @override
+  String get columnEmail => 'Email';
+
+  @override
   String get columnPhone => 'Phone';
 
   @override
@@ -627,9 +630,6 @@ class SEn extends S {
 
   @override
   String get noUsersMatchSearch => 'No users match your search';
-
-  @override
-  String get columnEmail => 'Email';
 
   @override
   String get requestForServiceTitle => 'Request for Service';

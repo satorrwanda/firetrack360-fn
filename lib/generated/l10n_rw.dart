@@ -472,7 +472,7 @@ class SRw extends S {
   String get closeButton => 'Funga';
 
   @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
     return '$startIndex-$endIndex / $totalItems';
   }
 
@@ -590,6 +590,9 @@ class SRw extends S {
   }
 
   @override
+  String get columnEmail => 'Email';
+
+  @override
   String get columnPhone => 'Phone';
 
   @override
@@ -627,9 +630,6 @@ class SRw extends S {
 
   @override
   String get noUsersMatchSearch => 'Abo mwashatse ntabwo babonetse';
-
-  @override
-  String get columnEmail => 'Email';
 
   @override
   String get requestForServiceTitle => 'Request for Service';
