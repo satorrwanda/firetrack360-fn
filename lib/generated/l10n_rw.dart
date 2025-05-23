@@ -473,7 +473,7 @@ class SRw extends S {
 
   @override
   String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
-    return 'Erekana $startIndex-$endIndex muri $totalItems';
+    return '$startIndex-$endIndex / $totalItems';
   }
 
   @override

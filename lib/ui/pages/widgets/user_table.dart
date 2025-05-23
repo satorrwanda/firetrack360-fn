@@ -483,6 +483,7 @@ class _UserTableState extends State<UserTable> {
                             ? _sortedUsers.length
                             : (_currentPage + 1) * _rowsPerPage,
                         _sortedUsers.length,
+                        _rowsPerPage, // Added the missing 4th argument
                       ),
                       style: const TextStyle(fontSize: 12),
                     ),

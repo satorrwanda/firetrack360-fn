@@ -614,7 +614,7 @@
     "@closeButton": {
         "description": "Text for the close button"
     },
-    "showingRecords": "Erekana {startIndex}-{endIndex} muri {totalItems}",
+    "showingRecords": "{startIndex}-{endIndex} / {totalItems}",
     "@showingRecords": {
         "description": "Message indicating the range of records being displayed",
         "placeholders": {

@@ -664,7 +664,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              l10n.showingRecords(startIndex + 1, endIndex, totalItems),
+              l10n.showingRecords(startIndex + 1, endIndex, totalItems, pageSize),
               style: TextStyle(color: secondaryTextColor),
             ),
             Row(
@@ -804,7 +804,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
         Expanded(
           flex: 2,
           child: Text(
-            l10n.showingRecords(startIndex + 1, endIndex, totalItems),
+            l10n.showingRecords(startIndex + 1, endIndex, totalItems, pageSize),
             style: TextStyle(color: secondaryTextColor),
           ),
         ),
