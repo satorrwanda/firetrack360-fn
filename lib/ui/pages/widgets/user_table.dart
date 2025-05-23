@@ -1,6 +1,7 @@
 // user_table.dart
 import 'package:flutter/material.dart';
 import 'package:firetrack360/models/users.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class UserTable extends StatefulWidget {
   final List<User> users;
@@ -25,6 +26,7 @@ class _UserTableState extends State<UserTable> {
   void initState() {
     super.initState();
     _sortedUsers = List.from(widget.users);
+    _applySorting();
   }
 
   @override
@@ -80,9 +82,14 @@ class _UserTableState extends State<UserTable> {
     );
   }
 
-  int get _pageCount => (_sortedUsers.length / _rowsPerPage).ceil();
+  int get _pageCount {
+    if (_sortedUsers.isEmpty) return 1;
+    return (_sortedUsers.length / _rowsPerPage).ceil();
+  }
 
   void _showUserDetails(User user) {
+    final l10n = S.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -95,21 +102,24 @@ class _UserTableState extends State<UserTable> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildUserDetailHeader(user),
+              _buildUserDetailHeader(user, l10n),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    _buildDetailRow('Email', user.email, Icons.email),
-                    _buildDetailRow('Phone', user.phone ?? '-', Icons.phone),
-                    _buildDetailRow('Role', user.role, Icons.badge),
+                    _buildDetailRow(l10n.emailLabel, user.email, Icons.email),
+                    _buildDetailRow(l10n.phoneLabel,
+                        user.phone ?? l10n.notAvailable, Icons.phone),
+                    _buildDetailRow(l10n.roleLabel, user.role, Icons.badge),
                     _buildDetailRow(
-                        'Status',
-                        user.verified ? 'Verified' : 'Unverified',
+                        l10n.statusLabel,
+                        user.verified
+                            ? l10n.statusVerified
+                            : l10n.statusUnverified,
                         user.verified ? Icons.verified : Icons.pending),
                     if (user.city != null || user.state != null)
                       _buildDetailRow(
-                          'Location',
+                          l10n.locationLabel,
                           '${user.city ?? ''}, ${user.state ?? ''}'.trim(),
                           Icons.location_on),
                   ],
@@ -124,9 +134,9 @@ class _UserTableState extends State<UserTable> {
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(
-                        'Close',
+                        l10n.closeButton,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: Colors.deepPurple,
                         ),
                       ),
                     ),
@@ -140,11 +150,11 @@ class _UserTableState extends State<UserTable> {
     );
   }
 
-  Widget _buildUserDetailHeader(User user) {
+  Widget _buildUserDetailHeader(User user, S l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.deepPurple, // Primary color
+        color: Colors.deepPurple,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       ),
       child: Row(
@@ -154,7 +164,7 @@ class _UserTableState extends State<UserTable> {
             backgroundColor: Colors.white,
             child: Icon(
               Icons.person,
-              color: Colors.deepPurple, // Primary color
+              color: Colors.deepPurple,
               size: 28,
             ),
           ),
@@ -192,7 +202,7 @@ class _UserTableState extends State<UserTable> {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.deepPurple), // Primary color
+          Icon(icon, size: 20, color: Colors.deepPurple),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -202,7 +212,7 @@ class _UserTableState extends State<UserTable> {
                   label,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey.shade600, // Consistent with login form
+                    color: Colors.grey.shade600,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -211,7 +221,7 @@ class _UserTableState extends State<UserTable> {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black87, // Consistent with login form
+                    color: Colors.black87,
                   ),
                 ),
               ],
@@ -224,6 +234,8 @@ class _UserTableState extends State<UserTable> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -237,17 +249,16 @@ class _UserTableState extends State<UserTable> {
               child: SingleChildScrollView(
                 child: DataTable(
                   headingRowColor: MaterialStateColor.resolveWith(
-                    (states) =>
-                        Colors.deepPurple.withOpacity(0.05), // Light tint
+                    (states) => Colors.deepPurple.withOpacity(0.05),
                   ),
                   sortColumnIndex: _sortColumnIndex,
                   sortAscending: _sortAscending,
                   columns: [
                     DataColumn(
                       label: Text(
-                        'Email',
+                        l10n.columnEmail,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -258,9 +269,9 @@ class _UserTableState extends State<UserTable> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Phone',
+                        l10n.columnPhone,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -271,9 +282,9 @@ class _UserTableState extends State<UserTable> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Role',
+                        l10n.columnRole,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -284,9 +295,9 @@ class _UserTableState extends State<UserTable> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Status',
+                        l10n.columnStatus,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -297,9 +308,9 @@ class _UserTableState extends State<UserTable> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Actions',
+                        l10n.columnActions,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -314,21 +325,19 @@ class _UserTableState extends State<UserTable> {
                                   children: [
                                     CircleAvatar(
                                       radius: 14,
-                                      backgroundColor: Colors.deepPurple
-                                          .withOpacity(0.1), // Light tint
+                                      backgroundColor:
+                                          Colors.deepPurple.withOpacity(0.1),
                                       child: Icon(
                                         Icons.person,
                                         size: 16,
-                                        color:
-                                            Colors.deepPurple, // Primary color
+                                        color: Colors.deepPurple,
                                       ),
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
                                       user.email,
                                       style: const TextStyle(
-                                        color:
-                                            Colors.black87, // Consistent text
+                                        color: Colors.black87,
                                       ),
                                     ),
                                   ],
@@ -336,9 +345,9 @@ class _UserTableState extends State<UserTable> {
                               ),
                               DataCell(
                                 Text(
-                                  user.phone ?? '-',
+                                  user.phone ?? l10n.notAvailable,
                                   style: const TextStyle(
-                                    color: Colors.black87, // Consistent text
+                                    color: Colors.black87,
                                   ),
                                 ),
                               ),
@@ -349,14 +358,13 @@ class _UserTableState extends State<UserTable> {
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.deepPurple
-                                        .withOpacity(0.1), // Light tint
+                                    color: Colors.deepPurple.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Text(
                                     user.role,
                                     style: TextStyle(
-                                      color: Colors.deepPurple, // Primary color
+                                      color: Colors.deepPurple,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -390,8 +398,8 @@ class _UserTableState extends State<UserTable> {
                                       const SizedBox(width: 4),
                                       Text(
                                         user.verified
-                                            ? 'Verified'
-                                            : 'Unverified',
+                                            ? l10n.statusVerified
+                                            : l10n.statusUnverified,
                                         style: TextStyle(
                                           color: user.verified
                                               ? Colors.green
@@ -411,22 +419,10 @@ class _UserTableState extends State<UserTable> {
                                     IconButton(
                                       icon: Icon(
                                         Icons.visibility_outlined,
-                                        color:
-                                            Colors.deepPurple, // Primary color
+                                        color: Colors.deepPurple,
                                       ),
                                       onPressed: () => _showUserDetails(user),
-                                      tooltip: 'View Details',
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.edit_outlined,
-                                        color:
-                                            Colors.deepPurple, // Primary color
-                                      ),
-                                      onPressed: () {
-                                        // TODO: Implement edit functionality
-                                      },
-                                      tooltip: 'Edit User',
+                                      tooltip: l10n.viewDetailsTooltip,
                                     ),
                                   ],
                                 ),
@@ -452,9 +448,9 @@ class _UserTableState extends State<UserTable> {
               children: [
                 Row(
                   children: [
-                    const Text(
-                      'Rows per page:',
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      l10n.rowsPerPageLabel,
+                      style: const TextStyle(fontSize: 12),
                     ),
                     const SizedBox(width: 8),
                     DropdownButton<int>(
@@ -479,7 +475,15 @@ class _UserTableState extends State<UserTable> {
                     ),
                     const SizedBox(width: 24),
                     Text(
-                      '${_sortedUsers.isEmpty ? 0 : _currentPage * _rowsPerPage + 1}-${(_currentPage + 1) * _rowsPerPage > _sortedUsers.length ? _sortedUsers.length : (_currentPage + 1) * _rowsPerPage} of ${_sortedUsers.length}',
+                      l10n.showingRecords(
+                        _sortedUsers.isEmpty
+                            ? 0
+                            : _currentPage * _rowsPerPage + 1,
+                        (_currentPage + 1) * _rowsPerPage > _sortedUsers.length
+                            ? _sortedUsers.length
+                            : (_currentPage + 1) * _rowsPerPage,
+                        _sortedUsers.length,
+                      ),
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -489,9 +493,8 @@ class _UserTableState extends State<UserTable> {
                     IconButton(
                       icon: Icon(
                         Icons.chevron_left,
-                        color: _currentPage > 0
-                            ? Colors.deepPurple // Primary color
-                            : Colors.grey,
+                        color:
+                            _currentPage > 0 ? Colors.deepPurple : Colors.grey,
                       ),
                       onPressed: _currentPage > 0
                           ? () {
@@ -505,7 +508,7 @@ class _UserTableState extends State<UserTable> {
                       icon: Icon(
                         Icons.chevron_right,
                         color: _currentPage < _pageCount - 1
-                            ? Colors.deepPurple // Primary color
+                            ? Colors.deepPurple
                             : Colors.grey,
                       ),
                       onPressed: _currentPage < _pageCount - 1

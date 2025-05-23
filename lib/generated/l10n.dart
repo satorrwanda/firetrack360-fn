@@ -1200,6 +1200,90 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Page {currentPage} of {totalPages}'**
   String paginationPage(Object currentPage, Object totalPages);
+
+  /// Header for the Email column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get columnEmail;
+
+  /// Header for the Phone column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get columnPhone;
+
+  /// Header for the Role column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get columnRole;
+
+  /// Label for Location in user details
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get locationLabel;
+
+  /// Status text for a verified user
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get statusVerified;
+
+  /// Status text for an unverified user
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified'**
+  String get statusUnverified;
+
+  /// Title for the user management page
+  ///
+  /// In en, this message translates to:
+  /// **'User Management'**
+  String get userManagementTitle;
+
+  /// Success message after refreshing the user list
+  ///
+  /// In en, this message translates to:
+  /// **'User list refreshed successfully'**
+  String get userListRefreshed;
+
+  /// Tooltip for the add user button
+  ///
+  /// In en, this message translates to:
+  /// **'Add User'**
+  String get addUserTooltip;
+
+  /// Hint text for the users search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search users...'**
+  String get searchUsersHint;
+
+  /// Loading message displayed while data is being fetched
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loadingMessage;
+
+  /// Error message when loading users fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading users'**
+  String get errorLoadingUsers;
+
+  /// Message displayed when no users are found
+  ///
+  /// In en, this message translates to:
+  /// **'No users found'**
+  String get noUsersFound;
+
+  /// Message displayed when no users match the search criteria
+  ///
+  /// In en, this message translates to:
+  /// **'No users match your search'**
+  String get noUsersMatchSearch;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

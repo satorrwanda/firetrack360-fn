@@ -370,7 +370,7 @@ class SRw extends S {
   String get drawerItemHome => 'Ahabanza';
 
   @override
-  String get drawerItemUsers => 'Abakoresha';
+  String get drawerItemUsers => 'Abakozi';
 
   @override
   String get drawerItemService => 'Serivisi';
@@ -588,4 +588,46 @@ class SRw extends S {
   String paginationPage(Object currentPage, Object totalPages) {
     return 'Urupapuro $currentPage rwa $totalPages';
   }
+
+  @override
+  String get columnEmail => 'Email';
+
+  @override
+  String get columnPhone => 'Phone';
+
+  @override
+  String get columnRole => 'Role';
+
+  @override
+  String get locationLabel => 'Location';
+
+  @override
+  String get statusVerified => 'Verified';
+
+  @override
+  String get statusUnverified => 'Unverified';
+
+  @override
+  String get userManagementTitle => 'Ubuyobozi bw\'abakoresha';
+
+  @override
+  String get userListRefreshed => 'Amakuru y\'abakoresha yabonetse';
+
+  @override
+  String get addUserTooltip => 'Ongeza umukozi';
+
+  @override
+  String get searchUsersHint => 'Shakisha abakoresha...';
+
+  @override
+  String get loadingMessage => 'Gukura amakuru...';
+
+  @override
+  String get errorLoadingUsers => 'Habayemo ikibazo';
+
+  @override
+  String get noUsersFound => 'Nta bakoresha babonetse';
+
+  @override
+  String get noUsersMatchSearch => 'Abo mwashatse ntabwo babonetse';
 }

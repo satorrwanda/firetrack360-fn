@@ -588,4 +588,46 @@ class SFr extends S {
   String paginationPage(Object currentPage, Object totalPages) {
     return 'Page $currentPage sur $totalPages';
   }
+
+  @override
+  String get columnEmail => 'Email';
+
+  @override
+  String get columnPhone => 'Téléphone';
+
+  @override
+  String get columnRole => 'Rôle';
+
+  @override
+  String get locationLabel => 'Emplacement';
+
+  @override
+  String get statusVerified => 'Vérifié';
+
+  @override
+  String get statusUnverified => 'Non vérifié';
+
+  @override
+  String get userManagementTitle => 'Gestion des utilisateurs';
+
+  @override
+  String get userListRefreshed => 'Liste des utilisateurs actualisée';
+
+  @override
+  String get addUserTooltip => 'Ajouter un utilisateur';
+
+  @override
+  String get searchUsersHint => 'Rechercher des utilisateurs...';
+
+  @override
+  String get loadingMessage => 'Chargement des utilisateurs...';
+
+  @override
+  String get errorLoadingUsers => 'Erreur lors du chargement des utilisateurs';
+
+  @override
+  String get noUsersFound => 'Aucun utilisateur trouvé';
+
+  @override
+  String get noUsersMatchSearch => 'Aucun utilisateur ne correspond à votre recherche';
 }

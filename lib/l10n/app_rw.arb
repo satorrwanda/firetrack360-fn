@@ -478,7 +478,7 @@
     "@drawerItemHome": {
         "description": "Label for the Home menu item in the drawer (if used)"
     },
-    "drawerItemUsers": "Abakoresha",
+    "drawerItemUsers": "Abakozi",
     "@drawerItemUsers": {
         "description": "Label for the Users menu item in the drawer"
     },
@@ -776,5 +776,37 @@
             "currentPage": {},
             "totalPages": {}
         }
+    },
+    "userManagementTitle": "Ubuyobozi bw'abakoresha",
+    "@userManagementTitle": {
+        "description": "Title for the user management page"
+    },
+    "userListRefreshed": "Amakuru y'abakoresha yabonetse",
+    "@userListRefreshed": {
+        "description": "Success message after refreshing the user list"
+    },
+    "addUserTooltip": "Ongeza umukozi",
+    "@addUserTooltip": {
+        "description": "Tooltip for the add user button"
+    },
+    "searchUsersHint": "Shakisha abakoresha...",
+    "@searchUsersHint": {
+        "description": "Hint text for the users search bar"
+    },
+    "loadingMessage": "Gukura amakuru...",
+    "@loadingMessage": {
+        "description": "Loading message displayed while data is being fetched"
+    },
+    "errorLoadingUsers": "Habayemo ikibazo",
+    "@errorLoadingUsers": {
+        "description": "Error message when loading users fails"
+    },
+    "noUsersFound": "Nta bakoresha babonetse",
+    "@noUsersFound": {
+        "description": "Message displayed when no users are found"
+    },
+    "noUsersMatchSearch": "Abo mwashatse ntabwo babonetse",
+    "@noUsersMatchSearch": {
+        "description": "Message displayed when no users match the search criteria"
     }
 }

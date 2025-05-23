@@ -588,4 +588,46 @@ class SEn extends S {
   String paginationPage(Object currentPage, Object totalPages) {
     return 'Page $currentPage of $totalPages';
   }
+
+  @override
+  String get columnEmail => 'Email';
+
+  @override
+  String get columnPhone => 'Phone';
+
+  @override
+  String get columnRole => 'Role';
+
+  @override
+  String get locationLabel => 'Location';
+
+  @override
+  String get statusVerified => 'Verified';
+
+  @override
+  String get statusUnverified => 'Unverified';
+
+  @override
+  String get userManagementTitle => 'User Management';
+
+  @override
+  String get userListRefreshed => 'User list refreshed successfully';
+
+  @override
+  String get addUserTooltip => 'Add User';
+
+  @override
+  String get searchUsersHint => 'Search users...';
+
+  @override
+  String get loadingMessage => 'Loading...';
+
+  @override
+  String get errorLoadingUsers => 'Error loading users';
+
+  @override
+  String get noUsersFound => 'No users found';
+
+  @override
+  String get noUsersMatchSearch => 'No users match your search';
 }

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firetrack360/models/users.dart';
 import 'package:firetrack360/providers/users_provider.dart';
 import 'package:firetrack360/ui/pages/widgets/user_table.dart';
-
+import 'package:firetrack360/generated/l10n.dart';
 class UserManagementScreen extends StatelessWidget {
   const UserManagementScreen({super.key});
 
@@ -53,9 +53,12 @@ class _UserManagementContentState extends State<_UserManagementContent> {
   // Function to show the Add Technician modal dialog
   void showAddTechnicianModal(BuildContext context) {
     final usersProvider = Provider.of<UsersProvider>(context, listen: false);
+    final l10n = S.of(context)!; // Get localized strings
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        // Assuming AddTechnicianDialog might need l10n too, pass it if necessary
         return AddTechnicianDialog(usersProvider: usersProvider);
       },
     );
@@ -107,6 +110,8 @@ class _UserManagementContentState extends State<_UserManagementContent> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!; // Get localized strings
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: Column(
@@ -139,9 +144,10 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                   icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () => Navigator.pop(context),
                 ),
-                const Text(
-                  'User Management',
-                  style: TextStyle(
+                Text(
+                  // Localized title
+                  l10n.userManagementTitle,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -152,12 +158,15 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                   icon: const Icon(Icons.refresh, color: Colors.white),
                   onPressed: () {
                     context.read<UsersProvider>().refreshUsers();
-                    _showSuccessSnackBar('User list refreshed');
+                    // Localized success message for refresh
+                    _showSuccessSnackBar(l10n.userListRefreshed);
                   },
+                  tooltip: l10n.refreshTooltip, // Localized tooltip
                 ),
                 IconButton(
                   icon: const Icon(Icons.person_add, color: Colors.white),
                   onPressed: () => showAddTechnicianModal(context),
+                  tooltip: l10n.addUserTooltip, // Localized tooltip
                 ),
               ],
             ),
@@ -186,7 +195,7 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                     child: TextField(
                       style: const TextStyle(color: Colors.black87),
                       decoration: InputDecoration(
-                        hintText: 'Search users...',
+                        hintText: l10n.searchUsersHint, // Localized hint text
                         hintStyle: TextStyle(color: Colors.grey.shade600),
                         prefixIcon:
                             const Icon(Icons.search, color: Colors.deepPurple),
@@ -220,49 +229,81 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                         child: Consumer<UsersProvider>(
                           builder: (context, provider, child) {
                             if (provider.isLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Colors.deepPurple),
+                              return Center(
+                                // Localized loading text (optional, can keep indicator only)
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation(
+                                          Colors.deepPurple),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(l10n.loadingMessage),
+                                  ],
                                 ),
                               );
                             }
 
                             if (provider.error != null) {
                               return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      provider.error!,
-                                      style: const TextStyle(
-                                          color: Colors.deepPurple),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.deepPurple,
-                                        foregroundColor: Colors.white,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 24,
-                                          vertical: 12,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.error_outline,
+                                        size: 48,
+                                        color: Colors
+                                            .red, // Consistent with snackbar error
                                       ),
-                                      onPressed: () => provider.refreshUsers(),
-                                      child: const Text(
-                                        'RETRY',
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        // Localized error message header
+                                        l10n.errorLoadingUsers,
+                                        style: const TextStyle(
+                                            color: Colors.deepPurple),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        // Display the actual error message
+                                        provider.error!,
                                         style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 1,
+                                          color: Colors.grey.shade600,
+                                          fontSize: 12,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.deepPurple,
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 24,
+                                            vertical: 12,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                        onPressed: () =>
+                                            provider.refreshUsers(),
+                                        child: Text(
+                                          // Localized retry button
+                                          l10n.retryButton,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               );
                             }
@@ -282,17 +323,34 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                                     ),
                                     const SizedBox(height: 16),
                                     Text(
-                                      'No users found',
+                                      // Localized empty state message
+                                      _searchQuery.isEmpty
+                                          ? l10n.noUsersFound
+                                          : l10n.noUsersMatchSearch,
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 18,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
+                                    if (_searchQuery.isNotEmpty) ...[
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        l10n.adjustSearchOrFilters,
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 12,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ],
                                 ),
                               );
                             }
 
+                            // Assuming UserTable needs l10n for column headers or data,
+                            // you might need to pass it down or handle localization within UserTable.
                             return UserTable(users: filteredUsers);
                           },
                         ),
@@ -309,6 +367,7 @@ class _UserManagementContentState extends State<_UserManagementContent> {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         onPressed: () => showAddTechnicianModal(context),
+        tooltip: l10n.addUserTooltip, // Localized tooltip
         child: const Icon(Icons.person_add),
       ),
     );

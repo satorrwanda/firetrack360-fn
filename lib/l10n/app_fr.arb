@@ -747,5 +747,61 @@
     "paginationPage": "Page {currentPage} sur {totalPages}",
     "@paginationPage": {
         "description": "Text showing the current page and total pages"
+    },
+    "columnEmail": "Email",
+    "@columnEmail": {
+        "description": "En-tête de la colonne Email dans le tableau des utilisateurs"
+    },
+    "columnPhone": "Téléphone",
+    "@columnPhone": {
+        "description": "En-tête de la colonne Téléphone dans le tableau des utilisateurs"
+    },
+    "columnRole": "Rôle",
+    "@columnRole": {
+        "description": "En-tête de la colonne Rôle dans le tableau des utilisateurs"
+    },
+    "locationLabel": "Emplacement",
+    "@locationLabel": {
+        "description": "Étiquette pour l'Emplacement dans les détails de l'utilisateur"
+    },
+    "statusVerified": "Vérifié",
+    "@statusVerified": {
+        "description": "Texte de statut pour un utilisateur vérifié"
+    },
+    "statusUnverified": "Non vérifié",
+    "@statusUnverified": {
+        "description": "Texte de statut pour un utilisateur non vérifié"
+    },
+    "userManagementTitle": "Gestion des utilisateurs",
+    "@userManagementTitle": {
+        "description": "Title for the user management page"
+    },
+    "userListRefreshed": "Liste des utilisateurs actualisée",
+    "@userListRefreshed": {
+        "description": "Success message after refreshing the user list"
+    },
+    "addUserTooltip": "Ajouter un utilisateur",
+    "@addUserTooltip": {
+        "description": "Tooltip for the add user button"
+    },
+    "searchUsersHint": "Rechercher des utilisateurs...",
+    "@searchUsersHint": {
+        "description": "Hint text for the users search bar"
+    },
+    "loadingMessage": "Chargement des utilisateurs...",
+    "@loadingMessage": {
+        "description": "Loading message displayed while data is being fetched"
+    },
+    "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
+    "@errorLoadingUsers": {
+        "description": "Error message when loading users fails"
+    },
+    "noUsersFound": "Aucun utilisateur trouvé",
+    "@noUsersFound": {
+        "description": "Message displayed when no users are found"
+    },
+    "noUsersMatchSearch": "Aucun utilisateur ne correspond à votre recherche",
+    "@noUsersMatchSearch": {
+        "description": "Message displayed when no users match the search criteria"
     }
 }
