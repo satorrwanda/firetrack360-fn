@@ -1015,11 +1015,11 @@ abstract class S {
   /// **'Close'**
   String get closeButton;
 
-  /// Text showing the range of records being displayed
+  /// Text showing the range of records displayed
   ///
   /// In en, this message translates to:
-  /// **'Showing {startIndex}-{endIndex} of {totalCount}'**
-  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems);
+  /// **'Showing {startIndex}-{endIndex} of {totalItems}'**
+  String showingRecords(int startIndex, int endIndex, int totalItems);
 
   /// Label for the rows per page dropdown (small screen)
   ///
@@ -1201,12 +1201,6 @@ abstract class S {
   /// **'Page {currentPage} of {totalPages}'**
   String paginationPage(Object currentPage, Object totalPages);
 
-  /// Header for the Email column in the user table
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get columnEmail;
-
   /// Header for the Phone column in the user table
   ///
   /// In en, this message translates to:
@@ -1284,6 +1278,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'No users match your search'**
   String get noUsersMatchSearch;
+
+  /// Header for the Email column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get columnEmail;
 
   /// Title of the service request modal
   ///
@@ -1392,6 +1392,24 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Submit'**
   String get submitButton;
+
+  /// Error message when the user is not authenticated
+  ///
+  /// In en, this message translates to:
+  /// **'User not authenticated'**
+  String get userNotAuthenticated;
+
+  /// Label for the translate service option
+  ///
+  /// In en, this message translates to:
+  /// **'Translate Service'**
+  String get translateServiceLabel;
+
+  /// The label text for the service
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get labelTextKey;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

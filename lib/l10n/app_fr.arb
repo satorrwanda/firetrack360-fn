@@ -803,5 +803,20 @@
     "noUsersMatchSearch": "Aucun utilisateur ne correspond à votre recherche",
     "@noUsersMatchSearch": {
         "description": "Message displayed when no users match the search criteria"
+    },
+    "userNotAuthenticated": "Utilisateur non authentifié",
+    "@userNotAuthenticated": {
+        "description": "Message d'erreur lorsque l'utilisateur n'est pas authentifié"
+    },
+    "translateServiceLabel": "Service de traduction",
+    "@translateServiceLabel": {
+        "description": "Label for the translation service"
+    },
+    "labelTextKey": "Texte de l'étiquette",
+    "@labelTextKey": {
+        "description": "The label text for the service",
+        "type": "text",
+        "placeholders": {}
+    
     }
 }

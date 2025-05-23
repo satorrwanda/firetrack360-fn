@@ -777,10 +777,6 @@
             "totalPages": {}
         }
     },
-    "columnEmail": "Email",
-    "@columnEmail": {
-        "description": "Header for the Email column in the user table"
-    },
     "columnPhone": "Phone",
     "@columnPhone": {
         "description": "Header for the Phone column in the user table"
@@ -937,20 +933,7 @@
   "@rowsPerPageLabel": {
     "description": "Label for the number of rows displayed per page"
   },
-  "showingRecords": "Showing {startIndex}-{endIndex} of {totalCount}",
-   "@showingRecords": {
-    "description": "Text showing the range of records being displayed",
-    "placeholders": {
-      "startIndex": {},
-      "endIndex": {},
-      "totalCount": {}
-    }
-  },
-  "viewDetailsTooltip": "View Details",
-  "@viewDetailsTooltip": {
-    "description": "Tooltip for the view details button"
-  },
-
+  
   "requestForServiceTitle": "Request for Service",
    "@requestForServiceTitle": {
     "description": "Title of the service request modal"
@@ -1029,5 +1012,19 @@
   "submitButton": "Submit",
    "@submitButton": {
     "description": "Text for the submit button"
-  }
+  },
+  "userNotAuthenticated": "User not authenticated",
+    "@userNotAuthenticated": {
+        "description": "Error message when the user is not authenticated"
+    },
+    "translateServiceLabel": "Translate Service",
+    "@translateServiceLabel": {
+        "description": "Label for the translate service option"
+    },
+    "labelTextKey": "Service",
+    "@labelTextKey": {
+        "description": "The label text for the service",
+        "type": "text",
+        "placeholders": {}
+    }
 }

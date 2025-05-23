@@ -472,7 +472,7 @@ class SFr extends S {
   String get closeButton => 'Fermer';
 
   @override
-  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+  String showingRecords(int startIndex, int endIndex, int totalItems) {
     return 'Affichage de $startIndex-$endIndex sur $totalItems';
   }
 
@@ -590,9 +590,6 @@ class SFr extends S {
   }
 
   @override
-  String get columnEmail => 'Email';
-
-  @override
   String get columnPhone => 'Téléphone';
 
   @override
@@ -630,6 +627,9 @@ class SFr extends S {
 
   @override
   String get noUsersMatchSearch => 'Aucun utilisateur ne correspond à votre recherche';
+
+  @override
+  String get columnEmail => 'Email';
 
   @override
   String get requestForServiceTitle => 'Request for Service';
@@ -686,4 +686,13 @@ class SFr extends S {
 
   @override
   String get submitButton => 'Submit';
+
+  @override
+  String get userNotAuthenticated => 'Utilisateur non authentifié';
+
+  @override
+  String get translateServiceLabel => 'Service de traduction';
+
+  @override
+  String get labelTextKey => 'Texte de l\'étiquette';
 }

@@ -808,5 +808,19 @@
     "noUsersMatchSearch": "Abo mwashatse ntabwo babonetse",
     "@noUsersMatchSearch": {
         "description": "Message displayed when no users match the search criteria"
+    },
+    "userNotAuthenticated": "Ukoresha ntaho asangwa",
+    "@userNotAuthenticated": {
+        "description": "Message d'erreur lorsque l'utilisateur n'est pas authentifié"
+    },
+    "translateServiceLabel": "Serivisi yo guhindura",
+    "@translateServiceLabel": {
+        "description": "Label for the translation service"
+    },
+    "labelTextKey": "Serivisi",
+    "@labelTextKey": {
+        "description": "The label text for the service",
+        "type": "text",
+        "placeholders": {}
     }
 }
