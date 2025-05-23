@@ -472,7 +472,7 @@ class SFr extends S {
   String get closeButton => 'Fermer';
 
   @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
     return 'Affichage de $startIndex-$endIndex sur $totalItems';
   }
 
@@ -630,4 +630,60 @@ class SFr extends S {
 
   @override
   String get noUsersMatchSearch => 'Aucun utilisateur ne correspond à votre recherche';
+
+  @override
+  String get requestForServiceTitle => 'Request for Service';
+
+  @override
+  String get refillService => 'Refill';
+
+  @override
+  String get maintenanceService => 'Maintenance';
+
+  @override
+  String get supplyService => 'Supply';
+
+  @override
+  String get otherServices => 'Other Services';
+
+  @override
+  String get selectServiceLabel => 'Select Service';
+
+  @override
+  String get selectTechnicianLabel => 'Select Technician';
+
+  @override
+  String get pleaseSelectService => 'Please select a service';
+
+  @override
+  String get pleaseSelectTechnician => 'Please select a technician';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get descriptionTooLong => 'Description too long (max 500 characters)';
+
+  @override
+  String get describeServiceRequestHint => 'Describe your service request...';
+
+  @override
+  String get unknownErrorOccurred => 'Unknown error occurred';
+
+  @override
+  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+
+  @override
+  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+
+  @override
+  String get noAvailableTechniciansFound => 'No available technicians found';
+
+  @override
+  String failedToCreateRequest(Object errorMessage) {
+    return 'Failed to create request: $errorMessage';
+  }
+
+  @override
+  String get submitButton => 'Submit';
 }

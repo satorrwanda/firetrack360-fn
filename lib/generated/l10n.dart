@@ -745,10 +745,10 @@ abstract class S {
   /// **'Status'**
   String get statusTitle;
 
-  /// Label for the role section
+  /// Label for Role in user details
   ///
   /// In en, this message translates to:
-  /// **'Role:'**
+  /// **'Role'**
   String get roleLabel;
 
   /// Tooltip text for the notifications icon
@@ -862,7 +862,7 @@ abstract class S {
   /// Tooltip for the refresh button
   ///
   /// In en, this message translates to:
-  /// **'Refresh'**
+  /// **'Refresh Users'**
   String get refreshTooltip;
 
   /// Tooltip for the create service request button
@@ -886,7 +886,7 @@ abstract class S {
   /// Text for the retry button
   ///
   /// In en, this message translates to:
-  /// **'Retry'**
+  /// **'RETRY'**
   String get retryButton;
 
   /// Message displayed when no service requests are found
@@ -895,10 +895,10 @@ abstract class S {
   /// **'No Service Requests Found'**
   String get noServiceRequestsFound;
 
-  /// Hint text when no service requests are found
+  /// Message suggesting to adjust search or filters when no results are found
   ///
   /// In en, this message translates to:
-  /// **'Try adjusting your search or filters'**
+  /// **'Try adjusting your search or filters.'**
   String get adjustSearchOrFilters;
 
   /// Header for the 'Title' column in the data table
@@ -907,10 +907,10 @@ abstract class S {
   /// **'TITLE'**
   String get columnTitle;
 
-  /// Header for the 'Status' column in the data table
+  /// Header for the Status column in the user table
   ///
   /// In en, this message translates to:
-  /// **'STATUS'**
+  /// **'Status'**
   String get columnStatus;
 
   /// Header for the 'Technician' column in the data table
@@ -925,10 +925,10 @@ abstract class S {
   /// **'DATE'**
   String get columnDate;
 
-  /// Header for the 'Actions' column in the data table
+  /// Header for the Actions column in the user table
   ///
   /// In en, this message translates to:
-  /// **'ACTIONS'**
+  /// **'Actions'**
   String get columnActions;
 
   /// Text displayed when no technician is assigned to a service request
@@ -961,7 +961,7 @@ abstract class S {
   /// **'Title'**
   String get titleLabel;
 
-  /// Label for the 'Status' field in the details dialog
+  /// Label for Status in user details
   ///
   /// In en, this message translates to:
   /// **'Status'**
@@ -973,7 +973,7 @@ abstract class S {
   /// **'Date'**
   String get dateLabel;
 
-  /// Label for the 'Description' field in the details dialog
+  /// Label for the service request description field
   ///
   /// In en, this message translates to:
   /// **'Description'**
@@ -985,13 +985,13 @@ abstract class S {
   /// **'Client Information'**
   String get clientInformationTitle;
 
-  /// Label for the 'Email' field in the details dialog
+  /// Label for Email in user details
   ///
   /// In en, this message translates to:
   /// **'Email'**
   String get emailLabel;
 
-  /// Label for the 'Phone' field in the details dialog
+  /// Label for Phone in user details
   ///
   /// In en, this message translates to:
   /// **'Phone'**
@@ -1003,7 +1003,7 @@ abstract class S {
   /// **'Technician Information'**
   String get technicianInformationTitle;
 
-  /// Abbreviation for Not Available
+  /// Placeholder for unavailable information
   ///
   /// In en, this message translates to:
   /// **'N/A'**
@@ -1015,11 +1015,11 @@ abstract class S {
   /// **'Close'**
   String get closeButton;
 
-  /// Text showing the range of records displayed
+  /// Text showing the range of records being displayed
   ///
   /// In en, this message translates to:
-  /// **'Showing {startIndex}-{endIndex} of {totalItems}'**
-  String showingRecords(int startIndex, int endIndex, int totalItems);
+  /// **'Showing {startIndex}-{endIndex} of {totalCount}'**
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems);
 
   /// Label for the rows per page dropdown (small screen)
   ///
@@ -1027,10 +1027,10 @@ abstract class S {
   /// **'Rows: '**
   String get rowsLabel;
 
-  /// Label for the rows per page dropdown (regular screen)
+  /// Label for the number of rows displayed per page
   ///
   /// In en, this message translates to:
-  /// **'Rows per page: '**
+  /// **'Rows per page:'**
   String get rowsPerPageLabel;
 
   /// Status: Pending
@@ -1237,16 +1237,16 @@ abstract class S {
   /// **'Unverified'**
   String get statusUnverified;
 
-  /// Title for the user management page
+  /// Title for the User Management screen
   ///
   /// In en, this message translates to:
   /// **'User Management'**
   String get userManagementTitle;
 
-  /// Success message after refreshing the user list
+  /// Snackbar message when the user list is refreshed
   ///
   /// In en, this message translates to:
-  /// **'User list refreshed successfully'**
+  /// **'User list refreshed'**
   String get userListRefreshed;
 
   /// Tooltip for the add user button
@@ -1255,35 +1255,143 @@ abstract class S {
   /// **'Add User'**
   String get addUserTooltip;
 
-  /// Hint text for the users search bar
+  /// Hint text for the user search bar
   ///
   /// In en, this message translates to:
   /// **'Search users...'**
   String get searchUsersHint;
 
-  /// Loading message displayed while data is being fetched
+  /// Message displayed while users are loading
   ///
   /// In en, this message translates to:
-  /// **'Loading...'**
+  /// **'Loading users...'**
   String get loadingMessage;
 
-  /// Error message when loading users fails
+  /// Header for the error message when loading users fails
   ///
   /// In en, this message translates to:
-  /// **'Error loading users'**
+  /// **'Failed to load users'**
   String get errorLoadingUsers;
 
-  /// Message displayed when no users are found
+  /// Message displayed when no users are available
   ///
   /// In en, this message translates to:
   /// **'No users found'**
   String get noUsersFound;
 
-  /// Message displayed when no users match the search criteria
+  /// Message displayed when a search yields no results
   ///
   /// In en, this message translates to:
   /// **'No users match your search'**
   String get noUsersMatchSearch;
+
+  /// Title of the service request modal
+  ///
+  /// In en, this message translates to:
+  /// **'Request for Service'**
+  String get requestForServiceTitle;
+
+  /// Service option: Refill
+  ///
+  /// In en, this message translates to:
+  /// **'Refill'**
+  String get refillService;
+
+  /// Service option: Maintenance
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get maintenanceService;
+
+  /// Service option: Supply
+  ///
+  /// In en, this message translates to:
+  /// **'Supply'**
+  String get supplyService;
+
+  /// Service option: Other Services
+  ///
+  /// In en, this message translates to:
+  /// **'Other Services'**
+  String get otherServices;
+
+  /// Label for the service selection dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select Service'**
+  String get selectServiceLabel;
+
+  /// Label for the technician selection dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select Technician'**
+  String get selectTechnicianLabel;
+
+  /// Validation message: Service selection required
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a service'**
+  String get pleaseSelectService;
+
+  /// Validation message: Technician selection required
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a technician'**
+  String get pleaseSelectTechnician;
+
+  /// Validation message: Description required
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a description'**
+  String get pleaseEnterDescription;
+
+  /// Validation message: Description exceeds character limit
+  ///
+  /// In en, this message translates to:
+  /// **'Description too long (max 500 characters)'**
+  String get descriptionTooLong;
+
+  /// Hint text for the service request description field
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your service request...'**
+  String get describeServiceRequestHint;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error occurred'**
+  String get unknownErrorOccurred;
+
+  /// Network connection error message
+  ///
+  /// In en, this message translates to:
+  /// **'Network error occurred. Please check your connection.'**
+  String get networkErrorOccurred;
+
+  /// Error message when technicians fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while loading technicians'**
+  String get errorLoadingTechnicians;
+
+  /// Message when no technicians are available
+  ///
+  /// In en, this message translates to:
+  /// **'No available technicians found'**
+  String get noAvailableTechniciansFound;
+
+  /// Error message when service request creation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create request: {errorMessage}'**
+  String failedToCreateRequest(Object errorMessage);
+
+  /// Text for the submit button
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submitButton;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

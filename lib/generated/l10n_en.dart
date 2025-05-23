@@ -337,7 +337,7 @@ class SEn extends S {
   String get statusTitle => 'Status';
 
   @override
-  String get roleLabel => 'Role:';
+  String get roleLabel => 'Role';
 
   @override
   String get notificationsTooltip => 'Notifications';
@@ -394,7 +394,7 @@ class SEn extends S {
   String get serviceRequestsTitle => 'Service Requests';
 
   @override
-  String get refreshTooltip => 'Refresh';
+  String get refreshTooltip => 'Refresh Users';
 
   @override
   String get createServiceRequestTooltip => 'Create Service Request';
@@ -406,19 +406,19 @@ class SEn extends S {
   String get errorLoadingServiceRequests => 'Error loading service requests';
 
   @override
-  String get retryButton => 'Retry';
+  String get retryButton => 'RETRY';
 
   @override
   String get noServiceRequestsFound => 'No Service Requests Found';
 
   @override
-  String get adjustSearchOrFilters => 'Try adjusting your search or filters';
+  String get adjustSearchOrFilters => 'Try adjusting your search or filters.';
 
   @override
   String get columnTitle => 'TITLE';
 
   @override
-  String get columnStatus => 'STATUS';
+  String get columnStatus => 'Status';
 
   @override
   String get columnTechnician => 'TECHNICIAN';
@@ -427,7 +427,7 @@ class SEn extends S {
   String get columnDate => 'DATE';
 
   @override
-  String get columnActions => 'ACTIONS';
+  String get columnActions => 'Actions';
 
   @override
   String get noTechnicianAssigned => 'No technician assigned';
@@ -472,15 +472,15 @@ class SEn extends S {
   String get closeButton => 'Close';
 
   @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
-    return 'Showing $startIndex-$endIndex of $totalItems';
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return 'Showing $startIndex-$endIndex of $totalCount';
   }
 
   @override
   String get rowsLabel => 'Rows: ';
 
   @override
-  String get rowsPerPageLabel => 'Rows per page: ';
+  String get rowsPerPageLabel => 'Rows per page:';
 
   @override
   String get statusPending => 'Pending';
@@ -611,7 +611,7 @@ class SEn extends S {
   String get userManagementTitle => 'User Management';
 
   @override
-  String get userListRefreshed => 'User list refreshed successfully';
+  String get userListRefreshed => 'User list refreshed';
 
   @override
   String get addUserTooltip => 'Add User';
@@ -620,14 +620,70 @@ class SEn extends S {
   String get searchUsersHint => 'Search users...';
 
   @override
-  String get loadingMessage => 'Loading...';
+  String get loadingMessage => 'Loading users...';
 
   @override
-  String get errorLoadingUsers => 'Error loading users';
+  String get errorLoadingUsers => 'Failed to load users';
 
   @override
   String get noUsersFound => 'No users found';
 
   @override
   String get noUsersMatchSearch => 'No users match your search';
+
+  @override
+  String get requestForServiceTitle => 'Request for Service';
+
+  @override
+  String get refillService => 'Refill';
+
+  @override
+  String get maintenanceService => 'Maintenance';
+
+  @override
+  String get supplyService => 'Supply';
+
+  @override
+  String get otherServices => 'Other Services';
+
+  @override
+  String get selectServiceLabel => 'Select Service';
+
+  @override
+  String get selectTechnicianLabel => 'Select Technician';
+
+  @override
+  String get pleaseSelectService => 'Please select a service';
+
+  @override
+  String get pleaseSelectTechnician => 'Please select a technician';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get descriptionTooLong => 'Description too long (max 500 characters)';
+
+  @override
+  String get describeServiceRequestHint => 'Describe your service request...';
+
+  @override
+  String get unknownErrorOccurred => 'Unknown error occurred';
+
+  @override
+  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+
+  @override
+  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+
+  @override
+  String get noAvailableTechniciansFound => 'No available technicians found';
+
+  @override
+  String failedToCreateRequest(Object errorMessage) {
+    return 'Failed to create request: $errorMessage';
+  }
+
+  @override
+  String get submitButton => 'Submit';
 }
