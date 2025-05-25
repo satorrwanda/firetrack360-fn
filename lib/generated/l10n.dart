@@ -157,7 +157,7 @@ abstract class S {
   /// **'Sign Up'**
   String get signUpLink;
 
-  /// Title for the welcome back message
+  /// Main title on the login header
   ///
   /// In en, this message translates to:
   /// **'Welcome Back'**
@@ -745,12 +745,6 @@ abstract class S {
   /// **'Status'**
   String get statusTitle;
 
-  /// Label for Role in user details
-  ///
-  /// In en, this message translates to:
-  /// **'Role'**
-  String get roleLabel;
-
   /// Tooltip text for the notifications icon
   ///
   /// In en, this message translates to:
@@ -862,7 +856,7 @@ abstract class S {
   /// Tooltip for the refresh button
   ///
   /// In en, this message translates to:
-  /// **'Refresh Users'**
+  /// **'Refresh'**
   String get refreshTooltip;
 
   /// Tooltip for the create service request button
@@ -883,22 +877,16 @@ abstract class S {
   /// **'Error loading service requests'**
   String get errorLoadingServiceRequests;
 
-  /// Text for the retry button
-  ///
-  /// In en, this message translates to:
-  /// **'RETRY'**
-  String get retryButton;
-
   /// Message displayed when no service requests are found
   ///
   /// In en, this message translates to:
   /// **'No Service Requests Found'**
   String get noServiceRequestsFound;
 
-  /// Message suggesting to adjust search or filters when no results are found
+  /// Hint text when no service requests are found
   ///
   /// In en, this message translates to:
-  /// **'Try adjusting your search or filters.'**
+  /// **'Try adjusting your search or filters'**
   String get adjustSearchOrFilters;
 
   /// Header for the 'Title' column in the data table
@@ -907,10 +895,10 @@ abstract class S {
   /// **'TITLE'**
   String get columnTitle;
 
-  /// Header for the Status column in the user table
+  /// Header for the 'Status' column in the data table
   ///
   /// In en, this message translates to:
-  /// **'Status'**
+  /// **'STATUS'**
   String get columnStatus;
 
   /// Header for the 'Technician' column in the data table
@@ -925,10 +913,10 @@ abstract class S {
   /// **'DATE'**
   String get columnDate;
 
-  /// Header for the Actions column in the user table
+  /// Header for the 'Actions' column in the data table
   ///
   /// In en, this message translates to:
-  /// **'Actions'**
+  /// **'ACTIONS'**
   String get columnActions;
 
   /// Text displayed when no technician is assigned to a service request
@@ -961,7 +949,7 @@ abstract class S {
   /// **'Title'**
   String get titleLabel;
 
-  /// Label for Status in user details
+  /// Label for the 'Status' field in the details dialog
   ///
   /// In en, this message translates to:
   /// **'Status'**
@@ -973,7 +961,7 @@ abstract class S {
   /// **'Date'**
   String get dateLabel;
 
-  /// Label for the service request description field
+  /// Label for the 'Description' field in the details dialog
   ///
   /// In en, this message translates to:
   /// **'Description'**
@@ -985,25 +973,13 @@ abstract class S {
   /// **'Client Information'**
   String get clientInformationTitle;
 
-  /// Label for Email in user details
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get emailLabel;
-
-  /// Label for Phone in user details
-  ///
-  /// In en, this message translates to:
-  /// **'Phone'**
-  String get phoneLabel;
-
   /// Title for the technician information section in the details dialog
   ///
   /// In en, this message translates to:
   /// **'Technician Information'**
   String get technicianInformationTitle;
 
-  /// Placeholder for unavailable information
+  /// Abbreviation for Not Available
   ///
   /// In en, this message translates to:
   /// **'N/A'**
@@ -1015,22 +991,16 @@ abstract class S {
   /// **'Close'**
   String get closeButton;
 
-  /// Text showing the range of records being displayed
-  ///
-  /// In en, this message translates to:
-  /// **'Showing {startIndex}-{endIndex} of {totalCount}'**
-  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems);
-
   /// Label for the rows per page dropdown (small screen)
   ///
   /// In en, this message translates to:
   /// **'Rows: '**
   String get rowsLabel;
 
-  /// Label for the number of rows displayed per page
+  /// Label for the rows per page dropdown (regular screen)
   ///
   /// In en, this message translates to:
-  /// **'Rows per page:'**
+  /// **'Rows per page: '**
   String get rowsPerPageLabel;
 
   /// Status: Pending
@@ -1237,16 +1207,16 @@ abstract class S {
   /// **'Unverified'**
   String get statusUnverified;
 
-  /// Title for the User Management screen
+  /// Title for the user management page
   ///
   /// In en, this message translates to:
   /// **'User Management'**
   String get userManagementTitle;
 
-  /// Snackbar message when the user list is refreshed
+  /// Success message after refreshing the user list
   ///
   /// In en, this message translates to:
-  /// **'User list refreshed'**
+  /// **'User list refreshed successfully'**
   String get userListRefreshed;
 
   /// Tooltip for the add user button
@@ -1255,11 +1225,29 @@ abstract class S {
   /// **'Add User'**
   String get addUserTooltip;
 
-  /// Hint text for the user search bar
+  /// Hint text for the users search bar
   ///
   /// In en, this message translates to:
   /// **'Search users...'**
   String get searchUsersHint;
+
+  /// Error message when loading users fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading users'**
+  String get errorLoadingUsers;
+
+  /// Message displayed when no users are found
+  ///
+  /// In en, this message translates to:
+  /// **'No users found'**
+  String get noUsersFound;
+
+  /// Message displayed when no users match the search criteria
+  ///
+  /// In en, this message translates to:
+  /// **'No users match your search'**
+  String get noUsersMatchSearch;
 
   /// Message displayed while users are loading
   ///
@@ -1267,23 +1255,11 @@ abstract class S {
   /// **'Loading users...'**
   String get loadingMessage;
 
-  /// Header for the error message when loading users fails
+  /// Text showing the range of records being displayed
   ///
   /// In en, this message translates to:
-  /// **'Failed to load users'**
-  String get errorLoadingUsers;
-
-  /// Message displayed when no users are available
-  ///
-  /// In en, this message translates to:
-  /// **'No users found'**
-  String get noUsersFound;
-
-  /// Message displayed when a search yields no results
-  ///
-  /// In en, this message translates to:
-  /// **'No users match your search'**
-  String get noUsersMatchSearch;
+  /// **'Showing {startIndex}-{endIndex} of {totalCount}'**
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems);
 
   /// Title of the service request modal
   ///
@@ -1410,6 +1386,174 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Service'**
   String get labelTextKey;
+
+  /// Message displayed while the profile is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading profile...'**
+  String get loadingProfileMessage;
+
+  /// Title for the error screen when profile loading fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Profile'**
+  String get errorLoadingProfile;
+
+  /// Error message when profile data is not found
+  ///
+  /// In en, this message translates to:
+  /// **'Profile data not found'**
+  String get profileDataNotFound;
+
+  /// Title for the Profile page
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profilePageTitle;
+
+  /// Error message when updating profile image fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update profile image: {error}'**
+  String failedToUpdateProfileImage(Object error);
+
+  /// Error message when removing profile image fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove profile image: {error}'**
+  String failedToRemoveProfileImage(Object error);
+
+  /// Placeholder text for user name when not available
+  ///
+  /// In en, this message translates to:
+  /// **'____   _____'**
+  String get anonymousUserName;
+
+  /// Label indicating a user has a verified account
+  ///
+  /// In en, this message translates to:
+  /// **'Verified Account'**
+  String get verifiedAccountLabel;
+
+  /// Title for the Personal Information section
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformationTitle;
+
+  /// Title for the Address section
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressTitle;
+
+  /// Label for the Email field
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// Label for the Phone field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneLabel;
+
+  /// Label for the Role field
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get roleLabel;
+
+  /// Label for the Date of Birth field
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirthLabel;
+
+  /// Label for the Street field in address
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get streetLabel;
+
+  /// Label for the City/State field in address
+  ///
+  /// In en, this message translates to:
+  /// **'City/State'**
+  String get cityStateLabel;
+
+  /// Label for the ZIP Code field in address
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get zipCodeLabel;
+
+  /// Placeholder text for information that is not provided
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get notProvided;
+
+  /// Text for the retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
+
+  /// Title for the Settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// Section title for profile-related settings
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileSettingsSectionTitle;
+
+  /// Section title for app-related settings
+  ///
+  /// In en, this message translates to:
+  /// **'App Settings'**
+  String get appSettingsSectionTitle;
+
+  /// Title for the profile settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Settings'**
+  String get profileSettingsTitle;
+
+  /// Subtitle for the profile settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Update your personal information'**
+  String get profileSettingsSubtitle;
+
+  /// Title for the change password settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePasswordTitle;
+
+  /// Subtitle for the change password settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your security settings'**
+  String get changePasswordSubtitle;
+
+  /// Title for the language settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageTitle;
+
+  /// Subtitle for the language settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Change app language'**
+  String get languageSubtitle;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

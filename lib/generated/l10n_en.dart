@@ -337,9 +337,6 @@ class SEn extends S {
   String get statusTitle => 'Status';
 
   @override
-  String get roleLabel => 'Role';
-
-  @override
   String get notificationsTooltip => 'Notifications';
 
   @override
@@ -394,7 +391,7 @@ class SEn extends S {
   String get serviceRequestsTitle => 'Service Requests';
 
   @override
-  String get refreshTooltip => 'Refresh Users';
+  String get refreshTooltip => 'Refresh';
 
   @override
   String get createServiceRequestTooltip => 'Create Service Request';
@@ -406,19 +403,16 @@ class SEn extends S {
   String get errorLoadingServiceRequests => 'Error loading service requests';
 
   @override
-  String get retryButton => 'RETRY';
-
-  @override
   String get noServiceRequestsFound => 'No Service Requests Found';
 
   @override
-  String get adjustSearchOrFilters => 'Try adjusting your search or filters.';
+  String get adjustSearchOrFilters => 'Try adjusting your search or filters';
 
   @override
   String get columnTitle => 'TITLE';
 
   @override
-  String get columnStatus => 'Status';
+  String get columnStatus => 'STATUS';
 
   @override
   String get columnTechnician => 'TECHNICIAN';
@@ -427,7 +421,7 @@ class SEn extends S {
   String get columnDate => 'DATE';
 
   @override
-  String get columnActions => 'Actions';
+  String get columnActions => 'ACTIONS';
 
   @override
   String get noTechnicianAssigned => 'No technician assigned';
@@ -457,12 +451,6 @@ class SEn extends S {
   String get clientInformationTitle => 'Client Information';
 
   @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get phoneLabel => 'Phone';
-
-  @override
   String get technicianInformationTitle => 'Technician Information';
 
   @override
@@ -472,15 +460,10 @@ class SEn extends S {
   String get closeButton => 'Close';
 
   @override
-  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
-    return 'Showing $startIndex-$endIndex of $totalCount';
-  }
-
-  @override
   String get rowsLabel => 'Rows: ';
 
   @override
-  String get rowsPerPageLabel => 'Rows per page:';
+  String get rowsPerPageLabel => 'Rows per page: ';
 
   @override
   String get statusPending => 'Pending';
@@ -611,7 +594,7 @@ class SEn extends S {
   String get userManagementTitle => 'User Management';
 
   @override
-  String get userListRefreshed => 'User list refreshed';
+  String get userListRefreshed => 'User list refreshed successfully';
 
   @override
   String get addUserTooltip => 'Add User';
@@ -620,16 +603,21 @@ class SEn extends S {
   String get searchUsersHint => 'Search users...';
 
   @override
-  String get loadingMessage => 'Loading users...';
-
-  @override
-  String get errorLoadingUsers => 'Failed to load users';
+  String get errorLoadingUsers => 'Error loading users';
 
   @override
   String get noUsersFound => 'No users found';
 
   @override
   String get noUsersMatchSearch => 'No users match your search';
+
+  @override
+  String get loadingMessage => 'Loading users...';
+
+  @override
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return 'Showing $startIndex-$endIndex of $totalCount';
+  }
 
   @override
   String get requestForServiceTitle => 'Request for Service';
@@ -695,4 +683,92 @@ class SEn extends S {
 
   @override
   String get labelTextKey => 'Service';
+
+  @override
+  String get loadingProfileMessage => 'Loading profile...';
+
+  @override
+  String get errorLoadingProfile => 'Error Loading Profile';
+
+  @override
+  String get profileDataNotFound => 'Profile data not found';
+
+  @override
+  String get profilePageTitle => 'Profile';
+
+  @override
+  String failedToUpdateProfileImage(Object error) {
+    return 'Failed to update profile image: $error';
+  }
+
+  @override
+  String failedToRemoveProfileImage(Object error) {
+    return 'Failed to remove profile image: $error';
+  }
+
+  @override
+  String get anonymousUserName => '____   _____';
+
+  @override
+  String get verifiedAccountLabel => 'Verified Account';
+
+  @override
+  String get personalInformationTitle => 'Personal Information';
+
+  @override
+  String get addressTitle => 'Address';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Phone';
+
+  @override
+  String get roleLabel => 'Role';
+
+  @override
+  String get dateOfBirthLabel => 'Date of Birth';
+
+  @override
+  String get streetLabel => 'Street';
+
+  @override
+  String get cityStateLabel => 'City/State';
+
+  @override
+  String get zipCodeLabel => 'ZIP Code';
+
+  @override
+  String get notProvided => 'Not provided';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get profileSettingsSectionTitle => 'Profile';
+
+  @override
+  String get appSettingsSectionTitle => 'App Settings';
+
+  @override
+  String get profileSettingsTitle => 'Profile Settings';
+
+  @override
+  String get profileSettingsSubtitle => 'Update your personal information';
+
+  @override
+  String get changePasswordTitle => 'Change Password';
+
+  @override
+  String get changePasswordSubtitle => 'Manage your security settings';
+
+  @override
+  String get languageTitle => 'Language';
+
+  @override
+  String get languageSubtitle => 'Change app language';
 }

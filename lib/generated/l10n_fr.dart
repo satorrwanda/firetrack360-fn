@@ -337,9 +337,6 @@ class SFr extends S {
   String get statusTitle => 'Statut';
 
   @override
-  String get roleLabel => 'Rôle';
-
-  @override
   String get notificationsTooltip => 'Notifications';
 
   @override
@@ -406,9 +403,6 @@ class SFr extends S {
   String get errorLoadingServiceRequests => 'Erreur lors du chargement des demandes de service';
 
   @override
-  String get retryButton => 'Réessayer';
-
-  @override
   String get noServiceRequestsFound => 'Aucune demande de service trouvée';
 
   @override
@@ -457,12 +451,6 @@ class SFr extends S {
   String get clientInformationTitle => 'Informations client';
 
   @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get phoneLabel => 'Téléphone';
-
-  @override
   String get technicianInformationTitle => 'Informations technicien';
 
   @override
@@ -470,11 +458,6 @@ class SFr extends S {
 
   @override
   String get closeButton => 'Fermer';
-
-  @override
-  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
-    return 'Affichage de $startIndex-$endIndex sur $totalItems';
-  }
 
   @override
   String get rowsLabel => 'Lignes : ';
@@ -620,9 +603,6 @@ class SFr extends S {
   String get searchUsersHint => 'Rechercher des utilisateurs...';
 
   @override
-  String get loadingMessage => 'Chargement des utilisateurs...';
-
-  @override
   String get errorLoadingUsers => 'Erreur lors du chargement des utilisateurs';
 
   @override
@@ -630,6 +610,14 @@ class SFr extends S {
 
   @override
   String get noUsersMatchSearch => 'Aucun utilisateur ne correspond à votre recherche';
+
+  @override
+  String get loadingMessage => 'Chargement des utilisateurs...';
+
+  @override
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return 'Affichage de $startIndex-$endIndex sur $totalItems';
+  }
 
   @override
   String get requestForServiceTitle => 'Request for Service';
@@ -695,4 +683,92 @@ class SFr extends S {
 
   @override
   String get labelTextKey => 'Texte de l\'étiquette';
+
+  @override
+  String get loadingProfileMessage => 'Chargement du profil...';
+
+  @override
+  String get errorLoadingProfile => 'Erreur lors du chargement du profil';
+
+  @override
+  String get profileDataNotFound => 'Données du profil introuvables';
+
+  @override
+  String get profilePageTitle => 'Profil';
+
+  @override
+  String failedToUpdateProfileImage(Object error) {
+    return 'Échec de la mise à jour de l\'image de profil : $error';
+  }
+
+  @override
+  String failedToRemoveProfileImage(Object error) {
+    return 'Échec de la suppression de l\'image de profil : $error';
+  }
+
+  @override
+  String get anonymousUserName => '____   _____';
+
+  @override
+  String get verifiedAccountLabel => 'Compte vérifié';
+
+  @override
+  String get personalInformationTitle => 'Informations personnelles';
+
+  @override
+  String get addressTitle => 'Adresse';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Téléphone';
+
+  @override
+  String get roleLabel => 'Rôle';
+
+  @override
+  String get dateOfBirthLabel => 'Date de naissance';
+
+  @override
+  String get streetLabel => 'Rue';
+
+  @override
+  String get cityStateLabel => 'Ville/État';
+
+  @override
+  String get zipCodeLabel => 'Code postal';
+
+  @override
+  String get notProvided => 'Non fourni';
+
+  @override
+  String get retryButton => 'Réessayer';
+
+  @override
+  String get settingsTitle => 'Paramètres';
+
+  @override
+  String get profileSettingsSectionTitle => 'Profil';
+
+  @override
+  String get appSettingsSectionTitle => 'Paramètres de l\'application';
+
+  @override
+  String get profileSettingsTitle => 'Paramètres du profil';
+
+  @override
+  String get profileSettingsSubtitle => 'Mettre à jour vos informations personnelles';
+
+  @override
+  String get changePasswordTitle => 'Changer le mot de passe';
+
+  @override
+  String get changePasswordSubtitle => 'Gérer vos paramètres de sécurité';
+
+  @override
+  String get languageTitle => 'Langue';
+
+  @override
+  String get languageSubtitle => 'Changer la langue de l\'application';
 }

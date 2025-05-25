@@ -337,9 +337,6 @@ class SRw extends S {
   String get statusTitle => 'Imiterere';
 
   @override
-  String get roleLabel => 'Uruhare';
-
-  @override
   String get notificationsTooltip => 'Ubutumwa';
 
   @override
@@ -406,9 +403,6 @@ class SRw extends S {
   String get errorLoadingServiceRequests => 'Ikibazo mu gufata  serivisi';
 
   @override
-  String get retryButton => 'Ongera ugerageze';
-
-  @override
   String get noServiceRequestsFound => 'Nta byifuzo bya Serivisi byabonetse';
 
   @override
@@ -457,12 +451,6 @@ class SRw extends S {
   String get clientInformationTitle => 'Amakuru y\'Umukiriya';
 
   @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get phoneLabel => 'Nimero ya telefone';
-
-  @override
   String get technicianInformationTitle => 'Amakuru y\'umutekinisiye';
 
   @override
@@ -470,11 +458,6 @@ class SRw extends S {
 
   @override
   String get closeButton => 'Funga';
-
-  @override
-  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
-    return '$startIndex-$endIndex / $totalItems';
-  }
 
   @override
   String get rowsLabel => 'Imirongo: ';
@@ -620,9 +603,6 @@ class SRw extends S {
   String get searchUsersHint => 'Shakisha abakoresha...';
 
   @override
-  String get loadingMessage => 'Gukura amakuru...';
-
-  @override
   String get errorLoadingUsers => 'Habayemo ikibazo';
 
   @override
@@ -630,6 +610,14 @@ class SRw extends S {
 
   @override
   String get noUsersMatchSearch => 'Abo mwashatse ntabwo babonetse';
+
+  @override
+  String get loadingMessage => 'Gukura amakuru...';
+
+  @override
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return '$startIndex-$endIndex / $totalItems';
+  }
 
   @override
   String get requestForServiceTitle => 'Request for Service';
@@ -695,4 +683,92 @@ class SRw extends S {
 
   @override
   String get labelTextKey => 'Serivisi';
+
+  @override
+  String get loadingProfileMessage => 'Gukoresha amakuru...';
+
+  @override
+  String get errorLoadingProfile => 'Ikosa mu gukoresha amakuru';
+
+  @override
+  String get profileDataNotFound => 'Amakuru ntaho asangwa';
+
+  @override
+  String get profilePageTitle => 'Amakuru yanjye';
+
+  @override
+  String failedToUpdateProfileImage(Object error) {
+    return 'Échec de la mise à jour de l\'image : $error';
+  }
+
+  @override
+  String failedToRemoveProfileImage(Object error) {
+    return 'Échec de la gukuraho l\'image : $error';
+  }
+
+  @override
+  String get anonymousUserName => '____   _____';
+
+  @override
+  String get verifiedAccountLabel => 'Konti yemejwe';
+
+  @override
+  String get personalInformationTitle => 'Amakuru bwite';
+
+  @override
+  String get addressTitle => 'Aho aherereye';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Nimero ya telefone';
+
+  @override
+  String get roleLabel => 'Uruhare';
+
+  @override
+  String get dateOfBirthLabel => 'Itariki y\'amavuko';
+
+  @override
+  String get streetLabel => 'Umuhanda';
+
+  @override
+  String get cityStateLabel => 'Umujyi/Intara';
+
+  @override
+  String get zipCodeLabel => 'Kode y\'iposita';
+
+  @override
+  String get notProvided => 'Ntabwo yatanze';
+
+  @override
+  String get retryButton => 'Ongera ugerageze';
+
+  @override
+  String get settingsTitle => 'Uburyo';
+
+  @override
+  String get profileSettingsSectionTitle => 'Amakuru';
+
+  @override
+  String get appSettingsSectionTitle => 'Uburyo bwa porogaramu';
+
+  @override
+  String get profileSettingsTitle => 'Uburyo bw\'amakuru';
+
+  @override
+  String get profileSettingsSubtitle => 'Vugurura amakuru bwite';
+
+  @override
+  String get changePasswordTitle => 'Hindura ijambo ry\'ibanga';
+
+  @override
+  String get changePasswordSubtitle => 'Genzura uburyo bw\'umutekano';
+
+  @override
+  String get languageTitle => 'Ururimi';
+
+  @override
+  String get languageSubtitle => 'Hindura ururimi rwa porogaramu';
 }

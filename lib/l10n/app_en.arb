@@ -406,10 +406,6 @@
     "@homePageTitle": {
         "description": "Title for the Home page"
     },
-    "welcomeBackTitle": "Welcome Back",
-    "@welcomeBackTitle": {
-        "description": "Title for the welcome back message"
-    },
     "welcomeBackSubtitle": "Manage your fire safety equipment efficiently",
     "@welcomeBackSubtitle": {
         "description": "Subtitle for the welcome back message"
@@ -441,10 +437,6 @@
     "statusTitle": "Status",
     "@statusTitle": {
         "description": "Title for the status section"
-    },
-    "roleLabel": "Role:",
-    "@roleLabel": {
-        "description": "Label for the role section"
     },
     "notificationsTooltip": "Notifications",
     "@notificationsTooltip": {
@@ -534,10 +526,6 @@
     "@errorLoadingServiceRequests": {
         "description": "Error message when service requests fail to load"
     },
-    "retryButton": "Retry",
-    "@retryButton": {
-        "description": "Text for the retry button"
-    },
     "noServiceRequestsFound": "No Service Requests Found",
     "@noServiceRequestsFound": {
         "description": "Message displayed when no service requests are found"
@@ -602,14 +590,6 @@
     "@clientInformationTitle": {
         "description": "Title for the client information section in the details dialog"
     },
-    "emailLabel": "Email",
-    "@emailLabel": {
-        "description": "Label for the 'Email' field in the details dialog"
-    },
-    "phoneLabel": "Phone",
-    "@phoneLabel": {
-        "description": "Label for the 'Phone' field in the details dialog"
-    },
     "technicianInformationTitle": "Technician Information",
     "@technicianInformationTitle": {
         "description": "Title for the technician information section in the details dialog"
@@ -621,24 +601,6 @@
     "closeButton": "Close",
     "@closeButton": {
         "description": "Text for the close button"
-    },
-    "showingRecords": "Showing {startIndex}-{endIndex} of {totalItems}",
-    "@showingRecords": {
-        "description": "Text showing the range of records displayed",
-        "placeholders": {
-            "startIndex": {
-                "type": "int",
-                "example": "1"
-            },
-            "endIndex": {
-                "type": "int",
-                "example": "10"
-            },
-            "totalItems": {
-                "type": "int",
-                "example": "50"
-            }
-        }
     },
     "rowsLabel": "Rows: ",
     "@rowsLabel": {
@@ -817,10 +779,6 @@
     "@searchUsersHint": {
         "description": "Hint text for the users search bar"
     },
-    "loadingMessage": "Loading...",
-    "@loadingMessage": {
-        "description": "Loading message displayed while data is being fetched"
-    },
     "errorLoadingUsers": "Error loading users",
     "@errorLoadingUsers": {
         "description": "Error message when loading users fails"
@@ -833,109 +791,9 @@
     "@noUsersMatchSearch": {
         "description": "Message displayed when no users match the search criteria"
     },
-    "userManagementTitle": "User Management",
-    "@userManagementTitle": {
-        "description": "Title for the User Management screen"
-    },
-    "userListRefreshed": "User list refreshed",
-    "@userListRefreshed": {
-        "description": "Snackbar message when the user list is refreshed"
-    },
-    "searchUsersHint": "Search users...",
-    "@searchUsersHint": {
-        "description": "Hint text for the user search bar"
-    },
-    "noUsersFound": "No users found",
-    "@noUsersFound": {
-        "description": "Message displayed when no users are available"
-    },
-    "noUsersMatchSearch": "No users match your search",
-    "@noUsersMatchSearch": {
-        "description": "Message displayed when a search yields no results"
-    },
-    "errorLoadingUsers": "Failed to load users",
-    "@errorLoadingUsers": {
-        "description": "Header for the error message when loading users fails"
-    },
-    "retryButton": "RETRY",
-    "@retryButton": {
-        "description": "Text for the retry button"
-    },
-    "refreshTooltip": "Refresh Users",
-    "@refreshTooltip": {
-        "description": "Tooltip for the refresh button"
-    },
-    "addUserTooltip": "Add User",
-    "@addUserTooltip": {
-        "description": "Tooltip for the add user button"
-    },
     "loadingMessage": "Loading users...",
     "@loadingMessage": {
         "description": "Message displayed while users are loading"
-    },
-    "adjustSearchOrFilters": "Try adjusting your search or filters.",
-    "@adjustSearchOrFilters": {
-        "description": "Message suggesting to adjust search or filters when no results are found"
-    },
-    "columnEmail": "Email",
-    "@columnEmail": {
-        "description": "Header for the Email column in the user table"
-    },
-    "columnPhone": "Phone",
-    "@columnPhone": {
-        "description": "Header for the Phone column in the user table"
-    },
-    "columnRole": "Role",
-    "@columnRole": {
-        "description": "Header for the Role column in the user table"
-    },
-    "columnStatus": "Status",
-    "@columnStatus": {
-        "description": "Header for the Status column in the user table"
-    },
-    "columnActions": "Actions",
-    "@columnActions": {
-        "description": "Header for the Actions column in the user table"
-    },
-    "emailLabel": "Email",
-    "@emailLabel": {
-        "description": "Label for Email in user details"
-    },
-    "phoneLabel": "Phone",
-    "@phoneLabel": {
-        "description": "Label for Phone in user details"
-    },
-    "roleLabel": "Role",
-    "@roleLabel": {
-        "description": "Label for Role in user details"
-    },
-    "statusLabel": "Status",
-    "@statusLabel": {
-        "description": "Label for Status in user details"
-    },
-    "locationLabel": "Location",
-    "@locationLabel": {
-        "description": "Label for Location in user details"
-    },
-    "notAvailable": "N/A",
-    "@notAvailable": {
-        "description": "Placeholder for unavailable information"
-    },
-    "statusVerified": "Verified",
-    "@statusVerified": {
-        "description": "Status text for a verified user"
-    },
-    "statusUnverified": "Unverified",
-    "@statusUnverified": {
-        "description": "Status text for an unverified user"
-    },
-    "closeButton": "Close",
-    "@closeButton": {
-        "description": "Text for the close button"
-    },
-    "rowsPerPageLabel": "Rows per page:",
-    "@rowsPerPageLabel": {
-        "description": "Label for the number of rows displayed per page"
     },
     "showingRecords": "Showing {startIndex}-{endIndex} of {totalCount}",
     "@showingRecords": {
@@ -945,10 +803,6 @@
             "endIndex": {},
             "totalCount": {}
         }
-    },
-    "viewDetailsTooltip": "View Details",
-    "@viewDetailsTooltip": {
-        "description": "Tooltip for the view details button"
     },
     "requestForServiceTitle": "Request for Service",
     "@requestForServiceTitle": {
@@ -977,10 +831,6 @@
     "selectTechnicianLabel": "Select Technician",
     "@selectTechnicianLabel": {
         "description": "Label for the technician selection dropdown"
-    },
-    "descriptionLabel": "Description",
-    "@descriptionLabel": {
-        "description": "Label for the service request description field"
     },
     "pleaseSelectService": "Please select a service",
     "@pleaseSelectService": {
@@ -1042,5 +892,123 @@
         "description": "The label text for the service",
         "type": "text",
         "placeholders": {}
+    },
+    "loadingProfileMessage": "Loading profile...",
+    "@loadingProfileMessage": {
+        "description": "Message displayed while the profile is loading"
+    },
+    "errorLoadingProfile": "Error Loading Profile",
+    "@errorLoadingProfile": {
+        "description": "Title for the error screen when profile loading fails"
+    },
+    "profileDataNotFound": "Profile data not found",
+    "@profileDataNotFound": {
+        "description": "Error message when profile data is not found"
+    },
+    "profilePageTitle": "Profile",
+    "@profilePageTitle": {
+        "description": "Title for the Profile page"
+    },
+    "failedToUpdateProfileImage": "Failed to update profile image: {error}",
+    "@failedToUpdateProfileImage": {
+        "description": "Error message when updating profile image fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRemoveProfileImage": "Failed to remove profile image: {error}",
+    "@failedToRemoveProfileImage": {
+        "description": "Error message when removing profile image fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "anonymousUserName": "____   _____",
+    "@anonymousUserName": {
+        "description": "Placeholder text for user name when not available"
+    },
+    "verifiedAccountLabel": "Verified Account",
+    "@verifiedAccountLabel": {
+        "description": "Label indicating a user has a verified account"
+    },
+    "personalInformationTitle": "Personal Information",
+    "@personalInformationTitle": {
+        "description": "Title for the Personal Information section"
+    },
+    "addressTitle": "Address",
+    "@addressTitle": {
+        "description": "Title for the Address section"
+    },
+    "emailLabel": "Email",
+    "@emailLabel": {
+        "description": "Label for the Email field"
+    },
+    "phoneLabel": "Phone",
+    "@phoneLabel": {
+        "description": "Label for the Phone field"
+    },
+    "roleLabel": "Role",
+    "@roleLabel": {
+        "description": "Label for the Role field"
+    },
+    "dateOfBirthLabel": "Date of Birth",
+    "@dateOfBirthLabel": {
+        "description": "Label for the Date of Birth field"
+    },
+    "streetLabel": "Street",
+    "@streetLabel": {
+        "description": "Label for the Street field in address"
+    },
+    "cityStateLabel": "City/State",
+    "@cityStateLabel": {
+        "description": "Label for the City/State field in address"
+    },
+    "zipCodeLabel": "ZIP Code",
+    "@zipCodeLabel": {
+        "description": "Label for the ZIP Code field in address"
+    },
+    "notProvided": "Not provided",
+    "@notProvided": {
+        "description": "Placeholder text for information that is not provided"
+    },
+    "retryButton": "Retry",
+    "@retryButton": {
+        "description": "Text for the retry button"
+    },
+    "settingsTitle": "Settings",
+    "@settingsTitle": {
+        "description": "Title for the Settings page"
+    },
+    "profileSettingsSectionTitle": "Profile",
+    "@profileSettingsSectionTitle": {
+        "description": "Section title for profile-related settings"
+    },
+    "appSettingsSectionTitle": "App Settings",
+    "@appSettingsSectionTitle": {
+        "description": "Section title for app-related settings"
+    },
+    "profileSettingsTitle": "Profile Settings",
+    "@profileSettingsTitle": {
+        "description": "Title for the profile settings tile"
+    },
+    "profileSettingsSubtitle": "Update your personal information",
+    "@profileSettingsSubtitle": {
+        "description": "Subtitle for the profile settings tile"
+    },
+    "changePasswordTitle": "Change Password",
+    "@changePasswordTitle": {
+        "description": "Title for the change password settings tile"
+    },
+    "changePasswordSubtitle": "Manage your security settings",
+    "@changePasswordSubtitle": {
+        "description": "Subtitle for the change password settings tile"
+    },
+    "languageTitle": "Language",
+    "@languageTitle": {
+        "description": "Title for the language settings tile"
+    },
+    "languageSubtitle": "Change app language",
+    "@languageSubtitle": {
+        "description": "Subtitle for the language settings tile"
     }
 }

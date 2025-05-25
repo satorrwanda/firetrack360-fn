@@ -817,6 +817,107 @@
         "description": "The label text for the service",
         "type": "text",
         "placeholders": {}
-    
+    },
+    "loadingProfileMessage": "Chargement du profil...",
+    "@loadingProfileMessage": {
+        "description": "Message affiché pendant le chargement du profil"
+    },
+    "errorLoadingProfile": "Erreur lors du chargement du profil",
+    "@errorLoadingProfile": {
+        "description": "Titre pour l'écran d'erreur lorsque le chargement du profil échoue"
+    },
+    "profileDataNotFound": "Données du profil introuvables",
+    "@profileDataNotFound": {
+        "description": "Message d'erreur lorsque les données du profil ne sont pas trouvées"
+    },
+    "profilePageTitle": "Profil",
+    "@profilePageTitle": {
+        "description": "Titre pour la page du Profil"
+    },
+    "failedToUpdateProfileImage": "Échec de la mise à jour de l'image de profil : {error}",
+    "@failedToUpdateProfileImage": {
+        "description": "Message d'erreur lorsque la mise à jour de l'image de profil échoue",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRemoveProfileImage": "Échec de la suppression de l'image de profil : {error}",
+    "@failedToRemoveProfileImage": {
+        "description": "Message d'erreur lorsque la suppression de l'image de profil échoue",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "anonymousUserName": "____   _____",
+    "@anonymousUserName": {
+        "description": "Placeholder text for user name when not available"
+    },
+    "verifiedAccountLabel": "Compte vérifié",
+    "@verifiedAccountLabel": {
+        "description": "Étiquette indiquant qu'un utilisateur a un compte vérifié"
+    },
+    "personalInformationTitle": "Informations personnelles",
+    "@personalInformationTitle": {
+        "description": "Titre pour la section Informations personnelles"
+    },
+    "addressTitle": "Adresse",
+    "@addressTitle": {
+        "description": "Titre pour la section Adresse"
+    },
+    "dateOfBirthLabel": "Date de naissance",
+    "@dateOfBirthLabel": {
+        "description": "Étiquette pour le champ Date de naissance"
+    },
+    "streetLabel": "Rue",
+    "@streetLabel": {
+        "description": "Étiquette pour le champ Rue dans l'adresse"
+    },
+    "cityStateLabel": "Ville/État",
+    "@cityStateLabel": {
+        "description": "Étiquette pour le champ Ville/État dans l'adresse"
+    },
+    "zipCodeLabel": "Code postal",
+    "@zipCodeLabel": {
+        "description": "Étiquette pour le champ Code postal dans l'adresse"
+    },
+    "notProvided": "Non fourni",
+    "@notProvided": {
+        "description": "Placeholder text for information that is not provided"
+    },
+    "settingsTitle": "Paramètres",
+    "@settingsTitle": {
+        "description": "Titre pour la page des Paramètres"
+    },
+    "profileSettingsSectionTitle": "Profil",
+    "@profileSettingsSectionTitle": {
+        "description": "Titre de section pour les paramètres liés au profil"
+    },
+    "appSettingsSectionTitle": "Paramètres de l'application",
+    "@appSettingsSectionTitle": {
+        "description": "Titre de section pour les paramètres liés à l'application"
+    },
+    "profileSettingsTitle": "Paramètres du profil",
+    "@profileSettingsTitle": {
+        "description": "Titre pour la tuile des paramètres de profil"
+    },
+    "profileSettingsSubtitle": "Mettre à jour vos informations personnelles",
+    "@profileSettingsSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de profil"
+    },
+    "changePasswordTitle": "Changer le mot de passe",
+    "@changePasswordTitle": {
+        "description": "Titre pour la tuile des paramètres de changement de mot de passe"
+    },
+    "changePasswordSubtitle": "Gérer vos paramètres de sécurité",
+    "@changePasswordSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de changement de mot de passe"
+    },
+    "languageTitle": "Langue",
+    "@languageTitle": {
+        "description": "Titre pour la tuile des paramètres de langue"
+    },
+    "languageSubtitle": "Changer la langue de l'application",
+    "@languageSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de langue"
     }
 }

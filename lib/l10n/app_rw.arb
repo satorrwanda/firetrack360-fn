@@ -822,5 +822,107 @@
         "description": "The label text for the service",
         "type": "text",
         "placeholders": {}
+    },
+    "loadingProfileMessage": "Gukoresha amakuru...",
+    "@loadingProfileMessage": {
+        "description": "Message affiché pendant le chargement du profil"
+    },
+    "errorLoadingProfile": "Ikosa mu gukoresha amakuru",
+    "@errorLoadingProfile": {
+        "description": "Titre pour l'écran d'erreur lorsque le chargement du profil échoue"
+    },
+    "profileDataNotFound": "Amakuru ntaho asangwa",
+    "@profileDataNotFound": {
+        "description": "Message d'erreur lorsque les données du profil ne sont pas trouvées"
+    },
+    "profilePageTitle": "Amakuru yanjye",
+    "@profilePageTitle": {
+        "description": "Titre pour la page du Profil"
+    },
+    "failedToUpdateProfileImage": "Échec de la mise à jour de l'image : {error}",
+    "@failedToUpdateProfileImage": {
+        "description": "Message d'erreur lorsque la mise à jour de l'image de profil échoue",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRemoveProfileImage": "Échec de la gukuraho l'image : {error}",
+    "@failedToRemoveProfileImage": {
+        "description": "Message d'erreur lorsque la suppression de l'image de profil échoue",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "anonymousUserName": "____   _____",
+    "@anonymousUserName": {
+        "description": "Placeholder text for user name when not available"
+    },
+    "verifiedAccountLabel": "Konti yemejwe",
+    "@verifiedAccountLabel": {
+        "description": "Étiquette indiquant qu'un utilisateur a un compte vérifié"
+    },
+    "personalInformationTitle": "Amakuru bwite",
+    "@personalInformationTitle": {
+        "description": "Titre pour la section Informations personnelles"
+    },
+    "addressTitle": "Aho aherereye",
+    "@addressTitle": {
+        "description": "Titre pour la section Adresse"
+    },
+    "dateOfBirthLabel": "Itariki y'amavuko",
+    "@dateOfBirthLabel": {
+        "description": "Étiquette pour le champ Date de naissance"
+    },
+    "streetLabel": "Umuhanda",
+    "@streetLabel": {
+        "description": "Étiquette pour le champ Rue dans l'adresse"
+    },
+    "cityStateLabel": "Umujyi/Intara",
+    "@cityStateLabel": {
+        "description": "Étiquette pour le champ Ville/État dans l'adresse"
+    },
+    "zipCodeLabel": "Kode y'iposita",
+    "@zipCodeLabel": {
+        "description": "Étiquette pour le champ Code postal dans l'adresse"
+    },
+    "notProvided": "Ntabwo yatanze",
+    "@notProvided": {
+        "description": "Placeholder text for information that is not provided"
+    },
+    "settingsTitle": "Uburyo",
+    "@settingsTitle": {
+        "description": "Titre pour la page des Paramètres"
+    },
+    "profileSettingsSectionTitle": "Amakuru",
+    "@profileSettingsSectionTitle": {
+        "description": "Titre de section pour les paramètres liés au profil"
+    },
+    "appSettingsSectionTitle": "Uburyo bwa porogaramu",
+    "@appSettingsSectionTitle": {
+        "description": "Titre de section pour les paramètres liés à l'application"
+    },
+    "profileSettingsTitle": "Uburyo bw'amakuru",
+    "@profileSettingsTitle": {
+        "description": "Titre pour la tuile des paramètres de profil"
+    },
+    "profileSettingsSubtitle": "Vugurura amakuru bwite",
+    "@profileSettingsSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de profil"
+    },
+    "changePasswordTitle": "Hindura ijambo ry'ibanga",
+    "@changePasswordTitle": {
+        "description": "Titre pour la tuile des paramètres de changement de mot de passe"
+    },
+    "changePasswordSubtitle": "Genzura uburyo bw'umutekano",
+    "@changePasswordSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de changement de mot de passe"
+    },
+    "languageTitle": "Ururimi",
+    "@languageTitle": {
+        "description": "Titre pour la tuile des paramètres de langue"
+    },
+    "languageSubtitle": "Hindura ururimi rwa porogaramu",
+    "@languageSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de langue"
     }
 }

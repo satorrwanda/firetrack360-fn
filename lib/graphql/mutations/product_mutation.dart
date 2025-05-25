@@ -18,11 +18,7 @@ const String createProductMutation = r'''
 // Mutation to delete an existing product
 const String deleteProductMutation = r'''
   mutation DeleteProduct($productId: ID!) {
-    deleteProduct(id: $productId) {
-      id
-      success
-      message
-    }
+    deleteProduct(id: $productId) 
   }
 ''';
 
