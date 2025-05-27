@@ -1,6 +1,4 @@
-import 'package:firetrack360/routes/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/ui/pages/home/widgets/create_service_request_modal.dart'
     as home_widgets;
@@ -11,6 +9,7 @@ import 'package:firetrack360/generated/l10n.dart';
 
 final currentPageProvider = StateProvider<int>((ref) => 0);
 final pageSizeProvider = StateProvider<int>((ref) => 10);
+final searchQueryProvider = StateProvider<String>((ref) => '');
 
 class ServiceRequestsScreen extends HookConsumerWidget {
   const ServiceRequestsScreen({super.key});
@@ -26,7 +25,6 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     final isSmallScreen = screenWidth < 600;
     final l10n = S.of(context)!;
 
-    // Determine colors based on theme brightness, using deepPurple prominent
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final appBarColor =
         isDarkMode ? Colors.deepPurple.shade900 : Colors.deepPurple;
@@ -39,13 +37,12 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     final textColor = isDarkMode ? Colors.white : Colors.black87;
     final secondaryTextColor =
         isDarkMode ? Colors.white70 : Colors.grey.shade600;
-    final primaryColor = Theme.of(context).primaryColor; // Theme primary color
+    final primaryColor = Theme.of(context).primaryColor;
     final onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
 
     return Scaffold(
-      backgroundColor: Colors.transparent, // Make Scaffold background transparent
+      backgroundColor: Colors.transparent,
       body: Container(
-        // Add Container for the gradient background
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -58,7 +55,6 @@ class ServiceRequestsScreen extends HookConsumerWidget {
         ),
         child: Column(
           children: [
-            // Header
             Container(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top + 8,
@@ -67,7 +63,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 bottom: 16,
               ),
               decoration: BoxDecoration(
-                color: appBarColor, // Use deepPurple shade for header
+                color: appBarColor,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16),
@@ -114,8 +110,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                           onPressed: () {
                             showDialog(
                               context: context,
-                              builder: (context) =>
-                                  const home_widgets.CreateServiceRequestModal(),
+                              builder: (context) => const home_widgets
+                                  .CreateServiceRequestModal(),
                             ).then((_) {
                               ref
                                   .read(serviceRequestNotifierProvider.notifier)
@@ -127,10 +123,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  // Search Bar
                   Container(
                     decoration: BoxDecoration(
-                      color: cardBackgroundColor, // Use card background color
+                      color: cardBackgroundColor,
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
@@ -144,12 +139,11 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                       ],
                     ),
                     child: TextField(
-                      style: TextStyle(color: textColor), // Use text color
+                      style: TextStyle(color: textColor),
                       decoration: InputDecoration(
                         hintText: l10n.searchServiceRequestsHint,
-                        hintStyle: TextStyle(color: secondaryTextColor), // Use secondary text color
-                        prefixIcon: Icon(Icons.search,
-                            color: textColor), // Use text color for icon
+                        hintStyle: TextStyle(color: secondaryTextColor),
+                        prefixIcon: Icon(Icons.search, color: textColor),
                         border: InputBorder.none,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -165,12 +159,10 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-
-            // Content
             Expanded(
               child: serviceRequestsAsync.when(
                 loading: () => Center(
-                  child: CircularProgressIndicator(color: primaryColor),
+                  child: CircularProgressIndicator(color: Colors.white),
                 ),
                 error: (error, stack) => Center(
                   child: Padding(
@@ -186,14 +178,14 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                         const SizedBox(height: 16),
                         Text(
                           l10n.errorLoadingServiceRequests,
-                          style: TextStyle(color: textColor), // Use text color
+                          style: TextStyle(color: textColor),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           error.toString(),
                           style: TextStyle(
-                              color: secondaryTextColor, fontSize: 12), // Use secondary text color
+                              color: secondaryTextColor, fontSize: 12),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),
@@ -227,18 +219,18 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                           Icon(
                             Icons.assignment_outlined,
                             size: 64,
-                            color: secondaryTextColor, // Use secondary text color
+                            color: secondaryTextColor,
                           ),
                           const SizedBox(height: 16),
                           Text(
                             l10n.noServiceRequestsFound,
-                            style: TextStyle(color: textColor), // Use text color
+                            style: TextStyle(color: textColor),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             l10n.adjustSearchOrFilters,
                             style: TextStyle(
-                                color: secondaryTextColor, fontSize: 12), // Use secondary text color
+                                color: secondaryTextColor, fontSize: 12),
                           ),
                         ],
                       ),
@@ -252,6 +244,13 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                       : startIndex + pageSize;
                   final pageItems = requests.sublist(startIndex, endIndex);
 
+                  // Show loader instead of the table if data is loading
+                  if (serviceRequestsAsync.isLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(color: primaryColor),
+                    );
+                  }
+
                   return Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
@@ -261,11 +260,12 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                             scrollDirection: Axis.horizontal,
                             child: ConstrainedBox(
                               constraints: BoxConstraints(
-                                minWidth: MediaQuery.of(context).size.width - 32,
+                                minWidth:
+                                    MediaQuery.of(context).size.width - 32,
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: cardBackgroundColor, // Use card background color
+                                  color: cardBackgroundColor,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
@@ -327,19 +327,23 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                   maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               DataCell(
                                                 Container(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      horizontal: 8, vertical: 4),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 4),
                                                   decoration: BoxDecoration(
                                                     color: _getStatusColor(
                                                             request.status)
                                                         .withOpacity(0.1),
                                                     borderRadius:
-                                                        BorderRadius.circular(12),
+                                                        BorderRadius.circular(
+                                                            12),
                                                   ),
                                                   child: Text(
                                                     _localizeStatus(
@@ -348,7 +352,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                       color: _getStatusColor(
                                                           request.status),
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                     textAlign: TextAlign.center,
                                                   ),
@@ -358,21 +363,27 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                 Text(
                                                   request.technician?.phone ??
                                                       l10n.noTechnicianAssigned,
-                                                  style: TextStyle(color: secondaryTextColor),
+                                                  style: TextStyle(
+                                                      color:
+                                                          secondaryTextColor),
                                                   maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               DataCell(
                                                 Text(
                                                   DateFormat('MMM dd').format(
                                                       request.requestDate),
-                                                  style: TextStyle(color: secondaryTextColor),
+                                                  style: TextStyle(
+                                                      color:
+                                                          secondaryTextColor),
                                                 ),
                                               ),
                                               DataCell(
                                                 Row(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     IconButton(
                                                       icon: Icon(
@@ -382,9 +393,12 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                           color: primaryColor),
                                                       onPressed: () {
                                                         _showServiceRequestDetailsDialog(
-                                                            context, request, l10n);
+                                                            context,
+                                                            request,
+                                                            l10n);
                                                       },
-                                                      tooltip: l10n.viewDetailsTooltip,
+                                                      tooltip: l10n
+                                                          .viewDetailsTooltip,
                                                     ),
                                                   ],
                                                 ),
@@ -400,7 +414,6 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // Pagination Controls - Responsive Layout
                         if (isSmallScreen)
                           _buildSmallScreenPagination(
                             context,
@@ -449,6 +462,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     final onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
     final dividerColor = Theme.of(context).dividerColor;
 
+    // The main list is already loaded to show the dialog,
+    // so individual details within the dialog are not in a separate loading state based on the main list.
+    // If you were fetching individual details in the dialog, you'd use a separate provider and its isLoading state here.
 
     showDialog(
       context: context,
@@ -461,7 +477,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           child: Container(
             padding: const EdgeInsets.all(24),
             constraints: const BoxConstraints(maxWidth: 500),
-            color: cardBackgroundColor, // Use card background color
+            color: cardBackgroundColor,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -489,74 +505,100 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: textColor, // Use text color
+                              color: textColor,
                             ),
                           ),
                         ],
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.close, color: textColor.withOpacity(0.7)), // Use text color with opacity
+                      icon:
+                          Icon(Icons.close, color: textColor.withOpacity(0.7)),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
-
                 _buildInfoSection(
-                  l10n.requestInformationTitle,
-                  [
-                    _buildInfoRow(l10n.titleLabel, request.title, context, textColor, secondaryTextColor, dividerColor),
-                    _buildInfoRow(
-                        l10n.statusLabel,
-                        _localizeStatus(request.status, l10n),
-                        context, textColor, secondaryTextColor, dividerColor),
-                    _buildInfoRow(
-                        l10n.dateLabel,
-                        DateFormat('MMM dd, yyyy').format(request.requestDate),
-                        context, textColor, secondaryTextColor, dividerColor),
-                    _buildInfoRow(l10n.descriptionLabel, request.description,
-                        context, textColor, secondaryTextColor, dividerColor),
-                  ],
-                  context, textColor, primaryColor, dividerColor, isDarkMode
-                ),
-
+                    l10n.requestInformationTitle,
+                    [
+                      // Removed isLoading check and loader simulation
+                      _buildInfoRow(l10n.titleLabel, request.title, context,
+                          textColor, secondaryTextColor, dividerColor),
+                      _buildInfoRow(
+                          l10n.statusLabel,
+                          _localizeStatus(request.status, l10n),
+                          context,
+                          textColor,
+                          secondaryTextColor,
+                          dividerColor),
+                      _buildInfoRow(
+                          l10n.dateLabel,
+                          DateFormat('MMM dd, yyyy')
+                              .format(request.requestDate),
+                          context,
+                          textColor,
+                          secondaryTextColor,
+                          dividerColor),
+                      _buildInfoRow(l10n.descriptionLabel, request.description,
+                          context, textColor, secondaryTextColor, dividerColor),
+                    ],
+                    context,
+                    textColor,
+                    primaryColor,
+                    dividerColor,
+                    isDarkMode),
                 const SizedBox(height: 16),
-
                 _buildInfoSection(
-                  l10n.clientInformationTitle,
-                  [
-                    _buildInfoRow(
-                        l10n.emailLabel,
-                        request.client?.email ?? l10n.notAvailable,
-                        context, textColor, secondaryTextColor, dividerColor),
-                    _buildInfoRow(
-                        l10n.phoneLabel,
-                        request.client?.phone ?? l10n.notAvailable,
-                        context, textColor, secondaryTextColor, dividerColor),
-                  ],
-                  context, textColor, primaryColor, dividerColor, isDarkMode
-                ),
-
+                    l10n.clientInformationTitle,
+                    [
+                      // Removed isLoading check and loader simulation
+                      _buildInfoRow(
+                          l10n.emailLabel,
+                          request.client?.email ?? l10n.notAvailable,
+                          context,
+                          textColor,
+                          secondaryTextColor,
+                          dividerColor),
+                      _buildInfoRow(
+                          l10n.phoneLabel,
+                          request.client?.phone ?? l10n.notAvailable,
+                          context,
+                          textColor,
+                          secondaryTextColor,
+                          dividerColor),
+                    ],
+                    context,
+                    textColor,
+                    primaryColor,
+                    dividerColor,
+                    isDarkMode),
                 const SizedBox(height: 16),
-
                 _buildInfoSection(
-                  l10n.technicianInformationTitle,
-                  [
-                    _buildInfoRow(
-                        l10n.emailLabel,
-                        request.technician?.email ?? l10n.notAvailable,
-                        context, textColor, secondaryTextColor, dividerColor),
-                    _buildInfoRow(
-                        l10n.phoneLabel,
-                        request.technician?.phone ?? l10n.notAvailable,
-                        context, textColor, secondaryTextColor, dividerColor),
-                  ],
-                  context, textColor, primaryColor, dividerColor, isDarkMode
-                ),
-
+                    l10n.technicianInformationTitle,
+                    [
+                      // Removed isLoading check and loader simulation
+                      _buildInfoRow(
+                          l10n.emailLabel,
+                          request.technician?.email ?? l10n.notAvailable,
+                          context,
+                          textColor,
+                          secondaryTextColor,
+                          dividerColor),
+                      _buildInfoRow(
+                          l10n.phoneLabel,
+                          request.technician?.phone ?? l10n.notAvailable,
+                          context,
+                          textColor,
+                          secondaryTextColor,
+                          dividerColor),
+                    ],
+                    context,
+                    textColor,
+                    primaryColor,
+                    dividerColor,
+                    isDarkMode),
                 const SizedBox(height: 24),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -585,12 +627,19 @@ class ServiceRequestsScreen extends HookConsumerWidget {
   }
 
   Widget _buildInfoSection(
-      String title, List<Widget> rows, BuildContext context, Color textColor, Color primaryColor, Color dividerColor, bool isDarkMode) {
+      String title,
+      List<Widget> rows,
+      BuildContext context,
+      Color textColor,
+      Color primaryColor,
+      Color dividerColor,
+      bool isDarkMode) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDarkMode ? Colors.white.withOpacity(0.05) : Colors.grey.shade200, // Theme-aware background
+        color:
+            isDarkMode ? Colors.white.withOpacity(0.05) : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: dividerColor),
       ),
@@ -600,9 +649,9 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 16, // Adjusted font size slightly for sections
+              fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: primaryColor, // Use primary color for section title
+              color: primaryColor,
             ),
           ),
           const SizedBox(height: 12),
@@ -612,7 +661,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, BuildContext context, Color textColor, Color secondaryTextColor, Color dividerColor) {
+  Widget _buildInfoRow(String label, String value, BuildContext context,
+      Color textColor, Color secondaryTextColor, Color dividerColor) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -624,7 +674,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
               label,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: secondaryTextColor, // Use secondary text color for labels
+                color: secondaryTextColor,
               ),
             ),
           ),
@@ -632,7 +682,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           Expanded(
             child: Text(
               value,
-              style: TextStyle(color: textColor), // Use text color for values
+              style: TextStyle(color: textColor),
             ),
           ),
         ],
@@ -652,11 +702,11 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     S l10n,
   ) {
     final textColor = Theme.of(context).textTheme.bodyMedium?.color;
-    final secondaryTextColor = Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7);
+    final secondaryTextColor =
+        Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7);
     final primaryColor = Theme.of(context).primaryColor;
     final disabledColor = Theme.of(context).disabledColor;
     final cardColor = Theme.of(context).cardColor;
-
 
     return Column(
       children: [
@@ -664,7 +714,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              l10n.showingRecords(startIndex + 1, endIndex, totalItems, pageSize),
+              l10n.showingRecords(
+                  startIndex + 1, endIndex, totalItems, pageSize),
               style: TextStyle(color: secondaryTextColor),
             ),
             Row(
@@ -680,7 +731,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                   items: [5, 10, 15, 20].map((size) {
                     return DropdownMenuItem<int>(
                       value: size,
-                      child: Text('$size', style: TextStyle(color: textColor)), // Use text color
+                      child: Text('$size', style: TextStyle(color: textColor)),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -727,8 +778,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
               constraints: const BoxConstraints(),
               visualDensity: VisualDensity.compact,
             ),
-            const SizedBox(height: 8), // Adjusted spacing
-             Container(
+            const SizedBox(height: 8),
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: primaryColor,
@@ -737,7 +788,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
               child: Text(
                 '${currentPage + 1}',
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary, // Color on primary
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -794,7 +845,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
     S l10n,
   ) {
     final textColor = Theme.of(context).textTheme.bodyMedium?.color;
-    final secondaryTextColor = Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7);
+    final secondaryTextColor =
+        Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7);
     final primaryColor = Theme.of(context).primaryColor;
     final disabledColor = Theme.of(context).disabledColor;
     final cardColor = Theme.of(context).cardColor;
@@ -859,12 +911,13 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ? () {
                         ref.read(currentPageProvider.notifier).state =
                             currentPage - 1;
-                    }
-                  : null,
+                      }
+                    : null,
                 visualDensity: VisualDensity.compact,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: primaryColor,
                   borderRadius: BorderRadius.circular(4),
@@ -886,8 +939,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ? () {
                         ref.read(currentPageProvider.notifier).state =
                             currentPage + 1;
-                    }
-                  : null,
+                      }
+                    : null,
                 visualDensity: VisualDensity.compact,
               ),
               IconButton(
@@ -899,8 +952,8 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ? () {
                         ref.read(currentPageProvider.notifier).state =
                             totalPages - 1;
-                    }
-                  : null,
+                      }
+                    : null,
                 visualDensity: VisualDensity.compact,
               ),
             ],
@@ -909,7 +962,6 @@ class ServiceRequestsScreen extends HookConsumerWidget {
       ],
     );
   }
-
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {

@@ -1554,6 +1554,270 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Change app language'**
   String get languageSubtitle;
+
+  /// Title for the notifications page while loading user data
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications (Loading User...)'**
+  String get notifications_loadingUser;
+
+  /// Title for the notifications page when there is an error
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications (Error)'**
+  String get notifications_error;
+
+  /// Title for the notifications page
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications_title;
+
+  /// Tooltip for showing all notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Show All'**
+  String get tooltip_showAll;
+
+  /// Tooltip for showing only unread notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Show Unread Only'**
+  String get tooltip_showUnread;
+
+  /// Menu option to mark all notifications as read
+  ///
+  /// In en, this message translates to:
+  /// **'Mark All as Read'**
+  String get menu_markAllAsRead;
+
+  /// Menu option to refresh notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get menu_refresh;
+
+  /// Message displayed while user data is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading user data...'**
+  String get loading_userData;
+
+  /// Message displayed while notifications are loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading notifications...'**
+  String get loading_notifications;
+
+  /// Title for the empty state when there are no unread notifications
+  ///
+  /// In en, this message translates to:
+  /// **'No unread notifications'**
+  String get emptyState_unreadTitle;
+
+  /// Title for the empty state when there are no notifications
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get emptyState_allTitle;
+
+  /// Subtitle for the empty state when there are no unread notifications
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up! 🎉'**
+  String get emptyState_unreadSubtitle;
+
+  /// Subtitle for the empty state when there are no notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications will appear here when you receive them'**
+  String get emptyState_allSubtitle;
+
+  /// Title for the error state when notifications fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load notifications'**
+  String get errorState_title;
+
+  /// Text for the retry button in the error state
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get errorState_retry;
+
+  /// Text for the delete action when swiping a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete_swipeAction;
+
+  /// Label for high priority notifications
+  ///
+  /// In en, this message translates to:
+  /// **'High Priority'**
+  String get highPriority_label;
+
+  /// Time difference less than a minute
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get date_justNow;
+
+  /// Time difference in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String date_minutesAgo(int minutes);
+
+  /// Time difference in hours (less than a day)
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String date_hoursAgo(int hours);
+
+  /// Time difference in days (less than a week)
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String date_daysAgo(int days);
+
+  /// Title for the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Notification'**
+  String get deleteConfirmation_title;
+
+  /// Confirmation message for deleting a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{title}\"?'**
+  String deleteConfirmation_content(String title);
+
+  /// Text for the cancel button in the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get button_cancel;
+
+  /// Text for the delete button in the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get button_delete;
+
+  /// Text for the undo button in the snackbar after deleting a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get button_undo;
+
+  /// Snackbar message after deleting a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted \"{title}\"'**
+  String snackbar_notificationDeleted(String title);
+
+  /// Snackbar message after marking all notifications as read
+  ///
+  /// In en, this message translates to:
+  /// **'All notifications marked as read'**
+  String get snackbar_markedAllAsRead;
+
+  /// Title of the dialog to add a new technician
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Technician'**
+  String get addTechnician_dialogTitle;
+
+  /// Label for the first name input field
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get textField_firstName;
+
+  /// Label for the last name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get textField_lastName;
+
+  /// Label for the email input field
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get textField_email;
+
+  /// Label for the phone input field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get textField_phone;
+
+  /// Validation message for required first name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a first name'**
+  String get validation_firstNameRequired;
+
+  /// Validation message for required last name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a last name'**
+  String get validation_lastNameRequired;
+
+  /// Validation message for required email
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an email'**
+  String get validation_emailRequired;
+
+  /// Validation message for invalid email format
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get validation_emailValid;
+
+  /// Validation message for required phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a phone number'**
+  String get validation_phoneRequired;
+
+  /// Text for the create button
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get button_create;
+
+  /// Text for the create button while the request is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Creating...'**
+  String get button_creating;
+
+  /// Error message when a request times out
+  ///
+  /// In en, this message translates to:
+  /// **'Request timed out'**
+  String get error_requestTimedOut;
+
+  /// Prefix used for general error messages
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error_prefix;
+
+  /// Snackbar message on successful technician creation
+  ///
+  /// In en, this message translates to:
+  /// **'Technician created successfully'**
+  String get snackbar_technicianCreatedSuccess;
+
+  /// Snackbar message on failed technician creation (generic)
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create technician'**
+  String get snackbar_technicianCreatedError;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

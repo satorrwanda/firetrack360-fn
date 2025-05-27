@@ -771,4 +771,146 @@ class SFr extends S {
 
   @override
   String get languageSubtitle => 'Changer la langue de l\'application';
+
+  @override
+  String get notifications_loadingUser => 'Notifications (Chargement utilisateur...)';
+
+  @override
+  String get notifications_error => 'Notifications (Erreur)';
+
+  @override
+  String get notifications_title => 'Notifications';
+
+  @override
+  String get tooltip_showAll => 'Tout afficher';
+
+  @override
+  String get tooltip_showUnread => 'Afficher uniquement non lus';
+
+  @override
+  String get menu_markAllAsRead => 'Tout marquer comme lu';
+
+  @override
+  String get menu_refresh => 'Rafraîchir';
+
+  @override
+  String get loading_userData => 'Chargement des données utilisateur...';
+
+  @override
+  String get loading_notifications => 'Chargement des notifications...';
+
+  @override
+  String get emptyState_unreadTitle => 'Aucune notification non lue';
+
+  @override
+  String get emptyState_allTitle => 'Aucune notification pour le moment';
+
+  @override
+  String get emptyState_unreadSubtitle => 'Tout est à jour ! 🎉';
+
+  @override
+  String get emptyState_allSubtitle => 'Les notifications apparaîtront ici lorsque vous en recevrez';
+
+  @override
+  String get errorState_title => 'Échec du chargement des notifications';
+
+  @override
+  String get errorState_retry => 'Réessayer';
+
+  @override
+  String get delete_swipeAction => 'Supprimer';
+
+  @override
+  String get highPriority_label => 'Haute priorité';
+
+  @override
+  String get date_justNow => 'À l\'instant';
+
+  @override
+  String date_minutesAgo(int minutes) {
+    return 'il y a $minutes min';
+  }
+
+  @override
+  String date_hoursAgo(int hours) {
+    return 'il y a $hours h';
+  }
+
+  @override
+  String date_daysAgo(int days) {
+    return 'il y a $days j';
+  }
+
+  @override
+  String get deleteConfirmation_title => 'Supprimer la notification';
+
+  @override
+  String deleteConfirmation_content(String title) {
+    return 'Êtes-vous sûr de vouloir supprimer \"$title\" ?';
+  }
+
+  @override
+  String get button_cancel => 'Annuler';
+
+  @override
+  String get button_delete => 'Supprimer';
+
+  @override
+  String get button_undo => 'Annuler';
+
+  @override
+  String snackbar_notificationDeleted(String title) {
+    return 'Supprimé \"$title\"';
+  }
+
+  @override
+  String get snackbar_markedAllAsRead => 'Toutes les notifications marquées comme lues';
+
+  @override
+  String get addTechnician_dialogTitle => 'Ajouter un nouveau technicien';
+
+  @override
+  String get textField_firstName => 'Prénom';
+
+  @override
+  String get textField_lastName => 'Nom';
+
+  @override
+  String get textField_email => 'Email';
+
+  @override
+  String get textField_phone => 'Téléphone';
+
+  @override
+  String get validation_firstNameRequired => 'Veuillez entrer un prénom';
+
+  @override
+  String get validation_lastNameRequired => 'Veuillez entrer un nom';
+
+  @override
+  String get validation_emailRequired => 'Veuillez entrer un email';
+
+  @override
+  String get validation_emailValid => 'Veuillez entrer un email valide';
+
+  @override
+  String get validation_phoneRequired => 'Veuillez entrer un numéro de téléphone';
+
+  @override
+  String get button_create => 'Créer';
+
+  @override
+  String get button_creating => 'Création...';
+
+  @override
+  String get error_requestTimedOut => 'Délai de requête dépassé';
+
+  @override
+  String get error_prefix => 'Erreur';
+
+  @override
+  String get snackbar_technicianCreatedSuccess => 'Technicien créé avec succès';
+
+  @override
+  String get snackbar_technicianCreatedError => 'Échec de la création du technicien';
 }

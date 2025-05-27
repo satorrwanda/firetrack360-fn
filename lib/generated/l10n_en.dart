@@ -771,4 +771,146 @@ class SEn extends S {
 
   @override
   String get languageSubtitle => 'Change app language';
+
+  @override
+  String get notifications_loadingUser => 'Notifications (Loading User...)';
+
+  @override
+  String get notifications_error => 'Notifications (Error)';
+
+  @override
+  String get notifications_title => 'Notifications';
+
+  @override
+  String get tooltip_showAll => 'Show All';
+
+  @override
+  String get tooltip_showUnread => 'Show Unread Only';
+
+  @override
+  String get menu_markAllAsRead => 'Mark All as Read';
+
+  @override
+  String get menu_refresh => 'Refresh';
+
+  @override
+  String get loading_userData => 'Loading user data...';
+
+  @override
+  String get loading_notifications => 'Loading notifications...';
+
+  @override
+  String get emptyState_unreadTitle => 'No unread notifications';
+
+  @override
+  String get emptyState_allTitle => 'No notifications yet';
+
+  @override
+  String get emptyState_unreadSubtitle => 'All caught up! 🎉';
+
+  @override
+  String get emptyState_allSubtitle => 'Notifications will appear here when you receive them';
+
+  @override
+  String get errorState_title => 'Failed to load notifications';
+
+  @override
+  String get errorState_retry => 'Try Again';
+
+  @override
+  String get delete_swipeAction => 'Delete';
+
+  @override
+  String get highPriority_label => 'High Priority';
+
+  @override
+  String get date_justNow => 'Just now';
+
+  @override
+  String date_minutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String date_hoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String date_daysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get deleteConfirmation_title => 'Delete Notification';
+
+  @override
+  String deleteConfirmation_content(String title) {
+    return 'Are you sure you want to delete \"$title\"?';
+  }
+
+  @override
+  String get button_cancel => 'Cancel';
+
+  @override
+  String get button_delete => 'Delete';
+
+  @override
+  String get button_undo => 'Undo';
+
+  @override
+  String snackbar_notificationDeleted(String title) {
+    return 'Deleted \"$title\"';
+  }
+
+  @override
+  String get snackbar_markedAllAsRead => 'All notifications marked as read';
+
+  @override
+  String get addTechnician_dialogTitle => 'Add New Technician';
+
+  @override
+  String get textField_firstName => 'First Name';
+
+  @override
+  String get textField_lastName => 'Last Name';
+
+  @override
+  String get textField_email => 'Email';
+
+  @override
+  String get textField_phone => 'Phone';
+
+  @override
+  String get validation_firstNameRequired => 'Please enter a first name';
+
+  @override
+  String get validation_lastNameRequired => 'Please enter a last name';
+
+  @override
+  String get validation_emailRequired => 'Please enter an email';
+
+  @override
+  String get validation_emailValid => 'Please enter a valid email';
+
+  @override
+  String get validation_phoneRequired => 'Please enter a phone number';
+
+  @override
+  String get button_create => 'Create';
+
+  @override
+  String get button_creating => 'Creating...';
+
+  @override
+  String get error_requestTimedOut => 'Request timed out';
+
+  @override
+  String get error_prefix => 'Error';
+
+  @override
+  String get snackbar_technicianCreatedSuccess => 'Technician created successfully';
+
+  @override
+  String get snackbar_technicianCreatedError => 'Failed to create technician';
 }

@@ -5,14 +5,15 @@ import 'package:firetrack360/routes/auth_gateway.dart';
 import 'package:intl/intl.dart';
 import 'package:firetrack360/providers/notification_provider.dart';
 import 'package:firetrack360/models/notification.dart' as AppNotification;
+import 'package:firetrack360/generated/l10n.dart';
 
 class NotificationPage extends ConsumerWidget {
-  // Use ConsumerWidget
   NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Use a FutureProvider to get the userId asynchronously
+    final l10n = S.of(context)!;
+
     final userIdAsyncValue = ref.watch(userIdProvider);
 
     return AuthGateway(
@@ -23,25 +24,21 @@ class NotificationPage extends ConsumerWidget {
             onPressed: () => Navigator.pop(context),
           ),
           title: userIdAsyncValue.when(
-            loading: () => const Text('Notifications (Loading User...)'),
-            error: (err, stack) => const Text('Notifications (Error)'),
+            loading: () => Text(l10n.notifications_loadingUser),
+            error: (err, stack) => Text(l10n.notifications_error),
             data: (userId) {
-              // Watch the unread count only when userId is available
-              final unreadCount = ref.watch(unreadCountProvider(
-                  userId!)); // Use userId! assuming it's non-null here
+              final unreadCount = ref.watch(unreadCountProvider(userId!));
 
               return Row(
                 children: [
-                  const Text('Notifications'),
+                  Text(l10n.notifications_title),
                   const SizedBox(width: 8),
                   unreadCount.when(
                     loading: () => const SizedBox(
                       width: 16,
                       height: 16,
                       child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors
-                              .white), // Use white color for visibility on AppBar
+                          strokeWidth: 2, color: Colors.white),
                     ),
                     error: (_, __) => const SizedBox(),
                     data: (count) => count > 0
@@ -60,12 +57,12 @@ class NotificationPage extends ConsumerWidget {
           foregroundColor: Colors.white,
           elevation: 0,
           actions: userIdAsyncValue.when(
-            loading: () => [], // No actions while loading user ID
-            error: (err, stack) => [], // No actions on error
+            loading: () => [],
+            error: (err, stack) => [],
             data: (userId) {
               final filterUnread = ref.watch(notificationFilterProvider);
-              final notifier = ref.read(notificationNotifierProvider(userId!)
-                  .notifier); // Use userId!
+              final notifier =
+                  ref.read(notificationNotifierProvider(userId!).notifier);
 
               return [
                 IconButton(
@@ -75,28 +72,30 @@ class NotificationPage extends ConsumerWidget {
                     ref.read(notificationFilterProvider.notifier).state =
                         !filterUnread;
                   },
-                  tooltip: filterUnread ? 'Show All' : 'Show Unread Only',
+                  tooltip: filterUnread
+                      ? l10n.tooltip_showAll
+                      : l10n.tooltip_showUnread,
                 ),
                 PopupMenuButton(
                   icon: const Icon(Icons.more_vert),
                   itemBuilder: (context) => [
                     PopupMenuItem(
                       onTap: () => _markAllAsRead(context, notifier),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Icon(Icons.mark_email_read),
-                          SizedBox(width: 8),
-                          Text('Mark All as Read'),
+                          const Icon(Icons.mark_email_read),
+                          const SizedBox(width: 8),
+                          Text(l10n.menu_markAllAsRead),
                         ],
                       ),
                     ),
                     PopupMenuItem(
                       onTap: () => _refreshNotifications(notifier),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Icon(Icons.refresh),
-                          SizedBox(width: 8),
-                          Text('Refresh'),
+                          const Icon(Icons.refresh),
+                          const SizedBox(width: 8),
+                          Text(l10n.menu_refresh),
                         ],
                       ),
                     ),
@@ -118,41 +117,39 @@ class NotificationPage extends ConsumerWidget {
             ),
           ),
           child: userIdAsyncValue.when(
-            loading: () => const Center(
+            loading: () => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Loading user data...'),
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(l10n.loading_userData),
                 ],
               ),
             ),
-            error: (err, stack) => _buildErrorState(
-                context, null, err), // Pass null notifier for initial error
+            error: (err, stack) => _buildErrorState(context, null, err),
             data: (userId) {
-              // Watch the filtered notifications only when userId is available
-              final notifications = ref
-                  .watch(filteredNotificationsProvider(userId!)); // Use userId!
+              final notifications =
+                  ref.watch(filteredNotificationsProvider(userId!));
               final filterUnread = ref.watch(notificationFilterProvider);
-              final notifier = ref.read(notificationNotifierProvider(userId!)
-                  .notifier); // Use userId!
+              final notifier =
+                  ref.read(notificationNotifierProvider(userId!).notifier);
 
               return notifications.when(
-                loading: () => const Center(
+                loading: () => Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 16),
-                      Text('Loading notifications...'),
+                      const CircularProgressIndicator(),
+                      const SizedBox(height: 16),
+                      Text(l10n.loading_notifications),
                     ],
                   ),
                 ),
                 error: (err, stack) => _buildErrorState(context, notifier, err),
                 data: (notificationList) {
                   if (notificationList.isEmpty) {
-                    return _buildEmptyState(filterUnread);
+                    return _buildEmptyState(context, filterUnread);
                   }
 
                   return RefreshIndicator(
@@ -182,11 +179,12 @@ class NotificationPage extends ConsumerWidget {
     );
   }
 
-  // Helper function to create a FutureProvider for the userId
   final userIdProvider =
       FutureProvider<String?>((ref) => AuthService.getUserId());
 
-  Widget _buildEmptyState(bool filterUnread) {
+  Widget _buildEmptyState(BuildContext context, bool filterUnread) {
+    final l10n = S.of(context)!;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -198,7 +196,9 @@ class NotificationPage extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            filterUnread ? 'No unread notifications' : 'No notifications yet',
+            filterUnread
+                ? l10n.emptyState_unreadTitle
+                : l10n.emptyState_allTitle,
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[600],
@@ -208,8 +208,8 @@ class NotificationPage extends ConsumerWidget {
           const SizedBox(height: 8),
           Text(
             filterUnread
-                ? 'All caught up! 🎉'
-                : 'Notifications will appear here when you receive them',
+                ? l10n.emptyState_unreadSubtitle
+                : l10n.emptyState_allSubtitle,
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey[500],
@@ -223,7 +223,8 @@ class NotificationPage extends ConsumerWidget {
 
   Widget _buildErrorState(
       BuildContext context, NotificationNotifier? notifier, Object error) {
-    // Made notifier nullable
+    final l10n = S.of(context)!;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -237,7 +238,7 @@ class NotificationPage extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Failed to load notifications',
+              l10n.errorState_title,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -254,12 +255,11 @@ class NotificationPage extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            if (notifier !=
-                null) // Only show refresh button if notifier is available
+            if (notifier != null)
               ElevatedButton.icon(
                 onPressed: () => notifier.loadNotifications(),
                 icon: const Icon(Icons.refresh),
-                label: const Text('Try Again'),
+                label: Text(l10n.errorState_retry),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
                   foregroundColor: Colors.white,
@@ -277,6 +277,8 @@ class NotificationPage extends ConsumerWidget {
     NotificationNotifier notifier,
     WidgetRef ref,
   ) {
+    final l10n = S.of(context)!;
+
     return Dismissible(
       key: Key(notification.id),
       background: Container(
@@ -286,14 +288,14 @@ class NotificationPage extends ConsumerWidget {
         ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.delete, color: Colors.white, size: 24),
-            SizedBox(height: 4),
+            const Icon(Icons.delete, color: Colors.white, size: 24),
+            const SizedBox(height: 4),
             Text(
-              'Delete',
-              style: TextStyle(
+              l10n.delete_swipeAction,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -404,7 +406,7 @@ class NotificationPage extends ConsumerWidget {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            _formatDateTime(notification.createdAt),
+                            _formatDateTime(context, notification.createdAt),
                             style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: 12,
@@ -436,7 +438,7 @@ class NotificationPage extends ConsumerWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    'High Priority',
+                                    l10n.highPriority_label,
                                     style: TextStyle(
                                       color: Colors.red[700],
                                       fontSize: 10,
@@ -489,20 +491,22 @@ class NotificationPage extends ConsumerWidget {
     }
   }
 
-  String _formatDateTime(DateTime dateTime) {
+  String _formatDateTime(BuildContext context, DateTime dateTime) {
+    final l10n = S.of(context)!;
+    final locale = Localizations.localeOf(context);
     final now = DateTime.now();
     final difference = now.difference(dateTime);
 
     if (difference.inMinutes < 1) {
-      return 'Just now';
+      return l10n.date_justNow;
     } else if (difference.inHours < 1) {
-      return '${difference.inMinutes}m ago';
+      return l10n.date_minutesAgo(difference.inMinutes);
     } else if (difference.inDays < 1) {
-      return '${difference.inHours}h ago';
+      return l10n.date_hoursAgo(difference.inHours);
     } else if (difference.inDays < 7) {
-      return '${difference.inDays}d ago';
+      return l10n.date_daysAgo(difference.inDays);
     } else {
-      return DateFormat('MMM dd, yyyy').format(dateTime);
+      return DateFormat('MMM dd, yyyy', locale.toString()).format(dateTime);
     }
   }
 
@@ -510,18 +514,19 @@ class NotificationPage extends ConsumerWidget {
     BuildContext context,
     AppNotification.Notification notification,
   ) async {
+    final l10n = S.of(context)!;
+
     return showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Delete Notification'),
-        content:
-            Text('Are you sure you want to delete "${notification.title}"?'),
+        title: Text(l10n.deleteConfirmation_title),
+        content: Text(l10n.deleteConfirmation_content(notification.title)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
-              'Cancel',
+              l10n.button_cancel,
               style: TextStyle(color: Colors.grey[600]),
             ),
           ),
@@ -531,7 +536,7 @@ class NotificationPage extends ConsumerWidget {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Delete'),
+            child: Text(l10n.button_delete),
           ),
         ],
       ),
@@ -543,16 +548,18 @@ class NotificationPage extends ConsumerWidget {
     AppNotification.Notification notification,
     NotificationNotifier notifier,
   ) {
+    final l10n = S.of(context)!;
+
     // TODO: Implement delete functionality in your provider
     // notifier.deleteNotification(notification.id); // You would call a method like this
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Deleted "${notification.title}"'),
+        content: Text(l10n.snackbar_notificationDeleted(notification.title)),
         backgroundColor: Colors.red,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         action: SnackBarAction(
-          label: 'Undo',
+          label: l10n.button_undo,
           textColor: Colors.white,
           onPressed: () {
             // TODO: Implement undo functionality (if possible with your API)
@@ -575,10 +582,12 @@ class NotificationPage extends ConsumerWidget {
   }
 
   void _markAllAsRead(BuildContext context, NotificationNotifier notifier) {
+    final l10n = S.of(context)!;
+
     notifier.markAllAsRead();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('All notifications marked as read'),
+        content: Text(l10n.snackbar_markedAllAsRead),
         backgroundColor: Colors.green,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

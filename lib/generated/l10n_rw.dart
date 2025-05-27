@@ -346,7 +346,7 @@ class SRw extends S {
   String get confirmLogoutMessage => 'Urifuza gusohoka?';
 
   @override
-  String get cancelButton => 'Kureka';
+  String get cancelButton => 'Hagarika';
 
   @override
   String get logoutButton => 'Gusohoka';
@@ -771,4 +771,146 @@ class SRw extends S {
 
   @override
   String get languageSubtitle => 'Hindura ururimi rwa porogaramu';
+
+  @override
+  String get notifications_loadingUser => 'Umenyesha (Gutegura umukoresha...)';
+
+  @override
+  String get notifications_error => 'Umenyesha (Ikosa)';
+
+  @override
+  String get notifications_title => 'Amamenyesha';
+
+  @override
+  String get tooltip_showAll => 'Erekana Byose';
+
+  @override
+  String get tooltip_showUnread => 'Erekana Ibitarasomwa Gusa';
+
+  @override
+  String get menu_markAllAsRead => 'Marka Byose nka Byasomwe';
+
+  @override
+  String get menu_refresh => 'Subiramo';
+
+  @override
+  String get loading_userData => 'Gutegura amakuru y\'umukoresha...';
+
+  @override
+  String get loading_notifications => 'Gutegura umenyesha...';
+
+  @override
+  String get emptyState_unreadTitle => 'Nta menyesha ritarasomwa';
+
+  @override
+  String get emptyState_allTitle => 'Nta menyesha rirahari';
+
+  @override
+  String get emptyState_unreadSubtitle => 'Byose byamaze kuboneka! 🎉';
+
+  @override
+  String get emptyState_allSubtitle => 'Amamenyesha azagaragara hano';
+
+  @override
+  String get errorState_title => 'Kunanirwa gutegura umenyesha';
+
+  @override
+  String get errorState_retry => 'Ongera Ugerageze';
+
+  @override
+  String get delete_swipeAction => 'Siba';
+
+  @override
+  String get highPriority_label => 'Ubwihutirwe Bwinshi';
+
+  @override
+  String get date_justNow => 'Hashize akanya';
+
+  @override
+  String date_minutesAgo(int minutes) {
+    return 'Hashize iminota $minutes';
+  }
+
+  @override
+  String date_hoursAgo(int hours) {
+    return 'Hashize amasaha $hours';
+  }
+
+  @override
+  String date_daysAgo(int days) {
+    return 'Hashize iminsi $days';
+  }
+
+  @override
+  String get deleteConfirmation_title => 'Siba';
+
+  @override
+  String deleteConfirmation_content(String title) {
+    return 'Uzi neza ko ushaka gusiba \"$title\"?';
+  }
+
+  @override
+  String get button_cancel => 'Hagarika';
+
+  @override
+  String get button_delete => 'Gusiba';
+
+  @override
+  String get button_undo => 'Gusubizaho';
+
+  @override
+  String snackbar_notificationDeleted(String title) {
+    return 'Byasibwe \"$title\"';
+  }
+
+  @override
+  String get snackbar_markedAllAsRead => 'Amamenyesha yose yemejwe nk\'ayasomwe';
+
+  @override
+  String get addTechnician_dialogTitle => 'Ongeraho umukozi mushya';
+
+  @override
+  String get textField_firstName => 'Izina rya mbere';
+
+  @override
+  String get textField_lastName => 'Izina rya nyuma';
+
+  @override
+  String get textField_email => 'Imeri';
+
+  @override
+  String get textField_phone => 'Terefoni';
+
+  @override
+  String get validation_firstNameRequired => 'Injiza izina rya mbere';
+
+  @override
+  String get validation_lastNameRequired => 'Injiza izina rya nyuma';
+
+  @override
+  String get validation_emailRequired => 'Injiza imeri';
+
+  @override
+  String get validation_emailValid => 'Injiza imeri iboneye';
+
+  @override
+  String get validation_phoneRequired => 'Injiza numero ya terefoni';
+
+  @override
+  String get button_create => 'Ohereza';
+
+  @override
+  String get button_creating => 'Kohereza...';
+
+  @override
+  String get error_requestTimedOut => 'Igihe cyo gusaba cyararangiye';
+
+  @override
+  String get error_prefix => 'Ikosa';
+
+  @override
+  String get snackbar_technicianCreatedSuccess => 'Umukozi yarezwe neza';
+
+  @override
+  String get snackbar_technicianCreatedError => 'Kurema umukozi byarananiranye';
 }

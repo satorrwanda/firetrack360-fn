@@ -1010,5 +1010,208 @@
     "languageSubtitle": "Change app language",
     "@languageSubtitle": {
         "description": "Subtitle for the language settings tile"
+    },
+    "notifications_loadingUser": "Notifications (Loading User...)",
+    "@notifications_loadingUser": {
+        "description": "Title for the notifications page while loading user data"
+    },
+    "notifications_error": "Notifications (Error)",
+    "@notifications_error": {
+        "description": "Title for the notifications page when there is an error"
+    },
+    "notifications_title": "Notifications",
+    "@notifications_title": {
+        "description": "Title for the notifications page"
+    },
+    "tooltip_showAll": "Show All",
+    "@tooltip_showAll": {
+        "description": "Tooltip for showing all notifications"
+    },
+    "tooltip_showUnread": "Show Unread Only",
+    "@tooltip_showUnread": {
+        "description": "Tooltip for showing only unread notifications"
+    },
+    "menu_markAllAsRead": "Mark All as Read",
+    "@menu_markAllAsRead": {
+        "description": "Menu option to mark all notifications as read"
+    },
+    "menu_refresh": "Refresh",
+    "@menu_refresh": {
+        "description": "Menu option to refresh notifications"
+    },
+    "loading_userData": "Loading user data...",
+    "@loading_userData": {
+        "description": "Message displayed while user data is loading"
+    },
+    "loading_notifications": "Loading notifications...",
+    "@loading_notifications": {
+        "description": "Message displayed while notifications are loading"
+    },
+    "emptyState_unreadTitle": "No unread notifications",
+    "@emptyState_unreadTitle": {
+        "description": "Title for the empty state when there are no unread notifications"
+    },
+    "emptyState_allTitle": "No notifications yet",
+    "@emptyState_allTitle": {
+        "description": "Title for the empty state when there are no notifications"
+    },
+    "emptyState_unreadSubtitle": "All caught up! 🎉",
+    "@emptyState_unreadSubtitle": {
+        "description": "Subtitle for the empty state when there are no unread notifications"
+    },
+    "emptyState_allSubtitle": "Notifications will appear here when you receive them",
+    "@emptyState_allSubtitle": {
+        "description": "Subtitle for the empty state when there are no notifications"
+    },
+    "errorState_title": "Failed to load notifications",
+    "@errorState_title": {
+        "description": "Title for the error state when notifications fail to load"
+    },
+    "errorState_retry": "Try Again",
+    "@errorState_retry": {
+        "description": "Text for the retry button in the error state"
+    },
+    "delete_swipeAction": "Delete",
+    "@delete_swipeAction": {
+        "description": "Text for the delete action when swiping a notification"
+    },
+    "highPriority_label": "High Priority",
+    "@highPriority_label": {
+        "description": "Label for high priority notifications"
+    },
+    "date_justNow": "Just now",
+    "@date_justNow": {
+        "description": "Time difference less than a minute"
+    },
+    "date_minutesAgo": "{minutes}m ago",
+    "@date_minutesAgo": {
+        "description": "Time difference in minutes",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "date_hoursAgo": "{hours}h ago",
+    "@date_hoursAgo": {
+        "description": "Time difference in hours (less than a day)",
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            }
+        }
+    },
+    "date_daysAgo": "{days}d ago",
+    "@date_daysAgo": {
+        "description": "Time difference in days (less than a week)",
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "deleteConfirmation_title": "Delete Notification",
+    "@deleteConfirmation_title": {
+        "description": "Title for the delete confirmation dialog",
+        "placeholders": {}
+    },
+    "deleteConfirmation_content": "Are you sure you want to delete \"{title}\"?",
+    "@deleteConfirmation_content": {
+        "description": "Confirmation message for deleting a notification",
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
+    "button_cancel": "Cancel",
+    "@button_cancel": {
+        "description": "Text for the cancel button in the delete confirmation dialog"
+    },
+    "button_delete": "Delete",
+    "@button_delete": {
+        "description": "Text for the delete button in the delete confirmation dialog"
+    },
+    "button_undo": "Undo",
+    "@button_undo": {
+        "description": "Text for the undo button in the snackbar after deleting a notification"
+    },
+    "snackbar_notificationDeleted": "Deleted \"{title}\"",
+    "@snackbar_notificationDeleted": {
+        "description": "Snackbar message after deleting a notification",
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
+    "snackbar_markedAllAsRead": "All notifications marked as read",
+    "@snackbar_markedAllAsRead": {
+        "description": "Snackbar message after marking all notifications as read"
+    },
+    "addTechnician_dialogTitle": "Add New Technician",
+    "@addTechnician_dialogTitle": {
+        "description": "Title of the dialog to add a new technician"
+    },
+    "textField_firstName": "First Name",
+    "@textField_firstName": {
+        "description": "Label for the first name input field"
+    },
+    "textField_lastName": "Last Name",
+    "@textField_lastName": {
+        "description": "Label for the last name input field"
+    },
+    "textField_email": "Email",
+    "@textField_email": {
+        "description": "Label for the email input field"
+    },
+    "textField_phone": "Phone",
+    "@textField_phone": {
+        "description": "Label for the phone input field"
+    },
+    "validation_firstNameRequired": "Please enter a first name",
+    "@validation_firstNameRequired": {
+        "description": "Validation message for required first name"
+    },
+    "validation_lastNameRequired": "Please enter a last name",
+    "@validation_lastNameRequired": {
+        "description": "Validation message for required last name"
+    },
+    "validation_emailRequired": "Please enter an email",
+    "@validation_emailRequired": {
+        "description": "Validation message for required email"
+    },
+    "validation_emailValid": "Please enter a valid email",
+    "@validation_emailValid": {
+        "description": "Validation message for invalid email format"
+    },
+    "validation_phoneRequired": "Please enter a phone number",
+    "@validation_phoneRequired": {
+        "description": "Validation message for required phone number"
+    },
+    "button_create": "Create",
+    "@button_create": {
+        "description": "Text for the create button"
+    },
+    "button_creating": "Creating...",
+    "@button_creating": {
+        "description": "Text for the create button while the request is in progress"
+    },
+    "error_requestTimedOut": "Request timed out",
+    "@error_requestTimedOut": {
+        "description": "Error message when a request times out"
+    },
+    "error_prefix": "Error",
+    "@error_prefix": {
+        "description": "Prefix used for general error messages"
+    },
+    "snackbar_technicianCreatedSuccess": "Technician created successfully",
+    "@snackbar_technicianCreatedSuccess": {
+        "description": "Snackbar message on successful technician creation"
+    },
+    "snackbar_technicianCreatedError": "Failed to create technician",
+    "@snackbar_technicianCreatedError": {
+        "description": "Snackbar message on failed technician creation (generic)"
     }
+
 }

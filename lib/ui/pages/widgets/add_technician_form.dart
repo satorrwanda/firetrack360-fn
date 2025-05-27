@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firetrack360/providers/users_provider.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class AddTechnicianDialog extends StatelessWidget {
   final UsersProvider usersProvider;
@@ -8,6 +9,8 @@ class AddTechnicianDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -18,7 +21,7 @@ class AddTechnicianDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildTechnicianDetailHeader(context),
+              _buildTechnicianDetailHeader(context, l10n),
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -31,37 +34,37 @@ class AddTechnicianDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildTechnicianDetailHeader(BuildContext context) {
+  Widget _buildTechnicianDetailHeader(BuildContext context, S l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0xFFA65D57),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      decoration: BoxDecoration(
+        color: Colors.deepPurple,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       ),
-      child: const Row(
+      child: Row(
         children: [
           CircleAvatar(
             radius: 24,
             backgroundColor: Colors.white,
             child: Icon(
               Icons.person_add,
-              color: Colors.black,
+              color: Colors.deepPurple,
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Add New Technician',
-                  style: TextStyle(
+                  l10n.addTechnician_dialogTitle,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
               ],
             ),
           ),
@@ -98,7 +101,9 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
     super.dispose();
   }
 
-  void _handleFormSubmit() async {
+  void _handleFormSubmit(BuildContext context) async {
+    final l10n = S.of(context)!;
+
     if (_formKey.currentState!.validate()) {
       setState(() => _isSubmitting = true);
       print('Form is valid. Preparing payload...');
@@ -115,7 +120,7 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
             await widget.usersProvider.createTechnician(input).timeout(
           const Duration(seconds: 10),
           onTimeout: () {
-            throw Exception('Request timed out');
+            throw Exception(l10n.error_requestTimedOut);
           },
         );
 
@@ -125,8 +130,8 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                  response['message'] ?? 'Technician created successfully'),
+              content: Text(response['message'] ??
+                  l10n.snackbar_technicianCreatedSuccess),
               backgroundColor: Colors.green,
             ),
           );
@@ -135,7 +140,7 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error: $e'),
+              content: Text('${l10n.error_prefix}: $e'),
               backgroundColor: Colors.red,
             ),
           );
@@ -154,6 +159,8 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Form(
@@ -163,39 +170,41 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
           children: [
             TextFormField(
               controller: _firstNameController,
-              decoration: _inputDecoration('First Name', Icons.person),
+              decoration:
+                  _inputDecoration(l10n.textField_firstName, Icons.person),
               validator: (value) => value == null || value.isEmpty
-                  ? 'Please enter a first name'
+                  ? l10n.validation_firstNameRequired
                   : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _lastNameController,
-              decoration: _inputDecoration('Last Name', Icons.person_outline),
+              decoration: _inputDecoration(
+                  l10n.textField_lastName, Icons.person_outline),
               validator: (value) => value == null || value.isEmpty
-                  ? 'Please enter a last name'
+                  ? l10n.validation_lastNameRequired
                   : null,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _emailController,
-              decoration: _inputDecoration('Email', Icons.email),
+              decoration: _inputDecoration(l10n.textField_email, Icons.email),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter an email';
+                  return l10n.validation_emailRequired;
                 }
-                if (!value.contains('@')) return 'Please enter a valid email';
+                if (!value.contains('@')) return l10n.validation_emailValid;
                 return null;
               },
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _phoneController,
-              decoration: _inputDecoration('Phone', Icons.phone),
+              decoration: _inputDecoration(l10n.textField_phone, Icons.phone),
               keyboardType: TextInputType.phone,
               validator: (value) => value == null || value.isEmpty
-                  ? 'Please enter a phone number'
+                  ? l10n.validation_phoneRequired
                   : null,
             ),
             const SizedBox(height: 24),
@@ -205,11 +214,12 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
                 TextButton(
                   onPressed:
                       _isSubmitting ? null : () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(l10n.button_cancel),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton.icon(
-                  onPressed: _isSubmitting ? null : _handleFormSubmit,
+                  onPressed:
+                      _isSubmitting ? null : () => _handleFormSubmit(context),
                   icon: _isSubmitting
                       ? const SizedBox(
                           width: 20,
@@ -220,9 +230,11 @@ class _AddTechnicianFormState extends State<AddTechnicianForm> {
                           ),
                         )
                       : const Icon(Icons.add),
-                  label: Text(_isSubmitting ? 'Creating...' : 'Create'),
+                  label: Text(_isSubmitting
+                      ? l10n.button_creating
+                      : l10n.button_create),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFA65D57),
+                    backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,

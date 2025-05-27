@@ -450,7 +450,7 @@
     "@confirmLogoutMessage": {
         "description": "Message for the logout confirmation dialog"
     },
-    "cancelButton": "Kureka",
+    "cancelButton": "Hagarika",
     "@cancelButton": {
         "description": "Text for the cancel button"
     },
@@ -924,5 +924,196 @@
     "languageSubtitle": "Hindura ururimi rwa porogaramu",
     "@languageSubtitle": {
         "description": "Sous-titre pour la tuile des paramètres de langue"
+    },
+    "notifications_loadingUser": "Umenyesha (Gutegura umukoresha...)",
+    "@notifications_loadingUser": {
+        "description": "Message displayed while loading user data for notifications"
+    },
+    "notifications_error": "Umenyesha (Ikosa)",
+    "@notifications_error": {
+        "description": "Error message displayed when there is an issue with notifications"
+    },
+    "notifications_title": "Amamenyesha",
+    "@notifications_title": {
+        "description": "Title for the Notifications page"
+    },
+    "tooltip_showAll": "Erekana Byose",
+    "@tooltip_showAll": {
+        "description": "Tooltip text for showing all notifications"
+    },
+    "tooltip_showUnread": "Erekana Ibitarasomwa Gusa",
+    "@tooltip_showUnread": {
+        "description": "Tooltip text for showing only unread notifications"
+    },
+    "menu_markAllAsRead": "Marka Byose nka Byasomwe",
+    "@menu_markAllAsRead": {
+        "description": "Label for the menu option to mark all notifications as read"
+    },
+    "menu_refresh": "Subiramo",
+    "@menu_refresh": {
+        "description": "Label for the menu option to refresh notifications"
+    },
+    "loading_userData": "Gutegura amakuru y'umukoresha...",
+    "@loading_userData": {
+        "description": "Message displayed while loading user data for notifications"
+    },
+    "loading_notifications": "Gutegura umenyesha...",
+    "@loading_notifications": {
+        "description": "Message displayed while loading notifications"
+    },
+    "emptyState_unreadTitle": "Nta menyesha ritarasomwa",
+    "@emptyState_unreadTitle": {
+        "description": "Title for the empty state when there are no unread notifications"
+    },
+    "emptyState_allTitle": "Nta menyesha rirahari",
+    "@emptyState_allTitle": {
+        "description": "Title for the empty state when there are no notifications"
+    },
+    "emptyState_unreadSubtitle": "Byose byamaze kuboneka! 🎉",
+    "@emptyState_unreadSubtitle": {
+        "description": "Subtitle for the empty state when there are no unread notifications"
+    },
+    "emptyState_allSubtitle": "Amamenyesha azagaragara hano",
+    "@emptyState_allSubtitle": {
+        "description": "Subtitle for the empty state when there are no notifications"
+    },
+    "errorState_title": "Kunanirwa gutegura umenyesha",
+    "@errorState_title": {
+        "description": "Title for the error state when notifications cannot be loaded"
+    },
+    "errorState_retry": "Ongera Ugerageze",
+    "@errorState_retry": {
+        "description": "Text for the retry button in the error state of notifications"
+    },
+    "delete_swipeAction": "Siba",
+    "@delete_swipeAction": {
+        "description": "Text for the swipe action to delete a notification"
+    },
+    "highPriority_label": "Ubwihutirwe Bwinshi",
+    "@highPriority_label": {
+        "description": "Label for high priority notifications"
+    },
+    "date_justNow": "Hashize akanya",
+    "@date_justNow": {
+        "description": "Label for notifications that were just received"
+    },
+    "date_minutesAgo": "Hashize iminota {minutes}",
+    "@date_minutesAgo": {
+        "description": "Label for notifications that were received a few minutes ago",
+        "placeholders": {
+            "minutes": {}
+        }
+    },
+    "date_hoursAgo": "Hashize amasaha {hours}",
+    "@date_hoursAgo": {
+        "description": "Label for notifications that were received a few hours ago",
+        "placeholders": {
+            "hours": {}
+        }
+    },
+    "date_daysAgo": "Hashize iminsi {days}",
+    "@date_daysAgo": {
+        "description": "Label for notifications that were received a few days ago",
+        "placeholders": {
+            "days": {}
+        }
+    },
+    "deleteConfirmation_title": "Siba",
+    "@deleteConfirmation_title": {
+        "description": "Title for the delete confirmation dialog for notifications"
+    },
+    "deleteConfirmation_content": "Uzi neza ko ushaka gusiba \"{title}\"?",
+    "@deleteConfirmation_content": {
+        "description": "Content for the delete confirmation dialog, includes the title of the notification",
+        "placeholders": {
+            "title": {}
+        }
+    },
+    "button_cancel": "Hagarika",
+    "@button_cancel": {
+        "description": "Text for the cancel button in the delete confirmation dialog"
+    },
+    "button_delete": "Gusiba",
+    "@button_delete": {
+        "description": "Text for the delete button in the delete confirmation dialog"
+    },
+    "button_undo": "Gusubizaho",
+    "@button_undo": {
+        "description": "Text for the undo button after deleting a notification"
+    },
+    "snackbar_notificationDeleted": "Byasibwe \"{title}\"",
+    "@snackbar_notificationDeleted": {
+        "description": "Snackbar message shown after a notification is deleted, includes the title of the notification",
+        "placeholders": {
+            "title": {}
+        }
+    },
+    "snackbar_markedAllAsRead": "Amamenyesha yose yemejwe nk'ayasomwe",
+    "@snackbar_markedAllAsRead": {
+        "description": "Snackbar message shown after marking all notifications as read"
+    },
+    "addTechnician_dialogTitle": "Ongeraho umukozi mushya",
+    "@addTechnician_dialogTitle": {
+        "description": "Umutwe w'akabazo ko kongeraho umukozi mushya"
+    },
+    "textField_firstName": "Izina rya mbere",
+    "@textField_firstName": {
+        "description": "Umutwe w'agafunguzo ko kwandika izina rya mbere"
+    },
+    "textField_lastName": "Izina rya nyuma",
+    "@textField_lastName": {
+        "description": "Umutwe w'agafunguzo ko kwandika izina rya nyuma"
+    },
+    "textField_email": "Imeri",
+    "@textField_email": {
+        "description": "Umutwe w'agafunguzo ko kwandika imeri"
+    },
+    "textField_phone": "Terefoni",
+    "@textField_phone": {
+        "description": "Umutwe w'agafunguzo ko kwandika numero ya terefoni"
+    },
+    "validation_firstNameRequired": "Injiza izina rya mbere",
+    "@validation_firstNameRequired": {
+        "description": "Ubutumwa bwo kwemeza ko izina rya mbere rikenewe"
+    },
+    "validation_lastNameRequired": "Injiza izina rya nyuma",
+    "@validation_lastNameRequired": {
+        "description": "Ubutumwa bwo kwemeza ko izina rya nyuma rikenewe"
+    },
+    "validation_emailRequired": "Injiza imeri",
+    "@validation_emailRequired": {
+        "description": "Ubutumwa bwo kwemeza ko imeri ikenewe"
+    },
+    "validation_emailValid": "Injiza imeri iboneye",
+    "@validation_emailValid": {
+        "description": "Ubutumwa bwo kwemeza ko imeri itari nzima"
+    },
+    "validation_phoneRequired": "Injiza numero ya terefoni",
+    "@validation_phoneRequired": {
+        "description": "Ubutumwa bwo kwemeza ko numero ya terefoni ikenewe"
+    },
+    "button_create": "Ohereza",
+    "@button_create": {
+        "description": "Ijambo kuri buto yo kurema"
+    },
+    "button_creating": "Kohereza...",
+    "@button_creating": {
+        "description": "Ijambo kuri buto yo kurema mugihe bigitegurwa"
+    },
+    "error_requestTimedOut": "Igihe cyo gusaba cyararangiye",
+    "@error_requestTimedOut": {
+        "description": "Ubutumwa bwo kwemeza ko igihe cyo gusaba cyararangiye"
+    },
+    "error_prefix": "Ikosa",
+    "@error_prefix": {
+        "description": "Ijambo ritangiza ubutumwa bw'amakosa"
+    },
+    "snackbar_technicianCreatedSuccess": "Umukozi yarezwe neza",
+    "@snackbar_technicianCreatedSuccess": {
+        "description": "Ubutumwa bwa snackbar mugihe umukozi yarezwe neza"
+    },
+    "snackbar_technicianCreatedError": "Kurema umukozi byarananiranye",
+    "@snackbar_technicianCreatedError": {
+        "description": "Ubutumwa bwa snackbar mugihe kurema umukozi byananiwe (rusange)"
     }
 }
