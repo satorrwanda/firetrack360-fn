@@ -161,7 +161,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
             ),
             Expanded(
               child: serviceRequestsAsync.when(
-                loading: () => Center(
+                loading: () => const Center(
                   child: CircularProgressIndicator(color: Colors.white),
                 ),
                 error: (error, stack) => Center(
