@@ -90,18 +90,23 @@ class _LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed Colors
+    const backgroundColor = Colors.white;
+    const textColor = Colors.grey;
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(
+            const CircularProgressIndicator(
               color: Colors.deepPurple,
             ),
             const SizedBox(height: 16),
             Text(
               l10n.loadingProfileMessage,
-              style: TextStyle(color: Colors.grey.shade600),
+              style: const TextStyle(color: textColor),
             ),
           ],
         ),
@@ -123,33 +128,39 @@ class _ErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed Colors
+    const backgroundColor = Colors.white;
+    const textColor = Colors.black87;
+    const errorTextColor = Colors.grey;
+
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.error_outline,
-                color: Colors.red.shade600,
+                color: Colors.red,
                 size: 48,
               ),
               const SizedBox(height: 16),
               Text(
                 l10n.errorLoadingProfile,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 error,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey.shade600,
+                style: const TextStyle(
+                  color: errorTextColor,
                 ),
               ),
               if (onRetry != null) ...[
@@ -157,7 +168,7 @@ class _ErrorScreen extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: onRetry,
                   icon: const Icon(Icons.refresh, color: Colors.white),
-                  label: Text(l10n.retryButton,
+                  label: const Text('Retry',
                       style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -194,10 +205,10 @@ class _ProfileContent extends StatelessWidget {
 
   Widget buildProfileImage(String? imageUrl) {
     if (imageUrl == null) {
-      return CircleAvatar(
+      return const CircleAvatar(
         radius: 50,
-        backgroundColor: Colors.deepPurple.withOpacity(0.1),
-        child: Icon(Icons.person, size: 50, color: Colors.deepPurple),
+        backgroundColor: Colors.deepPurple,
+        child: Icon(Icons.person, size: 50, color: Colors.white),
       );
     }
 
@@ -213,7 +224,8 @@ class _ProfileContent extends StatelessWidget {
               file,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return Icon(Icons.person, size: 50, color: Colors.deepPurple);
+                return const Icon(Icons.person,
+                    size: 50, color: Colors.deepPurple);
               },
             ),
           ),
@@ -230,7 +242,8 @@ class _ProfileContent extends StatelessWidget {
             imageUrl,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
-              return Icon(Icons.person, size: 50, color: Colors.deepPurple);
+              return const Icon(Icons.person,
+                  size: 50, color: Colors.deepPurple);
             },
           ),
         ),
@@ -244,6 +257,9 @@ class _ProfileContent extends StatelessWidget {
     required String value,
     bool verified = false,
   }) {
+    const titleColor = Colors.grey;
+    const valueColor = Colors.black87;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -256,8 +272,8 @@ class _ProfileContent extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
+                  style: const TextStyle(
+                    color: titleColor,
                     fontSize: 14,
                   ),
                 ),
@@ -270,15 +286,15 @@ class _ProfileContent extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black87,
+                          color: valueColor,
                         ),
                       ),
                     ),
                     if (verified)
-                      Icon(
+                      const Icon(
                         Icons.verified,
                         size: 16,
-                        color: Colors.green[700],
+                        color: Colors.green,
                       ),
                   ],
                 ),
@@ -295,10 +311,13 @@ class _ProfileContent extends StatelessWidget {
     required String title,
     required List<Widget> children,
   }) {
+    const sectionBackgroundColor = Colors.white;
+    const sectionTitleColor = Colors.black87;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: sectionBackgroundColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -314,10 +333,10 @@ class _ProfileContent extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: sectionTitleColor,
             ),
           ),
           const Divider(color: Colors.deepPurple),
@@ -330,8 +349,12 @@ class _ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed Colors
+    const scaffoldBackgroundColor = Colors.white;
+    const gradientStartColor = Colors.deepPurple;
+
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(l10n.profilePageTitle),
         backgroundColor: Colors.deepPurple,
@@ -387,8 +410,8 @@ class _ProfileContent extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.deepPurple.withOpacity(0.05),
-              Colors.white,
+              gradientStartColor.withOpacity(0.05),
+              scaffoldBackgroundColor,
             ],
           ),
         ),
@@ -421,11 +444,15 @@ class _ProfileContent extends StatelessWidget {
   }
 
   Widget _buildProfileHeader(BuildContext context) {
+    // Fixed Colors
+    const sectionBackgroundColor = Colors.white;
+    const sectionTitleColor = Colors.black87;
+
     final l10n = S.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: sectionBackgroundColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -580,7 +607,7 @@ class _ProfileContent extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: sectionTitleColor,
               ),
             ),
             if (profile['bio'] != null) ...[
@@ -588,8 +615,8 @@ class _ProfileContent extends StatelessWidget {
               Text(
                 profile['bio'],
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey.shade600,
+                style: const TextStyle(
+                  color: Colors.grey,
                   fontSize: 14,
                 ),
               ),
@@ -608,16 +635,16 @@ class _ProfileContent extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.verified,
                       size: 16,
-                      color: Colors.green[700],
+                      color: Colors.green,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       l10n.verifiedAccountLabel,
-                      style: TextStyle(
-                        color: Colors.green[700],
+                      style: const TextStyle(
+                        color: Colors.green,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
