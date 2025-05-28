@@ -30,9 +30,9 @@ jobs:
       - name: Build Linux
         run: flutter build linux
 
-      # - name: Upload Linux Release
-      #   if: github.event_name == 'push'
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: linux-release
-      #     path: build/linux/x64/release/bundle
+      - name: Upload Linux Release
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-release
+          path: build/linux/x64/release/bundle
