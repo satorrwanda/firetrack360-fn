@@ -845,7 +845,7 @@ class SEn extends S {
   String get deleteConfirmation_title => 'Delete Notification';
 
   @override
-  String deleteConfirmation_content(String title) {
+  String deleteConfirmation_content(Object title) {
     return 'Are you sure you want to delete \"$title\"?';
   }
 
@@ -859,7 +859,7 @@ class SEn extends S {
   String get button_undo => 'Undo';
 
   @override
-  String snackbar_notificationDeleted(String title) {
+  String snackbar_notificationDeleted(Object title) {
     return 'Deleted \"$title\"';
   }
 

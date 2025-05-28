@@ -1691,7 +1691,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete \"{title}\"?'**
-  String deleteConfirmation_content(String title);
+  String deleteConfirmation_content(Object title);
 
   /// Text for the cancel button in the delete confirmation dialog
   ///
@@ -1715,7 +1715,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Deleted \"{title}\"'**
-  String snackbar_notificationDeleted(String title);
+  String snackbar_notificationDeleted(Object title);
 
   /// Snackbar message after marking all notifications as read
   ///

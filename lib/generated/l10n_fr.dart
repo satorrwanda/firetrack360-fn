@@ -845,7 +845,7 @@ class SFr extends S {
   String get deleteConfirmation_title => 'Supprimer la notification';
 
   @override
-  String deleteConfirmation_content(String title) {
+  String deleteConfirmation_content(Object title) {
     return 'Êtes-vous sûr de vouloir supprimer \"$title\" ?';
   }
 
@@ -859,7 +859,7 @@ class SFr extends S {
   String get button_undo => 'Annuler';
 
   @override
-  String snackbar_notificationDeleted(String title) {
+  String snackbar_notificationDeleted(Object title) {
     return 'Supprimé \"$title\"';
   }
 

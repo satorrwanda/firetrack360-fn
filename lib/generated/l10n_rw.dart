@@ -845,7 +845,7 @@ class SRw extends S {
   String get deleteConfirmation_title => 'Siba';
 
   @override
-  String deleteConfirmation_content(String title) {
+  String deleteConfirmation_content(Object title) {
     return 'Uzi neza ko ushaka gusiba \"$title\"?';
   }
 
@@ -859,7 +859,7 @@ class SRw extends S {
   String get button_undo => 'Gusubizaho';
 
   @override
-  String snackbar_notificationDeleted(String title) {
+  String snackbar_notificationDeleted(Object title) {
     return 'Byasibwe \"$title\"';
   }
 
