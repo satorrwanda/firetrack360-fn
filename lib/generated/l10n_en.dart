@@ -827,7 +827,7 @@ class SEn extends S {
   String get date_justNow => 'Just now';
 
   @override
-  String date_minutesAgo(int minutes) {
+  String date_minutesAgo(Object minutes) {
     return '${minutes}m ago';
   }
 

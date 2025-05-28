@@ -827,7 +827,7 @@ class SRw extends S {
   String get date_justNow => 'Hashize akanya';
 
   @override
-  String date_minutesAgo(int minutes) {
+  String date_minutesAgo(Object minutes) {
     return 'Hashize iminota $minutes';
   }
 

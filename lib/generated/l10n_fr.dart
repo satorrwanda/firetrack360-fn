@@ -827,7 +827,7 @@ class SFr extends S {
   String get date_justNow => 'À l\'instant';
 
   @override
-  String date_minutesAgo(int minutes) {
+  String date_minutesAgo(Object minutes) {
     return 'il y a $minutes min';
   }
 

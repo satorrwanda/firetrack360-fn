@@ -1088,7 +1088,7 @@
         "description": "Time difference in minutes",
         "placeholders": {
             "minutes": {
-                "type": "int"
+               
             }
         }
     },

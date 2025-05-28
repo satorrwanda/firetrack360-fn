@@ -1667,7 +1667,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'{minutes}m ago'**
-  String date_minutesAgo(int minutes);
+  String date_minutesAgo(Object minutes);
 
   /// Time difference in hours (less than a day)
   ///

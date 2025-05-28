@@ -993,7 +993,7 @@
             "minutes": {
             }
         }
-    },
+    }, 
     "date_hoursAgo": "il y a {hours} h",
     "@date_hoursAgo": {
         "description": "Text for notifications that were received a few hours ago",
