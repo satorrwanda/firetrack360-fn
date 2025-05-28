@@ -618,16 +618,10 @@
         "description": "Text showing the range of records displayed",
         "placeholders": {
             "startIndex": {
-                "type": "int",
-                "example": "1"
             },
             "endIndex": {
-                "type": "int",
-                "example": "10"
             },
             "totalItems": {
-                "type": "int",
-                "example": "50"
             }
         }
     },

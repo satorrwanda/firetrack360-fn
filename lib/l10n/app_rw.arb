@@ -619,16 +619,11 @@
         "description": "Message indicating the range of records being displayed",
         "placeholders": {
             "startIndex": {
-                "type": "int",
-                "example": "1"
             },
             "endIndex": {
-                "type": "int",
-                "example": "10"
             },
             "totalItems": {
-                "type": "int",
-                "example": "50"
+              
             }
         }
     },
