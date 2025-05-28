@@ -17,119 +17,48 @@ jobs:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
 
-      - name: Set up Docker Container 🐳
-        run: |
-          docker pull ubuntu:20.04
-          docker run --name android-deploy-container -dit ubuntu:20.04 bash
+      - name: Set up Java ☕
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-      - name: Copy Repository to Container 📂
-        run: |
-          docker cp ${{ github.workspace }} android-deploy-container:/app
+      - name: Set up Flutter 🐦
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'  # Pin to specific version
+          channel: 'stable'
+          cache: true
 
-      - name: Install Java and Android Dependencies ☕
-        run: |
-          docker exec android-deploy-container bash -c "
-            # Noninteractive tzdata configuration
-            export DEBIAN_FRONTEND=noninteractive
-            ln -fs /usr/share/zoneinfo/UTC /etc/localtime
-            apt-get update && \
-            apt-get install -y tzdata && \
-            dpkg-reconfigure --frontend noninteractive tzdata && \
-            apt-get install -y \
-              openjdk-17-jdk \
-              curl \
-              wget \
-              git \
-              unzip && \
-            # Create proper directory structure
-            mkdir -p /opt/android-sdk/cmdline-tools && \
-            cd /opt/android-sdk && \
-            wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip && \
-            unzip commandlinetools-linux-*_latest.zip -d /opt/android-sdk/cmdline-tools && \
-            mv /opt/android-sdk/cmdline-tools/cmdline-tools /opt/android-sdk/cmdline-tools/latest
-          "
+      - name: Set up Android SDK 🤖
+        uses: android-actions/setup-android@v3
+        with:
+          api-level: 33
+          build-tools: 33.0.0
 
-      - name: Install Android SDK and Tools 🤖
-        run: |
-          docker exec android-deploy-container bash -c "
-            # Set environment variables
-            export ANDROID_HOME=/opt/android-sdk && \
-            export PATH=\$PATH:\$ANDROID_HOME/cmdline-tools/latest/bin:\$ANDROID_HOME/platform-tools && \
-            # Create a script to automatically accept licenses
-            mkdir -p \$ANDROID_HOME/licenses && \
-            echo '24333f8a63b6825ea9c5514f83c2829b004d1fee' > \$ANDROID_HOME/licenses/android-sdk-license && \
-            # Install SDK components
-            cd \$ANDROID_HOME/cmdline-tools/latest/bin && \
-            ./sdkmanager --licenses && \
-            ./sdkmanager \
-              'platform-tools' \
-              'platforms;android-33' \
-              'build-tools;33.0.0' \
-              'emulator'
-          "
+      - name: Accept Android Licenses
+        run: yes | flutter doctor --android-licenses
 
-      - name: Debug - Check Android SDK Setup
-        run: |
-          docker exec android-deploy-container bash -c "
-            export ANDROID_HOME=/opt/android-sdk && \
-            echo 'ANDROID_HOME:' && echo \$ANDROID_HOME && \
-            echo 'SDK Contents:' && ls -la \$ANDROID_HOME && \
-            echo 'cmdline-tools Contents:' && ls -la \$ANDROID_HOME/cmdline-tools/latest/bin && \
-            \$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --list_installed
-          "
-
-          docker exec android-deploy-container bash -c "
-            git clone https://github.com/flutter/flutter.git /flutter && \
-            cd /flutter && \
-            git checkout stable -f && \
-            export PATH=\$PATH:/flutter/bin && \
-            export ANDROID_HOME=/opt/android-sdk && \
-            export ANDROID_SDK_ROOT=/opt/android-sdk && \
-            yes | flutter doctor --android-licenses && \
-            flutter doctor
-          "
+      - name: Flutter Doctor
+        run: flutter doctor -v
 
       - name: Install Project Dependencies 📦
-        run: |
-          docker exec android-deploy-container bash -c "
-            cd /app && \
-            export PATH=\$PATH:/flutter/bin && \
-            export ANDROID_HOME=/opt/android-sdk && \
-            export ANDROID_SDK_ROOT=/opt/android-sdk && \
-            flutter pub get
-          "
+        run: flutter pub get
 
       - name: Build Release APK 📱
-        run: |
-          docker exec android-deploy-container bash -c "
-            cd /app && \
-            export PATH=\$PATH:/flutter/bin && \
-            export ANDROID_HOME=/opt/android-sdk && \
-            export ANDROID_SDK_ROOT=/opt/android-sdk && \
-            flutter build apk --release --dart-define=ENVIRONMENT=production
-          "
-
-      - name: Copy APK from Container 📋
-        run: |
-          docker cp android-deploy-container:/app/build/app/outputs/flutter-apk/app-release.apk ./app-release.apk
+        run: flutter build apk --release --dart-define=ENVIRONMENT=production
 
       - name: Upload Build Artifact 📤
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: android-release
-          path: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 7
 
       - name: Create GitHub Release 🎉
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: app-release.apk
+          files: build/app/outputs/flutter-apk/app-release.apk
           generate_release_notes: true
-
-      - name: Cleanup Docker Resources 🧹
-        if: always()
-        run: |
-          docker stop android-deploy-container
-          docker rm android-deploy-container
