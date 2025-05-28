@@ -11,12 +11,11 @@ import 'package:intl/intl.dart';
 import 'package:firetrack360/ui/pages/home/widgets/custom_bottom_nav.dart';
 import 'package:firetrack360/generated/l10n.dart';
 
-
 class ProfileScreen extends HookWidget {
   const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
-     final l10n = S.of(context)!;
+    final l10n = S.of(context)!;
 
     return FutureBuilder<String?>(
       future: AuthService.getUserId(),
@@ -62,7 +61,7 @@ class ProfileScreen extends HookWidget {
             if (profileData == null) {
               return _ErrorScreen(
                 error: l10n.profileDataNotFound,
-                 l10n: l10n,
+                l10n: l10n,
               );
             }
 
@@ -332,7 +331,7 @@ class _ProfileContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(l10n.profilePageTitle),
         backgroundColor: Colors.deepPurple,
@@ -362,7 +361,7 @@ class _ProfileContent extends StatelessWidget {
             onPressed: () {
               // Handle notifications
             },
-             tooltip: l10n.notificationsTooltip,
+            tooltip: l10n.notificationsTooltip,
           ),
           IconButton(
             icon: const Icon(Icons.edit),
@@ -378,12 +377,12 @@ class _ProfileContent extends StatelessWidget {
                 onRefresh?.call();
               }
             },
-             tooltip: l10n.editTooltip,
+            tooltip: l10n.editTooltip,
           ),
         ],
       ),
       body: Container(
-         decoration: BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -422,7 +421,7 @@ class _ProfileContent extends StatelessWidget {
   }
 
   Widget _buildProfileHeader(BuildContext context) {
-     final l10n = S.of(context)!;
+    final l10n = S.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -485,7 +484,8 @@ class _ProfileContent extends StatelessWidget {
                                         const SizedBox(width: 12),
                                         Expanded(
                                             child: Text(
-                                                l10n.failedToUpdateProfileImage(e.toString()))),
+                                                l10n.failedToUpdateProfileImage(
+                                                    e.toString()))),
                                       ],
                                     ),
                                     backgroundColor: Colors.red.shade600,
@@ -534,8 +534,9 @@ class _ProfileContent extends StatelessWidget {
                                                   color: Colors.white),
                                               const SizedBox(width: 12),
                                               Expanded(
-                                                  child: Text(
-                                                      l10n.failedToRemoveProfileImage(e.toString()))),
+                                                  child: Text(l10n
+                                                      .failedToRemoveProfileImage(
+                                                          e.toString()))),
                                             ],
                                           ),
                                           backgroundColor: Colors.red.shade600,
@@ -650,7 +651,9 @@ class _ProfileContent extends StatelessWidget {
         _buildInfoTile(
           icon: Icons.badge,
           title: l10n.roleLabel,
-          value: (profile['user']?['role'] ?? l10n.notProvided).toString().toUpperCase(),
+          value: (profile['user']?['role'] ?? l10n.notProvided)
+              .toString()
+              .toUpperCase(),
         ),
         if (profile['dateOfBirth'] != null)
           _buildInfoTile(

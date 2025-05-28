@@ -7,13 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:firetrack360/generated/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// SettingsScreen needs to be a ConsumerWidget to use Riverpod
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Add WidgetRef ref
     final l10n = S.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
@@ -45,15 +43,6 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
                 _buildDivider(context),
-                _buildSettingsTile(
-                  context: context,
-                  icon: Icons.lock_outline,
-                  title: l10n.changePasswordTitle,
-                  subtitle: l10n.changePasswordSubtitle,
-                  onTap: () {
-                    // TODO: Navigate to Change Password Screen
-                  },
-                ),
               ],
             ),
             const SizedBox(height: 24),

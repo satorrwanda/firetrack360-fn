@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firetrack360/generated/l10n.dart'; // Import localization
+import 'package:firetrack360/generated/l10n.dart';
 
 class LogoutButton extends StatelessWidget {
   final VoidCallback onLogout;
@@ -11,7 +11,11 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = S.of(context)!; // Access l10n here
+    final l10n = S.of(context)!;
+    final theme = Theme.of(context);
+
+    const backgroundColor = Colors.deepPurple;
+    final foregroundColor = theme.colorScheme.onPrimary;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -20,18 +24,32 @@ class LogoutButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        leading: const Icon(
+        leading: Icon(
           Icons.logout,
-          color: Colors.white70,
+          color: foregroundColor,
         ),
-        title: Text(
-          l10n.logoutButton,
-          style: const TextStyle(
-            color: Colors.white70,
-            fontSize: 16,
-          ),
+        // Wrap the title in a Row with MainAxisAlignment.center
+        title: Row(
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Center the content of the Row
+          children: [
+            // Use Expanded to allow the Text to take available space within the Row
+            Expanded(
+              child: Text(
+                l10n.logoutButton,
+                style: TextStyle(
+                  color: foregroundColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
-        tileColor: Colors.white.withOpacity(0.05),
+        tileColor: backgroundColor,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
     );
   }
