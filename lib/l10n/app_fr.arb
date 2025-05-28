@@ -991,8 +991,6 @@
         "description": "Text for notifications that were received a few minutes ago",
         "placeholders": {
             "minutes": {
-                "type": "int",
-                "example": "5"
             }
         }
     },
