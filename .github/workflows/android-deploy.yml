@@ -11,7 +11,7 @@ on:
 jobs:
   android-deploy:
     name: Android Deployment 🚀
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Repository 📥
