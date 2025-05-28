@@ -1025,8 +1025,6 @@
         "description": "Content for the delete confirmation dialog for notifications",
         "placeholders": {
             "title": {
-                "type": "text",
-                "example": "Titre de la notification"
             }
         }
     },
