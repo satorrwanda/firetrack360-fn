@@ -1097,7 +1097,6 @@
         "description": "Time difference in hours (less than a day)",
         "placeholders": {
             "hours": {
-                "type": "int"
             }
         }
     },
@@ -1106,7 +1105,6 @@
         "description": "Time difference in days (less than a week)",
         "placeholders": {
             "days": {
-                "type": "int"
             }
         }
     },

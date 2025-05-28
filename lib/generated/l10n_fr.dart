@@ -832,12 +832,12 @@ class SFr extends S {
   }
 
   @override
-  String date_hoursAgo(int hours) {
+  String date_hoursAgo(Object hours) {
     return 'il y a $hours h';
   }
 
   @override
-  String date_daysAgo(int days) {
+  String date_daysAgo(Object days) {
     return 'il y a $days j';
   }
 

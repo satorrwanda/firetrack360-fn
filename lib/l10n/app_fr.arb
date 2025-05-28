@@ -999,8 +999,6 @@
         "description": "Text for notifications that were received a few hours ago",
         "placeholders": {
             "hours": {
-                "type": "int",
-                "example": "2"
             }
         }
     },
@@ -1009,8 +1007,6 @@
         "description": "Text for notifications that were received a few days ago",
         "placeholders": {
             "days": {
-                "type": "int",
-                "example": "3"
             }
         }
     },

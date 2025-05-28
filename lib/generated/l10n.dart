@@ -1673,13 +1673,13 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'{hours}h ago'**
-  String date_hoursAgo(int hours);
+  String date_hoursAgo(Object hours);
 
   /// Time difference in days (less than a week)
   ///
   /// In en, this message translates to:
   /// **'{days}d ago'**
-  String date_daysAgo(int days);
+  String date_daysAgo(Object days);
 
   /// Title for the delete confirmation dialog
   ///

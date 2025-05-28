@@ -832,12 +832,12 @@ class SEn extends S {
   }
 
   @override
-  String date_hoursAgo(int hours) {
+  String date_hoursAgo(Object hours) {
     return '${hours}h ago';
   }
 
   @override
-  String date_daysAgo(int days) {
+  String date_daysAgo(Object days) {
     return '${days}d ago';
   }
 
