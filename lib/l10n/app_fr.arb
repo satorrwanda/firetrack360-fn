@@ -1041,8 +1041,6 @@
         "description": "Snackbar message shown after a notification is deleted",
         "placeholders": {
             "title": {
-                "type": "text",
-                "example": "Titre de la notification"
             }
         }
     },

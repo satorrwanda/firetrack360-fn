@@ -1140,7 +1140,7 @@
         "description": "Snackbar message after deleting a notification",
         "placeholders": {
             "title": {
-                "type": "String"
+                
             }
         }
     },
