@@ -348,9 +348,6 @@ class _UserManagementContentState extends State<_UserManagementContent> {
                                 ),
                               );
                             }
-
-                            // Assuming UserTable needs l10n for column headers or data,
-                            // you might need to pass it down or handle localization within UserTable.
                             return UserTable(users: filteredUsers);
                           },
                         ),
