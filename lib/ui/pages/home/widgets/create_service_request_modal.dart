@@ -7,6 +7,7 @@ import 'package:firetrack360/graphql/queries/profile_query.dart';
 import 'package:firetrack360/models/technician.dart';
 import 'package:firetrack360/services/auth_service.dart';
 import 'package:firetrack360/providers/ServiceRequestProvider.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class CreateServiceRequestModal extends ConsumerStatefulWidget {
   const CreateServiceRequestModal({super.key});
@@ -25,12 +26,12 @@ class _CreateServiceRequestModalState
   String? _errorMessage;
 
   final List<String> _serviceOptions = [
-    'Refill',
-    'Maintenance',
-    'Supply',
-    'Other Services'
+    'refillService',
+    'maintenanceService',
+    'supplyService',
+    'otherServices'
   ];
-  String? _selectedService;
+  String? _selectedServiceKey;
   Technician? _selectedTechnician;
   List<Technician> _technicians = [];
 
@@ -86,30 +87,37 @@ class _CreateServiceRequestModalState
   }
 
   String _handleGraphQLError(OperationException? exception) {
-    if (exception == null) return 'Unknown error occurred';
+    final l10n = S.of(context)!;
+
+    if (exception == null) return l10n.unknownErrorOccurred;
     if (exception.linkException != null) {
-      return 'Network error occurred. Please check your connection.';
+      return l10n.networkErrorOccurred;
     }
     if (exception.graphqlErrors.isNotEmpty) {
       return exception.graphqlErrors.map((e) => e.message).join(', ');
     }
-    return 'An error occurred while loading technicians';
+    return l10n.errorLoadingTechnicians;
   }
 
   Future<void> _submitForm() async {
-    if (!_formKey.currentState!.validate() || _selectedTechnician == null)
-      return;
+    final l10n = S.of(context)!;
+
+    if (!_formKey.currentState!.validate() ||
+        _selectedTechnician == null ||
+        _selectedServiceKey == null) return;
 
     setState(() => _isSubmitting = true);
 
     try {
       final userId = await AuthService.getUserId();
-      if (userId == null) throw Exception('User not authenticated');
+      if (userId == null) throw Exception(l10n.userNotAuthenticated);
+
+      final serviceTitle = _localizeService(_selectedServiceKey!, l10n);
 
       await ref
           .read(serviceRequestNotifierProvider.notifier)
           .createServiceRequest(
-            title: _selectedService!,
+            title: serviceTitle,
             description: _descriptionController.text.trim(),
             clientId: userId,
             technicianId: _selectedTechnician!.id ?? '',
@@ -119,7 +127,7 @@ class _CreateServiceRequestModalState
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'Failed to create request: ${e.toString()}';
+          _errorMessage = l10n.failedToCreateRequest(e.toString());
         });
       }
     } finally {
@@ -127,10 +135,11 @@ class _CreateServiceRequestModalState
     }
   }
 
-  InputDecoration _inputDecoration(String label) {
-    final colorScheme = Theme.of(context).colorScheme;
+  InputDecoration _inputDecoration(
+      String labelTextKey, ColorScheme colorScheme) {
+    final l10n = S.of(context)!;
     return InputDecoration(
-      labelText: label,
+      labelText: l10n.translateServiceLabel,
       labelStyle: TextStyle(
         color: colorScheme.primary,
         fontWeight: FontWeight.w600,
@@ -141,7 +150,8 @@ class _CreateServiceRequestModalState
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey.shade400, width: 1.2),
+        borderSide: BorderSide(
+            color: colorScheme.onSurface.withOpacity(0.4), width: 1.2),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -150,18 +160,42 @@ class _CreateServiceRequestModalState
     );
   }
 
+  String _localizeService(String serviceKey, S l10n) {
+    switch (serviceKey) {
+      case 'refillService':
+        return l10n.refillService;
+      case 'maintenanceService':
+        return l10n.maintenanceService;
+      case 'supplyService':
+        return l10n.supplyService;
+      case 'otherServices':
+        return l10n.otherServices;
+      default:
+        return serviceKey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final l10n = S.of(context)!;
+
+    final dialogBackgroundColor =
+        isDarkMode ? Colors.deepPurple.shade800 : Colors.white;
+    final dialogTextColor = isDarkMode ? Colors.white : Colors.black87;
+    final dialogSecondaryTextColor =
+        isDarkMode ? Colors.white70 : Colors.grey.shade600;
+    final dialogPrimaryColor = colorScheme.primary;
 
     return AlertDialog(
-      backgroundColor: Colors.white,
+      backgroundColor: dialogBackgroundColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       title: Text(
-        'Request for Service',
+        l10n.requestForServiceTitle,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: colorScheme.primary,
+          color: dialogPrimaryColor,
         ),
         textAlign: TextAlign.center,
       ),
@@ -169,75 +203,105 @@ class _CreateServiceRequestModalState
         child: Form(
           key: _formKey,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               DropdownButtonFormField<String>(
-                value: _selectedService,
-                decoration: _inputDecoration('Select Service'),
-                dropdownColor: Colors.white,
-                style: TextStyle(fontSize: 16, color: Colors.black87),
-                items: _serviceOptions.map((service) {
+                value: _selectedServiceKey,
+                decoration: _inputDecoration('selectServiceLabel', colorScheme),
+                dropdownColor: dialogBackgroundColor,
+                style: TextStyle(fontSize: 16, color: dialogTextColor),
+                items: _serviceOptions.map((serviceKey) {
                   return DropdownMenuItem(
-                    value: service,
-                    child: Text(service,
-                        style: TextStyle(fontWeight: FontWeight.w500)),
+                    value: serviceKey,
+                    child: Text(_localizeService(serviceKey, l10n),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: dialogTextColor)),
                   );
                 }).toList(),
-                onChanged: (value) => setState(() => _selectedService = value),
+                onChanged: (value) =>
+                    setState(() => _selectedServiceKey = value),
                 validator: (value) =>
-                    value == null ? 'Please select a service' : null,
+                    value == null ? l10n.pleaseSelectService : null,
+                iconEnabledColor: dialogPrimaryColor,
+                iconDisabledColor: dialogSecondaryTextColor,
               ),
               const SizedBox(height: 16),
               if (_isLoadingTechnicians)
-                const CircularProgressIndicator()
-              else if (_errorMessage != null)
+                Center(
+                    child: CircularProgressIndicator(color: dialogPrimaryColor))
+              else if (_errorMessage != null && !_isSubmitting)
                 Text(
                   _errorMessage!,
                   style: TextStyle(
                       color: colorScheme.error, fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
                 )
               else if (_technicians.isEmpty)
-                const Text(
-                  'No available technicians found',
+                Text(
+                  l10n.noAvailableTechniciansFound,
                   style: TextStyle(
-                      fontStyle: FontStyle.italic, color: Colors.grey),
+                      fontStyle: FontStyle.italic,
+                      color: dialogSecondaryTextColor),
+                  textAlign: TextAlign.center,
                 )
               else
                 DropdownButtonFormField<Technician>(
                   value: _selectedTechnician,
-                  decoration: _inputDecoration('Select Technician'),
-                  dropdownColor: Colors.white,
-                  style: TextStyle(fontSize: 16, color: Colors.black87),
+                  decoration:
+                      _inputDecoration('selectTechnicianLabel', colorScheme),
+                  dropdownColor: dialogBackgroundColor,
+                  style: TextStyle(fontSize: 16, color: dialogTextColor),
                   items: _technicians.map((tech) {
                     return DropdownMenuItem(
                       value: tech,
                       child: Text(tech.fullName,
-                          style: TextStyle(fontWeight: FontWeight.w500)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: dialogTextColor)),
                     );
                   }).toList(),
                   onChanged: (value) =>
                       setState(() => _selectedTechnician = value),
                   validator: (value) =>
-                      value == null ? 'Please select a technician' : null,
+                      value == null ? l10n.pleaseSelectTechnician : null,
                   isExpanded: true,
+                  iconEnabledColor: dialogPrimaryColor,
+                  iconDisabledColor: dialogSecondaryTextColor,
                 ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _descriptionController,
-                decoration: _inputDecoration('Description').copyWith(
-                  hintText: 'Describe your service request...',
-                  hintStyle: const TextStyle(
-                      fontStyle: FontStyle.italic, color: Colors.grey),
+                decoration:
+                    _inputDecoration('descriptionLabel', colorScheme).copyWith(
+                  hintText: l10n.describeServiceRequestHint,
+                  hintStyle: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: dialogSecondaryTextColor),
+                  fillColor: dialogBackgroundColor,
+                  filled: true,
                 ),
                 maxLines: 3,
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, color: dialogTextColor),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty)
-                    return 'Please enter a description';
-                  if (value.length > 500)
-                    return 'Description too long (max 500 characters)';
+                    return l10n.pleaseEnterDescription;
+                  if (value.length > 500) return l10n.descriptionTooLong;
                   return null;
                 },
               ),
+              if (_errorMessage != null &&
+                  !_isLoadingTechnicians &&
+                  !_isSubmitting)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Text(
+                    _errorMessage!,
+                    style: TextStyle(
+                        color: colorScheme.error, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
             ],
           ),
         ),
@@ -245,17 +309,17 @@ class _CreateServiceRequestModalState
       actions: [
         TextButton(
           style: TextButton.styleFrom(
-            foregroundColor: colorScheme.primary,
+            foregroundColor: dialogPrimaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
           onPressed: _isSubmitting ? null : () => Navigator.pop(context),
-          child: const Text('Cancel',
+          child: Text(l10n.cancelButton,
               style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: colorScheme.primary,
+            backgroundColor: dialogPrimaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -269,9 +333,10 @@ class _CreateServiceRequestModalState
                   child: CircularProgressIndicator(
                       strokeWidth: 2, color: Colors.white),
                 )
-              : const Text('Submit',
+              : Text(l10n.submitButton,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white)),
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onPrimary)),
         ),
       ],
     );

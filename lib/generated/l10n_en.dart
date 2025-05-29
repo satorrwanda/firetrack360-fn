@@ -337,9 +337,6 @@ class SEn extends S {
   String get statusTitle => 'Status';
 
   @override
-  String get roleLabel => 'Role:';
-
-  @override
   String get notificationsTooltip => 'Notifications';
 
   @override
@@ -406,9 +403,6 @@ class SEn extends S {
   String get errorLoadingServiceRequests => 'Error loading service requests';
 
   @override
-  String get retryButton => 'Retry';
-
-  @override
   String get noServiceRequestsFound => 'No Service Requests Found';
 
   @override
@@ -457,12 +451,6 @@ class SEn extends S {
   String get clientInformationTitle => 'Client Information';
 
   @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get phoneLabel => 'Phone';
-
-  @override
   String get technicianInformationTitle => 'Technician Information';
 
   @override
@@ -470,11 +458,6 @@ class SEn extends S {
 
   @override
   String get closeButton => 'Close';
-
-  @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
-    return 'Showing $startIndex-$endIndex of $totalItems';
-  }
 
   @override
   String get rowsLabel => 'Rows: ';
@@ -588,4 +571,346 @@ class SEn extends S {
   String paginationPage(Object currentPage, Object totalPages) {
     return 'Page $currentPage of $totalPages';
   }
+
+  @override
+  String get columnEmail => 'Email';
+
+  @override
+  String get columnPhone => 'Phone';
+
+  @override
+  String get columnRole => 'Role';
+
+  @override
+  String get locationLabel => 'Location';
+
+  @override
+  String get statusVerified => 'Verified';
+
+  @override
+  String get statusUnverified => 'Unverified';
+
+  @override
+  String get userManagementTitle => 'User Management';
+
+  @override
+  String get userListRefreshed => 'User list refreshed successfully';
+
+  @override
+  String get addUserTooltip => 'Add User';
+
+  @override
+  String get searchUsersHint => 'Search users...';
+
+  @override
+  String get errorLoadingUsers => 'Error loading users';
+
+  @override
+  String get noUsersFound => 'No users found';
+
+  @override
+  String get noUsersMatchSearch => 'No users match your search';
+
+  @override
+  String get loadingMessage => 'Loading users...';
+
+  @override
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return 'Showing $startIndex-$endIndex of $totalCount';
+  }
+
+  @override
+  String get requestForServiceTitle => 'Request for Service';
+
+  @override
+  String get refillService => 'Refill';
+
+  @override
+  String get maintenanceService => 'Maintenance';
+
+  @override
+  String get supplyService => 'Supply';
+
+  @override
+  String get otherServices => 'Other Services';
+
+  @override
+  String get selectServiceLabel => 'Select Service';
+
+  @override
+  String get selectTechnicianLabel => 'Select Technician';
+
+  @override
+  String get pleaseSelectService => 'Please select a service';
+
+  @override
+  String get pleaseSelectTechnician => 'Please select a technician';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get descriptionTooLong => 'Description too long (max 500 characters)';
+
+  @override
+  String get describeServiceRequestHint => 'Describe your service request...';
+
+  @override
+  String get unknownErrorOccurred => 'Unknown error occurred';
+
+  @override
+  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+
+  @override
+  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+
+  @override
+  String get noAvailableTechniciansFound => 'No available technicians found';
+
+  @override
+  String failedToCreateRequest(Object errorMessage) {
+    return 'Failed to create request: $errorMessage';
+  }
+
+  @override
+  String get submitButton => 'Submit';
+
+  @override
+  String get userNotAuthenticated => 'User not authenticated';
+
+  @override
+  String get translateServiceLabel => 'Translate Service';
+
+  @override
+  String get labelTextKey => 'Service';
+
+  @override
+  String get loadingProfileMessage => 'Loading profile...';
+
+  @override
+  String get errorLoadingProfile => 'Error Loading Profile';
+
+  @override
+  String get profileDataNotFound => 'Profile data not found';
+
+  @override
+  String get profilePageTitle => 'Profile';
+
+  @override
+  String failedToUpdateProfileImage(Object error) {
+    return 'Failed to update profile image: $error';
+  }
+
+  @override
+  String failedToRemoveProfileImage(Object error) {
+    return 'Failed to remove profile image: $error';
+  }
+
+  @override
+  String get anonymousUserName => '____   _____';
+
+  @override
+  String get verifiedAccountLabel => 'Verified Account';
+
+  @override
+  String get personalInformationTitle => 'Personal Information';
+
+  @override
+  String get addressTitle => 'Address';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Phone';
+
+  @override
+  String get roleLabel => 'Role';
+
+  @override
+  String get dateOfBirthLabel => 'Date of Birth';
+
+  @override
+  String get streetLabel => 'Street';
+
+  @override
+  String get cityStateLabel => 'City/State';
+
+  @override
+  String get zipCodeLabel => 'ZIP Code';
+
+  @override
+  String get notProvided => 'Not provided';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get profileSettingsSectionTitle => 'Profile';
+
+  @override
+  String get appSettingsSectionTitle => 'App Settings';
+
+  @override
+  String get profileSettingsTitle => 'Profile Settings';
+
+  @override
+  String get profileSettingsSubtitle => 'Update your personal information';
+
+  @override
+  String get changePasswordTitle => 'Change Password';
+
+  @override
+  String get changePasswordSubtitle => 'Manage your security settings';
+
+  @override
+  String get languageTitle => 'Language';
+
+  @override
+  String get languageSubtitle => 'Change app language';
+
+  @override
+  String get notifications_loadingUser => 'Notifications (Loading User...)';
+
+  @override
+  String get notifications_error => 'Notifications (Error)';
+
+  @override
+  String get notifications_title => 'Notifications';
+
+  @override
+  String get tooltip_showAll => 'Show All';
+
+  @override
+  String get tooltip_showUnread => 'Show Unread Only';
+
+  @override
+  String get menu_markAllAsRead => 'Mark All as Read';
+
+  @override
+  String get menu_refresh => 'Refresh';
+
+  @override
+  String get loading_userData => 'Loading user data...';
+
+  @override
+  String get loading_notifications => 'Loading notifications...';
+
+  @override
+  String get emptyState_unreadTitle => 'No unread notifications';
+
+  @override
+  String get emptyState_allTitle => 'No notifications yet';
+
+  @override
+  String get emptyState_unreadSubtitle => 'All caught up! 🎉';
+
+  @override
+  String get emptyState_allSubtitle => 'Notifications will appear here when you receive them';
+
+  @override
+  String get errorState_title => 'Failed to load notifications';
+
+  @override
+  String get errorState_retry => 'Try Again';
+
+  @override
+  String get delete_swipeAction => 'Delete';
+
+  @override
+  String get highPriority_label => 'High Priority';
+
+  @override
+  String get date_justNow => 'Just now';
+
+  @override
+  String date_minutesAgo(Object minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String date_hoursAgo(Object hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String date_daysAgo(Object days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get deleteConfirmation_title => 'Delete Notification';
+
+  @override
+  String deleteConfirmation_content(Object title) {
+    return 'Are you sure you want to delete \"$title\"?';
+  }
+
+  @override
+  String get button_cancel => 'Cancel';
+
+  @override
+  String get button_delete => 'Delete';
+
+  @override
+  String get button_undo => 'Undo';
+
+  @override
+  String snackbar_notificationDeleted(Object title) {
+    return 'Deleted \"$title\"';
+  }
+
+  @override
+  String get snackbar_markedAllAsRead => 'All notifications marked as read';
+
+  @override
+  String get addTechnician_dialogTitle => 'Add New Technician';
+
+  @override
+  String get textField_firstName => 'First Name';
+
+  @override
+  String get textField_lastName => 'Last Name';
+
+  @override
+  String get textField_email => 'Email';
+
+  @override
+  String get textField_phone => 'Phone';
+
+  @override
+  String get validation_firstNameRequired => 'Please enter a first name';
+
+  @override
+  String get validation_lastNameRequired => 'Please enter a last name';
+
+  @override
+  String get validation_emailRequired => 'Please enter an email';
+
+  @override
+  String get validation_emailValid => 'Please enter a valid email';
+
+  @override
+  String get validation_phoneRequired => 'Please enter a phone number';
+
+  @override
+  String get button_create => 'Create';
+
+  @override
+  String get button_creating => 'Creating...';
+
+  @override
+  String get error_requestTimedOut => 'Request timed out';
+
+  @override
+  String get error_prefix => 'Error';
+
+  @override
+  String get snackbar_technicianCreatedSuccess => 'Technician created successfully';
+
+  @override
+  String get snackbar_technicianCreatedError => 'Failed to create technician';
 }

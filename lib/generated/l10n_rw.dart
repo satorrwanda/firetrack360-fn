@@ -337,9 +337,6 @@ class SRw extends S {
   String get statusTitle => 'Imiterere';
 
   @override
-  String get roleLabel => 'Uruhare';
-
-  @override
   String get notificationsTooltip => 'Ubutumwa';
 
   @override
@@ -349,7 +346,7 @@ class SRw extends S {
   String get confirmLogoutMessage => 'Urifuza gusohoka?';
 
   @override
-  String get cancelButton => 'Kureka';
+  String get cancelButton => 'Hagarika';
 
   @override
   String get logoutButton => 'Gusohoka';
@@ -370,7 +367,7 @@ class SRw extends S {
   String get drawerItemHome => 'Ahabanza';
 
   @override
-  String get drawerItemUsers => 'Abakoresha';
+  String get drawerItemUsers => 'Abakozi';
 
   @override
   String get drawerItemService => 'Serivisi';
@@ -404,9 +401,6 @@ class SRw extends S {
 
   @override
   String get errorLoadingServiceRequests => 'Ikibazo mu gufata  serivisi';
-
-  @override
-  String get retryButton => 'Ongera ugerageze';
 
   @override
   String get noServiceRequestsFound => 'Nta byifuzo bya Serivisi byabonetse';
@@ -457,12 +451,6 @@ class SRw extends S {
   String get clientInformationTitle => 'Amakuru y\'Umukiriya';
 
   @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get phoneLabel => 'Nimero ya telefone';
-
-  @override
   String get technicianInformationTitle => 'Amakuru y\'umutekinisiye';
 
   @override
@@ -470,11 +458,6 @@ class SRw extends S {
 
   @override
   String get closeButton => 'Funga';
-
-  @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
-    return 'Erekana $startIndex-$endIndex muri $totalItems';
-  }
 
   @override
   String get rowsLabel => 'Imirongo: ';
@@ -588,4 +571,346 @@ class SRw extends S {
   String paginationPage(Object currentPage, Object totalPages) {
     return 'Urupapuro $currentPage rwa $totalPages';
   }
+
+  @override
+  String get columnEmail => 'Email';
+
+  @override
+  String get columnPhone => 'Phone';
+
+  @override
+  String get columnRole => 'Role';
+
+  @override
+  String get locationLabel => 'Location';
+
+  @override
+  String get statusVerified => 'Verified';
+
+  @override
+  String get statusUnverified => 'Unverified';
+
+  @override
+  String get userManagementTitle => 'Ubuyobozi bw\'abakoresha';
+
+  @override
+  String get userListRefreshed => 'Amakuru y\'abakoresha yabonetse';
+
+  @override
+  String get addUserTooltip => 'Ongeza umukozi';
+
+  @override
+  String get searchUsersHint => 'Shakisha abakoresha...';
+
+  @override
+  String get errorLoadingUsers => 'Habayemo ikibazo';
+
+  @override
+  String get noUsersFound => 'Nta bakoresha babonetse';
+
+  @override
+  String get noUsersMatchSearch => 'Abo mwashatse ntabwo babonetse';
+
+  @override
+  String get loadingMessage => 'Gukura amakuru...';
+
+  @override
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return '$startIndex-$endIndex / $totalItems';
+  }
+
+  @override
+  String get requestForServiceTitle => 'Request for Service';
+
+  @override
+  String get refillService => 'Refill';
+
+  @override
+  String get maintenanceService => 'Maintenance';
+
+  @override
+  String get supplyService => 'Supply';
+
+  @override
+  String get otherServices => 'Other Services';
+
+  @override
+  String get selectServiceLabel => 'Select Service';
+
+  @override
+  String get selectTechnicianLabel => 'Select Technician';
+
+  @override
+  String get pleaseSelectService => 'Please select a service';
+
+  @override
+  String get pleaseSelectTechnician => 'Please select a technician';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get descriptionTooLong => 'Description too long (max 500 characters)';
+
+  @override
+  String get describeServiceRequestHint => 'Describe your service request...';
+
+  @override
+  String get unknownErrorOccurred => 'Unknown error occurred';
+
+  @override
+  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+
+  @override
+  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+
+  @override
+  String get noAvailableTechniciansFound => 'No available technicians found';
+
+  @override
+  String failedToCreateRequest(Object errorMessage) {
+    return 'Failed to create request: $errorMessage';
+  }
+
+  @override
+  String get submitButton => 'Submit';
+
+  @override
+  String get userNotAuthenticated => 'Ukoresha ntaho asangwa';
+
+  @override
+  String get translateServiceLabel => 'Serivisi yo guhindura';
+
+  @override
+  String get labelTextKey => 'Serivisi';
+
+  @override
+  String get loadingProfileMessage => 'Gukoresha amakuru...';
+
+  @override
+  String get errorLoadingProfile => 'Ikosa mu gukoresha amakuru';
+
+  @override
+  String get profileDataNotFound => 'Amakuru ntaho asangwa';
+
+  @override
+  String get profilePageTitle => 'Amakuru yanjye';
+
+  @override
+  String failedToUpdateProfileImage(Object error) {
+    return 'Échec de la mise à jour de l\'image : $error';
+  }
+
+  @override
+  String failedToRemoveProfileImage(Object error) {
+    return 'Échec de la gukuraho l\'image : $error';
+  }
+
+  @override
+  String get anonymousUserName => '____   _____';
+
+  @override
+  String get verifiedAccountLabel => 'Konti yemejwe';
+
+  @override
+  String get personalInformationTitle => 'Amakuru bwite';
+
+  @override
+  String get addressTitle => 'Aho aherereye';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Nimero ya telefone';
+
+  @override
+  String get roleLabel => 'Uruhare';
+
+  @override
+  String get dateOfBirthLabel => 'Itariki y\'amavuko';
+
+  @override
+  String get streetLabel => 'Umuhanda';
+
+  @override
+  String get cityStateLabel => 'Umujyi/Intara';
+
+  @override
+  String get zipCodeLabel => 'Kode y\'iposita';
+
+  @override
+  String get notProvided => 'Ntabwo yatanze';
+
+  @override
+  String get retryButton => 'Ongera ugerageze';
+
+  @override
+  String get settingsTitle => 'Uburyo';
+
+  @override
+  String get profileSettingsSectionTitle => 'Amakuru';
+
+  @override
+  String get appSettingsSectionTitle => 'Uburyo bwa porogaramu';
+
+  @override
+  String get profileSettingsTitle => 'Uburyo bw\'amakuru';
+
+  @override
+  String get profileSettingsSubtitle => 'Vugurura amakuru bwite';
+
+  @override
+  String get changePasswordTitle => 'Hindura ijambo ry\'ibanga';
+
+  @override
+  String get changePasswordSubtitle => 'Genzura uburyo bw\'umutekano';
+
+  @override
+  String get languageTitle => 'Ururimi';
+
+  @override
+  String get languageSubtitle => 'Hindura ururimi rwa porogaramu';
+
+  @override
+  String get notifications_loadingUser => 'Umenyesha (Gutegura umukoresha...)';
+
+  @override
+  String get notifications_error => 'Umenyesha (Ikosa)';
+
+  @override
+  String get notifications_title => 'Amamenyesha';
+
+  @override
+  String get tooltip_showAll => 'Erekana Byose';
+
+  @override
+  String get tooltip_showUnread => 'Erekana Ibitarasomwa Gusa';
+
+  @override
+  String get menu_markAllAsRead => 'Marka Byose nka Byasomwe';
+
+  @override
+  String get menu_refresh => 'Subiramo';
+
+  @override
+  String get loading_userData => 'Gutegura amakuru y\'umukoresha...';
+
+  @override
+  String get loading_notifications => 'Gutegura umenyesha...';
+
+  @override
+  String get emptyState_unreadTitle => 'Nta menyesha ritarasomwa';
+
+  @override
+  String get emptyState_allTitle => 'Nta menyesha rirahari';
+
+  @override
+  String get emptyState_unreadSubtitle => 'Byose byamaze kuboneka! 🎉';
+
+  @override
+  String get emptyState_allSubtitle => 'Amamenyesha azagaragara hano';
+
+  @override
+  String get errorState_title => 'Kunanirwa gutegura umenyesha';
+
+  @override
+  String get errorState_retry => 'Ongera Ugerageze';
+
+  @override
+  String get delete_swipeAction => 'Siba';
+
+  @override
+  String get highPriority_label => 'Ubwihutirwe Bwinshi';
+
+  @override
+  String get date_justNow => 'Hashize akanya';
+
+  @override
+  String date_minutesAgo(Object minutes) {
+    return 'Hashize iminota $minutes';
+  }
+
+  @override
+  String date_hoursAgo(Object hours) {
+    return 'Hashize amasaha $hours';
+  }
+
+  @override
+  String date_daysAgo(Object days) {
+    return 'Hashize iminsi $days';
+  }
+
+  @override
+  String get deleteConfirmation_title => 'Siba';
+
+  @override
+  String deleteConfirmation_content(Object title) {
+    return 'Uzi neza ko ushaka gusiba \"$title\"?';
+  }
+
+  @override
+  String get button_cancel => 'Hagarika';
+
+  @override
+  String get button_delete => 'Gusiba';
+
+  @override
+  String get button_undo => 'Gusubizaho';
+
+  @override
+  String snackbar_notificationDeleted(Object title) {
+    return 'Byasibwe \"$title\"';
+  }
+
+  @override
+  String get snackbar_markedAllAsRead => 'Amamenyesha yose yemejwe nk\'ayasomwe';
+
+  @override
+  String get addTechnician_dialogTitle => 'Ongeraho umukozi mushya';
+
+  @override
+  String get textField_firstName => 'Izina rya mbere';
+
+  @override
+  String get textField_lastName => 'Izina rya nyuma';
+
+  @override
+  String get textField_email => 'Imeri';
+
+  @override
+  String get textField_phone => 'Terefoni';
+
+  @override
+  String get validation_firstNameRequired => 'Injiza izina rya mbere';
+
+  @override
+  String get validation_lastNameRequired => 'Injiza izina rya nyuma';
+
+  @override
+  String get validation_emailRequired => 'Injiza imeri';
+
+  @override
+  String get validation_emailValid => 'Injiza imeri iboneye';
+
+  @override
+  String get validation_phoneRequired => 'Injiza numero ya terefoni';
+
+  @override
+  String get button_create => 'Ohereza';
+
+  @override
+  String get button_creating => 'Kohereza...';
+
+  @override
+  String get error_requestTimedOut => 'Igihe cyo gusaba cyararangiye';
+
+  @override
+  String get error_prefix => 'Ikosa';
+
+  @override
+  String get snackbar_technicianCreatedSuccess => 'Umukozi yarezwe neza';
+
+  @override
+  String get snackbar_technicianCreatedError => 'Kurema umukozi byarananiranye';
 }

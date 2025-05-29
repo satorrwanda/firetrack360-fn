@@ -406,10 +406,6 @@
     "@homePageTitle": {
         "description": "Title for the Home page"
     },
-    "welcomeBackTitle": "Welcome Back",
-    "@welcomeBackTitle": {
-        "description": "Title for the welcome back message"
-    },
     "welcomeBackSubtitle": "Manage your fire safety equipment efficiently",
     "@welcomeBackSubtitle": {
         "description": "Subtitle for the welcome back message"
@@ -441,10 +437,6 @@
     "statusTitle": "Status",
     "@statusTitle": {
         "description": "Title for the status section"
-    },
-    "roleLabel": "Role:",
-    "@roleLabel": {
-        "description": "Label for the role section"
     },
     "notificationsTooltip": "Notifications",
     "@notificationsTooltip": {
@@ -534,10 +526,6 @@
     "@errorLoadingServiceRequests": {
         "description": "Error message when service requests fail to load"
     },
-    "retryButton": "Retry",
-    "@retryButton": {
-        "description": "Text for the retry button"
-    },
     "noServiceRequestsFound": "No Service Requests Found",
     "@noServiceRequestsFound": {
         "description": "Message displayed when no service requests are found"
@@ -602,14 +590,6 @@
     "@clientInformationTitle": {
         "description": "Title for the client information section in the details dialog"
     },
-    "emailLabel": "Email",
-    "@emailLabel": {
-        "description": "Label for the 'Email' field in the details dialog"
-    },
-    "phoneLabel": "Phone",
-    "@phoneLabel": {
-        "description": "Label for the 'Phone' field in the details dialog"
-    },
     "technicianInformationTitle": "Technician Information",
     "@technicianInformationTitle": {
         "description": "Title for the technician information section in the details dialog"
@@ -621,24 +601,6 @@
     "closeButton": "Close",
     "@closeButton": {
         "description": "Text for the close button"
-    },
-    "showingRecords": "Showing {startIndex}-{endIndex} of {totalItems}",
-    "@showingRecords": {
-        "description": "Text showing the range of records displayed",
-        "placeholders": {
-            "startIndex": {
-                "type": "int",
-                "example": "1"
-            },
-            "endIndex": {
-                "type": "int",
-                "example": "10"
-            },
-            "totalItems": {
-                "type": "int",
-                "example": "50"
-            }
-        }
     },
     "rowsLabel": "Rows: ",
     "@rowsLabel": {
@@ -776,5 +738,477 @@
             "currentPage": {},
             "totalPages": {}
         }
+    },
+    "columnEmail": "Email",
+    "@columnEmail": {
+        "description": "Header for the Email column in the user table"
+    },
+    "columnPhone": "Phone",
+    "@columnPhone": {
+        "description": "Header for the Phone column in the user table"
+    },
+    "columnRole": "Role",
+    "@columnRole": {
+        "description": "Header for the Role column in the user table"
+    },
+    "locationLabel": "Location",
+    "@locationLabel": {
+        "description": "Label for Location in user details"
+    },
+    "statusVerified": "Verified",
+    "@statusVerified": {
+        "description": "Status text for a verified user"
+    },
+    "statusUnverified": "Unverified",
+    "@statusUnverified": {
+        "description": "Status text for an unverified user"
+    },
+    "userManagementTitle": "User Management",
+    "@userManagementTitle": {
+        "description": "Title for the user management page"
+    },
+    "userListRefreshed": "User list refreshed successfully",
+    "@userListRefreshed": {
+        "description": "Success message after refreshing the user list"
+    },
+    "addUserTooltip": "Add User",
+    "@addUserTooltip": {
+        "description": "Tooltip for the add user button"
+    },
+    "searchUsersHint": "Search users...",
+    "@searchUsersHint": {
+        "description": "Hint text for the users search bar"
+    },
+    "errorLoadingUsers": "Error loading users",
+    "@errorLoadingUsers": {
+        "description": "Error message when loading users fails"
+    },
+    "noUsersFound": "No users found",
+    "@noUsersFound": {
+        "description": "Message displayed when no users are found"
+    },
+    "noUsersMatchSearch": "No users match your search",
+    "@noUsersMatchSearch": {
+        "description": "Message displayed when no users match the search criteria"
+    },
+    "loadingMessage": "Loading users...",
+    "@loadingMessage": {
+        "description": "Message displayed while users are loading"
+    },
+    "showingRecords": "Showing {startIndex}-{endIndex} of {totalCount}",
+    "@showingRecords": {
+        "description": "Text showing the range of records being displayed",
+        "placeholders": {
+            "startIndex": {},
+            "endIndex": {},
+            "totalCount": {}
+        }
+    },
+    "requestForServiceTitle": "Request for Service",
+    "@requestForServiceTitle": {
+        "description": "Title of the service request modal"
+    },
+    "refillService": "Refill",
+    "@refillService": {
+        "description": "Service option: Refill"
+    },
+    "maintenanceService": "Maintenance",
+    "@maintenanceService": {
+        "description": "Service option: Maintenance"
+    },
+    "supplyService": "Supply",
+    "@supplyService": {
+        "description": "Service option: Supply"
+    },
+    "otherServices": "Other Services",
+    "@otherServices": {
+        "description": "Service option: Other Services"
+    },
+    "selectServiceLabel": "Select Service",
+    "@selectServiceLabel": {
+        "description": "Label for the service selection dropdown"
+    },
+    "selectTechnicianLabel": "Select Technician",
+    "@selectTechnicianLabel": {
+        "description": "Label for the technician selection dropdown"
+    },
+    "pleaseSelectService": "Please select a service",
+    "@pleaseSelectService": {
+        "description": "Validation message: Service selection required"
+    },
+    "pleaseSelectTechnician": "Please select a technician",
+    "@pleaseSelectTechnician": {
+        "description": "Validation message: Technician selection required"
+    },
+    "pleaseEnterDescription": "Please enter a description",
+    "@pleaseEnterDescription": {
+        "description": "Validation message: Description required"
+    },
+    "descriptionTooLong": "Description too long (max 500 characters)",
+    "@descriptionTooLong": {
+        "description": "Validation message: Description exceeds character limit"
+    },
+    "describeServiceRequestHint": "Describe your service request...",
+    "@describeServiceRequestHint": {
+        "description": "Hint text for the service request description field"
+    },
+    "unknownErrorOccurred": "Unknown error occurred",
+    "@unknownErrorOccurred": {
+        "description": "Generic error message"
+    },
+    "networkErrorOccurred": "Network error occurred. Please check your connection.",
+    "@networkErrorOccurred": {
+        "description": "Network connection error message"
+    },
+    "errorLoadingTechnicians": "An error occurred while loading technicians",
+    "@errorLoadingTechnicians": {
+        "description": "Error message when technicians fail to load"
+    },
+    "noAvailableTechniciansFound": "No available technicians found",
+    "@noAvailableTechniciansFound": {
+        "description": "Message when no technicians are available"
+    },
+    "failedToCreateRequest": "Failed to create request: {errorMessage}",
+    "@failedToCreateRequest": {
+        "description": "Error message when service request creation fails",
+        "placeholders": {
+            "errorMessage": {}
+        }
+    },
+    "submitButton": "Submit",
+    "@submitButton": {
+        "description": "Text for the submit button"
+    },
+    "userNotAuthenticated": "User not authenticated",
+    "@userNotAuthenticated": {
+        "description": "Error message when the user is not authenticated"
+    },
+    "translateServiceLabel": "Translate Service",
+    "@translateServiceLabel": {
+        "description": "Label for the translate service option"
+    },
+    "labelTextKey": "Service",
+    "@labelTextKey": {
+        "description": "The label text for the service",
+        "type": "text",
+        "placeholders": {}
+    },
+    "loadingProfileMessage": "Loading profile...",
+    "@loadingProfileMessage": {
+        "description": "Message displayed while the profile is loading"
+    },
+    "errorLoadingProfile": "Error Loading Profile",
+    "@errorLoadingProfile": {
+        "description": "Title for the error screen when profile loading fails"
+    },
+    "profileDataNotFound": "Profile data not found",
+    "@profileDataNotFound": {
+        "description": "Error message when profile data is not found"
+    },
+    "profilePageTitle": "Profile",
+    "@profilePageTitle": {
+        "description": "Title for the Profile page"
+    },
+    "failedToUpdateProfileImage": "Failed to update profile image: {error}",
+    "@failedToUpdateProfileImage": {
+        "description": "Error message when updating profile image fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRemoveProfileImage": "Failed to remove profile image: {error}",
+    "@failedToRemoveProfileImage": {
+        "description": "Error message when removing profile image fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "anonymousUserName": "____   _____",
+    "@anonymousUserName": {
+        "description": "Placeholder text for user name when not available"
+    },
+    "verifiedAccountLabel": "Verified Account",
+    "@verifiedAccountLabel": {
+        "description": "Label indicating a user has a verified account"
+    },
+    "personalInformationTitle": "Personal Information",
+    "@personalInformationTitle": {
+        "description": "Title for the Personal Information section"
+    },
+    "addressTitle": "Address",
+    "@addressTitle": {
+        "description": "Title for the Address section"
+    },
+    "emailLabel": "Email",
+    "@emailLabel": {
+        "description": "Label for the Email field"
+    },
+    "phoneLabel": "Phone",
+    "@phoneLabel": {
+        "description": "Label for the Phone field"
+    },
+    "roleLabel": "Role",
+    "@roleLabel": {
+        "description": "Label for the Role field"
+    },
+    "dateOfBirthLabel": "Date of Birth",
+    "@dateOfBirthLabel": {
+        "description": "Label for the Date of Birth field"
+    },
+    "streetLabel": "Street",
+    "@streetLabel": {
+        "description": "Label for the Street field in address"
+    },
+    "cityStateLabel": "City/State",
+    "@cityStateLabel": {
+        "description": "Label for the City/State field in address"
+    },
+    "zipCodeLabel": "ZIP Code",
+    "@zipCodeLabel": {
+        "description": "Label for the ZIP Code field in address"
+    },
+    "notProvided": "Not provided",
+    "@notProvided": {
+        "description": "Placeholder text for information that is not provided"
+    },
+    "retryButton": "Retry",
+    "@retryButton": {
+        "description": "Text for the retry button"
+    },
+    "settingsTitle": "Settings",
+    "@settingsTitle": {
+        "description": "Title for the Settings page"
+    },
+    "profileSettingsSectionTitle": "Profile",
+    "@profileSettingsSectionTitle": {
+        "description": "Section title for profile-related settings"
+    },
+    "appSettingsSectionTitle": "App Settings",
+    "@appSettingsSectionTitle": {
+        "description": "Section title for app-related settings"
+    },
+    "profileSettingsTitle": "Profile Settings",
+    "@profileSettingsTitle": {
+        "description": "Title for the profile settings tile"
+    },
+    "profileSettingsSubtitle": "Update your personal information",
+    "@profileSettingsSubtitle": {
+        "description": "Subtitle for the profile settings tile"
+    },
+    "changePasswordTitle": "Change Password",
+    "@changePasswordTitle": {
+        "description": "Title for the change password settings tile"
+    },
+    "changePasswordSubtitle": "Manage your security settings",
+    "@changePasswordSubtitle": {
+        "description": "Subtitle for the change password settings tile"
+    },
+    "languageTitle": "Language",
+    "@languageTitle": {
+        "description": "Title for the language settings tile"
+    },
+    "languageSubtitle": "Change app language",
+    "@languageSubtitle": {
+        "description": "Subtitle for the language settings tile"
+    },
+    "notifications_loadingUser": "Notifications (Loading User...)",
+    "@notifications_loadingUser": {
+        "description": "Title for the notifications page while loading user data"
+    },
+    "notifications_error": "Notifications (Error)",
+    "@notifications_error": {
+        "description": "Title for the notifications page when there is an error"
+    },
+    "notifications_title": "Notifications",
+    "@notifications_title": {
+        "description": "Title for the notifications page"
+    },
+    "tooltip_showAll": "Show All",
+    "@tooltip_showAll": {
+        "description": "Tooltip for showing all notifications"
+    },
+    "tooltip_showUnread": "Show Unread Only",
+    "@tooltip_showUnread": {
+        "description": "Tooltip for showing only unread notifications"
+    },
+    "menu_markAllAsRead": "Mark All as Read",
+    "@menu_markAllAsRead": {
+        "description": "Menu option to mark all notifications as read"
+    },
+    "menu_refresh": "Refresh",
+    "@menu_refresh": {
+        "description": "Menu option to refresh notifications"
+    },
+    "loading_userData": "Loading user data...",
+    "@loading_userData": {
+        "description": "Message displayed while user data is loading"
+    },
+    "loading_notifications": "Loading notifications...",
+    "@loading_notifications": {
+        "description": "Message displayed while notifications are loading"
+    },
+    "emptyState_unreadTitle": "No unread notifications",
+    "@emptyState_unreadTitle": {
+        "description": "Title for the empty state when there are no unread notifications"
+    },
+    "emptyState_allTitle": "No notifications yet",
+    "@emptyState_allTitle": {
+        "description": "Title for the empty state when there are no notifications"
+    },
+    "emptyState_unreadSubtitle": "All caught up! 🎉",
+    "@emptyState_unreadSubtitle": {
+        "description": "Subtitle for the empty state when there are no unread notifications"
+    },
+    "emptyState_allSubtitle": "Notifications will appear here when you receive them",
+    "@emptyState_allSubtitle": {
+        "description": "Subtitle for the empty state when there are no notifications"
+    },
+    "errorState_title": "Failed to load notifications",
+    "@errorState_title": {
+        "description": "Title for the error state when notifications fail to load"
+    },
+    "errorState_retry": "Try Again",
+    "@errorState_retry": {
+        "description": "Text for the retry button in the error state"
+    },
+    "delete_swipeAction": "Delete",
+    "@delete_swipeAction": {
+        "description": "Text for the delete action when swiping a notification"
+    },
+    "highPriority_label": "High Priority",
+    "@highPriority_label": {
+        "description": "Label for high priority notifications"
+    },
+    "date_justNow": "Just now",
+    "@date_justNow": {
+        "description": "Time difference less than a minute"
+    },
+    "date_minutesAgo": "{minutes}m ago",
+    "@date_minutesAgo": {
+        "description": "Time difference in minutes",
+        "placeholders": {
+            "minutes": {
+               
+            }
+        }
+    },
+    "date_hoursAgo": "{hours}h ago",
+    "@date_hoursAgo": {
+        "description": "Time difference in hours (less than a day)",
+        "placeholders": {
+            "hours": {
+            }
+        }
+    },
+    "date_daysAgo": "{days}d ago",
+    "@date_daysAgo": {
+        "description": "Time difference in days (less than a week)",
+        "placeholders": {
+            "days": {
+            }
+        }
+    },
+    "deleteConfirmation_title": "Delete Notification",
+    "@deleteConfirmation_title": {
+        "description": "Title for the delete confirmation dialog",
+        "placeholders": {}
+    },
+    "deleteConfirmation_content": "Are you sure you want to delete \"{title}\"?",
+    "@deleteConfirmation_content": {
+        "description": "Confirmation message for deleting a notification",
+        "placeholders": {
+            "title": {
+            }
+        }
+    },
+    "button_cancel": "Cancel",
+    "@button_cancel": {
+        "description": "Text for the cancel button in the delete confirmation dialog"
+    },
+    "button_delete": "Delete",
+    "@button_delete": {
+        "description": "Text for the delete button in the delete confirmation dialog"
+    },
+    "button_undo": "Undo",
+    "@button_undo": {
+        "description": "Text for the undo button in the snackbar after deleting a notification"
+    },
+    "snackbar_notificationDeleted": "Deleted \"{title}\"",
+    "@snackbar_notificationDeleted": {
+        "description": "Snackbar message after deleting a notification",
+        "placeholders": {
+            "title": {
+                
+            }
+        }
+    },
+    "snackbar_markedAllAsRead": "All notifications marked as read",
+    "@snackbar_markedAllAsRead": {
+        "description": "Snackbar message after marking all notifications as read"
+    },
+    "addTechnician_dialogTitle": "Add New Technician",
+    "@addTechnician_dialogTitle": {
+        "description": "Title of the dialog to add a new technician"
+    },
+    "textField_firstName": "First Name",
+    "@textField_firstName": {
+        "description": "Label for the first name input field"
+    },
+    "textField_lastName": "Last Name",
+    "@textField_lastName": {
+        "description": "Label for the last name input field"
+    },
+    "textField_email": "Email",
+    "@textField_email": {
+        "description": "Label for the email input field"
+    },
+    "textField_phone": "Phone",
+    "@textField_phone": {
+        "description": "Label for the phone input field"
+    },
+    "validation_firstNameRequired": "Please enter a first name",
+    "@validation_firstNameRequired": {
+        "description": "Validation message for required first name"
+    },
+    "validation_lastNameRequired": "Please enter a last name",
+    "@validation_lastNameRequired": {
+        "description": "Validation message for required last name"
+    },
+    "validation_emailRequired": "Please enter an email",
+    "@validation_emailRequired": {
+        "description": "Validation message for required email"
+    },
+    "validation_emailValid": "Please enter a valid email",
+    "@validation_emailValid": {
+        "description": "Validation message for invalid email format"
+    },
+    "validation_phoneRequired": "Please enter a phone number",
+    "@validation_phoneRequired": {
+        "description": "Validation message for required phone number"
+    },
+    "button_create": "Create",
+    "@button_create": {
+        "description": "Text for the create button"
+    },
+    "button_creating": "Creating...",
+    "@button_creating": {
+        "description": "Text for the create button while the request is in progress"
+    },
+    "error_requestTimedOut": "Request timed out",
+    "@error_requestTimedOut": {
+        "description": "Error message when a request times out"
+    },
+    "error_prefix": "Error",
+    "@error_prefix": {
+        "description": "Prefix used for general error messages"
+    },
+    "snackbar_technicianCreatedSuccess": "Technician created successfully",
+    "@snackbar_technicianCreatedSuccess": {
+        "description": "Snackbar message on successful technician creation"
+    },
+    "snackbar_technicianCreatedError": "Failed to create technician",
+    "@snackbar_technicianCreatedError": {
+        "description": "Snackbar message on failed technician creation (generic)"
     }
+
 }

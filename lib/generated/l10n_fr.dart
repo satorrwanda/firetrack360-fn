@@ -337,9 +337,6 @@ class SFr extends S {
   String get statusTitle => 'Statut';
 
   @override
-  String get roleLabel => 'Rôle';
-
-  @override
   String get notificationsTooltip => 'Notifications';
 
   @override
@@ -406,9 +403,6 @@ class SFr extends S {
   String get errorLoadingServiceRequests => 'Erreur lors du chargement des demandes de service';
 
   @override
-  String get retryButton => 'Réessayer';
-
-  @override
   String get noServiceRequestsFound => 'Aucune demande de service trouvée';
 
   @override
@@ -457,12 +451,6 @@ class SFr extends S {
   String get clientInformationTitle => 'Informations client';
 
   @override
-  String get emailLabel => 'Email';
-
-  @override
-  String get phoneLabel => 'Téléphone';
-
-  @override
   String get technicianInformationTitle => 'Informations technicien';
 
   @override
@@ -470,11 +458,6 @@ class SFr extends S {
 
   @override
   String get closeButton => 'Fermer';
-
-  @override
-  String showingRecords(int startIndex, int endIndex, int totalItems) {
-    return 'Affichage de $startIndex-$endIndex sur $totalItems';
-  }
 
   @override
   String get rowsLabel => 'Lignes : ';
@@ -588,4 +571,346 @@ class SFr extends S {
   String paginationPage(Object currentPage, Object totalPages) {
     return 'Page $currentPage sur $totalPages';
   }
+
+  @override
+  String get columnEmail => 'Email';
+
+  @override
+  String get columnPhone => 'Téléphone';
+
+  @override
+  String get columnRole => 'Rôle';
+
+  @override
+  String get locationLabel => 'Emplacement';
+
+  @override
+  String get statusVerified => 'Vérifié';
+
+  @override
+  String get statusUnverified => 'Non vérifié';
+
+  @override
+  String get userManagementTitle => 'Gestion des utilisateurs';
+
+  @override
+  String get userListRefreshed => 'Liste des utilisateurs actualisée';
+
+  @override
+  String get addUserTooltip => 'Ajouter un utilisateur';
+
+  @override
+  String get searchUsersHint => 'Rechercher des utilisateurs...';
+
+  @override
+  String get errorLoadingUsers => 'Erreur lors du chargement des utilisateurs';
+
+  @override
+  String get noUsersFound => 'Aucun utilisateur trouvé';
+
+  @override
+  String get noUsersMatchSearch => 'Aucun utilisateur ne correspond à votre recherche';
+
+  @override
+  String get loadingMessage => 'Chargement des utilisateurs...';
+
+  @override
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems) {
+    return 'Affichage de $startIndex-$endIndex sur $totalItems';
+  }
+
+  @override
+  String get requestForServiceTitle => 'Request for Service';
+
+  @override
+  String get refillService => 'Refill';
+
+  @override
+  String get maintenanceService => 'Maintenance';
+
+  @override
+  String get supplyService => 'Supply';
+
+  @override
+  String get otherServices => 'Other Services';
+
+  @override
+  String get selectServiceLabel => 'Select Service';
+
+  @override
+  String get selectTechnicianLabel => 'Select Technician';
+
+  @override
+  String get pleaseSelectService => 'Please select a service';
+
+  @override
+  String get pleaseSelectTechnician => 'Please select a technician';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get descriptionTooLong => 'Description too long (max 500 characters)';
+
+  @override
+  String get describeServiceRequestHint => 'Describe your service request...';
+
+  @override
+  String get unknownErrorOccurred => 'Unknown error occurred';
+
+  @override
+  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+
+  @override
+  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+
+  @override
+  String get noAvailableTechniciansFound => 'No available technicians found';
+
+  @override
+  String failedToCreateRequest(Object errorMessage) {
+    return 'Failed to create request: $errorMessage';
+  }
+
+  @override
+  String get submitButton => 'Submit';
+
+  @override
+  String get userNotAuthenticated => 'Utilisateur non authentifié';
+
+  @override
+  String get translateServiceLabel => 'Service de traduction';
+
+  @override
+  String get labelTextKey => 'Texte de l\'étiquette';
+
+  @override
+  String get loadingProfileMessage => 'Chargement du profil...';
+
+  @override
+  String get errorLoadingProfile => 'Erreur lors du chargement du profil';
+
+  @override
+  String get profileDataNotFound => 'Données du profil introuvables';
+
+  @override
+  String get profilePageTitle => 'Profil';
+
+  @override
+  String failedToUpdateProfileImage(Object error) {
+    return 'Échec de la mise à jour de l\'image de profil : $error';
+  }
+
+  @override
+  String failedToRemoveProfileImage(Object error) {
+    return 'Échec de la suppression de l\'image de profil : $error';
+  }
+
+  @override
+  String get anonymousUserName => '____   _____';
+
+  @override
+  String get verifiedAccountLabel => 'Compte vérifié';
+
+  @override
+  String get personalInformationTitle => 'Informations personnelles';
+
+  @override
+  String get addressTitle => 'Adresse';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get phoneLabel => 'Téléphone';
+
+  @override
+  String get roleLabel => 'Rôle';
+
+  @override
+  String get dateOfBirthLabel => 'Date de naissance';
+
+  @override
+  String get streetLabel => 'Rue';
+
+  @override
+  String get cityStateLabel => 'Ville/État';
+
+  @override
+  String get zipCodeLabel => 'Code postal';
+
+  @override
+  String get notProvided => 'Non fourni';
+
+  @override
+  String get retryButton => 'Réessayer';
+
+  @override
+  String get settingsTitle => 'Paramètres';
+
+  @override
+  String get profileSettingsSectionTitle => 'Profil';
+
+  @override
+  String get appSettingsSectionTitle => 'Paramètres de l\'application';
+
+  @override
+  String get profileSettingsTitle => 'Paramètres du profil';
+
+  @override
+  String get profileSettingsSubtitle => 'Mettre à jour vos informations personnelles';
+
+  @override
+  String get changePasswordTitle => 'Changer le mot de passe';
+
+  @override
+  String get changePasswordSubtitle => 'Gérer vos paramètres de sécurité';
+
+  @override
+  String get languageTitle => 'Langue';
+
+  @override
+  String get languageSubtitle => 'Changer la langue de l\'application';
+
+  @override
+  String get notifications_loadingUser => 'Notifications (Chargement utilisateur...)';
+
+  @override
+  String get notifications_error => 'Notifications (Erreur)';
+
+  @override
+  String get notifications_title => 'Notifications';
+
+  @override
+  String get tooltip_showAll => 'Tout afficher';
+
+  @override
+  String get tooltip_showUnread => 'Afficher uniquement non lus';
+
+  @override
+  String get menu_markAllAsRead => 'Tout marquer comme lu';
+
+  @override
+  String get menu_refresh => 'Rafraîchir';
+
+  @override
+  String get loading_userData => 'Chargement des données utilisateur...';
+
+  @override
+  String get loading_notifications => 'Chargement des notifications...';
+
+  @override
+  String get emptyState_unreadTitle => 'Aucune notification non lue';
+
+  @override
+  String get emptyState_allTitle => 'Aucune notification pour le moment';
+
+  @override
+  String get emptyState_unreadSubtitle => 'Tout est à jour ! 🎉';
+
+  @override
+  String get emptyState_allSubtitle => 'Les notifications apparaîtront ici lorsque vous en recevrez';
+
+  @override
+  String get errorState_title => 'Échec du chargement des notifications';
+
+  @override
+  String get errorState_retry => 'Réessayer';
+
+  @override
+  String get delete_swipeAction => 'Supprimer';
+
+  @override
+  String get highPriority_label => 'Haute priorité';
+
+  @override
+  String get date_justNow => 'À l\'instant';
+
+  @override
+  String date_minutesAgo(Object minutes) {
+    return 'il y a $minutes min';
+  }
+
+  @override
+  String date_hoursAgo(Object hours) {
+    return 'il y a $hours h';
+  }
+
+  @override
+  String date_daysAgo(Object days) {
+    return 'il y a $days j';
+  }
+
+  @override
+  String get deleteConfirmation_title => 'Supprimer la notification';
+
+  @override
+  String deleteConfirmation_content(Object title) {
+    return 'Êtes-vous sûr de vouloir supprimer \"$title\" ?';
+  }
+
+  @override
+  String get button_cancel => 'Annuler';
+
+  @override
+  String get button_delete => 'Supprimer';
+
+  @override
+  String get button_undo => 'Annuler';
+
+  @override
+  String snackbar_notificationDeleted(Object title) {
+    return 'Supprimé \"$title\"';
+  }
+
+  @override
+  String get snackbar_markedAllAsRead => 'Toutes les notifications marquées comme lues';
+
+  @override
+  String get addTechnician_dialogTitle => 'Ajouter un nouveau technicien';
+
+  @override
+  String get textField_firstName => 'Prénom';
+
+  @override
+  String get textField_lastName => 'Nom';
+
+  @override
+  String get textField_email => 'Email';
+
+  @override
+  String get textField_phone => 'Téléphone';
+
+  @override
+  String get validation_firstNameRequired => 'Veuillez entrer un prénom';
+
+  @override
+  String get validation_lastNameRequired => 'Veuillez entrer un nom';
+
+  @override
+  String get validation_emailRequired => 'Veuillez entrer un email';
+
+  @override
+  String get validation_emailValid => 'Veuillez entrer un email valide';
+
+  @override
+  String get validation_phoneRequired => 'Veuillez entrer un numéro de téléphone';
+
+  @override
+  String get button_create => 'Créer';
+
+  @override
+  String get button_creating => 'Création...';
+
+  @override
+  String get error_requestTimedOut => 'Délai de requête dépassé';
+
+  @override
+  String get error_prefix => 'Erreur';
+
+  @override
+  String get snackbar_technicianCreatedSuccess => 'Technicien créé avec succès';
+
+  @override
+  String get snackbar_technicianCreatedError => 'Échec de la création du technicien';
 }

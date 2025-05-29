@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # Step 1: Checkout code
       - name: Checkout Repository
@@ -36,7 +36,7 @@ jobs:
         run: flutter build web --release --web-renderer html --dart-define=ENVIRONMENT=production
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     

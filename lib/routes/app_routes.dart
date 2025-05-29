@@ -90,7 +90,7 @@ class AppRoutes {
 
       // common routes
       settings: (_) => const SettingsScreen(),
-      notification: (_) => const NotificationPage(),
+      notification: (_) => NotificationPage(),
       terms: (_) => const TermsPage(),
     };
   }

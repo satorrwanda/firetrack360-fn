@@ -8,7 +8,7 @@ class EditProductDialog extends StatefulWidget {
   const EditProductDialog({
     super.key,
     required this.product,
-    required this.onSubmit,
+    required this.onSubmit, required Color dialogBackgroundColor, required Color dialogTextColor, required Color dialogPrimaryColor, required Color dialogOnPrimaryColor,
   });
 
   @override

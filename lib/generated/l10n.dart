@@ -157,7 +157,7 @@ abstract class S {
   /// **'Sign Up'**
   String get signUpLink;
 
-  /// Title for the welcome back message
+  /// Main title on the login header
   ///
   /// In en, this message translates to:
   /// **'Welcome Back'**
@@ -745,12 +745,6 @@ abstract class S {
   /// **'Status'**
   String get statusTitle;
 
-  /// Label for the role section
-  ///
-  /// In en, this message translates to:
-  /// **'Role:'**
-  String get roleLabel;
-
   /// Tooltip text for the notifications icon
   ///
   /// In en, this message translates to:
@@ -883,12 +877,6 @@ abstract class S {
   /// **'Error loading service requests'**
   String get errorLoadingServiceRequests;
 
-  /// Text for the retry button
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get retryButton;
-
   /// Message displayed when no service requests are found
   ///
   /// In en, this message translates to:
@@ -985,18 +973,6 @@ abstract class S {
   /// **'Client Information'**
   String get clientInformationTitle;
 
-  /// Label for the 'Email' field in the details dialog
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get emailLabel;
-
-  /// Label for the 'Phone' field in the details dialog
-  ///
-  /// In en, this message translates to:
-  /// **'Phone'**
-  String get phoneLabel;
-
   /// Title for the technician information section in the details dialog
   ///
   /// In en, this message translates to:
@@ -1014,12 +990,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Close'**
   String get closeButton;
-
-  /// Text showing the range of records displayed
-  ///
-  /// In en, this message translates to:
-  /// **'Showing {startIndex}-{endIndex} of {totalItems}'**
-  String showingRecords(int startIndex, int endIndex, int totalItems);
 
   /// Label for the rows per page dropdown (small screen)
   ///
@@ -1200,6 +1170,654 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Page {currentPage} of {totalPages}'**
   String paginationPage(Object currentPage, Object totalPages);
+
+  /// Header for the Email column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get columnEmail;
+
+  /// Header for the Phone column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get columnPhone;
+
+  /// Header for the Role column in the user table
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get columnRole;
+
+  /// Label for Location in user details
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get locationLabel;
+
+  /// Status text for a verified user
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get statusVerified;
+
+  /// Status text for an unverified user
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified'**
+  String get statusUnverified;
+
+  /// Title for the user management page
+  ///
+  /// In en, this message translates to:
+  /// **'User Management'**
+  String get userManagementTitle;
+
+  /// Success message after refreshing the user list
+  ///
+  /// In en, this message translates to:
+  /// **'User list refreshed successfully'**
+  String get userListRefreshed;
+
+  /// Tooltip for the add user button
+  ///
+  /// In en, this message translates to:
+  /// **'Add User'**
+  String get addUserTooltip;
+
+  /// Hint text for the users search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search users...'**
+  String get searchUsersHint;
+
+  /// Error message when loading users fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading users'**
+  String get errorLoadingUsers;
+
+  /// Message displayed when no users are found
+  ///
+  /// In en, this message translates to:
+  /// **'No users found'**
+  String get noUsersFound;
+
+  /// Message displayed when no users match the search criteria
+  ///
+  /// In en, this message translates to:
+  /// **'No users match your search'**
+  String get noUsersMatchSearch;
+
+  /// Message displayed while users are loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading users...'**
+  String get loadingMessage;
+
+  /// Text showing the range of records being displayed
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {startIndex}-{endIndex} of {totalCount}'**
+  String showingRecords(Object startIndex, Object endIndex, Object totalCount, Object totalItems);
+
+  /// Title of the service request modal
+  ///
+  /// In en, this message translates to:
+  /// **'Request for Service'**
+  String get requestForServiceTitle;
+
+  /// Service option: Refill
+  ///
+  /// In en, this message translates to:
+  /// **'Refill'**
+  String get refillService;
+
+  /// Service option: Maintenance
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get maintenanceService;
+
+  /// Service option: Supply
+  ///
+  /// In en, this message translates to:
+  /// **'Supply'**
+  String get supplyService;
+
+  /// Service option: Other Services
+  ///
+  /// In en, this message translates to:
+  /// **'Other Services'**
+  String get otherServices;
+
+  /// Label for the service selection dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select Service'**
+  String get selectServiceLabel;
+
+  /// Label for the technician selection dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select Technician'**
+  String get selectTechnicianLabel;
+
+  /// Validation message: Service selection required
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a service'**
+  String get pleaseSelectService;
+
+  /// Validation message: Technician selection required
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a technician'**
+  String get pleaseSelectTechnician;
+
+  /// Validation message: Description required
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a description'**
+  String get pleaseEnterDescription;
+
+  /// Validation message: Description exceeds character limit
+  ///
+  /// In en, this message translates to:
+  /// **'Description too long (max 500 characters)'**
+  String get descriptionTooLong;
+
+  /// Hint text for the service request description field
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your service request...'**
+  String get describeServiceRequestHint;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error occurred'**
+  String get unknownErrorOccurred;
+
+  /// Network connection error message
+  ///
+  /// In en, this message translates to:
+  /// **'Network error occurred. Please check your connection.'**
+  String get networkErrorOccurred;
+
+  /// Error message when technicians fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while loading technicians'**
+  String get errorLoadingTechnicians;
+
+  /// Message when no technicians are available
+  ///
+  /// In en, this message translates to:
+  /// **'No available technicians found'**
+  String get noAvailableTechniciansFound;
+
+  /// Error message when service request creation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create request: {errorMessage}'**
+  String failedToCreateRequest(Object errorMessage);
+
+  /// Text for the submit button
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submitButton;
+
+  /// Error message when the user is not authenticated
+  ///
+  /// In en, this message translates to:
+  /// **'User not authenticated'**
+  String get userNotAuthenticated;
+
+  /// Label for the translate service option
+  ///
+  /// In en, this message translates to:
+  /// **'Translate Service'**
+  String get translateServiceLabel;
+
+  /// The label text for the service
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get labelTextKey;
+
+  /// Message displayed while the profile is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading profile...'**
+  String get loadingProfileMessage;
+
+  /// Title for the error screen when profile loading fails
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Profile'**
+  String get errorLoadingProfile;
+
+  /// Error message when profile data is not found
+  ///
+  /// In en, this message translates to:
+  /// **'Profile data not found'**
+  String get profileDataNotFound;
+
+  /// Title for the Profile page
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profilePageTitle;
+
+  /// Error message when updating profile image fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update profile image: {error}'**
+  String failedToUpdateProfileImage(Object error);
+
+  /// Error message when removing profile image fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove profile image: {error}'**
+  String failedToRemoveProfileImage(Object error);
+
+  /// Placeholder text for user name when not available
+  ///
+  /// In en, this message translates to:
+  /// **'____   _____'**
+  String get anonymousUserName;
+
+  /// Label indicating a user has a verified account
+  ///
+  /// In en, this message translates to:
+  /// **'Verified Account'**
+  String get verifiedAccountLabel;
+
+  /// Title for the Personal Information section
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformationTitle;
+
+  /// Title for the Address section
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressTitle;
+
+  /// Label for the Email field
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// Label for the Phone field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneLabel;
+
+  /// Label for the Role field
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get roleLabel;
+
+  /// Label for the Date of Birth field
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirthLabel;
+
+  /// Label for the Street field in address
+  ///
+  /// In en, this message translates to:
+  /// **'Street'**
+  String get streetLabel;
+
+  /// Label for the City/State field in address
+  ///
+  /// In en, this message translates to:
+  /// **'City/State'**
+  String get cityStateLabel;
+
+  /// Label for the ZIP Code field in address
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get zipCodeLabel;
+
+  /// Placeholder text for information that is not provided
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get notProvided;
+
+  /// Text for the retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
+
+  /// Title for the Settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// Section title for profile-related settings
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileSettingsSectionTitle;
+
+  /// Section title for app-related settings
+  ///
+  /// In en, this message translates to:
+  /// **'App Settings'**
+  String get appSettingsSectionTitle;
+
+  /// Title for the profile settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Settings'**
+  String get profileSettingsTitle;
+
+  /// Subtitle for the profile settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Update your personal information'**
+  String get profileSettingsSubtitle;
+
+  /// Title for the change password settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePasswordTitle;
+
+  /// Subtitle for the change password settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your security settings'**
+  String get changePasswordSubtitle;
+
+  /// Title for the language settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageTitle;
+
+  /// Subtitle for the language settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Change app language'**
+  String get languageSubtitle;
+
+  /// Title for the notifications page while loading user data
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications (Loading User...)'**
+  String get notifications_loadingUser;
+
+  /// Title for the notifications page when there is an error
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications (Error)'**
+  String get notifications_error;
+
+  /// Title for the notifications page
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications_title;
+
+  /// Tooltip for showing all notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Show All'**
+  String get tooltip_showAll;
+
+  /// Tooltip for showing only unread notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Show Unread Only'**
+  String get tooltip_showUnread;
+
+  /// Menu option to mark all notifications as read
+  ///
+  /// In en, this message translates to:
+  /// **'Mark All as Read'**
+  String get menu_markAllAsRead;
+
+  /// Menu option to refresh notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get menu_refresh;
+
+  /// Message displayed while user data is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading user data...'**
+  String get loading_userData;
+
+  /// Message displayed while notifications are loading
+  ///
+  /// In en, this message translates to:
+  /// **'Loading notifications...'**
+  String get loading_notifications;
+
+  /// Title for the empty state when there are no unread notifications
+  ///
+  /// In en, this message translates to:
+  /// **'No unread notifications'**
+  String get emptyState_unreadTitle;
+
+  /// Title for the empty state when there are no notifications
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get emptyState_allTitle;
+
+  /// Subtitle for the empty state when there are no unread notifications
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up! 🎉'**
+  String get emptyState_unreadSubtitle;
+
+  /// Subtitle for the empty state when there are no notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications will appear here when you receive them'**
+  String get emptyState_allSubtitle;
+
+  /// Title for the error state when notifications fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load notifications'**
+  String get errorState_title;
+
+  /// Text for the retry button in the error state
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get errorState_retry;
+
+  /// Text for the delete action when swiping a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete_swipeAction;
+
+  /// Label for high priority notifications
+  ///
+  /// In en, this message translates to:
+  /// **'High Priority'**
+  String get highPriority_label;
+
+  /// Time difference less than a minute
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get date_justNow;
+
+  /// Time difference in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String date_minutesAgo(Object minutes);
+
+  /// Time difference in hours (less than a day)
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String date_hoursAgo(Object hours);
+
+  /// Time difference in days (less than a week)
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String date_daysAgo(Object days);
+
+  /// Title for the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Notification'**
+  String get deleteConfirmation_title;
+
+  /// Confirmation message for deleting a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{title}\"?'**
+  String deleteConfirmation_content(Object title);
+
+  /// Text for the cancel button in the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get button_cancel;
+
+  /// Text for the delete button in the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get button_delete;
+
+  /// Text for the undo button in the snackbar after deleting a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get button_undo;
+
+  /// Snackbar message after deleting a notification
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted \"{title}\"'**
+  String snackbar_notificationDeleted(Object title);
+
+  /// Snackbar message after marking all notifications as read
+  ///
+  /// In en, this message translates to:
+  /// **'All notifications marked as read'**
+  String get snackbar_markedAllAsRead;
+
+  /// Title of the dialog to add a new technician
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Technician'**
+  String get addTechnician_dialogTitle;
+
+  /// Label for the first name input field
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get textField_firstName;
+
+  /// Label for the last name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get textField_lastName;
+
+  /// Label for the email input field
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get textField_email;
+
+  /// Label for the phone input field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get textField_phone;
+
+  /// Validation message for required first name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a first name'**
+  String get validation_firstNameRequired;
+
+  /// Validation message for required last name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a last name'**
+  String get validation_lastNameRequired;
+
+  /// Validation message for required email
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an email'**
+  String get validation_emailRequired;
+
+  /// Validation message for invalid email format
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get validation_emailValid;
+
+  /// Validation message for required phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a phone number'**
+  String get validation_phoneRequired;
+
+  /// Text for the create button
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get button_create;
+
+  /// Text for the create button while the request is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Creating...'**
+  String get button_creating;
+
+  /// Error message when a request times out
+  ///
+  /// In en, this message translates to:
+  /// **'Request timed out'**
+  String get error_requestTimedOut;
+
+  /// Prefix used for general error messages
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error_prefix;
+
+  /// Snackbar message on successful technician creation
+  ///
+  /// In en, this message translates to:
+  /// **'Technician created successfully'**
+  String get snackbar_technicianCreatedSuccess;
+
+  /// Snackbar message on failed technician creation (generic)
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create technician'**
+  String get snackbar_technicianCreatedError;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

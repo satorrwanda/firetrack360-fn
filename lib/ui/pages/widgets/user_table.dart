@@ -1,6 +1,7 @@
 // user_table.dart
 import 'package:flutter/material.dart';
 import 'package:firetrack360/models/users.dart';
+import 'package:firetrack360/generated/l10n.dart';
 
 class UserTable extends StatefulWidget {
   final List<User> users;
@@ -25,6 +26,7 @@ class _UserTableState extends State<UserTable> {
   void initState() {
     super.initState();
     _sortedUsers = List.from(widget.users);
+    _applySorting();
   }
 
   @override
@@ -80,13 +82,21 @@ class _UserTableState extends State<UserTable> {
     );
   }
 
-  int get _pageCount => (_sortedUsers.length / _rowsPerPage).ceil();
+  int get _pageCount {
+    if (_sortedUsers.isEmpty) return 1;
+    return (_sortedUsers.length / _rowsPerPage).ceil();
+  }
 
   void _showUserDetails(User user) {
+    final l10n = S.of(context)!;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: EdgeInsets.zero,
+        backgroundColor: theme.dialogBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -95,27 +105,30 @@ class _UserTableState extends State<UserTable> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildUserDetailHeader(user),
+              _buildUserDetailHeader(user, l10n),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    _buildDetailRow('Email', user.email, Icons.email),
-                    _buildDetailRow('Phone', user.phone ?? '-', Icons.phone),
-                    _buildDetailRow('Role', user.role, Icons.badge),
+                    _buildDetailRow(l10n.emailLabel, user.email, Icons.email),
+                    _buildDetailRow(l10n.phoneLabel,
+                        user.phone ?? l10n.notAvailable, Icons.phone),
+                    _buildDetailRow(l10n.roleLabel, user.role, Icons.badge),
                     _buildDetailRow(
-                        'Status',
-                        user.verified ? 'Verified' : 'Unverified',
+                        l10n.statusLabel,
+                        user.verified
+                            ? l10n.statusVerified
+                            : l10n.statusUnverified,
                         user.verified ? Icons.verified : Icons.pending),
                     if (user.city != null || user.state != null)
                       _buildDetailRow(
-                          'Location',
+                          l10n.locationLabel,
                           '${user.city ?? ''}, ${user.state ?? ''}'.trim(),
                           Icons.location_on),
                   ],
                 ),
               ),
-              const Divider(height: 1),
+              Divider(height: 1, color: theme.dividerColor),
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Row(
@@ -124,9 +137,9 @@ class _UserTableState extends State<UserTable> {
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(
-                        'Close',
+                        l10n.closeButton,
                         style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
+                          color: theme.primaryColor,
                         ),
                       ),
                     ),
@@ -140,21 +153,23 @@ class _UserTableState extends State<UserTable> {
     );
   }
 
-  Widget _buildUserDetailHeader(User user) {
+  Widget _buildUserDetailHeader(User user, S l10n) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.deepPurple, // Primary color
+        color: theme.primaryColor,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 24,
-            backgroundColor: Colors.white,
+            backgroundColor: theme.colorScheme.onPrimary,
             child: Icon(
               Icons.person,
-              color: Colors.deepPurple, // Primary color
+              color: theme.primaryColor,
               size: 28,
             ),
           ),
@@ -165,8 +180,8 @@ class _UserTableState extends State<UserTable> {
               children: [
                 Text(
                   '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim(),
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: theme.colorScheme.onPrimary,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -175,7 +190,7 @@ class _UserTableState extends State<UserTable> {
                 Text(
                   user.role,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: theme.colorScheme.onPrimary.withOpacity(0.8),
                     fontSize: 14,
                   ),
                 ),
@@ -188,11 +203,13 @@ class _UserTableState extends State<UserTable> {
   }
 
   Widget _buildDetailRow(String label, String value, IconData icon) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.deepPurple), // Primary color
+          Icon(icon, size: 20, color: theme.primaryColor),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -202,16 +219,16 @@ class _UserTableState extends State<UserTable> {
                   label,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey.shade600, // Consistent with login form
+                    color: theme.textTheme.bodySmall?.color,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black87, // Consistent with login form
+                    color: theme.textTheme.bodyLarge?.color,
                   ),
                 ),
               ],
@@ -224,8 +241,13 @@ class _UserTableState extends State<UserTable> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = S.of(context)!;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Card(
       elevation: 2,
+      color: theme.cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -235,205 +257,204 @@ class _UserTableState extends State<UserTable> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
-                child: DataTable(
-                  headingRowColor: MaterialStateColor.resolveWith(
-                    (states) =>
-                        Colors.deepPurple.withOpacity(0.05), // Light tint
+                child: Theme(
+                  data: theme.copyWith(
+                    dataTableTheme: DataTableThemeData(
+                      headingRowColor: MaterialStateColor.resolveWith(
+                        (states) => theme.primaryColor.withOpacity(0.05),
+                      ),
+                      dataTextStyle: TextStyle(
+                        color: theme.textTheme.bodyMedium?.color,
+                      ),
+                      headingTextStyle: TextStyle(
+                        color: theme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  sortColumnIndex: _sortColumnIndex,
-                  sortAscending: _sortAscending,
-                  columns: [
-                    DataColumn(
-                      label: Text(
-                        'Email',
-                        style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
-                          fontWeight: FontWeight.bold,
+                  child: DataTable(
+                    sortColumnIndex: _sortColumnIndex,
+                    sortAscending: _sortAscending,
+                    columns: [
+                      DataColumn(
+                        label: Text(
+                          l10n.columnEmail,
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onSort: (columnIndex, ascending) {
+                          _sort<String>(
+                              (user) => user.email, columnIndex, ascending);
+                        },
+                      ),
+                      DataColumn(
+                        label: Text(
+                          l10n.columnPhone,
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onSort: (columnIndex, ascending) {
+                          _sort<String>((user) => user.phone ?? '', columnIndex,
+                              ascending);
+                        },
+                      ),
+                      DataColumn(
+                        label: Text(
+                          l10n.columnRole,
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onSort: (columnIndex, ascending) {
+                          _sort<String>(
+                              (user) => user.role, columnIndex, ascending);
+                        },
+                      ),
+                      DataColumn(
+                        label: Text(
+                          l10n.columnStatus,
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onSort: (columnIndex, ascending) {
+                          _sort<num>((user) => user.verified ? 1 : 0,
+                              columnIndex, ascending);
+                        },
+                      ),
+                      DataColumn(
+                        label: Text(
+                          l10n.columnActions,
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      onSort: (columnIndex, ascending) {
-                        _sort<String>(
-                            (user) => user.email, columnIndex, ascending);
-                      },
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Phone',
-                        style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onSort: (columnIndex, ascending) {
-                        _sort<String>(
-                            (user) => user.phone ?? '', columnIndex, ascending);
-                      },
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Role',
-                        style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onSort: (columnIndex, ascending) {
-                        _sort<String>(
-                            (user) => user.role, columnIndex, ascending);
-                      },
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Status',
-                        style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onSort: (columnIndex, ascending) {
-                        _sort<num>((user) => user.verified ? 1 : 0, columnIndex,
-                            ascending);
-                      },
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Actions',
-                        style: TextStyle(
-                          color: Colors.deepPurple, // Primary color
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                  rows: _paginatedUsers
-                      .map((user) => DataRow(
-                            cells: [
-                              DataCell(
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 14,
-                                      backgroundColor: Colors.deepPurple
-                                          .withOpacity(0.1), // Light tint
-                                      child: Icon(
-                                        Icons.person,
-                                        size: 16,
-                                        color:
-                                            Colors.deepPurple, // Primary color
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      user.email,
-                                      style: const TextStyle(
-                                        color:
-                                            Colors.black87, // Consistent text
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              DataCell(
-                                Text(
-                                  user.phone ?? '-',
-                                  style: const TextStyle(
-                                    color: Colors.black87, // Consistent text
-                                  ),
-                                ),
-                              ),
-                              DataCell(
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.deepPurple
-                                        .withOpacity(0.1), // Light tint
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Text(
-                                    user.role,
-                                    style: TextStyle(
-                                      color: Colors.deepPurple, // Primary color
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              DataCell(
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: user.verified
-                                        ? Colors.green.withOpacity(0.1)
-                                        : Colors.orange.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Row(
+                    ],
+                    rows: _paginatedUsers
+                        .map((user) => DataRow(
+                              cells: [
+                                DataCell(
+                                  Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(
-                                        user.verified
-                                            ? Icons.check_circle
-                                            : Icons.pending,
-                                        size: 14,
-                                        color: user.verified
-                                            ? Colors.green
-                                            : Colors.orange,
+                                      CircleAvatar(
+                                        radius: 14,
+                                        backgroundColor:
+                                            theme.primaryColor.withOpacity(0.1),
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 16,
+                                          color: theme.primaryColor,
+                                        ),
                                       ),
-                                      const SizedBox(width: 4),
+                                      const SizedBox(width: 8),
                                       Text(
-                                        user.verified
-                                            ? 'Verified'
-                                            : 'Unverified',
+                                        user.email,
                                         style: TextStyle(
-                                          color: user.verified
-                                              ? Colors.green
-                                              : Colors.orange,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
+                                          color:
+                                              theme.textTheme.bodyMedium?.color,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.visibility_outlined,
-                                        color:
-                                            Colors.deepPurple, // Primary color
-                                      ),
-                                      onPressed: () => _showUserDetails(user),
-                                      tooltip: 'View Details',
+                                DataCell(
+                                  Text(
+                                    user.phone ?? l10n.notAvailable,
+                                    style: TextStyle(
+                                      color: theme.textTheme.bodyMedium?.color,
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.edit_outlined,
-                                        color:
-                                            Colors.deepPurple, // Primary color
-                                      ),
-                                      onPressed: () {
-                                        // TODO: Implement edit functionality
-                                      },
-                                      tooltip: 'Edit User',
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ))
-                      .toList(),
+                                DataCell(
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          theme.primaryColor.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      user.role,
+                                      style: TextStyle(
+                                        color: theme.primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: user.verified
+                                          ? Colors.green.withOpacity(0.1)
+                                          : Colors.orange.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          user.verified
+                                              ? Icons.check_circle
+                                              : Icons.pending,
+                                          size: 14,
+                                          color: user.verified
+                                              ? Colors.green
+                                              : Colors.orange,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          user.verified
+                                              ? l10n.statusVerified
+                                              : l10n.statusUnverified,
+                                          style: TextStyle(
+                                            color: user.verified
+                                                ? Colors.green
+                                                : Colors.orange,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.visibility_outlined,
+                                          color: theme.primaryColor,
+                                        ),
+                                        onPressed: () => _showUserDetails(user),
+                                        tooltip: l10n.viewDetailsTooltip,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ))
+                        .toList(),
+                  ),
                 ),
               ),
             ),
@@ -441,9 +462,10 @@ class _UserTableState extends State<UserTable> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
+              color: theme.cardColor,
               border: Border(
                 top: BorderSide(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: theme.dividerColor,
                 ),
               ),
             ),
@@ -452,19 +474,26 @@ class _UserTableState extends State<UserTable> {
               children: [
                 Row(
                   children: [
-                    const Text(
-                      'Rows per page:',
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      l10n.rowsPerPageLabel,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: theme.textTheme.bodySmall?.color,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     DropdownButton<int>(
                       value: _rowsPerPage,
+                      dropdownColor: theme.cardColor,
                       items: [10, 20, 50].map((value) {
                         return DropdownMenuItem<int>(
                           value: value,
                           child: Text(
                             value.toString(),
-                            style: const TextStyle(fontSize: 12),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: theme.textTheme.bodyMedium?.color,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -479,8 +508,20 @@ class _UserTableState extends State<UserTable> {
                     ),
                     const SizedBox(width: 24),
                     Text(
-                      '${_sortedUsers.isEmpty ? 0 : _currentPage * _rowsPerPage + 1}-${(_currentPage + 1) * _rowsPerPage > _sortedUsers.length ? _sortedUsers.length : (_currentPage + 1) * _rowsPerPage} of ${_sortedUsers.length}',
-                      style: const TextStyle(fontSize: 12),
+                      l10n.showingRecords(
+                        _sortedUsers.isEmpty
+                            ? 0
+                            : _currentPage * _rowsPerPage + 1,
+                        (_currentPage + 1) * _rowsPerPage > _sortedUsers.length
+                            ? _sortedUsers.length
+                            : (_currentPage + 1) * _rowsPerPage,
+                        _sortedUsers.length,
+                        _rowsPerPage,
+                      ),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: theme.textTheme.bodySmall?.color,
+                      ),
                     ),
                   ],
                 ),
@@ -490,8 +531,8 @@ class _UserTableState extends State<UserTable> {
                       icon: Icon(
                         Icons.chevron_left,
                         color: _currentPage > 0
-                            ? Colors.deepPurple // Primary color
-                            : Colors.grey,
+                            ? theme.primaryColor
+                            : theme.disabledColor,
                       ),
                       onPressed: _currentPage > 0
                           ? () {
@@ -505,8 +546,8 @@ class _UserTableState extends State<UserTable> {
                       icon: Icon(
                         Icons.chevron_right,
                         color: _currentPage < _pageCount - 1
-                            ? Colors.deepPurple // Primary color
-                            : Colors.grey,
+                            ? theme.primaryColor
+                            : theme.disabledColor,
                       ),
                       onPressed: _currentPage < _pageCount - 1
                           ? () {

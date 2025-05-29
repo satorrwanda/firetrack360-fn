@@ -11,7 +11,7 @@ class CreateProductDialog extends StatefulWidget {
   const CreateProductDialog({
     Key? key,
     required this.onSubmit,
-    required this.uploadEndpoint,
+    required this.uploadEndpoint, required Color dialogBackgroundColor, required Color dialogTextColor, required Color dialogOnPrimaryColor, required Color dialogPrimaryColor,
   }) : super(key: key);
 
   @override

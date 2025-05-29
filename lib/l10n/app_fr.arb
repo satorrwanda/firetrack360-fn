@@ -618,16 +618,10 @@
         "description": "Text showing the range of records displayed",
         "placeholders": {
             "startIndex": {
-                "type": "int",
-                "example": "1"
             },
             "endIndex": {
-                "type": "int",
-                "example": "10"
             },
             "totalItems": {
-                "type": "int",
-                "example": "50"
             }
         }
     },
@@ -747,5 +741,373 @@
     "paginationPage": "Page {currentPage} sur {totalPages}",
     "@paginationPage": {
         "description": "Text showing the current page and total pages"
+    },
+    "columnEmail": "Email",
+    "@columnEmail": {
+        "description": "En-tête de la colonne Email dans le tableau des utilisateurs"
+    },
+    "columnPhone": "Téléphone",
+    "@columnPhone": {
+        "description": "En-tête de la colonne Téléphone dans le tableau des utilisateurs"
+    },
+    "columnRole": "Rôle",
+    "@columnRole": {
+        "description": "En-tête de la colonne Rôle dans le tableau des utilisateurs"
+    },
+    "locationLabel": "Emplacement",
+    "@locationLabel": {
+        "description": "Étiquette pour l'Emplacement dans les détails de l'utilisateur"
+    },
+    "statusVerified": "Vérifié",
+    "@statusVerified": {
+        "description": "Texte de statut pour un utilisateur vérifié"
+    },
+    "statusUnverified": "Non vérifié",
+    "@statusUnverified": {
+        "description": "Texte de statut pour un utilisateur non vérifié"
+    },
+    "userManagementTitle": "Gestion des utilisateurs",
+    "@userManagementTitle": {
+        "description": "Title for the user management page"
+    },
+    "userListRefreshed": "Liste des utilisateurs actualisée",
+    "@userListRefreshed": {
+        "description": "Success message after refreshing the user list"
+    },
+    "addUserTooltip": "Ajouter un utilisateur",
+    "@addUserTooltip": {
+        "description": "Tooltip for the add user button"
+    },
+    "searchUsersHint": "Rechercher des utilisateurs...",
+    "@searchUsersHint": {
+        "description": "Hint text for the users search bar"
+    },
+    "loadingMessage": "Chargement des utilisateurs...",
+    "@loadingMessage": {
+        "description": "Loading message displayed while data is being fetched"
+    },
+    "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
+    "@errorLoadingUsers": {
+        "description": "Error message when loading users fails"
+    },
+    "noUsersFound": "Aucun utilisateur trouvé",
+    "@noUsersFound": {
+        "description": "Message displayed when no users are found"
+    },
+    "noUsersMatchSearch": "Aucun utilisateur ne correspond à votre recherche",
+    "@noUsersMatchSearch": {
+        "description": "Message displayed when no users match the search criteria"
+    },
+    "userNotAuthenticated": "Utilisateur non authentifié",
+    "@userNotAuthenticated": {
+        "description": "Message d'erreur lorsque l'utilisateur n'est pas authentifié"
+    },
+    "translateServiceLabel": "Service de traduction",
+    "@translateServiceLabel": {
+        "description": "Label for the translation service"
+    },
+    "labelTextKey": "Texte de l'étiquette",
+    "@labelTextKey": {
+        "description": "The label text for the service",
+        "type": "text",
+        "placeholders": {}
+    },
+    "loadingProfileMessage": "Chargement du profil...",
+    "@loadingProfileMessage": {
+        "description": "Message affiché pendant le chargement du profil"
+    },
+    "errorLoadingProfile": "Erreur lors du chargement du profil",
+    "@errorLoadingProfile": {
+        "description": "Titre pour l'écran d'erreur lorsque le chargement du profil échoue"
+    },
+    "profileDataNotFound": "Données du profil introuvables",
+    "@profileDataNotFound": {
+        "description": "Message d'erreur lorsque les données du profil ne sont pas trouvées"
+    },
+    "profilePageTitle": "Profil",
+    "@profilePageTitle": {
+        "description": "Titre pour la page du Profil"
+    },
+    "failedToUpdateProfileImage": "Échec de la mise à jour de l'image de profil : {error}",
+    "@failedToUpdateProfileImage": {
+        "description": "Message d'erreur lorsque la mise à jour de l'image de profil échoue",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "failedToRemoveProfileImage": "Échec de la suppression de l'image de profil : {error}",
+    "@failedToRemoveProfileImage": {
+        "description": "Message d'erreur lorsque la suppression de l'image de profil échoue",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "anonymousUserName": "____   _____",
+    "@anonymousUserName": {
+        "description": "Placeholder text for user name when not available"
+    },
+    "verifiedAccountLabel": "Compte vérifié",
+    "@verifiedAccountLabel": {
+        "description": "Étiquette indiquant qu'un utilisateur a un compte vérifié"
+    },
+    "personalInformationTitle": "Informations personnelles",
+    "@personalInformationTitle": {
+        "description": "Titre pour la section Informations personnelles"
+    },
+    "addressTitle": "Adresse",
+    "@addressTitle": {
+        "description": "Titre pour la section Adresse"
+    },
+    "dateOfBirthLabel": "Date de naissance",
+    "@dateOfBirthLabel": {
+        "description": "Étiquette pour le champ Date de naissance"
+    },
+    "streetLabel": "Rue",
+    "@streetLabel": {
+        "description": "Étiquette pour le champ Rue dans l'adresse"
+    },
+    "cityStateLabel": "Ville/État",
+    "@cityStateLabel": {
+        "description": "Étiquette pour le champ Ville/État dans l'adresse"
+    },
+    "zipCodeLabel": "Code postal",
+    "@zipCodeLabel": {
+        "description": "Étiquette pour le champ Code postal dans l'adresse"
+    },
+    "notProvided": "Non fourni",
+    "@notProvided": {
+        "description": "Placeholder text for information that is not provided"
+    },
+    "settingsTitle": "Paramètres",
+    "@settingsTitle": {
+        "description": "Titre pour la page des Paramètres"
+    },
+    "profileSettingsSectionTitle": "Profil",
+    "@profileSettingsSectionTitle": {
+        "description": "Titre de section pour les paramètres liés au profil"
+    },
+    "appSettingsSectionTitle": "Paramètres de l'application",
+    "@appSettingsSectionTitle": {
+        "description": "Titre de section pour les paramètres liés à l'application"
+    },
+    "profileSettingsTitle": "Paramètres du profil",
+    "@profileSettingsTitle": {
+        "description": "Titre pour la tuile des paramètres de profil"
+    },
+    "profileSettingsSubtitle": "Mettre à jour vos informations personnelles",
+    "@profileSettingsSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de profil"
+    },
+    "changePasswordTitle": "Changer le mot de passe",
+    "@changePasswordTitle": {
+        "description": "Titre pour la tuile des paramètres de changement de mot de passe"
+    },
+    "changePasswordSubtitle": "Gérer vos paramètres de sécurité",
+    "@changePasswordSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de changement de mot de passe"
+    },
+    "languageTitle": "Langue",
+    "@languageTitle": {
+        "description": "Titre pour la tuile des paramètres de langue"
+    },
+    "languageSubtitle": "Changer la langue de l'application",
+    "@languageSubtitle": {
+        "description": "Sous-titre pour la tuile des paramètres de langue"
+    },
+    "notifications_loadingUser": "Notifications (Chargement utilisateur...)",
+    "@notifications_loadingUser": {
+        "description": "Message displayed while loading user data for notifications"
+    },
+    "notifications_error": "Notifications (Erreur)",
+    "@notifications_error": {
+        "description": "Message displayed when there is an error loading notifications"
+    },
+    "notifications_title": "Notifications",
+    "@notifications_title": {
+        "description": "Title for the notifications page"
+    },
+    "tooltip_showAll": "Tout afficher",
+    "@tooltip_showAll": {
+        "description": "Tooltip text for showing all notifications"
+    },
+    "tooltip_showUnread": "Afficher uniquement non lus",
+    "@tooltip_showUnread": {
+        "description": "Tooltip text for showing only unread notifications"
+    },
+    "menu_markAllAsRead": "Tout marquer comme lu",
+    "@menu_markAllAsRead": {
+        "description": "Menu option to mark all notifications as read"
+    },
+    "menu_refresh": "Rafraîchir",
+    "@menu_refresh": {
+        "description": "Menu option to refresh notifications"
+    },
+    "loading_userData": "Chargement des données utilisateur...",
+    "@loading_userData": {
+        "description": "Message displayed while loading user data for notifications"
+    },
+    "loading_notifications": "Chargement des notifications...",
+    "@loading_notifications": {
+        "description": "Message displayed while loading notifications"
+    },
+    "emptyState_unreadTitle": "Aucune notification non lue",
+    "@emptyState_unreadTitle": {
+        "description": "Title for the empty state when there are no unread notifications"
+    },
+    "emptyState_allTitle": "Aucune notification pour le moment",
+    "@emptyState_allTitle": {
+        "description": "Title for the empty state when there are no notifications at all"
+    },
+    "emptyState_unreadSubtitle": "Tout est à jour ! 🎉",
+    "@emptyState_unreadSubtitle": {
+        "description": "Subtitle for the empty state when there are no unread notifications"
+    },
+    "emptyState_allSubtitle": "Les notifications apparaîtront ici lorsque vous en recevrez",
+    "@emptyState_allSubtitle": {
+        "description": "Subtitle for the empty state when there are no notifications at all"
+    },
+    "errorState_title": "Échec du chargement des notifications",
+    "@errorState_title": {
+        "description": "Title for the error state when notifications fail to load"
+    },
+    "errorState_retry": "Réessayer",
+    "@errorState_retry": {
+        "description": "Text for the retry button in the error state"
+    },
+    "delete_swipeAction": "Supprimer",
+    "@delete_swipeAction": {
+        "description": "Text for the swipe action to delete a notification"
+    },
+    "highPriority_label": "Haute priorité",
+    "@highPriority_label": {
+        "description": "Label for high priority notifications"
+    },
+    "date_justNow": "À l'instant",
+    "@date_justNow": {
+        "description": "Text for notifications that were just received"
+    },
+    "date_minutesAgo": "il y a {minutes} min",
+    "@date_minutesAgo": {
+        "description": "Text for notifications that were received a few minutes ago",
+        "placeholders": {
+            "minutes": {
+            }
+        }
+    }, 
+    "date_hoursAgo": "il y a {hours} h",
+    "@date_hoursAgo": {
+        "description": "Text for notifications that were received a few hours ago",
+        "placeholders": {
+            "hours": {
+            }
+        }
+    },
+    "date_daysAgo": "il y a {days} j",
+    "@date_daysAgo": {
+        "description": "Text for notifications that were received a few days ago",
+        "placeholders": {
+            "days": {
+            }
+        }
+    },
+    "deleteConfirmation_title": "Supprimer la notification",
+    "@deleteConfirmation_title": {
+        "description": "Title for the delete confirmation dialog for notifications"
+    },
+    "deleteConfirmation_content": "Êtes-vous sûr de vouloir supprimer \"{title}\" ?",
+    "@deleteConfirmation_content": {
+        "description": "Content for the delete confirmation dialog for notifications",
+        "placeholders": {
+            "title": {
+            }
+        }
+    },
+    "button_delete": "Supprimer",
+    "@button_delete": {
+        "description": "Text for the delete button in the delete confirmation dialog"
+    },
+    "button_undo": "Annuler",
+    "@button_undo": {
+        "description": "Text for the undo button after deleting a notification"
+    },
+    "snackbar_notificationDeleted": "Supprimé \"{title}\"",
+    "@snackbar_notificationDeleted": {
+        "description": "Snackbar message shown after a notification is deleted",
+        "placeholders": {
+            "title": {
+            }
+        }
+    },
+    "snackbar_markedAllAsRead": "Toutes les notifications marquées comme lues",
+    "@snackbar_markedAllAsRead": {
+        "description": "Snackbar message shown after marking all notifications as read"
+    },
+    "addTechnician_dialogTitle": "Ajouter un nouveau technicien",
+    "@addTechnician_dialogTitle": {
+        "description": "Titre de la boîte de dialogue pour ajouter un nouveau technicien"
+    },
+    "textField_firstName": "Prénom",
+    "@textField_firstName": {
+        "description": "Étiquette pour le champ de saisie du prénom"
+    },
+    "textField_lastName": "Nom",
+    "@textField_lastName": {
+        "description": "Étiquette pour le champ de saisie du nom"
+    },
+    "textField_email": "Email",
+    "@textField_email": {
+        "description": "Étiquette pour le champ de saisie de l'email"
+    },
+    "textField_phone": "Téléphone",
+    "@textField_phone": {
+        "description": "Étiquette pour le champ de saisie du numéro de téléphone"
+    },
+    "validation_firstNameRequired": "Veuillez entrer un prénom",
+    "@validation_firstNameRequired": {
+        "description": "Message de validation pour le prénom requis"
+    },
+    "validation_lastNameRequired": "Veuillez entrer un nom",
+    "@validation_lastNameRequired": {
+        "description": "Message de validation pour le nom requis"
+    },
+    "validation_emailRequired": "Veuillez entrer un email",
+    "@validation_emailRequired": {
+        "description": "Message de validation pour l'email requis"
+    },
+    "validation_emailValid": "Veuillez entrer un email valide",
+    "@validation_emailValid": {
+        "description": "Message de validation pour un format d'email invalide"
+    },
+    "validation_phoneRequired": "Veuillez entrer un numéro de téléphone",
+    "@validation_phoneRequired": {
+        "description": "Message de validation pour le numéro de téléphone requis"
+    },
+    "button_cancel": "Annuler",
+    "@button_cancel": {
+        "description": "Texte du bouton Annuler"
+    },
+    "button_create": "Créer",
+    "@button_create": {
+        "description": "Texte du bouton Créer"
+    },
+    "button_creating": "Création...",
+    "@button_creating": {
+        "description": "Texte du bouton Créer pendant que la requête est en cours"
+    },
+    "error_requestTimedOut": "Délai de requête dépassé",
+    "@error_requestTimedOut": {
+        "description": "Message d'erreur lorsque le délai d'une requête est dépassé"
+    },
+    "error_prefix": "Erreur",
+    "@error_prefix": {
+        "description": "Préfixe utilisé pour les messages d'erreur généraux"
+    },
+    "snackbar_technicianCreatedSuccess": "Technicien créé avec succès",
+    "@snackbar_technicianCreatedSuccess": {
+        "description": "Message du snackbar lors de la création réussie d'un technicien"
+    },
+    "snackbar_technicianCreatedError": "Échec de la création du technicien",
+    "@snackbar_technicianCreatedError": {
+        "description": "Message du snackbar lors de l'échec de la création d'un technicien (générique)"
     }
 }
