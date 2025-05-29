@@ -283,7 +283,7 @@ class SRw extends S {
   String get passwordResetSuccess => 'Ijambo ry\'ibanga ryawe ryongeweho neza';
 
   @override
-  String get genericError => 'An error occurred';
+  String get genericError => 'Habayeho ikosa';
 
   @override
   String get termsAndConditionsText => 'Amategeko n\'Amabwiriza';
@@ -573,22 +573,22 @@ class SRw extends S {
   }
 
   @override
-  String get columnEmail => 'Email';
+  String get columnEmail => 'Imeyili';
 
   @override
-  String get columnPhone => 'Phone';
+  String get columnPhone => 'Terefoni';
 
   @override
-  String get columnRole => 'Role';
+  String get columnRole => 'Uruhare';
 
   @override
-  String get locationLabel => 'Location';
+  String get locationLabel => 'Aho aherereye';
 
   @override
-  String get statusVerified => 'Verified';
+  String get statusVerified => 'Yemejwe';
 
   @override
-  String get statusUnverified => 'Unverified';
+  String get statusUnverified => 'Ntiyemejwe';
 
   @override
   String get userManagementTitle => 'Ubuyobozi bw\'abakoresha';
@@ -620,60 +620,60 @@ class SRw extends S {
   }
 
   @override
-  String get requestForServiceTitle => 'Request for Service';
+  String get requestForServiceTitle => 'Gusaba Serivisi';
 
   @override
-  String get refillService => 'Refill';
+  String get refillService => 'Serivisi yo kongera';
 
   @override
-  String get maintenanceService => 'Maintenance';
+  String get maintenanceService => 'Serivisi yo gufata neza';
 
   @override
-  String get supplyService => 'Supply';
+  String get supplyService => 'Serivisi yo gutanga ibikoresho';
 
   @override
-  String get otherServices => 'Other Services';
+  String get otherServices => 'Izindi Serivisi';
 
   @override
-  String get selectServiceLabel => 'Select Service';
+  String get selectServiceLabel => 'Hitamo Serivisi';
 
   @override
-  String get selectTechnicianLabel => 'Select Technician';
+  String get selectTechnicianLabel => 'Hitamo Tekinisiye';
 
   @override
-  String get pleaseSelectService => 'Please select a service';
+  String get pleaseSelectService => 'Nyamuneka hitamo serivisi';
 
   @override
-  String get pleaseSelectTechnician => 'Please select a technician';
+  String get pleaseSelectTechnician => 'Nyamuneka hitamo tekinisiye';
 
   @override
-  String get pleaseEnterDescription => 'Please enter a description';
+  String get pleaseEnterDescription => 'Nyamuneka andika ibisobanuro';
 
   @override
-  String get descriptionTooLong => 'Description too long (max 500 characters)';
+  String get descriptionTooLong => 'Ibisobanuro birarenga (ntibigomba kurenga inyuguti 500)';
 
   @override
-  String get describeServiceRequestHint => 'Describe your service request...';
+  String get describeServiceRequestHint => 'Sobanura ubusabe bwa serivisi yawe';
 
   @override
-  String get unknownErrorOccurred => 'Unknown error occurred';
+  String get unknownErrorOccurred => 'Ikosa ritazwi ryabayeho.';
 
   @override
-  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+  String get networkErrorOccurred => 'Ikosa ryabayeho kumurongo wa internet.';
 
   @override
-  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+  String get errorLoadingTechnicians => 'Ikosa ryabayeho mugutwara abatekinisiye.';
 
   @override
-  String get noAvailableTechniciansFound => 'No available technicians found';
+  String get noAvailableTechniciansFound => 'Nta batekinisiye bahari babonetse.';
 
   @override
-  String failedToCreateRequest(Object errorMessage) {
-    return 'Failed to create request: $errorMessage';
+  String failedToCreateRequest(Object errorMessage, Object error) {
+    return 'Kurema ubusabe byarananiranye: $error';
   }
 
   @override
-  String get submitButton => 'Submit';
+  String get submitButton => 'Kohereza';
 
   @override
   String get userNotAuthenticated => 'Ukoresha ntaho asangwa';

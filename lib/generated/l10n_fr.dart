@@ -295,7 +295,7 @@ class SFr extends S {
   String get errorLoadingTerms => 'Erreur lors du chargement des conditions d\'utilisation';
 
   @override
-  String get errorLoadingPage => 'Error loading page. Please try again.';
+  String get errorLoadingPage => 'Erreur lors du chargement de la page';
 
   @override
   String get selectLanguageTitle => 'Sélectionner la langue';
@@ -620,60 +620,60 @@ class SFr extends S {
   }
 
   @override
-  String get requestForServiceTitle => 'Request for Service';
+  String get requestForServiceTitle => 'Demande de service';
 
   @override
-  String get refillService => 'Refill';
+  String get refillService => 'Service de recharge';
 
   @override
-  String get maintenanceService => 'Maintenance';
+  String get maintenanceService => 'Service d\'entretien';
 
   @override
-  String get supplyService => 'Supply';
+  String get supplyService => 'Service d\'approvisionnement';
 
   @override
-  String get otherServices => 'Other Services';
+  String get otherServices => 'Autres services';
 
   @override
-  String get selectServiceLabel => 'Select Service';
+  String get selectServiceLabel => 'Sélectionner un service';
 
   @override
-  String get selectTechnicianLabel => 'Select Technician';
+  String get selectTechnicianLabel => 'Sélectionner un technicien';
 
   @override
-  String get pleaseSelectService => 'Please select a service';
+  String get pleaseSelectService => 'Veuillez sélectionner un service';
 
   @override
-  String get pleaseSelectTechnician => 'Please select a technician';
+  String get pleaseSelectTechnician => 'Veuillez sélectionner un technicien';
 
   @override
-  String get pleaseEnterDescription => 'Please enter a description';
+  String get pleaseEnterDescription => 'Veuillez entrer une description';
 
   @override
-  String get descriptionTooLong => 'Description too long (max 500 characters)';
+  String get descriptionTooLong => 'La description est trop longue (maximum 500 caractères)';
 
   @override
-  String get describeServiceRequestHint => 'Describe your service request...';
+  String get describeServiceRequestHint => 'Décrivez votre demande de service';
 
   @override
-  String get unknownErrorOccurred => 'Unknown error occurred';
+  String get unknownErrorOccurred => 'Une erreur inconnue est survenue.';
 
   @override
-  String get networkErrorOccurred => 'Network error occurred. Please check your connection.';
+  String get networkErrorOccurred => 'Une erreur réseau est survenue.';
 
   @override
-  String get errorLoadingTechnicians => 'An error occurred while loading technicians';
+  String get errorLoadingTechnicians => 'Erreur lors du chargement des techniciens.';
 
   @override
-  String get noAvailableTechniciansFound => 'No available technicians found';
+  String get noAvailableTechniciansFound => 'Aucun technicien disponible trouvé.';
 
   @override
-  String failedToCreateRequest(Object errorMessage) {
-    return 'Failed to create request: $errorMessage';
+  String failedToCreateRequest(Object errorMessage, Object error) {
+    return 'Échec de la création de la demande : $error';
   }
 
   @override
-  String get submitButton => 'Submit';
+  String get submitButton => 'Soumettre';
 
   @override
   String get userNotAuthenticated => 'Utilisateur non authentifié';

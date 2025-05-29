@@ -127,7 +127,7 @@ class _CreateServiceRequestModalState
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = l10n.failedToCreateRequest(e.toString());
+          _errorMessage = l10n.failedToCreateRequest(e.toString(), '');
         });
       }
     } finally {
@@ -138,8 +138,22 @@ class _CreateServiceRequestModalState
   InputDecoration _inputDecoration(
       String labelTextKey, ColorScheme colorScheme) {
     final l10n = S.of(context)!;
+    String labelText;
+    switch (labelTextKey) {
+      case 'selectServiceLabel':
+        labelText = l10n.selectServiceLabel;
+        break;
+      case 'selectTechnicianLabel':
+        labelText = l10n.selectTechnicianLabel;
+        break;
+      case 'descriptionLabel':
+        labelText = l10n.descriptionLabel;
+        break;
+      default:
+        labelText = '';
+    }
     return InputDecoration(
-      labelText: l10n.translateServiceLabel,
+      labelText: labelText,
       labelStyle: TextStyle(
         color: colorScheme.primary,
         fontWeight: FontWeight.w600,
