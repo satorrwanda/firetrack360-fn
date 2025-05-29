@@ -1109,5 +1109,33 @@
     "snackbar_technicianCreatedError": "Échec de la création du technicien",
     "@snackbar_technicianCreatedError": {
         "description": "Message du snackbar lors de l'échec de la création d'un technicien (générique)"
+    },
+    "requestForServiceTitle": "Demande de service",
+    "selectServiceLabel": "Sélectionner un service",
+    "pleaseSelectService": "Veuillez sélectionner un service",
+    "selectTechnicianLabel": "Sélectionner un technicien",
+    "pleaseSelectTechnician": "Veuillez sélectionner un technicien",
+    "describeServiceRequestHint": "Décrivez votre demande de service",
+    "pleaseEnterDescription": "Veuillez entrer une description",
+    "descriptionTooLong": "La description est trop longue (maximum 500 caractères)",
+    "submitButton": "Soumettre",
+    "failedToCreateRequest": "Échec de la création de la demande : {error}",
+    "@failedToCreateRequest": {
+        "description": "Error message when creating a service request fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "errorLoadingTechnicians": "Erreur lors du chargement des techniciens.",
+    "unknownErrorOccurred": "Une erreur inconnue est survenue.",
+    "networkErrorOccurred": "Une erreur réseau est survenue.",
+    "noAvailableTechniciansFound": "Aucun technicien disponible trouvé.",
+    "refillService": "Service de recharge",
+    "maintenanceService": "Service d'entretien",
+    "supplyService": "Service d'approvisionnement",
+    "otherServices": "Autres services",
+    "errorLoadingPage": "Erreur lors du chargement de la page",
+    "@errorLoadingPage": {
+        "description": "Message d'erreur affiché lorsqu'une page ne peut pas être chargée"
     }
 }

@@ -668,7 +668,7 @@ class SEn extends S {
   String get noAvailableTechniciansFound => 'No available technicians found';
 
   @override
-  String failedToCreateRequest(Object errorMessage) {
+  String failedToCreateRequest(Object errorMessage, Object error) {
     return 'Failed to create request: $errorMessage';
   }
 

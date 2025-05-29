@@ -1110,5 +1110,57 @@
     "snackbar_technicianCreatedError": "Kurema umukozi byarananiranye",
     "@snackbar_technicianCreatedError": {
         "description": "Ubutumwa bwa snackbar mugihe kurema umukozi byananiwe (rusange)"
+    },
+    "requestForServiceTitle": "Gusaba Serivisi",
+    "selectServiceLabel": "Hitamo Serivisi",
+    "pleaseSelectService": "Nyamuneka hitamo serivisi",
+    "selectTechnicianLabel": "Hitamo Tekinisiye",
+    "pleaseSelectTechnician": "Nyamuneka hitamo tekinisiye",
+    "describeServiceRequestHint": "Sobanura ubusabe bwa serivisi yawe",
+    "pleaseEnterDescription": "Nyamuneka andika ibisobanuro",
+    "descriptionTooLong": "Ibisobanuro birarenga (ntibigomba kurenga inyuguti 500)",
+    "submitButton": "Kohereza",
+    "failedToCreateRequest": "Kurema ubusabe byarananiranye: {error}",
+    "@failedToCreateRequest": {
+        "description": "Error message when creating a service request fails",
+        "placeholders": {
+            "error": {}
+        }
+    },
+    "errorLoadingTechnicians": "Ikosa ryabayeho mugutwara abatekinisiye.",
+    "unknownErrorOccurred": "Ikosa ritazwi ryabayeho.",
+    "networkErrorOccurred": "Ikosa ryabayeho kumurongo wa internet.",
+    "noAvailableTechniciansFound": "Nta batekinisiye bahari babonetse.",
+    "refillService": "Serivisi yo kongera",
+    "maintenanceService": "Serivisi yo gufata neza",
+    "supplyService": "Serivisi yo gutanga ibikoresho",
+    "otherServices": "Izindi Serivisi",
+    "genericError": "Habayeho ikosa",
+    "@genericError": {
+        "description": "Generic error message"
+    },
+    "columnEmail": "Imeyili",
+    "@columnEmail": {
+        "description": "Column label for email"
+    },
+    "columnPhone": "Terefoni",
+    "@columnPhone": {
+        "description": "Column label for phone"
+    },
+    "columnRole": "Uruhare",
+    "@columnRole": {
+        "description": "Column label for role"
+    },
+    "locationLabel": "Aho aherereye",
+    "@locationLabel": {
+        "description": "Label for location field"
+    },
+    "statusVerified": "Yemejwe",
+    "@statusVerified": {
+        "description": "Status label for verified"
+    },
+    "statusUnverified": "Ntiyemejwe",
+    "@statusUnverified": {
+        "description": "Status label for unverified"
     }
 }

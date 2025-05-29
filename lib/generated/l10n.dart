@@ -1361,7 +1361,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Failed to create request: {errorMessage}'**
-  String failedToCreateRequest(Object errorMessage);
+  String failedToCreateRequest(Object errorMessage, Object error);
 
   /// Text for the submit button
   ///
