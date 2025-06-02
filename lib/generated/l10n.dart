@@ -1818,6 +1818,78 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Failed to create technician'**
   String get snackbar_technicianCreatedError;
+
+  /// No description provided for @requestDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Date'**
+  String get requestDateLabel;
+
+  /// No description provided for @completionDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completion Date'**
+  String get completionDateLabel;
+
+  /// No description provided for @requestedByLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested By'**
+  String get requestedByLabel;
+
+  /// No description provided for @technicianLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Technician'**
+  String get technicianLabel;
+
+  /// No description provided for @notesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesLabel;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @notSpecified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Specified'**
+  String get notSpecified;
+
+  /// No description provided for @updateServiceRequestStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Service Request Status'**
+  String get updateServiceRequestStatus;
+
+  /// No description provided for @newStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New Status'**
+  String get newStatusLabel;
+
+  /// No description provided for @updateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateButton;
+
+  /// No description provided for @updateStatusButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Status'**
+  String get updateStatusButton;
+
+  /// No description provided for @statusUpdateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Service request status updated to {status}.'**
+  String statusUpdateSuccess(Object status);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -1162,5 +1162,17 @@
     "statusUnverified": "Ntiyemejwe",
     "@statusUnverified": {
         "description": "Status label for unverified"
-    }
+    },
+    "requestDateLabel": "Itariki y'isaba",
+    "completionDateLabel": "Itariki yo kurangiza",
+    "requestedByLabel": "Yasabye na",
+    "technicianLabel": "Umuhanga",
+    "notesLabel": "Ibisobanuro",
+    "unknown": "Ntizwi",
+    "notSpecified": "Ntibyatanzwe",
+    "updateServiceRequestStatus": "Hagura Ubuzima bw'isaba ry'Ibarura",
+    "newStatusLabel": "Ubuzima Bushya",
+    "updateButton": "Hagura",
+    "updateStatusButton": "Hagura Ubuzima",
+    "statusUpdateSuccess": "Ubuzima bw'isaba ry'ibarura bwagiye kuri {status}."
 }

@@ -913,4 +913,42 @@ class SFr extends S {
 
   @override
   String get snackbar_technicianCreatedError => 'Échec de la création du technicien';
+
+  @override
+  String get requestDateLabel => 'Date de la Demande';
+
+  @override
+  String get completionDateLabel => 'Date d\'Achèvement';
+
+  @override
+  String get requestedByLabel => 'Demandé par';
+
+  @override
+  String get technicianLabel => 'Technicien';
+
+  @override
+  String get notesLabel => 'Notes';
+
+  @override
+  String get unknown => 'Inconnu';
+
+  @override
+  String get notSpecified => 'Non Spécifié';
+
+  @override
+  String get updateServiceRequestStatus => 'Mettre à jour le Statut de la Demande';
+
+  @override
+  String get newStatusLabel => 'Nouveau Statut';
+
+  @override
+  String get updateButton => 'Mettre à jour';
+
+  @override
+  String get updateStatusButton => 'Mettre à jour le statut';
+
+  @override
+  String statusUpdateSuccess(Object status) {
+    return 'Le statut de la demande de service a été mis à jour à $status.';
+  }
 }

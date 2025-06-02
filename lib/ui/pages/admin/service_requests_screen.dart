@@ -8,6 +8,8 @@ import 'package:firetrack360/providers/ServiceRequestProvider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:firetrack360/generated/l10n.dart';
+// NEW IMPORT: Import the status update dialog for technicians
+import 'package:firetrack360/ui/pages/home/widgets/service_request_status_update_dialog.dart';
 
 final currentPageProvider = StateProvider<int>((ref) => 0);
 final pageSizeProvider = StateProvider<int>((ref) => 10);
@@ -16,10 +18,64 @@ final searchQueryProvider = StateProvider<String>((ref) => '');
 class ServiceRequestsScreen extends HookConsumerWidget {
   const ServiceRequestsScreen({super.key});
 
+  // Helper method to show the service request details dialog
+  void _showServiceRequestDetailsDialog(
+      BuildContext context, dynamic request, S l10n) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ServiceRequestDetailsDialog(request: request, l10n: l10n);
+      },
+    );
+  }
+
+  // NEW HELPER METHOD: To show the status update dialog for technicians
+  void _showStatusUpdateDialog(BuildContext context, dynamic request) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // Pass the request to the status update dialog
+        return ServiceRequestStatusUpdateDialog(request: request);
+      },
+    );
+  }
+
+  // Helper method to determine the status color
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return Colors.orange;
+      case 'in progress':
+        return Colors.blue;
+      case 'completed':
+        return Colors.green;
+      case 'cancelled':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  // Helper method to localize status strings
+  String _localizeStatus(String status, S l10n) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return l10n.statusPending;
+      case 'in progress':
+        return l10n.statusInProgress;
+      case 'completed':
+        return l10n.statusCompleted;
+      case 'cancelled':
+        return l10n.statusCancelled;
+      default:
+        return status;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = useAuth();
-    final userRole = authState.userRole;
+    final userRole = authState.userRole; // Get the user's role
     final serviceRequestsAsync = ref.watch(filteredServiceRequestsProvider);
     final currentPage = ref.watch(currentPageProvider);
     final pageSize = ref.watch(pageSizeProvider);
@@ -57,6 +113,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
         ),
         child: Column(
           children: [
+            // AppBar section
             Container(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top + 8,
@@ -106,6 +163,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                         },
                         tooltip: l10n.refreshTooltip,
                       ),
+                      // Only show "Add" button for clients
                       if (userRole == 'CLIENT')
                         IconButton(
                           icon: Icon(Icons.add, color: onPrimaryColor),
@@ -115,6 +173,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                               builder: (context) => const home_widgets
                                   .CreateServiceRequestModal(),
                             ).then((_) {
+                              // Refresh requests after modal is closed (assuming a new request might have been created)
                               ref
                                   .read(serviceRequestNotifierProvider.notifier)
                                   .refreshServiceRequests();
@@ -125,6 +184,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
+                  // Search field
                   Container(
                     decoration: BoxDecoration(
                       color: cardBackgroundColor,
@@ -154,17 +214,18 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                       ),
                       onChanged: (value) {
                         ref.read(searchQueryProvider.notifier).state = value;
-                        ref.read(currentPageProvider.notifier).state = 0;
+                        ref.read(currentPageProvider.notifier).state = 0; // Reset pagination on search
                       },
                     ),
                   ),
                 ],
               ),
             ),
+            // Main content area
             Expanded(
               child: serviceRequestsAsync.when(
-                loading: () => const Center(
-                  child: CircularProgressIndicator(color: Colors.white),
+                loading: () => Center(
+                  child: CircularProgressIndicator(color: primaryColor),
                 ),
                 error: (error, stack) => Center(
                   child: Padding(
@@ -185,7 +246,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          error.toString(),
+                          error.toString(), // Display the actual error for debugging
                           style: TextStyle(
                               color: secondaryTextColor, fontSize: 12),
                           textAlign: TextAlign.center,
@@ -245,13 +306,6 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                       ? requests.length
                       : startIndex + pageSize;
                   final pageItems = requests.sublist(startIndex, endIndex);
-
-                  // Show loader instead of the table if data is loading
-                  if (serviceRequestsAsync.isLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(color: primaryColor),
-                    );
-                  }
 
                   return Padding(
                     padding: const EdgeInsets.all(16),
@@ -387,6 +441,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
+                                                    // View Details Button (visible to all roles)
                                                     IconButton(
                                                       icon: Icon(
                                                           Icons
@@ -402,6 +457,23 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                                                       tooltip: l10n
                                                           .viewDetailsTooltip,
                                                     ),
+                                                    // NEW: Update Status Button (only for Technicians and if not completed/cancelled)
+                                                    if (userRole == 'TECHNICIAN' &&
+                                                        request.status != 'Completed' &&
+                                                        request.status != 'Cancelled')
+                                                      IconButton(
+                                                        icon: Icon(Icons.edit_note,
+                                                            size: 20,
+                                                            color: Theme.of(context)
+                                                                .colorScheme
+                                                                .secondary), // Use a distinct icon/color
+                                                        onPressed: () {
+                                                          _showStatusUpdateDialog(
+                                                              context, request);
+                                                        },
+                                                        tooltip: l10n
+                                                            .updateStatusButton, // Use the new localization key
+                                                      ),
                                                   ],
                                                 ),
                                               ),
@@ -416,6 +488,7 @@ class ServiceRequestsScreen extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
+                        // Pagination controls
                         if (isSmallScreen)
                           buildSmallScreenPagination(
                             context,
@@ -450,45 +523,5 @@ class ServiceRequestsScreen extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _showServiceRequestDetailsDialog(
-      BuildContext context, dynamic request, S l10n) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return ServiceRequestDetailsDialog(request: request, l10n: l10n);
-      },
-    );
-  }
-
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-        return Colors.orange;
-      case 'in progress':
-        return Colors.blue;
-      case 'completed':
-        return Colors.green;
-      case 'cancelled':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  String _localizeStatus(String status, S l10n) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-        return l10n.statusPending;
-      case 'in progress':
-        return l10n.statusInProgress;
-      case 'completed':
-        return l10n.statusCompleted;
-      case 'cancelled':
-        return l10n.statusCancelled;
-      default:
-        return status;
-    }
   }
 }
