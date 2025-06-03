@@ -951,4 +951,13 @@ class SFr extends S {
   String statusUpdateSuccess(Object status) {
     return 'Le statut de la demande de service a été mis à jour à $status.';
   }
+
+  @override
+  String get statusRequested => 'Demandé';
+
+  @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get statusScheduled => 'Planifié';
 }

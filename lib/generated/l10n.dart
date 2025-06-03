@@ -1890,6 +1890,24 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Service request status updated to {status}.'**
   String statusUpdateSuccess(Object status);
+
+  /// No description provided for @statusRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get statusRequested;
+
+  /// No description provided for @statusAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get statusAssigned;
+
+  /// No description provided for @statusScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get statusScheduled;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

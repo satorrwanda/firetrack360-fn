@@ -637,7 +637,6 @@
     "@statusPending": {
         "description": "Label for the pending status in the service requests"
     },
-    "statusInProgress": "En cours",
     "@statusInProgress": {
         "description": "Label for the in progress status in the service requests"
     },
@@ -1149,5 +1148,8 @@
     "newStatusLabel": "Nouveau Statut",
     "updateButton": "Mettre à jour",
     "updateStatusButton": "Mettre à jour le statut",
-    "statusUpdateSuccess": "Le statut de la demande de service a été mis à jour à {status}."
+    "statusUpdateSuccess": "Le statut de la demande de service a été mis à jour à {status}.",
+    "statusRequested": "Demandé",
+    "statusInProgress": "En cours",
+    "statusScheduled": "Planifié"
 }

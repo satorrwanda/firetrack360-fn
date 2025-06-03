@@ -28,3 +28,17 @@ const String createServiceRequestMutation = '''
     }
   }
 ''';
+
+const String completeServiceMutation = r'''
+mutation CompleteService($requestId: ID!) {
+    completeService(requestId: $requestId) {
+        id
+        title
+        description
+        requestDate
+        scheduledDate
+        completionDate
+        status
+    }
+}
+''';

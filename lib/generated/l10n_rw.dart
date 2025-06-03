@@ -951,4 +951,13 @@ class SRw extends S {
   String statusUpdateSuccess(Object status) {
     return 'Ubuzima bw\'isaba ry\'ibarura bwagiye kuri $status.';
   }
+
+  @override
+  String get statusRequested => 'Byoherejwe';
+
+  @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get statusScheduled => 'Byateguwe';
 }

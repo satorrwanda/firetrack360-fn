@@ -1174,5 +1174,7 @@
     "newStatusLabel": "Ubuzima Bushya",
     "updateButton": "Hagura",
     "updateStatusButton": "Hagura Ubuzima",
-    "statusUpdateSuccess": "Ubuzima bw'isaba ry'ibarura bwagiye kuri {status}."
+    "statusUpdateSuccess": "Ubuzima bw'isaba ry'ibarura bwagiye kuri {status}.",
+    "statusRequested": "Byoherejwe",
+    "statusScheduled": "Byateguwe"
 }

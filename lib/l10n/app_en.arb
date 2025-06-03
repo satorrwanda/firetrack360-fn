@@ -1221,6 +1221,9 @@
     "newStatusLabel": "New Status",
     "updateButton": "Update",
     "updateStatusButton": "Update Status",
-    "statusUpdateSuccess": "Service request status updated to {status}."
+    "statusUpdateSuccess": "Service request status updated to {status}.",
+    "statusRequested": "Requested",
+    "statusAssigned": "Assigned",
+    "statusScheduled": "Scheduled"
 
 }

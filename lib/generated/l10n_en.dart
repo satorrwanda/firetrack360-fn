@@ -951,4 +951,13 @@ class SEn extends S {
   String statusUpdateSuccess(Object status) {
     return 'Service request status updated to $status.';
   }
+
+  @override
+  String get statusRequested => 'Requested';
+
+  @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get statusScheduled => 'Scheduled';
 }
