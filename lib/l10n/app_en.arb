@@ -1209,6 +1209,21 @@
     "snackbar_technicianCreatedError": "Failed to create technician",
     "@snackbar_technicianCreatedError": {
         "description": "Snackbar message on failed technician creation (generic)"
-    }
+    },
+    "requestDateLabel": "Request Date",
+    "completionDateLabel": "Completion Date",
+    "requestedByLabel": "Requested By",
+    "technicianLabel": "Technician",
+    "notesLabel": "Notes",
+    "unknown": "Unknown",
+    "notSpecified": "Not Specified",
+    "updateServiceRequestStatus": "Update Service Request Status",
+    "newStatusLabel": "New Status",
+    "updateButton": "Update",
+    "updateStatusButton": "Update Status",
+    "statusUpdateSuccess": "Service request status updated to {status}.",
+    "statusRequested": "Requested",
+    "statusAssigned": "Assigned",
+    "statusScheduled": "Scheduled"
 
 }

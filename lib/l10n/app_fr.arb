@@ -637,7 +637,6 @@
     "@statusPending": {
         "description": "Label for the pending status in the service requests"
     },
-    "statusInProgress": "En cours",
     "@statusInProgress": {
         "description": "Label for the in progress status in the service requests"
     },
@@ -1137,5 +1136,20 @@
     "errorLoadingPage": "Erreur lors du chargement de la page",
     "@errorLoadingPage": {
         "description": "Message d'erreur affiché lorsqu'une page ne peut pas être chargée"
-    }
+    },
+    "requestDateLabel": "Date de la Demande",
+    "completionDateLabel": "Date d'Achèvement",
+    "requestedByLabel": "Demandé par",
+    "technicianLabel": "Technicien",
+    "notesLabel": "Notes",
+    "unknown": "Inconnu",
+    "notSpecified": "Non Spécifié",
+    "updateServiceRequestStatus": "Mettre à jour le Statut de la Demande",
+    "newStatusLabel": "Nouveau Statut",
+    "updateButton": "Mettre à jour",
+    "updateStatusButton": "Mettre à jour le statut",
+    "statusUpdateSuccess": "Le statut de la demande de service a été mis à jour à {status}.",
+    "statusRequested": "Demandé",
+    "statusInProgress": "En cours",
+    "statusScheduled": "Planifié"
 }

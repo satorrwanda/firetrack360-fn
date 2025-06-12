@@ -269,6 +269,8 @@ class ServiceRequestNotifier
       rethrow;
     }
   }
+
+  updateServiceRequestStatus(String id, String s) {}
 }
 
 // Additional provider for getting a single service request by ID

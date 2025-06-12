@@ -913,4 +913,51 @@ class SRw extends S {
 
   @override
   String get snackbar_technicianCreatedError => 'Kurema umukozi byarananiranye';
+
+  @override
+  String get requestDateLabel => 'Itariki y\'isaba';
+
+  @override
+  String get completionDateLabel => 'Itariki yo kurangiza';
+
+  @override
+  String get requestedByLabel => 'Yasabye na';
+
+  @override
+  String get technicianLabel => 'Umuhanga';
+
+  @override
+  String get notesLabel => 'Ibisobanuro';
+
+  @override
+  String get unknown => 'Ntizwi';
+
+  @override
+  String get notSpecified => 'Ntibyatanzwe';
+
+  @override
+  String get updateServiceRequestStatus => 'Hagura Ubuzima bw\'isaba ry\'Ibarura';
+
+  @override
+  String get newStatusLabel => 'Ubuzima Bushya';
+
+  @override
+  String get updateButton => 'Hagura';
+
+  @override
+  String get updateStatusButton => 'Hagura Ubuzima';
+
+  @override
+  String statusUpdateSuccess(Object status) {
+    return 'Ubuzima bw\'isaba ry\'ibarura bwagiye kuri $status.';
+  }
+
+  @override
+  String get statusRequested => 'Byoherejwe';
+
+  @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get statusScheduled => 'Byateguwe';
 }

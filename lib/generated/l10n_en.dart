@@ -913,4 +913,51 @@ class SEn extends S {
 
   @override
   String get snackbar_technicianCreatedError => 'Failed to create technician';
+
+  @override
+  String get requestDateLabel => 'Request Date';
+
+  @override
+  String get completionDateLabel => 'Completion Date';
+
+  @override
+  String get requestedByLabel => 'Requested By';
+
+  @override
+  String get technicianLabel => 'Technician';
+
+  @override
+  String get notesLabel => 'Notes';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get notSpecified => 'Not Specified';
+
+  @override
+  String get updateServiceRequestStatus => 'Update Service Request Status';
+
+  @override
+  String get newStatusLabel => 'New Status';
+
+  @override
+  String get updateButton => 'Update';
+
+  @override
+  String get updateStatusButton => 'Update Status';
+
+  @override
+  String statusUpdateSuccess(Object status) {
+    return 'Service request status updated to $status.';
+  }
+
+  @override
+  String get statusRequested => 'Requested';
+
+  @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get statusScheduled => 'Scheduled';
 }
