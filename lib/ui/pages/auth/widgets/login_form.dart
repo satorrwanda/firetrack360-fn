@@ -75,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
             loginResult['message'] ?? l10n.loginFailedDefaultError);
       }
     } catch (e) {
-      _showErrorSnackBar(l10n.unexpectedError); // Use localized message
+      _showErrorSnackBar(l10n.unexpectedError);
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);

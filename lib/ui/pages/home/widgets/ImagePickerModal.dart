@@ -1,10 +1,10 @@
+import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ProfileImagePickerModal extends StatelessWidget {
   final Function(String) onImageSelected;
@@ -81,7 +81,7 @@ class ProfileImagePickerModal extends StatelessWidget {
 
   Future<String?> _uploadImage(String imagePath) async {
     try {
-      final uploadUrl = dotenv.env['FILE_UPLOAD_ENDPOINT']!;
+      const uploadUrl = ProductionConfig.fileUploadEndpoint;
       final file = File(imagePath);
 
       // Create multipart request

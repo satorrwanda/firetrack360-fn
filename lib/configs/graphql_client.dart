@@ -1,24 +1,22 @@
 import 'package:firetrack360/services/auth_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'dart:convert';
+
+class ProductionConfig {
+  static const String graphqlEndpoint =
+      'https://firetrack360.satorrwanda.rw/graphql';
+  static const String fileUploadEndpoint =
+      'https://firetrack360.satorrwanda.rw/api/upload/file';
+  static const String googleMapsApiKey =
+      'AIzaSyAf2-1NVpjR3wRZo8JURcXtwt8vY7SX6cM';
+}
 
 class GraphQLConfiguration {
   static HttpLink _createHttpLink() {
-    final String? endpointUrl = dotenv.env['GRAPHQL_ENDPOINT_URL'];
-    debugPrint('GraphQL_ENDPOINT_URL: $endpointUrl');
-
-    if (endpointUrl == null || endpointUrl.isEmpty) {
-      throw Exception('GRAPHQL_ENDPOINT_URL is not set in .env file');
-    }
-
-    _testDirectConnection(endpointUrl);
-
     return HttpLink(
-      endpointUrl,
+      ProductionConfig.graphqlEndpoint,
       httpClient: http.Client(),
       defaultHeaders: {
         'Content-Type': 'application/json',
@@ -31,68 +29,39 @@ class GraphQLConfiguration {
     return AuthLink(
       getToken: () async {
         final token = await AuthService.getAccessToken();
-        debugPrint('Auth Token Present: ${token != null && token.isNotEmpty}');
         return token != null && token.isNotEmpty ? 'Bearer $token' : null;
       },
     );
   }
 
   static Link _createLink() {
-    try {
-      final httpLink = _createHttpLink();
-      final authLink = _createAuthLink();
+    final httpLink = _createHttpLink();
+    final authLink = _createAuthLink();
 
-      final errorLink =
-          Link.function((Request request, [NextLink? forward]) async* {
-        try {
-          final stream = await forward!(request);
+    final errorLink =
+        Link.function((Request request, [NextLink? forward]) async* {
+      try {
+        final stream = await forward!(request);
 
-          await for (final response in stream) {
-            if (response.errors != null && response.errors!.isNotEmpty) {
-              if (GraphQLErrorHandler.isAuthenticationError(
-                  response.errors!.first)) {
-                await AuthService.logout();
-              }
+        await for (final response in stream) {
+          if (response.errors != null && response.errors!.isNotEmpty) {
+            if (GraphQLErrorHandler.isAuthenticationError(
+                response.errors!.first)) {
+              await AuthService.logout();
             }
-            yield response;
           }
-        } catch (error) {
-          if (error is LinkException &&
-              GraphQLErrorHandler.isAuthenticationError(error)) {
-            await AuthService.logout();
-          }
-          rethrow;
+          yield response;
         }
-      });
-
-      return errorLink.concat(authLink).concat(httpLink);
-    } catch (e, stackTrace) {
-      debugPrint('Error creating GraphQL link: $e');
-      debugPrint('Stack trace: $stackTrace');
-      rethrow;
-    }
-  }
-
-  static void _testDirectConnection(String url) {
-    // Use POST instead of GET for GraphQL
-    http
-        .post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'query':
-            '{ __schema { queryType { name } } }' // Simple introspection query
-      }),
-    )
-        .then((response) {
-      debugPrint('Direct connection test - Status: ${response.statusCode}');
-      debugPrint('Response headers: ${response.headers}');
-      debugPrint('Response body: ${response.body.substring(0, 100)}...');
-    }).catchError((error) {
-      debugPrint('Direct connection failed: $error');
+      } catch (error) {
+        if (error is LinkException &&
+            GraphQLErrorHandler.isAuthenticationError(error)) {
+          await AuthService.logout();
+        }
+        rethrow;
+      }
     });
+
+    return errorLink.concat(authLink).concat(httpLink);
   }
 
   static ValueNotifier<GraphQLClient> initializeClient() {
@@ -104,12 +73,12 @@ class GraphQLConfiguration {
         cache: GraphQLCache(store: InMemoryStore()),
         defaultPolicies: DefaultPolicies(
           watchQuery: Policies(
-            fetch: FetchPolicy.networkOnly,
+            fetch: FetchPolicy.cacheAndNetwork,
             error: ErrorPolicy.all,
             cacheReread: CacheRereadPolicy.mergeOptimistic,
           ),
           query: Policies(
-            fetch: FetchPolicy.networkOnly,
+            fetch: FetchPolicy.cacheFirst,
             error: ErrorPolicy.all,
             cacheReread: CacheRereadPolicy.mergeOptimistic,
           ),
@@ -122,9 +91,8 @@ class GraphQLConfiguration {
       );
 
       return ValueNotifier(client);
-    } catch (e, stackTrace) {
-      debugPrint('Error initializing GraphQL client: $e');
-      debugPrint('Stack trace: $stackTrace');
+    } catch (e) {
+      // Fallback client for production
       return ValueNotifier(
         GraphQLClient(
           link: _createHttpLink(),
@@ -137,12 +105,30 @@ class GraphQLConfiguration {
 
 class GraphQLErrorHandler {
   static bool isAuthenticationError(dynamic error) {
-    if (error.toString().contains('ResponseFormatException') ||
-        error.toString().contains('Unexpected end of input')) {
-      return true;
+    // Silent error handling in production
+    if (kReleaseMode) {
+      // Only handle critical auth errors
+      if (error.toString().contains('401') ||
+          error.toString().contains('403')) {
+        return true;
+      }
+
+      if (error is GraphQLError) {
+        final message = error.message.toLowerCase();
+        return message.contains('unauthorized') ||
+            message.contains('unauthenticated') ||
+            message.contains('invalid token') ||
+            message.contains('token expired');
+      }
+
+      return false;
     }
 
-    if (error.toString().contains('401') || error.toString().contains('403')) {
+    // Debug mode - more verbose error checking
+    if (error.toString().contains('ResponseFormatException') ||
+        error.toString().contains('Unexpected end of input') ||
+        error.toString().contains('401') ||
+        error.toString().contains('403')) {
       return true;
     }
 

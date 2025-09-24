@@ -1,2 +1,0 @@
-D:/codes/firetrack360-fn/android/app/.cxx/RelWithDebInfo/105nx27a/x86/CMakeFiles/edit_cache.dir
-D:/codes/firetrack360-fn/android/app/.cxx/RelWithDebInfo/105nx27a/x86/CMakeFiles/rebuild_cache.dir

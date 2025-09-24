@@ -1,5 +1,6 @@
 // lib/ui/screens/inventory_screen.dart
 
+import 'package:firetrack360/configs/graphql_client.dart';
 import 'package:firetrack360/hooks/use_auth.dart';
 import 'package:firetrack360/models/product.dart';
 import 'package:firetrack360/ui/pages/admin/product_details_screen.dart';
@@ -7,16 +8,9 @@ import 'package:firetrack360/ui/widgets/create_product_dialog.dart';
 import 'package:firetrack360/ui/widgets/edit_product_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:firetrack360/providers/product_provider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:firetrack360/generated/l10n.dart'; // Import localization
-
-// Define providers used in the screen (if not already defined elsewhere)
-// Example:
-// final currentPageProvider = StateProvider<int>((ref) => 1);
-// final searchQueryProvider = StateProvider<String>((ref) => '');
-// final totalPagesProvider = StateProvider<int>((ref) => 1); // Assuming this is calculated in your provider
-
+import 'package:firetrack360/generated/l10n.dart';
 class InventoryScreen extends HookConsumerWidget {
   const InventoryScreen({super.key});
 
@@ -33,7 +27,7 @@ class InventoryScreen extends HookConsumerWidget {
       context: context,
       barrierDismissible: false, // Prevent dismissing by tapping outside
       builder: (context) => CreateProductDialog(
-        uploadEndpoint: dotenv.env['FILE_UPLOAD_ENDPOINT']!,
+        uploadEndpoint: ProductionConfig.fileUploadEndpoint,
         // Pass theme-aware colors to the dialog
         dialogBackgroundColor: cardBackgroundColor,
         dialogTextColor: textColor,
